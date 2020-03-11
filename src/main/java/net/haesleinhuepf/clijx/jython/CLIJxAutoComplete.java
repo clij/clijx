@@ -728,6 +728,9 @@ class CLIJxAutoComplete {
        headline = "clijx.subtract(ClearCLImageInterface subtrahend, ClearCLImageInterface minuend, ClearCLImageInterface destination)";
        description = "<b>subtract</b><br><br>Subtracts one image X from another image Y pixel wise.<br><br><pre>f(x, y) = x - y</pre><br><br>Parameters:<br>ClearCLImageInterface subtrahend, ClearCLImageInterface minuend, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.sumImageSliceBySlice(ClearCLImageInterface source, ClearCLImageInterface destination)";
+       description = "<b>sumImageSliceBySlice</b><br><br>Sums all pixels slice by slice and returns them in an array.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.sumOfAllPixels(ClearCLImageInterface source)";
        description = "<b>sumOfAllPixels</b><br><br>Determines the sum of all pixels in a given image. It will be stored in a new row of ImageJs<br>Results table in the column 'Sum'.<br><br>Parameters:<br>ClearCLImageInterface source";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -860,4 +863,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 283 methods generated.
+// 284 methods generated.
