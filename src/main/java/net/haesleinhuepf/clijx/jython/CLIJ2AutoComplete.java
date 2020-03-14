@@ -587,6 +587,9 @@ class CLIJ2AutoComplete {
        headline = "clij2.setRampZ(ClearCLImageInterface source)";
        description = "<b>setRampZ</b><br><br>Sets all pixel values to their Z coordinate<br><br>Parameters:<br>ClearCLImageInterface source";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.setRandom(ClearCLBuffer source, Float minimumValue, Float maximumValue, Float seed)";
+       description = "<b>setRandom</b><br><br>Fills an image or image stack with uniformly distributed random numbers between given minimum and maximum values.<br>Recommendation: For the seed, use getTime().<br><br>Parameters:<br>ClearCLBuffer source, Float minimumValue, Float maximumValue, Float seed";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.setRow(ClearCLImageInterface source, Integer rowIndex, Float value)";
        description = "<b>setRow</b><br><br>Sets all pixel values x of a given row in X to a constant value v.<br><br><pre>f(x) = v</pre><br><br>Parameters:<br>ClearCLImageInterface source, Integer rowIndex, Float value";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -758,4 +761,4 @@ class CLIJ2AutoComplete {
         return list;
     }
 }
-// 249 methods generated.
+// 250 methods generated.
