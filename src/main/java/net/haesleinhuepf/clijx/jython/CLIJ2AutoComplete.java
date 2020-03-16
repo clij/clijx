@@ -104,6 +104,9 @@ class CLIJ2AutoComplete {
        headline = "clij2.closingDiamond(ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_dilations_and_erotions)";
        description = "<b>closingDiamond</b><br><br>Apply a binary closing to the input image by calling n dilations and n erosions subsequenntly.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_dilations_and_erotions";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.concatenateStacks(ClearCLImageInterface stack1, ClearCLImageInterface stack2, ClearCLImageInterface destination)";
+       description = "<b>concatenateStacks</b><br><br>Concatenates two stacks<br><br>Parameters:<br>ClearCLImageInterface stack1, ClearCLImageInterface stack2, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.connectedComponentsLabelingBox(ClearCLImageInterface binary_input, ClearCLImageInterface labeling_destination)";
        description = "<b>connectedComponentsLabelingBox</b><br><br>Performs connected components analysis to a binary image and generates a label map.<br><br>Parameters:<br>ClearCLImageInterface binary_input, ClearCLImageInterface labeling_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -761,4 +764,4 @@ class CLIJ2AutoComplete {
         return list;
     }
 }
-// 250 methods generated.
+// 251 methods generated.
