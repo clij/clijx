@@ -31,22 +31,28 @@ public class ShowRGB extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJ
     public static boolean showRGB(CLIJ clij, ClearCLBuffer inputR, ClearCLBuffer inputG, ClearCLBuffer inputB, String name) {
         ImagePlus impR = clij.pull(inputR);
         ImageStack stack = new ImageStack(impR.getWidth(), impR.getHeight());
-        IJ.run(impR, "Enhance Contrast", "saturated=0.35");
-        IJ.run(impR, "8-bit", "");
+        if (impR.getBitDepth() != 8) {
+            IJ.run(impR, "Enhance Contrast", "saturated=0.35");
+            IJ.run(impR, "8-bit", "");
+        }
         stack.addSlice(impR.getProcessor());
         int channels = 1;
 
         ImagePlus impG = clij.pull(inputG);
         if (impG != null) {
-            IJ.run(impG, "Enhance Contrast", "saturated=0.35");
-            IJ.run(impG, "8-bit", "");
+            if (impG.getBitDepth() != 8) {
+                IJ.run(impG, "Enhance Contrast", "saturated=0.35");
+                IJ.run(impG, "8-bit", "");
+            }
             stack.addSlice(impG.getProcessor());
             channels ++;
         }
         ImagePlus impB = clij.pull(inputB);
         if (impB != null) {
-            IJ.run(impB, "Enhance Contrast", "saturated=0.35");
-            IJ.run(impB, "8-bit", "");
+            if (impB.getBitDepth() != 8) {
+                IJ.run(impB, "Enhance Contrast", "saturated=0.35");
+                IJ.run(impB, "8-bit", "");
+            }
             stack.addSlice(impB.getProcessor());
             channels ++;
         }
