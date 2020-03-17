@@ -33,7 +33,7 @@ public class AbsoluteInplace extends AbstractCLIJxPlugin implements CLIJMacroPlu
 
     @Override
     public String getParameterHelpText() {
-        return "Image source, Image destination";
+        return "Image source_destination";
     }
 
     @Override
