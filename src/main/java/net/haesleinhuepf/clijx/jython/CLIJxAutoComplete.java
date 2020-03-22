@@ -8,6 +8,9 @@ class CLIJxAutoComplete {
        ArrayList<BasicCompletion> list = new ArrayList<BasicCompletion>();
        String headline;
        String description;
+       headline = "clijx.absoluteInplace(ClearCLBuffer source_destination)";
+       description = "<b>absoluteInplace</b><br><br>Computes the absolute value of every individual pixel x in a given image.<br><br><pre>f(x) = |x| </pre><br><br>Parameters:<br>ClearCLBuffer source_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.absolute(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>absolute</b><br><br>Computes the absolute value of every individual pixel x in a given image.<br><br><pre>f(x) = |x| </pre><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -104,8 +107,8 @@ class CLIJxAutoComplete {
        headline = "clijx.centerOfMass(ClearCLBuffer source)";
        description = "<b>centerOfMass</b><br><br>Determines the center of mass of an image or image stack and writes the result in the results table<br>in the columns MassX, MassY and MassZ.<br><br>Parameters:<br>ClearCLBuffer source";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.closeIndexGapsInLabelMap(ClearCLBuffer binary_input, ClearCLImageInterface labeling_destination)";
-       description = "<b>closeIndexGapsInLabelMap</b><br><br>Analyses a label map and if there are gaps in the indexing (e.g. label 5 is not present) all <br>subsequent labels will be relabelled. Thus, afterwards number of labels and maximum label index are equal.<br><br><br>Parameters:<br>ClearCLBuffer binary_input, ClearCLImageInterface labeling_destination";
+       headline = "clijx.closeIndexGapsInLabelMap(ClearCLBuffer labeling_input, ClearCLImageInterface labeling_destination)";
+       description = "<b>closeIndexGapsInLabelMap</b><br><br>Analyses a label map and if there are gaps in the indexing (e.g. label 5 is not present) all <br>subsequent labels will be relabelled. Thus, afterwards number of labels and maximum label index are equal.<br><br><br>Parameters:<br>ClearCLBuffer labeling_input, ClearCLImageInterface labeling_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.closingBox(ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_dilations_and_erosions)";
        description = "<b>closingBox</b><br><br>Apply a binary closing to the input image by calling n dilations and n erosions subsequenntly.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_dilations_and_erosions";
@@ -869,4 +872,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 286 methods generated.
+// 287 methods generated.
