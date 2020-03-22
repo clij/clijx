@@ -53,7 +53,7 @@ public class GaussJordan extends AbstractCLIJPlugin implements CLIJMacroPlugin, 
             parameters.put("size", new Integer(size));
             parameters.put("t", new Integer(t));
 
-            clij.execute(MultiplyMatrix.class, "gaussJordan.cl", "Fan1", new long[]{size}, parameters);
+            clij.execute(GaussJordan.class, "gaussJordan.cl", "Fan1", new long[]{size}, parameters);
             //System.out.println("tem");
             //TestUtilities.printBuffer(CLIJ.getInstance(), temp);
 
@@ -63,7 +63,7 @@ public class GaussJordan extends AbstractCLIJPlugin implements CLIJMacroPlugin, 
             parameters.put("dst_b_dev", resultBuffer);
             parameters.put("size", new Integer(size));
             parameters.put("t", new Integer(t));
-            clij.execute(MultiplyMatrix.class, "gaussJordan.cl", "Fan2", new long[]{size, size}, parameters);
+            clij.execute(GaussJordan.class, "gaussJordan.cl", "Fan2", new long[]{size, size}, parameters);
 
 
             //System.out.println("mat");
@@ -79,7 +79,7 @@ public class GaussJordan extends AbstractCLIJPlugin implements CLIJMacroPlugin, 
         parameters.put("src_b_dev", resultBuffer);
         parameters.put("dst_finalVec", coefficients_destination);
         parameters.put("size", new Integer(size));
-        clij.execute(MultiplyMatrix.class, "gaussJordan.cl", "BackSub", new long[]{1,1,1}, parameters);
+        clij.execute(GaussJordan.class, "gaussJordan.cl", "BackSub", new long[]{1,1,1}, parameters);
         return true;
     }
 
