@@ -19,7 +19,7 @@ public class CrossCorrelation extends AbstractCLIJPlugin implements CLIJMacroPlu
 
     @Override
     public String getParameterHelpText() {
-        return "Image input1, Image meanInput1, Image input2, Image meanInput2, Image destination, Number radius, Number deltaPos, Number dimension";
+        return "Image input1, Image meanInput1, Image input2, Image meanInput2, ByRef Image destination, Number radius, Number deltaPos, Number dimension";
     }
 
     @Override

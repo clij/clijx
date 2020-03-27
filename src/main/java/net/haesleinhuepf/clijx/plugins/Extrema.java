@@ -16,7 +16,7 @@ public class Extrema extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJ
 
     @Override
     public String getParameterHelpText() {
-        return "Image input1, Image input2, Image destination";
+        return "Image input1, Image input2, ByRef Image destination";
     }
 
     @Override

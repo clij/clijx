@@ -19,7 +19,7 @@ public class AverageAngleBetweenAdjacentTriangles extends AbstractCLIJxPlugin im
 
     @Override
     public String getParameterHelpText() {
-        return "Image pointlist, Image touch_matrix, Image average_distancelist_destination";
+        return "Image pointlist, Image touch_matrix, ByRef Image average_distancelist_destination";
     }
 
     @Override

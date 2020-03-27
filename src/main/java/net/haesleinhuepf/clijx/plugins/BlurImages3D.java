@@ -36,7 +36,7 @@ public class BlurImages3D extends AbstractCLIJPlugin implements CLIJMacroPlugin,
 
     @Override
     public String getParameterHelpText() {
-        return "Image source, Image destination, Number sigmaX, Number sigmaY, Number sigmaZ";
+        return "Image source, ByRef Image destination, Number sigmaX, Number sigmaY, Number sigmaZ";
     }
 
 

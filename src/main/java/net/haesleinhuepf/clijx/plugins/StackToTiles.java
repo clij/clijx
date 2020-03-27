@@ -40,7 +40,7 @@ public class StackToTiles extends AbstractCLIJxPlugin implements CLIJMacroPlugin
 
     @Override
     public String getParameterHelpText() {
-        return "Image source, Image destination, Number tiles_x, Number tiles_y";
+        return "Image source, ByRef Image destination, Number tiles_x, Number tiles_y";
     }
 
 

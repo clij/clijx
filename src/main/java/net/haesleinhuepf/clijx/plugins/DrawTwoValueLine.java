@@ -23,7 +23,7 @@ public class DrawTwoValueLine extends AbstractCLIJxPlugin implements CLIJMacroPl
 
     @Override
     public String getParameterHelpText() {
-        return "Image destination, Number x1, Number y1, Number z1, Number x2, Number y2, Number z2, Number thickness, Number value1, Number value2";
+        return "ByRef Image destination, Number x1, Number y1, Number z1, Number x2, Number y2, Number z2, Number thickness, Number value1, Number value2";
     }
 
     @Override

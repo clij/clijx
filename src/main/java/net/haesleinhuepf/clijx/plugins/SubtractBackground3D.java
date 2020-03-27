@@ -15,7 +15,7 @@ public class SubtractBackground3D extends AbstractCLIJxPlugin implements CLIJMac
 
     @Override
     public String getParameterHelpText() {
-        return "Image input, Image destination, Number sigmaX, Number sigmaY, Number sigmaZ";
+        return "Image input, ByRef Image destination, Number sigmaX, Number sigmaY, Number sigmaZ";
     }
 
     @Override

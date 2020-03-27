@@ -96,7 +96,7 @@ public class TopHatOctagonSliceBySlice extends AbstractCLIJxPlugin implements CL
 
     @Override
     public String getParameterHelpText() {
-        return "Image input, Image destination, Number iterations";
+        return "Image input, ByRef Image destination, Number iterations";
     }
 
     @Override

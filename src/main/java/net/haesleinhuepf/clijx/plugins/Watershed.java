@@ -204,7 +204,7 @@ public class Watershed extends AbstractCLIJxPlugin implements CLIJMacroPlugin, C
 
     @Override
     public String getParameterHelpText() {
-        return "Image binary_source, Image destination";
+        return "Image binary_source, ByRef Image destination";
     }
 
     @Override

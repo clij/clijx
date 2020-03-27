@@ -14,7 +14,7 @@ public class Presign extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJ
 
     @Override
     public String getParameterHelpText() {
-        return "Image input, Image destination";
+        return "Image input, ByRef Image destination";
     }
 
     @Override

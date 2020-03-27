@@ -22,7 +22,7 @@ public class LFRecon extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJ
 
     @Override
     public String getParameterHelpText() {
-        return "Image input, Image destination, Number umax, Number vmax";
+        return "Image input, ByRef Image destination, Number umax, Number vmax";
     }
 
     @Override

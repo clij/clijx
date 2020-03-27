@@ -47,7 +47,7 @@ public class ConvertRGBStackToGraySlice extends AbstractCLIJxPlugin implements C
 
     @Override
     public String getParameterHelpText() {
-        return "Image stack_source, Image slice_destination";
+        return "Image stack_source, ByRef Image slice_destination";
     }
 
 

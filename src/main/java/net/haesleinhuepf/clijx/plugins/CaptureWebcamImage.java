@@ -101,7 +101,7 @@ public class CaptureWebcamImage extends AbstractCLIJxPlugin implements CLIJMacro
 
     @Override
     public String getParameterHelpText() {
-        return "Image destination, Number cameraDeviceIndex, Number imageWidth, Number imageHeight";
+        return "ByRef Image destination, Number cameraDeviceIndex, Number imageWidth, Number imageHeight";
     }
 
     @Override

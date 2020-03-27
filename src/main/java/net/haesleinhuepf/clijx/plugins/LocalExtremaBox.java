@@ -13,7 +13,7 @@ public class LocalExtremaBox extends AbstractCLIJPlugin implements CLIJMacroPlug
 
     @Override
     public String getParameterHelpText() {
-        return "Image input, Image destination, Number radiusX, Number radiusY, Number radiusZ";
+        return "Image input, ByRef Image destination, Number radiusX, Number radiusY, Number radiusZ";
     }
 
     @Override

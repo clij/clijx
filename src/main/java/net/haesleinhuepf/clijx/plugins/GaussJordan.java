@@ -21,7 +21,7 @@ public class GaussJordan extends AbstractCLIJPlugin implements CLIJMacroPlugin, 
 
     @Override
     public String getParameterHelpText() {
-        return "Image A_matrix, Image B_result_vector, Image solution_destination";
+        return "Image A_matrix, Image B_result_vector, ByRef Image solution_destination";
     }
 
     @Override

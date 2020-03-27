@@ -87,7 +87,7 @@ public class TopHatOctagon extends AbstractCLIJxPlugin implements CLIJMacroPlugi
 
     @Override
     public String getParameterHelpText() {
-        return "Image input, Image destination, Number iterations";
+        return "Image input, ByRef Image destination, Number iterations";
     }
 
     @Override
