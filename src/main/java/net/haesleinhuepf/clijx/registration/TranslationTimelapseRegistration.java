@@ -14,7 +14,7 @@ public class TranslationTimelapseRegistration extends AbstractCLIJPlugin impleme
 
     @Override
     public String getParameterHelpText() {
-        return "Image input, Image output";
+        return "Image input, ByRef Image output";
     }
 
     @Override

@@ -21,7 +21,7 @@ public class TranslationRegistration extends AbstractCLIJPlugin implements CLIJM
 
     @Override
     public String getParameterHelpText() {
-        return "Image input1, Image input2, Image destination";
+        return "Image input1, Image input2, ByRef Image destination";
     }
 
     @Override

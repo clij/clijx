@@ -15,7 +15,7 @@ public class DeformableRegistration2D extends AbstractCLIJPlugin implements CLIJ
 
     @Override
     public String getParameterHelpText() {
-        return "Image input1, Image input2, Image destination, Number maxDeltaX, Number maxDeltaY";
+        return "Image input1, Image input2, ByRef Image destination, Number maxDeltaX, Number maxDeltaY";
     }
 
     @Override
