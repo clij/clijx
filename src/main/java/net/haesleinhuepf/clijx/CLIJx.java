@@ -49,17 +49,6 @@ public class CLIJx extends CLIJ2 implements CLIJxOps {
         return this;
     }
 
-    /**
-     * Transfer a buffer from a different OpenCLDevice
-     * @param input
-     * @return
-     */
-    public ClearCLBuffer transfer(ClearCLBuffer input) {
-        ClearCLBuffer output = create(input);
-        ByteBuffer buffer = ByteBuffer.allocate((int) input.getSizeInBytes());
-        input.writeTo(buffer, true);
-        output.readFrom(buffer, true);
-        return output;
-    }
+
 
 }
