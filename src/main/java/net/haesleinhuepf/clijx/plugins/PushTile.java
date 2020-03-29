@@ -62,17 +62,24 @@ public class PushTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
         if (startY < 0) {
             startY = 0;
         }
-        if (endX > imp.getWidth()) {
-            endX = imp.getWidth();
+        if (endX >= imp.getWidth()) {
+            endX = imp.getWidth() - 1;
         }
-        if (endY > imp.getHeight()) {
-            endY = imp.getHeight();
+        if (endY >= imp.getHeight()) {
+            endY = imp.getHeight() - 1;
         }
 
         imp.setRoi(startX, startY, endX - startX + 1, endY - startY + 1);
 
         int endZ = (tileZ + 1) * depth + marginDepth;
         int startZ = tileZ * depth - marginDepth;
+        if (startZ < 0) {
+            startZ = 0;
+        }
+        if (endZ >= imp.getNSlices()) {
+            endZ = imp.getNSlices() - 1;
+        }
+
 
 
 //        System.out.println("Start z " + startZ);
@@ -88,7 +95,7 @@ public class PushTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
 
         for (int z = startZ; z <= endZ; z++) {
             imp.setZ(z + 1);
-            tile.setZ(z + marginDepth + 1);
+            tile.setZ(z + 1 - startZ);
             tile.getProcessor().copyBits(imp.getProcessor().crop(), 0, 0, Blitter.COPY);
         }
         //////////////////

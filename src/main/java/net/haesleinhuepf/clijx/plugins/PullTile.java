@@ -62,6 +62,17 @@ public class PullTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
         int zStart = tileZ * depth;
 
         ImagePlus tileSource = clij2.pull(buffer);
+        System.out.println("w " + tileSource.getWidth());
+
+        if (tileX == 0) {
+            marginWidth = 0;
+        }
+        if (tileY == 0) {
+            marginHeight = 0;
+        }
+        if (tileZ == 0) {
+            marginDepth = 0;
+        }
         tileSource.setRoi(marginWidth, marginHeight, width, height);
         //if (tileX == 0 && tileY == 0) {
         //    tileSource.show();
@@ -72,8 +83,11 @@ public class PullTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
 
         for (int z = zStart; z <= zEnd; z++) {
             imp.setZ(z + 1);
-            tileSource.setZ(z + marginDepth + 1);
-            imp.getProcessor().copyBits(tileSource.getProcessor(), tileX * width, tileY * height, Blitter.COPY);
+            tileSource.setZ(z + marginDepth + 1 - zStart);
+            //if (tileX == 0 && tileY == 0) {
+            //    System.out.println("pullcopy from " + (z + marginDepth + 1 - zStart) + " to " + (z + 1));
+            //}
+            imp.getProcessor().copyBits(tileSource.getProcessor().crop(), tileX * width, tileY * height, Blitter.COPY);
         }
 
         imp.setRoi(roiBefore);
