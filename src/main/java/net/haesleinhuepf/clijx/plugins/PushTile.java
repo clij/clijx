@@ -117,7 +117,41 @@ public class PushTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
         CLIJHandler.getInstance().pushInternal(buffer, imageName);
     }
 
-    @Override
+    public static ClearCLBuffer pushTile(CLIJ2 clij2, ClearCLBuffer input, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
+        long startX = tileX * width - marginWidth;
+        long startY = tileY * height - marginHeight;
+        long endX = (tileX + 1) * width + marginWidth - 1;
+        long endY = (tileY + 1) * height + marginHeight - 1;
+
+        if (startX < 0) {
+            startX = 0;
+        }
+        if (startY < 0) {
+            startY = 0;
+        }
+        if (endX >= input.getWidth()) {
+            endX = input.getWidth() - 1;
+        }
+        if (endY >= input.getHeight()) {
+            endY = input.getHeight() - 1;
+        }
+
+        long endZ = (tileZ + 1) * depth + marginDepth;
+        long startZ = tileZ * depth - marginDepth;
+        if (startZ < 0) {
+            startZ = 0;
+        }
+        if (endZ >= input.getDepth()) {
+            endZ = input.getDepth() - 1;
+        }
+
+        ClearCLBuffer output = clij2.create(new long[]{endX - startX + 1, endY - startY + 1, endZ - startZ + 1}, input.getNativeType());
+        clij2.crop(input, output, startX, startY, startZ);
+        return output;
+    }
+
+
+        @Override
     public ClearCLBuffer createOutputBufferFromSource(ClearCLBuffer input) {
 
         int width = asInteger(args[4]);

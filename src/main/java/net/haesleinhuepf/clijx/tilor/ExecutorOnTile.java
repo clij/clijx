@@ -1,6 +1,6 @@
 package net.haesleinhuepf.clijx.tilor;
 
-import ij.ImagePlus;
+import net.haesleinhuepf.clij.CLIJ;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
@@ -12,8 +12,9 @@ public class ExecutorOnTile implements Runnable {
 
     private static Object pushPullMutex = new Object();
 
-    private AbstractCLIJ2Plugin plugin;
-    private HashMap<String, ImagePlus> parameters;
+    private AbstractCLIJ2Plugin master;
+    private AbstractCLIJ2Plugin client;
+    private HashMap<String, ClearCLBuffer> parameters;
     private Object[] args;
     private final int tileX;
     private final int tileY;
@@ -27,8 +28,9 @@ public class ExecutorOnTile implements Runnable {
 
     boolean finished = false;
 
-    ExecutorOnTile(AbstractCLIJ2Plugin plugin,
-                   HashMap<String, ImagePlus> parameters,
+    ExecutorOnTile(AbstractCLIJ2Plugin master,
+                   AbstractCLIJ2Plugin client,
+                   HashMap<String, ClearCLBuffer> parameters,
                    Object[] args,
                    int tileX, int tileY, int tileZ,
                    int tileWidth,
@@ -38,7 +40,8 @@ public class ExecutorOnTile implements Runnable {
                    int marginHeight,
                    int marginDepth
     ) {
-        this.plugin = plugin;
+        this.master = master;
+        this.client = client;
         this.parameters = parameters;
         this.args = args;
         this.tileX = tileX;
@@ -55,7 +58,7 @@ public class ExecutorOnTile implements Runnable {
     @Override
     public void run() {
         long time = System.currentTimeMillis();
-        String[] argumentNames = plugin.getParameterHelpText().split(",");
+        String[] argumentNames = client.getParameterHelpText().split(",");
 
         Object[] newArgs = new Object[args.length];
         for (int a = 0; a < argumentNames.length; a++) {
@@ -70,10 +73,14 @@ public class ExecutorOnTile implements Runnable {
             }
 
             if (parameterType.compareTo("Image") == 0) {
-                ImagePlus imp = parameters.get(parameterName);
+                ClearCLBuffer wholeImage = parameters.get(parameterName);
                 synchronized (pushPullMutex) {
                     //System.out.println("push " + parameterName);
-                    newArgs[a] = PushTile.pushTile(plugin.getCLIJ2(), imp, tileX, tileY, tileZ, tileWidth, tileHeight, tileDepth, marginWidth, marginHeight, marginDepth);
+                    ClearCLBuffer tileOnMaster = PushTile.pushTile(master.getCLIJ2(), wholeImage, tileX, tileY, tileZ, tileWidth, tileHeight, tileDepth, marginWidth, marginHeight, marginDepth);
+                    ClearCLBuffer tileOnClient = client.getCLIJ2().transfer(tileOnMaster);
+                    //client.getCLIJ2().show(tileOnClient, "tile on client");
+                    master.getCLIJ2().release(tileOnMaster);
+                    newArgs[a] = tileOnClient;
                     //System.out.println("args depth" + ((ClearCLBuffer)newArgs[a]).getDepth());
                 }
             } else {
@@ -81,9 +88,9 @@ public class ExecutorOnTile implements Runnable {
             }
         }
 
-        plugin.setArgs(newArgs);
-        if (plugin instanceof CLIJOpenCLProcessor) {
-            ((CLIJOpenCLProcessor) plugin).executeCL();
+        client.setArgs(newArgs);
+        if (client instanceof CLIJOpenCLProcessor) {
+            ((CLIJOpenCLProcessor) client).executeCL();
         }
 
         for (int a = 0; a < argumentNames.length; a++) {
@@ -98,21 +105,23 @@ public class ExecutorOnTile implements Runnable {
             }
 
             if (parameterType.compareTo("Image") == 0) {
-                ImagePlus imp = parameters.get(parameterName);
+                ClearCLBuffer wholeImage = parameters.get(parameterName);
                 synchronized (pushPullMutex) {
-                    //System.out.println("pull " + parameterName);
-                    PullTile.pullTile(plugin.getCLIJ2(), imp, (ClearCLBuffer) newArgs[a], tileX, tileY, tileZ, tileWidth, tileHeight, tileDepth, marginWidth, marginHeight, marginDepth);
+                    ClearCLBuffer tileOnMaster = master.getCLIJ2().transfer((ClearCLBuffer) newArgs[a]);
+                    PullTile.pullTile(master.getCLIJ2(), tileOnMaster, wholeImage, tileX, tileY, tileZ, tileWidth, tileHeight, tileDepth, marginWidth, marginHeight, marginDepth);
+                    master.getCLIJ2().release(tileOnMaster);
+                    client.getCLIJ2().release((ClearCLBuffer) newArgs[a]);
                 }
-                plugin.getCLIJ2().release((ClearCLBuffer) newArgs[a]);
+                client.getCLIJ2().release((ClearCLBuffer) newArgs[a]);
             }
         }
 
-        System.out.println("Processing a tile on " + plugin.getCLIJ2().getGPUName() + " took " + (System.currentTimeMillis() - time) + " ms.");
+        System.out.println("Processing a tile on " + client.getCLIJ2().getGPUName() + " took " + (System.currentTimeMillis() - time) + " ms.");
         finished = true;
     }
 
     public AbstractCLIJ2Plugin getPlugin() {
-        return plugin;
+        return client;
     }
 
     public boolean isFinished() {

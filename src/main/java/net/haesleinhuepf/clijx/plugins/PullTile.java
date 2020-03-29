@@ -94,6 +94,29 @@ public class PullTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
         imp.setZ(zBefore);
     }
 
+    public static void pullTile(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
+
+        ClearCLBuffer temp = clij2.create(new long[]{width, height, depth}, input.getNativeType());
+
+        int zEnd = (tileZ + 1) * depth;
+        int zStart = tileZ * depth;
+
+        if (tileX == 0) {
+            marginWidth = 0;
+        }
+        if (tileY == 0) {
+            marginHeight = 0;
+        }
+        if (tileZ == 0) {
+            marginDepth = 0;
+        }
+
+        clij2.crop(input, temp, marginWidth, marginHeight, marginDepth);
+        clij2.paste(temp, output, tileX * width, tileY * height, tileZ * depth);
+
+        clij2.release(temp);
+    }
+
     @Override
     public ClearCLBuffer createOutputBufferFromSource(ClearCLBuffer input) {
 

@@ -1,10 +1,9 @@
 package net.haesleinhuepf.clijx.tilor;
 
-import ij.ImagePlus;
 import net.haesleinhuepf.clij.CLIJ;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
-import net.haesleinhuepf.clij2.plugins.AddImages;
+import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clijx.CLIJx;
 
 import java.util.ArrayList;
@@ -30,25 +29,41 @@ public class Tilor{
     private int numTilesY;
     private int numTilesZ;
 
-    public Tilor(AbstractCLIJ2Plugin master, ArrayList<AbstractCLIJ2Plugin> clients) {
-        //System.out.println("Initializing Tilor: " + master.getName());
-        this.master = master;
+    Object mutex = new Object();
+    CLIJ2[] clij2s = null;
 
-        for (int i = 0; i < CLIJ.getAvailableDeviceNames().size(); i++) {
-            try {
-                AbstractCLIJ2Plugin clone = master.getClass().newInstance();
-                CLIJ.debug = true;
-                clone.setClij(new CLIJ(i));
-                CLIJ.debug = false;
-                //System.out.println("dev" + i + " " + clone.getCLIJ2().getGPUName());
-                clients.add(clone);
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+    private static boolean USE_MASTER_CLIJ = true;
+
+    public static void setUseMasterClij(boolean useMasterClij) {
+        USE_MASTER_CLIJ = useMasterClij;
+    }
+
+    public Tilor(AbstractCLIJ2Plugin master, ArrayList<AbstractCLIJ2Plugin> clients) {
+        synchronized (mutex) {
+            if (clij2s == null) {
+                ArrayList names = CLIJ.getAvailableDeviceNames();
+                clij2s = new CLIJ2[names.size()];
+                for (int i = 0; i < clij2s.length; i++){
+                    clij2s[i] = new CLIJ2(new CLIJ(i));
+                }
             }
         }
-        // TODO: Check if it's necessary to close all instances by the end.
+
+        this.master = master;
+
+        for (int i = 0; i < clij2s.length; i++) {
+            if (clij2s[i] != master.getCLIJ2() || USE_MASTER_CLIJ) {
+                try {
+                    AbstractCLIJ2Plugin clone = master.getClass().newInstance();
+                    clone.setCLIJ2(clij2s[i]);
+                    clients.add(clone);
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public void executeCL(AbstractCLIJ2Plugin master, ArrayList<AbstractCLIJ2Plugin> clients, Object[] args) {
@@ -56,10 +71,10 @@ public class Tilor{
 
         String[] argumentNames = master.getParameterHelpText().split(",");
 
-        ImagePlus anyImp = null;
-        HashMap<String, ImagePlus> imageParameters = new HashMap<>();
-        CLIJx clijx = CLIJx.getInstance();
-        clijx.stopWatch("");
+        ClearCLBuffer anyImage = null;
+        HashMap<String, ClearCLBuffer> imageParameters = new HashMap<>();
+        //CLIJx clijx = CLIJx.getInstance();
+        //clijx.stopWatch("");
         for (int a = 0; a < argumentNames.length; a++) {
             String[] parameterParts = argumentNames[a].trim().split(" ");
             String parameterType = parameterParts[0];
@@ -72,14 +87,11 @@ public class Tilor{
             }
 
             if (parameterType.compareTo("Image") == 0) {
-                ImagePlus imp = master.getCLIJ2().pull(args[a]);
-                //imp.show();
-                //System.out.println("pulled imp " + imp.getWidth()+"/" + imp.getHeight() + "/" + imp.getNSlices());
-                imageParameters.put(parameterName, imp);
-                anyImp = imp;
+                imageParameters.put(parameterName, (ClearCLBuffer)args[a]);
+                anyImage = (ClearCLBuffer) args[a];
             }
         }
-        clijx.stopWatch("Divided images");
+        //clijx.stopWatch("Divided images");
 
         tileWidth =    asInteger(args[args.length - 6]);
         tileHeight =   asInteger(args[args.length - 5]);
@@ -93,9 +105,9 @@ public class Tilor{
         tileIndexY = 0;
         tileIndexZ = 0;
 
-        numTilesX = anyImp.getWidth() / tileWidth;
-        numTilesY = anyImp.getHeight() / tileHeight;
-        numTilesZ = anyImp.getNSlices() / tileDepth;
+        numTilesX = (int) (anyImage.getWidth() / tileWidth);
+        numTilesY = (int) (anyImage.getHeight() / tileHeight);
+        numTilesZ = (int) (anyImage.getDepth() / tileDepth);
 
         boolean addMoreProcessors = true;
 
@@ -130,7 +142,7 @@ public class Tilor{
             }
         }
 
-        clijx.stopWatch("");
+        //clijx.stopWatch("");
         for (int a = 0; a < argumentNames.length; a++) {
             String[] parameterParts = argumentNames[a].trim().split(" ");
             String parameterType = parameterParts[0];
@@ -143,25 +155,24 @@ public class Tilor{
             }
 
             if (parameterType.compareTo("Image") == 0) {
-                ImagePlus imp = imageParameters.get(parameterName);
-                ClearCLBuffer buffer = master.getCLIJ2().push(imp);
-                master.getCLIJ2().copy(buffer, (ClearCLBuffer)args[a]);
-                master.getCLIJ2().release(buffer);
+                //ClearCLBuffer buffer = imageParameters.get(parameterName);
+                //master.getCLIJ2().copy(buffer, (ClearCLBuffer)args[a]);
+                //master.getCLIJ2().release(buffer);
             }
         }
-        clijx.stopWatch("Combined images");
+        //clijx.stopWatch("Combined images");
 
-        System.out.println("Processing on " + clients.size() + " OpenCL devices took " + (System.currentTimeMillis() - time) + "ms.");
+        System.out.println("Tilor took " + (System.currentTimeMillis() - time) + " ms.");
     }
 
-    private boolean addExecutor(Object[] args, HashMap<String, ImagePlus> imageParameters, ArrayList<ExecutorOnTile> executors, AbstractCLIJ2Plugin plugin) {
+    private boolean addExecutor(Object[] args, HashMap<String, ClearCLBuffer> imageParameters, ArrayList<ExecutorOnTile> executors, AbstractCLIJ2Plugin plugin) {
 
-        ExecutorOnTile executor = new ExecutorOnTile(plugin, imageParameters, args, tileIndexX, tileIndexY, tileIndexZ, tileWidth, tileHeight, tileDepth, marginWidth, marginHeight, marginDepth);
+        ExecutorOnTile executor = new ExecutorOnTile(master, plugin, imageParameters, args, tileIndexX, tileIndexY, tileIndexZ, tileWidth, tileHeight, tileDepth, marginWidth, marginHeight, marginDepth);
         new Thread(executor).start();
         executors.add(executor);
 
         tileIndexX++;
-        System.out.println("\t" + tileIndexX + "\t" + tileIndexY + "\t" + tileIndexZ);
+        // System.out.println("\t" + tileIndexX + "\t" + tileIndexY + "\t" + tileIndexZ);
         if (tileIndexX >= numTilesX) {
             //System.out.println("TilesX over");
             tileIndexX = 0;
@@ -178,4 +189,6 @@ public class Tilor{
 
         return true;
     }
+
+
 }
