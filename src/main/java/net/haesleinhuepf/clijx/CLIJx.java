@@ -1,8 +1,11 @@
 package net.haesleinhuepf.clijx;
 
 import net.haesleinhuepf.clij.CLIJ;
+import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clijx.utilities.CLIJxOps;
+
+import java.nio.ByteBuffer;
 
 /**
  * The CLIJx gateway
@@ -44,6 +47,19 @@ public class CLIJx extends CLIJ2 implements CLIJxOps {
     public CLIJx __enter__() {
         clear();
         return this;
+    }
+
+    /**
+     * Transfer a buffer from a different OpenCLDevice
+     * @param input
+     * @return
+     */
+    public ClearCLBuffer transfer(ClearCLBuffer input) {
+        ClearCLBuffer output = create(input);
+        ByteBuffer buffer = ByteBuffer.allocate((int) input.getSizeInBytes());
+        input.writeTo(buffer, true);
+        output.readFrom(buffer, true);
+        return output;
     }
 
 }
