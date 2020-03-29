@@ -2,8 +2,10 @@ package net.haesleinhuepf.clijx.plugins;
 
 import ij.ImagePlus;
 import ij.WindowManager;
+import ij.gui.NewImage;
 import ij.gui.Roi;
 import ij.plugin.Duplicator;
+import ij.process.Blitter;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.macro.CLIJHandler;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
@@ -47,20 +49,65 @@ public class PushTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
         return true;
     }
 
-    private void pushTile(CLIJ2 clij2, ImagePlus imp, String imageName, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
+    public static ClearCLBuffer pushTile(CLIJ2 clij2, ImagePlus imp, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
         Roi roi = imp.getRoi();
-        imp.setRoi(tileX * width - marginWidth, tileY * height - marginWidth, width + marginWidth * 2, height + marginHeight * 2);
+        int startX = tileX * width - marginWidth;
+        int startY = tileY * height - marginHeight;
+        int endX = (tileX + 1) * width + marginWidth - 1;
+        int endY = (tileY + 1) * height + marginHeight - 1;
 
-        int zEnd = (tileZ + 1) * depth - marginDepth;
-        int zStart = tileZ * depth + marginDepth;
+        if (startX < 0) {
+            startX = 0;
+        }
+        if (startY < 0) {
+            startY = 0;
+        }
+        if (endX > imp.getWidth()) {
+            endX = imp.getWidth();
+        }
+        if (endY > imp.getHeight()) {
+            endY = imp.getHeight();
+        }
 
-        System.out.println("Start z " + zStart);
-        System.out.println("End z " + zEnd);
+        imp.setRoi(startX, startY, endX - startX + 1, endY - startY + 1);
 
-        ImagePlus tile = new Duplicator().run(imp, imp.getChannel(), imp.getChannel(), zStart + 1, zEnd + 1, imp.getFrame(), imp.getFrame());
-        ClearCLBuffer buffer = clij2.push(tile);
-        CLIJHandler.getInstance().pushInternal(buffer, imageName);
+        int endZ = (tileZ + 1) * depth + marginDepth;
+        int startZ = tileZ * depth - marginDepth;
+
+
+//        System.out.println("Start z " + startZ);
+//        System.out.println("End z   " + endZ);
+
+        //ImagePlus tile = new Duplicator().run(imp, imp.getChannel(), imp.getChannel(), startZ + 1, endZ, imp.getFrame(), imp.getFrame());
+
+
+        //////////////////
+
+        System.out.println("pull " + tileX + "/" + tileY);
+        ImagePlus tile = NewImage.createImage("temp", endX - startX + 1, endY - startY + 1, endZ - startZ + 1, imp.getBitDepth(), NewImage.FILL_BLACK);
+
+        for (int z = startZ; z <= endZ; z++) {
+            imp.setZ(z + 1);
+            tile.setZ(z + marginDepth + 1);
+            tile.getProcessor().copyBits(imp.getProcessor().crop(), 0, 0, Blitter.COPY);
+        }
+        //////////////////
+
+
+        //if (tileX == 0 && tileY == 0) {
+        //    tile.show();
+        //    tile.setTitle("tit " + startZ + " " + endZ);
+        //}
+
         imp.setRoi(roi);
+        ClearCLBuffer buffer = clij2.push(tile);
+        System.out.println("push " + startX +"/" + startY + " - " + endX + "/" + endY + " sum " + clij2.sumOfAllPixels(buffer));
+        return buffer;
+    }
+
+    public static void pushTile(CLIJ2 clij2, ImagePlus imp, String imageName, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
+        ClearCLBuffer buffer = pushTile(clij2, imp, tileX, tileY, tileZ, width, height, depth, marginWidth, marginHeight, marginDepth);
+        CLIJHandler.getInstance().pushInternal(buffer, imageName);
     }
 
     @Override

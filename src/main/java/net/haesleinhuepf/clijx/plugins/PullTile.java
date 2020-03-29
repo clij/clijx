@@ -48,19 +48,31 @@ public class PullTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
         return true;
     }
 
-    private void pullTile(CLIJ2 clij2, ImagePlus imp, String imageName, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
+    public static void pullTile(CLIJ2 clij2, ImagePlus imp, String imageName, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
+        ClearCLBuffer buffer = CLIJHandler.getInstance().getFromCache(imageName);
+        pullTile(clij2, imp, buffer, tileX, tileY, tileZ, width, height, depth, marginWidth, marginHeight, marginDepth);
+    }
+
+    public static void pullTile(CLIJ2 clij2, ImagePlus imp, ClearCLBuffer buffer, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
         Roi roiBefore = imp.getRoi();
         int zBefore = imp.getZ();
-        imp.setRoi(tileX * width, tileY * height, width, height);
+        //imp.setRoi(tileX * width, tileY * height, width, height);
 
         int zEnd = (tileZ + 1) * depth;
         int zStart = tileZ * depth;
 
-        ImagePlus tileSource = clij2.pull(CLIJHandler.getInstance().getFromCache(imageName));
+        ImagePlus tileSource = clij2.pull(buffer);
         tileSource.setRoi(marginWidth, marginHeight, width, height);
+        //if (tileX == 0 && tileY == 0) {
+        //    tileSource.show();
+            //System.out.println("zi " + imp.getZ() + " zt " + tileSource.getZ());
+        //}
 
-        for (int z = zStart; z < zEnd; z++) {
+        System.out.println("pull " + tileX + "/" + tileY);
+
+        for (int z = zStart; z <= zEnd; z++) {
             imp.setZ(z + 1);
+            tileSource.setZ(z + marginDepth + 1);
             imp.getProcessor().copyBits(tileSource.getProcessor(), tileX * width, tileY * height, Blitter.COPY);
         }
 
