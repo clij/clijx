@@ -1,6 +1,7 @@
 package net.haesleinhuepf.clijx.utilities;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clijx.CLIJx;
+import net.haesleinhuepf.clijx.weka.CLIJxWeka2;
 import net.haesleinhuepf.clij.CLIJ;
 import net.haesleinhuepf.clij.clearcl.ClearCLKernel;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
@@ -10,6 +11,7 @@ import ij.measure.ResultsTable;
 import ij.gui.Roi;
 import ij.plugin.frame.RoiManager;
 import java.util.HashMap;
+import ij.ImagePlus;
 import net.haesleinhuepf.clij.kernels.Kernels;
 import net.haesleinhuepf.clijx.plugins.CrossCorrelation;
 import net.haesleinhuepf.clijx.plugins.Extrema;
@@ -52,6 +54,14 @@ import net.haesleinhuepf.clijx.plugins.tenengradfusion.TenengradFusion;
 import net.haesleinhuepf.clijx.plugins.Skeletonize;
 import net.haesleinhuepf.clijx.plugins.PushTile;
 import net.haesleinhuepf.clijx.plugins.PullTile;
+import net.haesleinhuepf.clijx.weka.autocontext.ApplyAutoContextWekaModel;
+import net.haesleinhuepf.clijx.weka.autocontext.TrainAutoContextWekaModel;
+import net.haesleinhuepf.clijx.weka.ApplyWekaModel;
+import net.haesleinhuepf.clijx.weka.ApplyWekaToTable;
+import net.haesleinhuepf.clijx.weka.GenerateFeatureStack;
+import net.haesleinhuepf.clijx.weka.TrainWekaModel;
+import net.haesleinhuepf.clijx.weka.TrainWekaFromTable;
+import net.haesleinhuepf.clijx.weka.TrainWekaModelWithOptions;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -64,57 +74,8 @@ public abstract interface CLIJxOps {
     /**
      * 
      */
-    default boolean detectOptima(ClearCLImage arg1, ClearCLImage arg2, double arg3, boolean arg4) {
-        return Kernels.detectOptima(getCLIJ(), arg1, arg2, new Double (arg3).intValue(), arg4);
-    }
-
-    /**
-     * 
-     */
-    default boolean detectOptima(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, boolean arg4) {
-        return Kernels.detectOptima(getCLIJ(), arg1, arg2, new Double (arg3).intValue(), arg4);
-    }
-
-    /**
-     * Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. 
-     */
-    default boolean applyVectorfield(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4, ClearCLBuffer arg5) {
-        return Kernels.applyVectorfield(getCLIJ(), arg1, arg2, arg3, arg4, arg5);
-    }
-
-    /**
-     * Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. 
-     */
-    default boolean applyVectorfield(ClearCLBuffer source, ClearCLBuffer vectorX, ClearCLBuffer vectorY, ClearCLBuffer destination) {
-        return Kernels.applyVectorfield(getCLIJ(), source, vectorX, vectorY, destination);
-    }
-
-    /**
-     * Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. 
-     */
-    default boolean applyVectorfield(ClearCLImage arg1, ClearCLImage arg2, ClearCLImage arg3, ClearCLImage arg4, ClearCLImage arg5) {
-        return Kernels.applyVectorfield(getCLIJ(), arg1, arg2, arg3, arg4, arg5);
-    }
-
-    /**
-     * Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. 
-     */
-    default boolean applyVectorfield(ClearCLImage source, ClearCLImage vectorX, ClearCLImage vectorY, ClearCLImage destination) {
-        return Kernels.applyVectorfield(getCLIJ(), source, vectorX, vectorY, destination);
-    }
-
-    /**
-     * 
-     */
-    default boolean multiplySliceBySliceWithScalars(ClearCLImage arg1, ClearCLImage arg2, float[] arg3) {
-        return Kernels.multiplySliceBySliceWithScalars(getCLIJ(), arg1, arg2, arg3);
-    }
-
-    /**
-     * 
-     */
-    default boolean multiplySliceBySliceWithScalars(ClearCLBuffer arg1, ClearCLBuffer arg2, float[] arg3) {
-        return Kernels.multiplySliceBySliceWithScalars(getCLIJ(), arg1, arg2, arg3);
+    default boolean differenceOfGaussianSliceBySlice(ClearCLImage arg1, ClearCLImage arg2, double arg3, double arg4, double arg5) {
+        return Kernels.differenceOfGaussianSliceBySlice(getCLIJ(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
     }
 
     /**
@@ -129,6 +90,29 @@ public abstract interface CLIJxOps {
      */
     default boolean convertToImageJBinary(ClearCLImage arg1, ClearCLImage arg2) {
         return Kernels.convertToImageJBinary(getCLIJ(), arg1, arg2);
+    }
+
+    /**
+     * Applies Gaussian blur to the input image twice with different sigma values resulting in two images which are then subtracted from each other.
+     * 
+     * It is recommended to apply this operation to images of type Float (32 bit) as results might be negative.
+     */
+    default boolean differenceOfGaussian(ClearCLImage arg1, ClearCLImage arg2, double arg3, double arg4, double arg5) {
+        return Kernels.differenceOfGaussian(getCLIJ(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
+    }
+
+    /**
+     * 
+     */
+    default boolean detectOptimaSliceBySlice(ClearCLImage arg1, ClearCLImage arg2, double arg3, boolean arg4) {
+        return Kernels.detectOptimaSliceBySlice(getCLIJ(), arg1, arg2, new Double (arg3).intValue(), arg4);
+    }
+
+    /**
+     * 
+     */
+    default boolean detectOptimaSliceBySlice(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, boolean arg4) {
+        return Kernels.detectOptimaSliceBySlice(getCLIJ(), arg1, arg2, new Double (arg3).intValue(), arg4);
     }
 
     /**
@@ -158,8 +142,15 @@ public abstract interface CLIJxOps {
     /**
      * 
      */
-    default double[] sumPixelsSliceBySlice(ClearCLBuffer arg1) {
-        return Kernels.sumPixelsSliceBySlice(getCLIJ(), arg1);
+    default boolean multiplySliceBySliceWithScalars(ClearCLImage arg1, ClearCLImage arg2, float[] arg3) {
+        return Kernels.multiplySliceBySliceWithScalars(getCLIJ(), arg1, arg2, arg3);
+    }
+
+    /**
+     * 
+     */
+    default boolean multiplySliceBySliceWithScalars(ClearCLBuffer arg1, ClearCLBuffer arg2, float[] arg3) {
+        return Kernels.multiplySliceBySliceWithScalars(getCLIJ(), arg1, arg2, arg3);
     }
 
     /**
@@ -170,33 +161,52 @@ public abstract interface CLIJxOps {
     }
 
     /**
-     * Applies Gaussian blur to the input image twice with different sigma values resulting in two images which are then subtracted from each other.
      * 
-     * It is recommended to apply this operation to images of type Float (32 bit) as results might be negative.
      */
-    default boolean differenceOfGaussian(ClearCLImage arg1, ClearCLImage arg2, double arg3, double arg4, double arg5) {
-        return Kernels.differenceOfGaussian(getCLIJ(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
+    default double[] sumPixelsSliceBySlice(ClearCLBuffer arg1) {
+        return Kernels.sumPixelsSliceBySlice(getCLIJ(), arg1);
+    }
+
+    /**
+     * Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. 
+     */
+    default boolean applyVectorfield(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4, ClearCLBuffer arg5) {
+        return Kernels.applyVectorfield(getCLIJ(), arg1, arg2, arg3, arg4, arg5);
+    }
+
+    /**
+     * Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. 
+     */
+    default boolean applyVectorfield(ClearCLImage source, ClearCLImage vectorX, ClearCLImage vectorY, ClearCLImage destination) {
+        return Kernels.applyVectorfield(getCLIJ(), source, vectorX, vectorY, destination);
+    }
+
+    /**
+     * Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. 
+     */
+    default boolean applyVectorfield(ClearCLBuffer source, ClearCLBuffer vectorX, ClearCLBuffer vectorY, ClearCLBuffer destination) {
+        return Kernels.applyVectorfield(getCLIJ(), source, vectorX, vectorY, destination);
+    }
+
+    /**
+     * Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. 
+     */
+    default boolean applyVectorfield(ClearCLImage arg1, ClearCLImage arg2, ClearCLImage arg3, ClearCLImage arg4, ClearCLImage arg5) {
+        return Kernels.applyVectorfield(getCLIJ(), arg1, arg2, arg3, arg4, arg5);
     }
 
     /**
      * 
      */
-    default boolean differenceOfGaussianSliceBySlice(ClearCLImage arg1, ClearCLImage arg2, double arg3, double arg4, double arg5) {
-        return Kernels.differenceOfGaussianSliceBySlice(getCLIJ(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
+    default boolean detectOptima(ClearCLImage arg1, ClearCLImage arg2, double arg3, boolean arg4) {
+        return Kernels.detectOptima(getCLIJ(), arg1, arg2, new Double (arg3).intValue(), arg4);
     }
 
     /**
      * 
      */
-    default boolean detectOptimaSliceBySlice(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, boolean arg4) {
-        return Kernels.detectOptimaSliceBySlice(getCLIJ(), arg1, arg2, new Double (arg3).intValue(), arg4);
-    }
-
-    /**
-     * 
-     */
-    default boolean detectOptimaSliceBySlice(ClearCLImage arg1, ClearCLImage arg2, double arg3, boolean arg4) {
-        return Kernels.detectOptimaSliceBySlice(getCLIJ(), arg1, arg2, new Double (arg3).intValue(), arg4);
+    default boolean detectOptima(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, boolean arg4) {
+        return Kernels.detectOptima(getCLIJ(), arg1, arg2, new Double (arg3).intValue(), arg4);
     }
 
 
@@ -272,15 +282,15 @@ public abstract interface CLIJxOps {
     /**
      * Applies Gaussian blur to the input image and subtracts the result from the original image.
      */
-    default boolean subtractBackground(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4) {
-        return SubtractBackground2D.subtractBackground(getCLIJx(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
+    default boolean subtractBackground2D(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4) {
+        return SubtractBackground2D.subtractBackground2D(getCLIJx(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
     }
 
     /**
      * Applies Gaussian blur to the input image and subtracts the result from the original image.
      */
-    default boolean subtractBackground2D(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4) {
-        return SubtractBackground2D.subtractBackground2D(getCLIJx(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
+    default boolean subtractBackground(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4) {
+        return SubtractBackground2D.subtractBackground(getCLIJx(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
     }
 
 
@@ -289,15 +299,15 @@ public abstract interface CLIJxOps {
     /**
      * Applies Gaussian blur to the input image and subtracts the result from the original image.
      */
-    default boolean subtractBackground(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
-        return SubtractBackground3D.subtractBackground(getCLIJx(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
+    default boolean subtractBackground3D(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
+        return SubtractBackground3D.subtractBackground3D(getCLIJx(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
     }
 
     /**
      * Applies Gaussian blur to the input image and subtracts the result from the original image.
      */
-    default boolean subtractBackground3D(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
-        return SubtractBackground3D.subtractBackground3D(getCLIJx(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
+    default boolean subtractBackground(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
+        return SubtractBackground3D.subtractBackground(getCLIJx(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
     }
 
 
@@ -355,14 +365,14 @@ public abstract interface CLIJxOps {
     /**
      * Measures center of mass of thresholded objects in the two input images and translates the second image so that it better fits to the first image.
      */
-    default boolean translationRegistration(ClearCLBuffer arg1, ClearCLBuffer arg2, double[] arg3) {
+    default boolean translationRegistration(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3) {
         return TranslationRegistration.translationRegistration(getCLIJ(), arg1, arg2, arg3);
     }
 
     /**
      * Measures center of mass of thresholded objects in the two input images and translates the second image so that it better fits to the first image.
      */
-    default boolean translationRegistration(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3) {
+    default boolean translationRegistration(ClearCLBuffer arg1, ClearCLBuffer arg2, double[] arg3) {
         return TranslationRegistration.translationRegistration(getCLIJ(), arg1, arg2, arg3);
     }
 
@@ -392,15 +402,15 @@ public abstract interface CLIJxOps {
     /**
      * Reads a raw file from disc and pushes it immediately to the GPU.
      */
-    default boolean readRawImageFromDisc(ClearCLBuffer arg1, String arg2) {
-        return ReadRawImageFromDisc.readRawImageFromDisc(getCLIJ(), arg1, arg2);
+    default ClearCLBuffer readRawImageFromDisc(String arg1, double arg2, double arg3, double arg4, double arg5) {
+        return ReadRawImageFromDisc.readRawImageFromDisc(getCLIJ(), arg1, new Double (arg2).intValue(), new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
     }
 
     /**
      * Reads a raw file from disc and pushes it immediately to the GPU.
      */
-    default ClearCLBuffer readRawImageFromDisc(String arg1, double arg2, double arg3, double arg4, double arg5) {
-        return ReadRawImageFromDisc.readRawImageFromDisc(getCLIJ(), arg1, new Double (arg2).intValue(), new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
+    default boolean readRawImageFromDisc(ClearCLBuffer arg1, String arg2) {
+        return ReadRawImageFromDisc.readRawImageFromDisc(getCLIJ(), arg1, arg2);
     }
 
 
@@ -669,8 +679,213 @@ public abstract interface CLIJxOps {
 
     // net.haesleinhuepf.clijx.plugins.PushTile
     //----------------------------------------------------
+    /**
+     * Copies a tile in an image specified by its name, position and size to GPU memory in order to process it there later.
+     */
+    default ClearCLBuffer pushTile(ClearCLBuffer arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
+        return PushTile.pushTile(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+    }
+
+    /**
+     * Copies a tile in an image specified by its name, position and size to GPU memory in order to process it there later.
+     */
+    default void pushTile(ImagePlus arg1, String arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+        PushTile.pushTile(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+    }
+
+    /**
+     * Copies a tile in an image specified by its name, position and size to GPU memory in order to process it there later.
+     */
+    default ClearCLBuffer pushTile(ImagePlus arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
+        return PushTile.pushTile(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+    }
+
 
     // net.haesleinhuepf.clijx.plugins.PullTile
     //----------------------------------------------------
+    /**
+     * Copies a tile in an image specified by its name, position and size to GPU memory in order to process it there later.
+     */
+    default void pullTile(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+        PullTile.pullTile(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+    }
+
+    /**
+     * Copies a tile in an image specified by its name, position and size to GPU memory in order to process it there later.
+     */
+    default void pullTile(ImagePlus arg1, ClearCLBuffer arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+        PullTile.pullTile(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+    }
+
+    /**
+     * Copies a tile in an image specified by its name, position and size to GPU memory in order to process it there later.
+     */
+    default void pullTile(ImagePlus arg1, String arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+        PullTile.pullTile(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+    }
+
+
+    // net.haesleinhuepf.clijx.weka.autocontext.ApplyAutoContextWekaModel
+    //----------------------------------------------------
+    /**
+     * 
+     */
+    default boolean applyAutoContextWekaModelWithOptions(ClearCLBuffer arg1, ClearCLBuffer arg2, String arg3, String arg4, int arg5) {
+        return ApplyAutoContextWekaModel.applyAutoContextWekaModelWithOptions(getCLIJ2(), arg1, arg2, arg3, arg4, arg5);
+    }
+
+
+    // net.haesleinhuepf.clijx.weka.autocontext.TrainAutoContextWekaModel
+    //----------------------------------------------------
+    /**
+     * 
+     */
+    default boolean trainAutoContextWekaModelWithOptions(ClearCLBuffer arg1, ClearCLBuffer arg2, String arg3, String arg4, int arg5, double arg6, double arg7, double arg8) {
+        return TrainAutoContextWekaModel.trainAutoContextWekaModelWithOptions(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue());
+    }
+
+
+    // net.haesleinhuepf.clijx.weka.ApplyWekaModel
+    //----------------------------------------------------
+    /**
+     * Applies a Weka model using functionality of Fijis Trainable Weka Segmentation plugin.
+     * It takes a 3D feature stack (e.g. first plane original image, second plane blurred, third plane edge image)and applies a pre-trained a Weka model. Take care that the feature stack has been generated in the sameway as for training the model!
+     */
+    default boolean applyWekaModel(ClearCLBuffer arg1, ClearCLBuffer arg2, CLIJxWeka2 arg3) {
+        return ApplyWekaModel.applyWekaModel(getCLIJ2(), arg1, arg2, arg3);
+    }
+
+    /**
+     * Applies a Weka model using functionality of Fijis Trainable Weka Segmentation plugin.
+     * It takes a 3D feature stack (e.g. first plane original image, second plane blurred, third plane edge image)and applies a pre-trained a Weka model. Take care that the feature stack has been generated in the sameway as for training the model!
+     */
+    default CLIJxWeka2 applyWekaModel(ClearCLBuffer featureStack3D, ClearCLBuffer prediction2D_destination, String loadModelFilename) {
+        return ApplyWekaModel.applyWekaModel(getCLIJ2(), featureStack3D, prediction2D_destination, loadModelFilename);
+    }
+
+
+    // net.haesleinhuepf.clijx.weka.ApplyWekaToTable
+    //----------------------------------------------------
+    /**
+     * Applies a Weka model using functionality of Fijis Trainable Weka Segmentation plugin.
+     * It takes a Results Table, sorts its columns by name alphabetically and uses it as extracted features (rows correspond to feature vectors) and applies a pre-trained a Weka model. Take care that the table has been generated in the sameway as for training the model!
+     */
+    default boolean applyWekaToTable(ResultsTable arg1, String arg2, CLIJxWeka2 arg3) {
+        return ApplyWekaToTable.applyWekaToTable(getCLIJ2(), arg1, arg2, arg3);
+    }
+
+    /**
+     * Applies a Weka model using functionality of Fijis Trainable Weka Segmentation plugin.
+     * It takes a Results Table, sorts its columns by name alphabetically and uses it as extracted features (rows correspond to feature vectors) and applies a pre-trained a Weka model. Take care that the table has been generated in the sameway as for training the model!
+     */
+    default boolean applyWekaToTable(ResultsTable arg1, String arg2, String arg3) {
+        return ApplyWekaToTable.applyWekaToTable(getCLIJ2(), arg1, arg2, arg3);
+    }
+
+
+    // net.haesleinhuepf.clijx.weka.GenerateFeatureStack
+    //----------------------------------------------------
+    /**
+     * Generates a feature stack for Trainable Weka Segmentation. Use this terminology to specifiy which stacks should be generated:
+     * * "original" original slice
+     * * "GaussianBlur=s" Gaussian blurred image with sigma s
+     * * "LaplacianOfGaussian=s" Laplacian of Gaussian blurred image with sigma s
+     * * "SobelOfGaussian=s" Sobel filter applied to Gaussian blurred image with sigma s
+     * * "minimum=r" local minimum with radius r
+     * * "maximum=r" local maximum with radius r
+     * * "mean=r" local mean with radius r
+     * * "entropy=r" local entropy with radius r
+     * * "gradientX" local gradient in X direction
+     * * "gradientY" local gradient in Y direction
+     * 
+     * Use sigma=0 to apply a filter to the original image. Feature definitions are not case sensitive.
+     * 
+     * Example: "original gaussianBlur=1 gaussianBlur=5 laplacianOfGaussian=1 laplacianOfGaussian=7 entropy=3"
+     */
+    default boolean generateFeatureStack(ClearCLBuffer input, ClearCLBuffer feature_stack_destination, String feature_definitions) {
+        return GenerateFeatureStack.generateFeatureStack(getCLIJ2(), input, feature_stack_destination, feature_definitions);
+    }
+
+    /**
+     * Generates a feature stack for Trainable Weka Segmentation. Use this terminology to specifiy which stacks should be generated:
+     * * "original" original slice
+     * * "GaussianBlur=s" Gaussian blurred image with sigma s
+     * * "LaplacianOfGaussian=s" Laplacian of Gaussian blurred image with sigma s
+     * * "SobelOfGaussian=s" Sobel filter applied to Gaussian blurred image with sigma s
+     * * "minimum=r" local minimum with radius r
+     * * "maximum=r" local maximum with radius r
+     * * "mean=r" local mean with radius r
+     * * "entropy=r" local entropy with radius r
+     * * "gradientX" local gradient in X direction
+     * * "gradientY" local gradient in Y direction
+     * 
+     * Use sigma=0 to apply a filter to the original image. Feature definitions are not case sensitive.
+     * 
+     * Example: "original gaussianBlur=1 gaussianBlur=5 laplacianOfGaussian=1 laplacianOfGaussian=7 entropy=3"
+     */
+    default ClearCLBuffer generateFeatureStack(ClearCLBuffer arg1, String arg2) {
+        return GenerateFeatureStack.generateFeatureStack(getCLIJ2(), arg1, arg2);
+    }
+
+
+    // net.haesleinhuepf.clijx.weka.TrainWekaModel
+    //----------------------------------------------------
+    /**
+     * Trains a Weka model using functionality of Fijis Trainable Weka Segmentation plugin.
+     * It takes a 3D feature stack (e.g. first plane original image, second plane blurred, third plane edge image)and trains a Weka model. This model will be saved to disc.
+     * The given groundTruth image is supposed to be a label map where pixels with value 1 represent class 1, pixels with value 2 represent class 2 and so on. Pixels with value 0 will be ignored for training.
+     */
+    default CLIJxWeka2 trainWekaModel(ClearCLBuffer featureStack3D, ClearCLBuffer groundTruth2D, String saveModelFilename) {
+        return TrainWekaModel.trainWekaModel(getCLIJ2(), featureStack3D, groundTruth2D, saveModelFilename);
+    }
+
+
+    // net.haesleinhuepf.clijx.weka.TrainWekaFromTable
+    //----------------------------------------------------
+    /**
+     * Trains a Weka model using functionality of Fijis Trainable Weka Segmentation plugin.
+     * It takes the given Results Table, sorts its columns alphabetically as extracted features (rows correspond to feature vectors) and a given column name containing the ground truth to train a Weka model. This model will be saved to disc.
+     * The given groundTruth column is supposed to be numeric with values 1 represent class 1,  value 2 represent class 2 and so on. Value 0 will be ignored for training.
+     * 
+     * Default values for options are:
+     * * trees = 200
+     * * features = 2
+     * * maxDepth = 0
+     */
+    default CLIJxWeka2 trainWekaFromTable(ResultsTable arg1, String arg2, String arg3, double arg4, double arg5, double arg6) {
+        return TrainWekaFromTable.trainWekaFromTable(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue());
+    }
+
+    /**
+     * Trains a Weka model using functionality of Fijis Trainable Weka Segmentation plugin.
+     * It takes the given Results Table, sorts its columns alphabetically as extracted features (rows correspond to feature vectors) and a given column name containing the ground truth to train a Weka model. This model will be saved to disc.
+     * The given groundTruth column is supposed to be numeric with values 1 represent class 1,  value 2 represent class 2 and so on. Value 0 will be ignored for training.
+     * 
+     * Default values for options are:
+     * * trees = 200
+     * * features = 2
+     * * maxDepth = 0
+     */
+    default CLIJxWeka2 trainWekaFromTable(ResultsTable arg1, String arg2, double arg3, double arg4, double arg5) {
+        return TrainWekaFromTable.trainWekaFromTable(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
+    }
+
+
+    // net.haesleinhuepf.clijx.weka.TrainWekaModelWithOptions
+    //----------------------------------------------------
+    /**
+     * Trains a Weka model using functionality of Fijis Trainable Weka Segmentation plugin.
+     * It takes a 3D feature stack (e.g. first plane original image, second plane blurred, third plane edge image)and trains a Weka model. This model will be saved to disc.
+     * The given groundTruth image is supposed to be a label map where pixels with value 1 represent class 1, pixels with value 2 represent class 2 and so on. Pixels with value 0 will be ignored for training.
+     * 
+     * Default values for options are:
+     * * trees = 200
+     * * features = 2
+     * * maxDepth = 0
+     */
+    default CLIJxWeka2 trainWekaModelWithOptions(ClearCLBuffer arg1, ClearCLBuffer arg2, String arg3, double arg4, double arg5, double arg6) {
+        return TrainWekaModelWithOptions.trainWekaModelWithOptions(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue());
+    }
+
 }
-// 64 methods generated.
+// 82 methods generated.

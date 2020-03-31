@@ -38,6 +38,9 @@ class CLIJxAutoComplete {
        headline = "clijx.applyVectorField(ClearCLImageInterface source, ClearCLImageInterface vectorX, ClearCLImageInterface vectorY, ClearCLImageInterface destination)";
        description = "<b>applyVectorField</b><br><br>Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. <br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface vectorX, ClearCLImageInterface vectorY, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.applyWekaModel(ClearCLBuffer featureStack3D, ClearCLBuffer prediction2D_destination, String loadModelFilename)";
+       description = "<b>applyWekaModel</b><br><br>Applies a Weka model using functionality of Fijis Trainable Weka Segmentation plugin.<br>It takes a 3D feature stack (e.g. first plane original image, second plane blurred, third plane edge image)and applies a pre-trained a Weka model. Take care that the feature stack has been generated in the sameway as for training the model!<br><br>Parameters:<br>ClearCLBuffer featureStack3D, ClearCLBuffer prediction2D_destination, String loadModelFilename";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.argMaximumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination_max, ClearCLImageInterface destination_arg_max)";
        description = "<b>argMaximumZProjection</b><br><br>Determines the maximum projection of an image stack along Z.<br>Furthermore, another 2D image is generated with pixels containing the z-index where the maximum was found (zero based).<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination_max, ClearCLImageInterface destination_arg_max";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -160,6 +163,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.flip(ClearCLImageInterface source, ClearCLImageInterface destination, Boolean flipX, Boolean flipY)";
        description = "<b>flip</b><br><br>Flips an image in X and/or Y direction depending on boolean flags.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Boolean flipX, Boolean flipY";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.generateFeatureStack(ClearCLBuffer input, ClearCLBuffer feature_stack_destination, String feature_definitions)";
+       description = "<b>generateFeatureStack</b><br><br>Generates a feature stack for Trainable Weka Segmentation. Use this terminology to specifiy which stacks should be generated:<br>* &quot;original&quot; original slice<br>* &quot;GaussianBlur=s&quot; Gaussian blurred image with sigma s<br>* &quot;LaplacianOfGaussian=s&quot; Laplacian of Gaussian blurred image with sigma s<br>* &quot;SobelOfGaussian=s&quot; Sobel filter applied to Gaussian blurred image with sigma s<br>* &quot;minimum=r&quot; local minimum with radius r<br>* &quot;maximum=r&quot; local maximum with radius r<br>* &quot;mean=r&quot; local mean with radius r<br>* &quot;entropy=r&quot; local entropy with radius r<br>* &quot;gradientX&quot; local gradient in X direction<br>* &quot;gradientY&quot; local gradient in Y direction<br><br>Use sigma=0 to apply a filter to the original image. Feature definitions are not case sensitive.<br><br>Example: &quot;original gaussianBlur=1 gaussianBlur=5 laplacianOfGaussian=1 laplacianOfGaussian=7 entropy=3&quot;<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer feature_stack_destination, String feature_definitions";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.getSize(ClearCLBuffer source)";
        description = "<b>getSize</b><br><br>Reads out the size of an image [stack] and writes it to the results table in the columns 'Width', 'Height' and 'Depth'.<br><br>Parameters:<br>ClearCLBuffer source";
@@ -443,6 +449,12 @@ class CLIJxAutoComplete {
        headline = "clijx.threshold(ClearCLBuffer source, ClearCLBuffer destination, Float threshold)";
        description = "<b>threshold</b><br><br>Computes a binary image with pixel values 0 and 1. All pixel values x of a given input image with <br>value larger or equal to a given threshold t will be set to 1.<br><br>f(x,t) = (1 if (x >= t); (0 otherwise))<br><br>This plugin is comparable to setting a raw threshold in ImageJ and using the 'Convert to Mask' menu.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Float threshold";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.trainWekaModelWithOptions(ClearCLBuffer featureStack3D, ClearCLBuffer groundTruth2D, String saveModelFilename, Integer trees, Integer features, Integer maxDepth)";
+       description = "<b>trainWekaModelWithOptions</b><br><br>Trains a Weka model using functionality of Fijis Trainable Weka Segmentation plugin.<br>It takes a 3D feature stack (e.g. first plane original image, second plane blurred, third plane edge image)and trains a Weka model. This model will be saved to disc.<br>The given groundTruth image is supposed to be a label map where pixels with value 1 represent class 1, pixels with value 2 represent class 2 and so on. Pixels with value 0 will be ignored for training.<br><br>Default values for options are:<br>* trees = 200<br>* features = 2<br>* maxDepth = 0<br><br>Parameters:<br>ClearCLBuffer featureStack3D, ClearCLBuffer groundTruth2D, String saveModelFilename, Integer trees, Integer features, Integer maxDepth";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.trainWekaModel(ClearCLBuffer featureStack3D, ClearCLBuffer groundTruth2D, String saveModelFilename)";
+       description = "<b>trainWekaModel</b><br><br>Trains a Weka model using functionality of Fijis Trainable Weka Segmentation plugin.<br>It takes a 3D feature stack (e.g. first plane original image, second plane blurred, third plane edge image)and trains a Weka model. This model will be saved to disc.<br>The given groundTruth image is supposed to be a label map where pixels with value 1 represent class 1, pixels with value 2 represent class 2 and so on. Pixels with value 0 will be ignored for training.<br><br>Parameters:<br>ClearCLBuffer featureStack3D, ClearCLBuffer groundTruth2D, String saveModelFilename";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.translate2D(ClearCLBuffer source, ClearCLBuffer destination, Float translateX, Float translateY)";
        description = "<b>translate2D</b><br><br>Translate an image stack in X and Y.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Float translateX, Float translateY";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -464,4 +476,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 151 methods generated.
+// 155 methods generated.
