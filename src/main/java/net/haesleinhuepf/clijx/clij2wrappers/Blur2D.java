@@ -6,5 +6,6 @@ import org.scijava.plugin.Plugin;
 
 // this is generated code. See src/test/net.haesleinhuepf.clijx.codegenerator.CLIJ2WrapperGenerator for details.
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_blur2D")
+@Deprecated
 public class Blur2D extends net.haesleinhuepf.clij2.plugins.Blur2D {
 }

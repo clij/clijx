@@ -5,7 +5,6 @@ import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import org.scijava.plugin.Plugin;
 
 // this is generated code. See src/test/net.haesleinhuepf.clijx.codegenerator.CLIJ2WrapperGenerator for details.
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_blur3D")
-@Deprecated
-public class Blur3D extends net.haesleinhuepf.clij2.plugins.Blur3D {
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_entropyBox")
+public class EntropyBox extends net.haesleinhuepf.clij2.plugins.EntropyBox {
 }
