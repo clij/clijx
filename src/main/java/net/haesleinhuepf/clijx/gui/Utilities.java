@@ -1,6 +1,22 @@
 package net.haesleinhuepf.clijx.gui;
 
+import ij.IJ;
+import ij.gui.Toolbar;
+
 public class Utilities {
+
+    public static void installTools() {
+        String tool = IJ.getToolName();
+
+        //Toolbar.removeMacroTools();
+
+        Toolbar.addPlugInTool(new InteractiveThresholding());
+        Toolbar.addPlugInTool(new InteractiveWand());
+        Toolbar.addPlugInTool(new ContinuousWebcamAcquisition());
+
+        IJ.setTool(tool);
+    }
+
 
     public static String generateIconCodeString(String icon)
     {
