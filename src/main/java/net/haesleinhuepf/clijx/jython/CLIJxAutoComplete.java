@@ -422,8 +422,14 @@ class CLIJxAutoComplete {
        headline = "clijx.standardDeviationOfMaskedPixels(ClearCLBuffer source, ClearCLBuffer mask)";
        description = "<b>standardDeviationOfMaskedPixels</b><br><br>Determines the standard deviation of all pixels in an image which have non-zero value in a corresponding mask image. The value will be stored in a new row of ImageJs<br>Results table in the column 'Masked_standard_deviation'.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer mask";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.startContinuousWebcamAcquisition(Integer cameraDeviceIndex, Integer imageWidth, Integer imageHeight)";
+       description = "<b>startContinuousWebcamAcquisition</b><br><br>Acquires an image (in fact an RGB image stack with three slices) of given size using a webcam. It uses the webcam-capture library by Bartosz Firyn.https://github.com/sarxos/webcam-capture<br><br>Parameters:<br>Integer cameraDeviceIndex, Integer imageWidth, Integer imageHeight";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.statisticsOfLabelledPixels(ClearCLBuffer input, ClearCLBuffer labelmap)";
        description = "<b>statisticsOfLabelledPixels</b><br><br>Determines bounding box, area (in pixels/voxels), min, max and mean intensity  of a labelled object in a label map and corresponding pixels in the original image.Instead of a label map, you can also use a binary image as a binary image is a label map with just one label.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer labelmap";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.stopContinuousWebcamAcquisition(Integer cameraDeviceIndex)";
+       description = "<b>stopContinuousWebcamAcquisition</b><br><br>Acquires an image (in fact an RGB image stack with three slices) of given size using a webcam. It uses the webcam-capture library by Bartosz Firyn.https://github.com/sarxos/webcam-capture<br><br>Parameters:<br>Integer cameraDeviceIndex";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.stopWatch(String text)";
        description = "<b>stopWatch</b><br><br>Measures time and outputs delay to last call.<br><br>Parameters:<br>String text";
@@ -476,4 +482,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 155 methods generated.
+// 157 methods generated.
