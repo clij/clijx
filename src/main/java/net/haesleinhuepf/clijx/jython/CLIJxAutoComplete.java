@@ -335,8 +335,11 @@ class CLIJxAutoComplete {
        headline = "clijx.pullAsROI(ClearCLBuffer binary_input)";
        description = "<b>pullAsROI</b><br><br>Pulls a binary image from the GPU memory and puts it on the currently active ImageJ window.<br><br>Parameters:<br>ClearCLBuffer binary_input";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.pullLabelsToROIManager(ClearCLBuffer binary_input)";
-       description = "<b>pullLabelsToROIManager</b><br><br>Pulls all labels in a label map as ROIs to the ROI manager.<br><br>Parameters:<br>ClearCLBuffer binary_input";
+       headline = "clijx.pullLabelsToROIList(ClearCLBuffer labelmap_input)";
+       description = "<b>pullLabelsToROIList</b><br><br>Pulls all labels in a label map as ROIs to a list.<br><br>Parameters:<br>ClearCLBuffer labelmap_input";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.pullLabelsToROIManager(ClearCLBuffer labelmap_input)";
+       description = "<b>pullLabelsToROIManager</b><br><br>Pulls all labels in a label map as ROIs to the ROI manager.<br><br>Parameters:<br>ClearCLBuffer labelmap_input";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.resliceBottom(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>resliceBottom</b><br><br>Flippes Y and Z axis of an image stack. This operation is similar to ImageJs 'Reslice [/]' method but<br>offers less flexibility such as interpolation.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
@@ -426,7 +429,7 @@ class CLIJxAutoComplete {
        description = "<b>startContinuousWebcamAcquisition</b><br><br>Acquires an image (in fact an RGB image stack with three slices) of given size using a webcam. It uses the webcam-capture library by Bartosz Firyn.https://github.com/sarxos/webcam-capture<br><br>Parameters:<br>Integer cameraDeviceIndex, Integer imageWidth, Integer imageHeight";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.statisticsOfLabelledPixels(ClearCLBuffer input, ClearCLBuffer labelmap)";
-       description = "<b>statisticsOfLabelledPixels</b><br><br>Determines bounding box, area (in pixels/voxels), min, max and mean intensity  of a labelled object in a label map and corresponding pixels in the original image.Instead of a label map, you can also use a binary image as a binary image is a label map with just one label.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer labelmap";
+       description = "<b>statisticsOfLabelledPixels</b><br><br>Determines bounding box, area (in pixels/voxels), min, max and mean intensity  of labelled objects in a label map and corresponding pixels in the original image.Instead of a label map, you can also use a binary image as a binary image is a label map with just one label.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer labelmap";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.stopContinuousWebcamAcquisition(Integer cameraDeviceIndex)";
        description = "<b>stopContinuousWebcamAcquisition</b><br><br>Acquires an image (in fact an RGB image stack with three slices) of given size using a webcam. It uses the webcam-capture library by Bartosz Firyn.https://github.com/sarxos/webcam-capture<br><br>Parameters:<br>Integer cameraDeviceIndex";
@@ -482,4 +485,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 157 methods generated.
+// 158 methods generated.
