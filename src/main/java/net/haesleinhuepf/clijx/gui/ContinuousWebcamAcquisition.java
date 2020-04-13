@@ -1,6 +1,7 @@
 package net.haesleinhuepf.clijx.gui;
 
 import ij.IJ;
+import ij.IJEventListener;
 import ij.ImageJ;
 import ij.ImagePlus;
 import ij.gui.GenericDialog;
@@ -21,7 +22,26 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static net.haesleinhuepf.clijx.gui.Utilities.ignoreEvent;
+
 public class ContinuousWebcamAcquisition extends PlugInTool {
+    public ContinuousWebcamAcquisition () {
+        IJ.addEventListener(new IJEventListener() {
+            @Override
+            public void eventOccurred(int eventID) {
+                if (ignoreEvent) {
+                    return;
+                }
+                if (eventID == IJEventListener.TOOL_CHANGED) {
+                    if (IJ.getToolName().compareTo(getToolName()) == 0 ) {
+                        System.out.println("Start acquisition");
+                        run("");
+                    }
+                }
+            }
+        });
+    }
+
     CLIJx clijx = null;
     int camera_index;
     int image_width;
@@ -187,6 +207,10 @@ public class ContinuousWebcamAcquisition extends PlugInTool {
         input_b = null;
     }
 
+    @Override
+    public String getToolName() {
+        return "Continous webcam acquisition";
+    }
 
     @Override
     public String getToolIcon()
