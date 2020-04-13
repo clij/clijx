@@ -5,14 +5,17 @@ import ij.gui.Toolbar;
 
 public class Utilities {
 
+    public static boolean ignoreEvent = false;
+
     public static void installTools() {
         String tool = IJ.getToolName();
-
+        ignoreEvent = true;
         //Toolbar.removeMacroTools();
 
         Toolbar.addPlugInTool(new InteractiveThresholding());
         Toolbar.addPlugInTool(new InteractiveWand());
         Toolbar.addPlugInTool(new ContinuousWebcamAcquisition());
+        ignoreEvent = false;
 
         IJ.setTool(tool);
     }
