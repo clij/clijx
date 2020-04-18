@@ -49,8 +49,7 @@ public class StartContinuousWebcamAcquisition extends AbstractCLIJxPlugin implem
 
     @Override
     public String getDescription() {
-        return "Acquires an image (in fact an RGB image stack with three slices) of given size using a webcam. It uses the webcam-capture library by Bartosz Firyn." +
-                "https://github.com/sarxos/webcam-capture";
+        return "Starts acquistion of images from a webcam.";
     }
 
     @Override

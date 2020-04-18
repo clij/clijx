@@ -106,7 +106,7 @@ public class CaptureWebcamImage extends AbstractCLIJxPlugin implements CLIJMacro
 
     @Override
     public String getDescription() {
-        return "Acquires an image (in fact an RGB image stack with three slices) of given size using a webcam. It uses the webcam-capture library by Bartosz Firyn." +
+        return "Acquires an image (in fact an RGB image stack with three slices) of given size using a webcam. \n\nIt uses the webcam-capture library by Bartosz Firyn." +
                 "https://github.com/sarxos/webcam-capture";
     }
 

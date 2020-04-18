@@ -68,7 +68,7 @@ public class BlurSliceBySlice extends AbstractCLIJxPlugin implements CLIJMacroPl
 
     @Override
     public String getDescription() {
-        return "Computes the Gaussian blurred image of an image given two sigma values in X and Y. Thus, the filter" +
+        return "Computes the Gaussian blurred image of an image given two sigma values in X and Y. \n\nThus, the filter" +
                 "kernel can have non-isotropic shape.\n\n" +
                 "" +
                 "The Gaussian blur is applied slice by slice in 2D.";

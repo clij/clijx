@@ -90,7 +90,7 @@ public class GaussJordan extends AbstractCLIJPlugin implements CLIJMacroPlugin, 
 
     @Override
     public String getDescription() {
-        return "Gauss Jordan elimination algorithm for solving linear equation systems. " +
+        return "Gauss Jordan elimination algorithm for solving linear equation systems. \n\n" +
                 "Ent the equation coefficients as an n*n sized image A and an n*1 sized image B:" +
                 "\n" +
                 "<pre>" +

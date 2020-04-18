@@ -38,7 +38,7 @@ public class Presign extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJ
 
     @Override
     public String getDescription() {
-        return "Determines the extrema of pixel values: f(x) = x / abs(x).";
+        return "Determines the extrema of pixel values: \n\nf(x) = x / abs(x).";
     }
 
     @Override

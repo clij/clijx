@@ -24,26 +24,26 @@ public class ShowGrey extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLI
     @Override
     public boolean executeCL() {
 
-        return showGrey(clij, (ClearCLBuffer) args[0], (String)args[1]);
+        showGrey(clij, (ClearCLBuffer) args[0], (String)args[1]);
+        return true;
     }
 
-    public static boolean showGrey(CLIJ clij, ClearCLBuffer input, String name) {
+    public static ImagePlus showGrey(CLIJ clij, ClearCLBuffer input, String name) {
         final ImagePlus imp = clij.pull(input);
-        SwingUtilities.invokeLater(() -> {
-            IJ.run(imp, "Enhance Contrast", "saturated=0.35");
 
-            ImagePlus resultImp = WindowManager.getImage(name);
-            if (resultImp == null) {
-                resultImp = imp;
-                resultImp.setTitle(name);
-                resultImp.show();
-            } else {
-                resultImp.setProcessor(imp.getProcessor());
-                resultImp.updateAndDraw();
-            }
+        IJ.run(imp, "Enhance Contrast", "saturated=0.35");
+
+        ImagePlus resultImp = WindowManager.getImage(name);
+        if (resultImp == null) {
+            resultImp = imp;
+            resultImp.setTitle(name);
             resultImp.show();
-        });
-        return true;
+        } else {
+            resultImp.setProcessor(imp.getProcessor());
+            resultImp.updateAndDraw();
+        }
+        resultImp.show();
+        return resultImp;
     }
 
     @Override

@@ -76,7 +76,7 @@ public class ListWebcams extends AbstractCLIJxPlugin implements CLIJMacroPlugin,
 
     @Override
     public String getDescription() {
-        return "Computes the absolute value of every individual pixel x in a given image.\n\n<pre>f(x) = |x| </pre>";
+        return "Lists available webcams and resolutions.";
     }
 
     @Override

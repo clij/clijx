@@ -62,7 +62,7 @@ public class DepthColorProjection extends AbstractCLIJ2Plugin implements CLIJMac
 
     @Override
     public String getDescription() {
-        return "Determines a maximum projection of an image stack and does a color coding of the determined arg Z (position of the found maximum).\n" +
+        return "Determines a maximum projection of an image stack and does a color coding of the determined arg Z (position of the found maximum). \n\n" +
                 "Second parameter is a Lookup-Table in the form of an 8-bit image stack 255 pixels wide, 1 pixel high with 3 planes representing red, green and blue intensities.\n" +
                 "Resulting image is a 3D image with three Z-planes representing red, green and blue channels.";
     }

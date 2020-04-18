@@ -39,7 +39,7 @@ public class LocalExtremaBox extends AbstractCLIJPlugin implements CLIJMacroPlug
 
     @Override
     public String getDescription() {
-        return "Applies a local minimum and maximum filter. Afterwards, the value is returned which is more far from zero.";
+        return "Applies a local minimum and maximum filter. \n\nAfterwards, the value is returned which is more far from zero.";
     }
 
     @Override

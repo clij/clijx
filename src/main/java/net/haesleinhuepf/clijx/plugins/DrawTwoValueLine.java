@@ -79,7 +79,7 @@ public class DrawTwoValueLine extends AbstractCLIJxPlugin implements CLIJMacroPl
 
     @Override
     public String getDescription() {
-        return "Draws a line between two points with a given thickness. Pixels close to point 1 are set to value1. Pixels closer to point 2 are set to value2 All pixels other than on the line are untouched. Consider using clij.set(buffer, 0); in advance.";
+        return "Draws a line between two points with a given thickness. \n\nPixels close to point 1 are set to value1. Pixels closer to point 2 are set to value2 All pixels other than on the line are untouched. Consider using clij.set(buffer, 0); in advance.";
     }
 
     @Override

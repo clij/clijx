@@ -4,7 +4,9 @@ import ij.*;
 import ij.gui.GenericDialog;
 import ij.measure.Calibration;
 import ij.plugin.filter.PlugInFilter;
+import ij.plugin.frame.Recorder;
 import ij.process.ImageProcessor;
+import ij.process.LUT;
 import net.haesleinhuepf.clij.CLIJ;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.macro.AbstractCLIJPlugin;
@@ -23,14 +25,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * InteractiveMaximumZProjection
+ * Show3DWithTipTilt
  * <p>
  * <p>
  * <p>
  * Author: @haesleinhuepf
  *         April 2020
  */
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_showWithTipTilt")
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_show3DWithTipTilt")
 public class Show3DWithTipTilt extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, PlugInFilter, ImageListener {
 
 
@@ -47,7 +49,8 @@ public class Show3DWithTipTilt extends AbstractCLIJxPlugin implements CLIJMacroP
 
     @Override
     public String getDescription() {
-        return "Visualises a single 2D image.";
+        return "Visualises a single 3D image stack in a named interactive 2D viewer window. \n\nThe user can change tip and tilt" +
+                " of the view perspective.";
     }
 
     @Override
@@ -80,35 +83,39 @@ public class Show3DWithTipTilt extends AbstractCLIJxPlugin implements CLIJMacroP
 
     String projection = "Max";
 
+    private String viewerName;
+
     @Override
     public int setup(String arg, ImagePlus imp) {
         return PlugInFilter.DOES_ALL;
     }
 
-    public static boolean showWithTipTilt(CLIJx clijx, ClearCLBuffer input, String name) {
-        return showWithTipTilt(clijx, input, name, 1.0, "Max");
+    public static boolean showWithTipTilt(CLIJx clijx, ClearCLBuffer input, String viewerName) {
+        return showWithTipTilt(clijx, input, viewerName, 1.0, "Max");
     }
 
     private static HashMap<String, Show3DWithTipTilt> viewers = new HashMap<>();
-    public static boolean showWithTipTilt(CLIJx clijx, ClearCLBuffer input, String name, Double zoom, String projection) {
+    public static boolean showWithTipTilt(CLIJx clijx, ClearCLBuffer input, String viewerName, Double zoom, String projection) {
 
-        Show3DWithTipTilt viewer = viewers.get(name);
+        Show3DWithTipTilt viewer = viewers.get(viewerName);
         if (viewer == null) {
             viewer = new Show3DWithTipTilt();
-            viewers.put(name, viewer);
+            viewers.put(viewerName, viewer);
         } else {
             synchronized (viewer) {
                 viewer.myBuffer.close();
                 viewer.myBuffer = null;
             }
         }
-        viewer.show(clijx, input, name, zoom, projection);
+        viewer.show(clijx, input, viewerName, zoom, projection);
 
         return true;
     }
 
-    private void show(CLIJx clijx, ClearCLBuffer input, String name, Double zoom, String projection)
+    private void show(CLIJx clijx, ClearCLBuffer input, String viewerName, Double zoom, String projection)
     {
+        Recorder.setCommand(null);
+        this.viewerName = viewerName;
         ImagePlus imp = clijx.pull(input); //IJ.getImage();
         this.zoom = zoom;
         this.projection = projection;
@@ -139,7 +146,7 @@ public class Show3DWithTipTilt extends AbstractCLIJxPlugin implements CLIJMacroP
                         myBuffer = clijx.pushCurrentZStack(my_source);
                     }
 
-                    //System.out.println(myBuffer);
+                    // System.out.println(myBuffer);
                     //System.out.println("Angle: " + angleX + "/" + angleY);
                     //transformed = clijx.create(new long[]{myBuffer.getWidth(), myBuffer.getHeight(), (long)(myBuffer.getDepth() * 1.5)}, myBuffer.getNativeType());
                     if (transformed == null) {
@@ -169,55 +176,56 @@ public class Show3DWithTipTilt extends AbstractCLIJxPlugin implements CLIJMacroP
                     } else if (projection.compareTo("Mean") == 0) {
                         clijx.meanZProjectionBounded(transformed, myMaxProjection, min_z, max_z);
                     }
-                    clijx.showGrey(myMaxProjection, name);
-                }
 
-                if (my_display == null) {
-                    my_display = WindowManager.getImage(name);
-                }
-
-                if (my_display == null) {
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    LUT lut = null;
+                    double displayMin = 0;
+                    double displayMax = 0;
+                    ImagePlus viewer = WindowManager.getImage(viewerName);
+                    if (viewer != null) {
+                        ImageProcessor ip = viewer.getProcessor();
+                        lut = ip.getLut();
+                        displayMin = viewer.getDisplayRangeMin();
+                        displayMax = viewer.getDisplayRangeMax();
                     }
-                    System.out.println("wait and try again");
-                    SwingUtilities.invokeLater(() -> {
-                        refresh();
-                    });
-                    return;
-                } else {
-                    System.out.println("installing viewer capabilities");
-                    my_display.getWindow().getCanvas().disablePopupMenu(false);
-                    while (my_display.getWindow().getCanvas().getMouseListeners().length > 0) {
-                        my_display.getWindow().getCanvas().removeMouseListener(my_display.getWindow().getCanvas().getMouseListeners()[0]);
-                    }
-                    my_display.getWindow().getCanvas().addMouseMotionListener(new MouseAdapter() {
-                        @Override
-                        public void mouseDragged(MouseEvent e) {
-                            double deltaX = e.getX() - mouseStartX;
-                            double deltaY = e.getY() - mouseStartY;
 
-                            angleY = angleStartY - deltaX / 5;
-                            angleX = angleStartX + deltaY / 5;
+                    my_display = clijx.showGrey(myMaxProjection, viewerName);
 
-                            refresh();
-                            //System.out.println("Refreshing...");
+                    if(viewer != null) {
+                        viewer.getProcessor().setLut(lut);
+                        viewer.setDisplayRange(displayMin, displayMax);
+                    } else {
+                        System.out.println("installing viewer capabilities");
+                        my_display.getWindow().getCanvas().disablePopupMenu(false);
+                        while (my_display.getWindow().getCanvas().getMouseListeners().length > 0) {
+                            my_display.getWindow().getCanvas().removeMouseListener(my_display.getWindow().getCanvas().getMouseListeners()[0]);
                         }
-                    });
-                    my_display.getWindow().getCanvas().addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mousePressed(MouseEvent e) {
-                            angleStartX = angleX;
-                            angleStartY = angleY;
-                            mouseStartX = e.getX();
-                            mouseStartY = e.getY();
-                        }
-                    });
-                    if (projection.compareTo("Mean") != 0) {
-                        my_display.setDisplayRange(my_source.getDisplayRangeMin(), my_source.getDisplayRangeMax());
+                        my_display.getWindow().getCanvas().addMouseMotionListener(new MouseAdapter() {
+                            @Override
+                            public void mouseDragged(MouseEvent e) {
+                                double deltaX = e.getX() - mouseStartX;
+                                double deltaY = e.getY() - mouseStartY;
+
+                                angleY = angleStartY - deltaX / 5;
+                                angleX = angleStartX + deltaY / 5;
+
+                                refresh();
+                                //System.out.println("Refreshing...");
+                            }
+                        });
+                        my_display.getWindow().getCanvas().addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mousePressed(MouseEvent e) {
+                                angleStartX = angleX;
+                                angleStartY = angleY;
+                                mouseStartX = e.getX();
+                                mouseStartY = e.getY();
+                            }
+                        });
+                        //if (projection.compareTo("Mean") != 0) {
+                        //    my_display.setDisplayRange(my_source.getDisplayRangeMin(), my_source.getDisplayRangeMax());
+                        //}
                     }
+                    my_display.updateAndDraw();
                 }
 
                 old_angleY = angleY;
@@ -229,6 +237,7 @@ public class Show3DWithTipTilt extends AbstractCLIJxPlugin implements CLIJMacroP
     private void finish() {
         my_source = null;
         my_display = null;
+        viewers.remove(viewerName);
 
         ImagePlus.removeImageListener(this);
         clijx.release(myBuffer);

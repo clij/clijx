@@ -79,7 +79,7 @@ public class ShowGlasbeyOnGrey extends AbstractCLIJPlugin implements CLIJMacroPl
 
     @Override
     public String getDescription() {
-        return "Visualises two 2D images as one RGB image. The first channel is shown in grey, the second with glasbey LUT.";
+        return "Visualises two 2D images as one RGB image. \n\nThe first channel is shown in grey, the second with glasbey LUT.";
     }
 
     @Override

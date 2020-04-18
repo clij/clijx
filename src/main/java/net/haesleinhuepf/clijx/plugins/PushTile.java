@@ -172,7 +172,7 @@ public class PushTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
 
     @Override
     public String getDescription() {
-        return "Copies a tile in an image specified by its name, position and size to GPU memory in order to process it there later.";
+        return "Push a tile in an image specified by its name, position and size to GPU memory in order to process it there later.";
     }
 
     @Override

@@ -39,7 +39,7 @@ public class Extrema extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJ
 
     @Override
     public String getDescription() {
-        return "Returns an image with pixel values most distant from 0: f(x, y) = x if abs(x) > abs(y), y else.";
+        return "Returns an image with pixel values most distant from 0: \n\nf(x, y) = x if abs(x) > abs(y), y else.";
     }
 
     @Override
