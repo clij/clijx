@@ -65,7 +65,7 @@ public class VisualiseVectorFieldsPlugin implements Command {
 
         // create LUT
         ImagePlus lutImp = NewImage.createByteImage("Untitled", (int)(maximumLength * finalColorStep), 1, 1, NewImage.FILL_RAMP);
-        String lutFilename = lutFolder + lookupTable + ".lut";
+        /*String lutFilename = lutFolder + lookupTable + ".lut";
         if (new File(lutFilename).exists()) {
             try {
                 IndexColorModel lut1 = LutLoader.open(lutFilename);
@@ -85,7 +85,7 @@ public class VisualiseVectorFieldsPlugin implements Command {
                 e.printStackTrace();
             }
 
-        } else {
+        } else {*/
             String [] luts = IJ.getLuts();
             for (String lutname : luts) {
                 if (lutname.compareTo(lookupTable) == 0) {
@@ -93,7 +93,8 @@ public class VisualiseVectorFieldsPlugin implements Command {
                     break;
                 }
             }
-        }
+        /*}*/
+        //lutImp.show();
         //lutImp = IJ.getImage();
         IJ.run(lutImp, "RGB Color", "");
         //lutImp = IJ.getImage();
@@ -183,7 +184,7 @@ public class VisualiseVectorFieldsPlugin implements Command {
         gd.addImageChoice("Vector_X image", defaultImage);
         gd.addImageChoice("Vector_Y image", defaultImage);
 
-        gd.addStringField("LUT folder", lutFolder);
+        //gd.addStringField("LUT folder", lutFolder);
         gd.addStringField("Lookup_table", lookupTable);
 
         gd.addNumericField("Minimum_length (in pixels, ignore below)", minimumLength, 2);

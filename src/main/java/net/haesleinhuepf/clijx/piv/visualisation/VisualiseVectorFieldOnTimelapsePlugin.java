@@ -1,6 +1,8 @@
 package net.haesleinhuepf.clijx.piv.visualisation;
 
 
+import ij.IJ;
+import ij.ImageJ;
 import ij.ImagePlus;
 import ij.plugin.Concatenator;
 import ij.plugin.Duplicator;
@@ -46,5 +48,19 @@ public class VisualiseVectorFieldOnTimelapsePlugin extends VisualiseVectorFields
         if (showResult) {
             outputImage.show();
         }
+    }
+
+    public static void main(String[] args) {
+        new ImageJ();
+        ImagePlus a = IJ.openImage("C:/structure/mpicloud/Projects/202004_PIV/A.tif");
+        ImagePlus dx = IJ.openImage("C:/structure/mpicloud/Projects/202004_PIV/deltaX.tif");
+        ImagePlus dy = IJ.openImage("C:/structure/mpicloud/Projects/202004_PIV/deltaY.tif");
+
+        a.show();
+        dx.show();
+        dy.show();
+        new VisualiseVectorFieldOnTimelapsePlugin().run();
+
+
     }
 }
