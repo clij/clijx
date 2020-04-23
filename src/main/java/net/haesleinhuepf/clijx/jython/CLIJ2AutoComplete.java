@@ -105,7 +105,7 @@ class CLIJ2AutoComplete {
        description = "<b>centroidsOfLabels</b><br><br>Determines the centroids of all labels in a label image or image stack. <br><br>It writes the resulting  coordinates in a pointlist image. Depending on the dimensionality d of the labelmap and the number  of labels n, the pointlist image will have n*d pixels.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.closeIndexGapsInLabelMap(ClearCLBuffer labeling_input, ClearCLImageInterface labeling_destination)";
-       description = "<b>closeIndexGapsInLabelMap</b><br><br>Analyses a label map and if there are gaps in the indexing (e.g. label 5 is not present) all <br>subsequent labels will be relabelled. <br><br>Thus, afterwards number of labels and maximum label index are equal.<br><br><br>Parameters:<br>ClearCLBuffer labeling_input, ClearCLImageInterface labeling_destination";
+       description = "<b>closeIndexGapsInLabelMap</b><br><br>Analyses a label map and if there are gaps in the indexing (e.g. label 5 is not present) all <br>subsequent labels will be relabelled. <br><br>Thus, afterwards number of labels and maximum label index are equal.<br>This operation is mostly performed on the CPU.<br><br>Parameters:<br>ClearCLBuffer labeling_input, ClearCLImageInterface labeling_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.closingBox(ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_dilations_and_erosions)";
        description = "<b>closingBox</b><br><br>Apply a binary closing to the input image by calling n dilations and n erosions subsequenntly.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_dilations_and_erosions";
@@ -374,6 +374,9 @@ class CLIJ2AutoComplete {
        headline = "clij2.labelToMask(ClearCLBuffer label_map_source, ClearCLBuffer mask_destination, Float label_index)";
        description = "<b>labelToMask</b><br><br>Masks a single label in a label map. <br><br>Sets all pixels in the target image to 1, where the given label index was present in the label map. Other pixels are set to 0.<br><br>Parameters:<br>ClearCLBuffer label_map_source, ClearCLBuffer mask_destination, Float label_index";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.labelVoronoiOctagon(ClearCLBuffer label_map, ClearCLBuffer label_voronoi_destination)";
+       description = "<b>labelVoronoiOctagon</b><br><br>Takes a labelled image and dilates the labels using a octagon shape until they touch. <br><br>The pixels where  the regions touched are afterwards returned as binary image which corresponds to the Voronoi diagram.<br><br>Parameters:<br>ClearCLBuffer label_map, ClearCLBuffer label_voronoi_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.labelledSpotsToPointList(ClearCLBuffer input_labelled_spots, ClearCLBuffer destination_pointlist)";
        description = "<b>labelledSpotsToPointList</b><br><br>Generates a coordinate list of points in a labelled spot image. <br><br>Transforms a labelmap of spots (single pixels with values 1, 2, ..., n for n spots) as resulting <br>from connected components analysis in an image where every column contains d <br>pixels (with d = dimensionality of the original image) with the coordinates of the maxima/minima.<br><br>Parameters:<br>ClearCLBuffer input_labelled_spots, ClearCLBuffer destination_pointlist";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -438,7 +441,7 @@ class CLIJ2AutoComplete {
        description = "<b>maximumOfMaskedPixels</b><br><br>Determines the maximum intensity in an image, but only in pixels which have non-zero values in another mask image.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer mask";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.maximumOfTouchingNeighbors(ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer maximum_values_destination)";
-       description = "<b>maximumOfTouchingNeighbors</b><br><br>Takes a touch matrix and a vector of values to determine the maximum value among touching neighbors for every object. <br><br>TODO: This only works for values between 0 and 255 for now.<br><br>Parameters:<br>ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer maximum_values_destination";
+       description = "<b>maximumOfTouchingNeighbors</b><br><br>Takes a touch matrix and a vector of values to determine the maximum value among touching neighbors for every object. <br><br><br><br>Parameters:<br>ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer maximum_values_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.maximumXProjection(ClearCLImageInterface source, ClearCLImageInterface destination_max)";
        description = "<b>maximumXProjection</b><br><br>Determines the maximum projection of an image along X.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination_max";
@@ -480,7 +483,7 @@ class CLIJ2AutoComplete {
        description = "<b>meanOfPixelsAboveThreshold</b><br><br>Determines the mean intensity in a threshleded image. <br><br>But only in pixels which are above a given threshold.<br><br>Parameters:<br>ClearCLBuffer source, Float threshold";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.meanOfTouchingNeighbors(ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer mean_values_destination)";
-       description = "<b>meanOfTouchingNeighbors</b><br><br>Takes a touch matrix and a vector of values to determine the mean value among touching neighbors for every object. <br><br>TODO: This only works for values between 0 and 255 for now.<br><br>Parameters:<br>ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer mean_values_destination";
+       description = "<b>meanOfTouchingNeighbors</b><br><br>Takes a touch matrix and a vector of values to determine the mean value among touching neighbors for every object. <br><br><br><br>Parameters:<br>ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer mean_values_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.meanSliceBySliceSphere(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radiusX, Integer radiusY)";
        description = "<b>meanSliceBySliceSphere</b><br><br>Computes the local mean average of a pixels ellipsoidal 2D neighborhood in an image stack <br>slice by slice. The ellipses size is specified by its half-width and half-height (radius).<br><br>This filter is applied slice by slice in 2D.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radiusX, Integer radiusY";
@@ -513,7 +516,7 @@ class CLIJ2AutoComplete {
        description = "<b>median3DSphere</b><br><br>Computes the local median of a pixels spherical neighborhood. The spheres size is specified by <br>its half-width, half-height and half-depth (radius).<br><br>For technical reasons, the volume of the sphere must contain less than 1000 voxels.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radiusX, Integer radiusY, Integer radiusZ";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.medianOfTouchingNeighbors(ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer mean_values_destination)";
-       description = "<b>medianOfTouchingNeighbors</b><br><br>Takes a touch matrix and a vector of values to determine the mean value among touching neighbors for every object. <br><br>TODO: This only works for values between 0 and 255 for now.<br><br>Parameters:<br>ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer mean_values_destination";
+       description = "<b>medianOfTouchingNeighbors</b><br><br>Takes a touch matrix and a vector of values to determine the median value among touching neighbors for every object. <br><br><br><br>Parameters:<br>ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer mean_values_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.medianZProjection(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>medianZProjection</b><br><br>Determines the median projection of an image stack along Z.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
@@ -558,7 +561,7 @@ class CLIJ2AutoComplete {
        description = "<b>minimumOfMaskedPixels</b><br><br>Determines the minimum intensity in a masked image. <br><br>But only in pixels which have non-zero values in another mask image.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer mask";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.minimumOfTouchingNeighbors(ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer minimum_values_destination)";
-       description = "<b>minimumOfTouchingNeighbors</b><br><br>Takes a touch matrix and a vector of values to determine the minimum value among touching neighbors for every object. <br><br>TODO: This only works for values between 0 and 255 for now.<br><br>Parameters:<br>ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer minimum_values_destination";
+       description = "<b>minimumOfTouchingNeighbors</b><br><br>Takes a touch matrix and a vector of values to determine the minimum value among touching neighbors for every object. <br><br><br><br>Parameters:<br>ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer minimum_values_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.minimumZProjectionBounded(ClearCLImageInterface source, ClearCLImageInterface destination_min, Integer min_z, Integer max_z)";
        description = "<b>minimumZProjectionBounded</b><br><br>Determines the minimum projection of an image along Z within a given z range.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination_min, Integer min_z, Integer max_z";
@@ -586,6 +589,9 @@ class CLIJ2AutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.multiplyStackWithPlane(ClearCLImageInterface sourceStack, ClearCLImageInterface sourcePlane, ClearCLImageInterface destination)";
        description = "<b>multiplyStackWithPlane</b><br><br>Multiplies all pairs of pixel values x and y from an image stack X and a 2D image Y. x and y are at <br>the same spatial position within a plane.<br><br><pre>f(x, y) = x * y</pre><br><br>Parameters:<br>ClearCLImageInterface sourceStack, ClearCLImageInterface sourcePlane, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.nClosestDistances(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3)";
+       description = "<b>nClosestDistances</b><br><br>Determine the n point indices with shortest distance for all points in a distance matrix. <br><br>This corresponds to the n row indices with minimum values for each column of the distance matrix.Returns the n shortest distances in one image and the point indices in another image.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.nClosestPoints(ClearCLBuffer arg1, ClearCLBuffer arg2)";
        description = "<b>nClosestPoints</b><br><br>Determine the n point indices with shortest distance for all points in a distance matrix. <br><br>This corresponds to the n row indices with minimum values for each column of the distance matrix.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2";
@@ -653,11 +659,11 @@ class CLIJ2AutoComplete {
        headline = "clij2.pullLabelsToROIManager(ClearCLBuffer labelmap_input)";
        description = "<b>pullLabelsToROIManager</b><br><br>Pulls all labels in a label map as ROIs to the ROI manager.<br><br>Parameters:<br>ClearCLBuffer labelmap_input";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clij2.pullResultsTable(ClearCLBuffer arg1, ResultsTable arg2)";
-       description = "<b>pullResultsTable</b><br><br>null";
-       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.pullString(ClearCLImageInterface arg1)";
-       description = "<b>pullString</b><br><br>null";
+       description = "<b>pullString</b><br><br>Writes an image into a string.<br><br>Parameters:<br>ClearCLImageInterface arg1";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.pullToResultsTable(ClearCLBuffer arg1, ResultsTable arg2)";
+       description = "<b>pullToResultsTable</b><br><br>Converts an image into a table.<br><br>Parameters:<br>ClearCLBuffer arg1, ResultsTable arg2";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.pushArray(ClearCLBuffer arg1, Object arg2)";
        description = "<b>pushArray</b><br><br>Converts an array to an image.<br><br>Parameters:<br>ClearCLBuffer arg1, Object arg2";
@@ -813,10 +819,16 @@ class CLIJ2AutoComplete {
        description = "<b>standardDeviationZProjection</b><br><br>Determines the standard deviation projection of an image stack along Z.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.statisticsOfBackgroundAndLabelledPixels(ClearCLBuffer arg1, ClearCLBuffer arg2, ResultsTable arg3)";
-       description = "<b>statisticsOfBackgroundAndLabelledPixels</b><br><br>Determines bounding box, area (in pixels/voxels), min, max and mean intensity <br> of background and labelled objects in a label map and corresponding pixels in the original image.<br><br>Instead of a label map, you can also use a binary image as a binary image is a label map with just one label.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, ResultsTable arg3";
+       description = "<b>statisticsOfBackgroundAndLabelledPixels</b><br><br>Determines bounding box, area (in pixels/voxels), min, max and mean intensity <br> of background and labelled objects in a label map and corresponding pixels in the original image.<br><br>Instead of a label map, you can also use a binary image as a binary image is a label map with just one label.<br><br>This method is executed on the CPU and not on the GPU/OpenCL device.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, ResultsTable arg3";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.statisticsOfImage(ClearCLBuffer arg1, ResultsTable arg2)";
+       description = "<b>statisticsOfImage</b><br><br>Determines image size (bounding box), area (in pixels/voxels), min, max and mean intensity <br> of all pixels in the original image.<br><br>This method is executed on the CPU and not on the GPU/OpenCL device.<br><br>Parameters:<br>ClearCLBuffer arg1, ResultsTable arg2";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.statisticsOfLabelledPixels(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3)";
-       description = "<b>statisticsOfLabelledPixels</b><br><br>Determines bounding box, area (in pixels/voxels), min, max and mean intensity <br> of labelled objects in a label map and corresponding pixels in the original image. <br><br>Instead of a label map, you can also use a binary image as a binary image is a label map with just one label.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3";
+       description = "<b>statisticsOfLabelledPixels</b><br><br>Determines bounding box, area (in pixels/voxels), min, max and mean intensity <br> of labelled objects in a label map and corresponding pixels in the original image. <br><br>Instead of a label map, you can also use a binary image as a binary image is a label map with just one label.<br><br>This method is executed on the CPU and not on the GPU/OpenCL device.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.statisticsOfLabelledPixels_single_threaded(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3, int arg4)";
+       description = "<b>statisticsOfLabelledPixels_single_threaded</b><br><br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.subtractImageFromScalar(ClearCLImageInterface input, ClearCLImageInterface destination, Float scalar)";
        description = "<b>subtractImageFromScalar</b><br><br>Subtracts one image X from a scalar s pixel wise.<br><br><pre>f(x, s) = s - x</pre><br><br>Parameters:<br>ClearCLImageInterface input, ClearCLImageInterface destination, Float scalar";
@@ -944,4 +956,4 @@ class CLIJ2AutoComplete {
         return list;
     }
 }
-// 311 methods generated.
+// 315 methods generated.
