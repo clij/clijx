@@ -73,6 +73,9 @@ public abstract interface CLIJxOps {
    CLIJ getCLIJ();
    CLIJ2 getCLIJ2();
    CLIJx getCLIJx();
+   boolean doTimeTracing();
+   void recordMethodStart(String method);
+   void recordMethodEnd(String method);
    
 
     // net.haesleinhuepf.clij.kernels.Kernels
