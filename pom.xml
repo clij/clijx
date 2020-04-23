@@ -8,13 +8,13 @@
 	<parent>
 		<groupId>net.haesleinhuepf</groupId>
 		<artifactId>clij-parent-pom</artifactId>
-		<version>1.6.0</version>
+		<version>1.6.2</version>
 		<relativePath />
 	</parent>
 
 	<groupId>net.haesleinhuepf</groupId>
 	<artifactId>clijx_</artifactId>
-	<version>0.27.0</version>
+	<version>0.27.2</version>
 
 	<name>clijx_</name>
 	<description>clijx</description>
@@ -98,7 +98,6 @@
 		<dependency>
 			<groupId>net.haesleinhuepf</groupId>
 			<artifactId>clijx-weka_</artifactId>
-			<version>0.26.5</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.sarxos</groupId>
