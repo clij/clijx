@@ -13,6 +13,7 @@ public class Utilities {
         //Toolbar.removeMacroTools();
 
         Toolbar.addPlugInTool(new InteractiveThresholding());
+        Toolbar.addPlugInTool(new InteractiveDifferenceOfGaussian());
         Toolbar.addPlugInTool(new InteractiveWand());
         Toolbar.addPlugInTool(new ContinuousWebcamAcquisition());
         ignoreEvent = false;
