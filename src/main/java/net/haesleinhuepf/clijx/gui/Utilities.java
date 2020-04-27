@@ -14,6 +14,7 @@ public class Utilities {
 
         Toolbar.addPlugInTool(new InteractiveThresholding());
         Toolbar.addPlugInTool(new InteractiveDifferenceOfGaussian());
+        Toolbar.addPlugInTool(new InteractiveSpotDetection());
         Toolbar.addPlugInTool(new InteractiveWand());
         Toolbar.addPlugInTool(new ContinuousWebcamAcquisition());
         ignoreEvent = false;

@@ -77,6 +77,7 @@ public class InteractiveThresholding extends PlugInTool {
             {
                 startX = null;
                 startY = null;
+                this.imp.killRoi();
                 this.imp = null;
 
                 clijx.release(input);

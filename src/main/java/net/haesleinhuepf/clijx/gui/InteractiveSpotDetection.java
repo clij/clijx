@@ -3,7 +3,9 @@ package net.haesleinhuepf.clijx.gui;
 import ij.IJ;
 import ij.ImageJ;
 import ij.ImagePlus;
+import ij.gui.Overlay;
 import ij.gui.PointRoi;
+import ij.gui.Roi;
 import ij.gui.Toolbar;
 import ij.plugin.tool.PlugInTool;
 import ij.process.ImageProcessor;
@@ -12,7 +14,7 @@ import net.haesleinhuepf.clijx.CLIJx;
 
 import java.awt.event.MouseEvent;
 
-public class InteractiveDifferenceOfGaussian extends PlugInTool {
+public class InteractiveSpotDetection extends PlugInTool {
 
 
     private ClearCLBuffer input;
@@ -53,14 +55,16 @@ public class InteractiveDifferenceOfGaussian extends PlugInTool {
 
             temp1 = clijx.create(input.getDimensions(), clijx.Float);
             temp2 = clijx.create(input.getDimensions(), clijx.Float);
-            output = clijx.create(input.getDimensions(), input.getNativeType());
+            output = clijx.create(input.getDimensions(), clijx.Float);
 
 
 
             startX = imp.getWindow().getCanvas().offScreenX(e.getX());
             startY = imp.getWindow().getCanvas().offScreenY(e.getY());
 
-            imp.setRoi(new PointRoi(startX, startY));
+            Overlay overlay = new Overlay();
+            overlay.add(new PointRoi(startX, startY));
+            imp.setOverlay(overlay);
 
 
             sigma2 = imp.getProcessor().getf(startX, startY);
@@ -77,12 +81,11 @@ public class InteractiveDifferenceOfGaussian extends PlugInTool {
             {
                 startX = null;
                 startY = null;
-                this.imp.setProcessor(backup);
-                this.imp.killRoi();
+                this.imp.setOverlay(null);
                 this.imp = null;
 
                 ImagePlus result = clijx.pull(output);
-                result.setTitle("DoG s1=" + sigma1 + " s1=" + sigma2);
+                result.setTitle("Spot detection DoG s1=" + sigma1 + " s1=" + sigma2);
                 result.show();
 
                 clijx.release(input);
@@ -118,14 +121,21 @@ public class InteractiveDifferenceOfGaussian extends PlugInTool {
             clijx.gaussianBlur3D(input, temp1, sigma1, sigma1, 0);
 
             clijx.activateSizeIndependentKernelCompilation();
-            clijx.gaussianBlur3D(input, temp2, sigma2, sigma2, 0);
+            clijx.gaussianBlur3D(input, output, sigma2, sigma2, 0);
 
             clijx.activateSizeIndependentKernelCompilation();
-            clijx.subtractImages(temp1, temp2, output);
+            clijx.subtractImages(temp1, output, temp2);
 
-            //Roi roi = clijx.pullAsROI(output);
-            //imp.setRoi(roi);
-            imp.setProcessor(clijx.pull(output).getProcessor());
+            if (sigma1 < 0) {
+                clijx.detectMaximaBox(temp2, output, 1);
+            } else {
+                clijx.detectMinimaBox(temp2, output, 1);
+            }
+
+
+            Roi roi = clijx.pullAsROI(output);
+            imp.setRoi(roi);
+            //imp.setProcessor(clijx.pull(output).getProcessor());
 
             IJ.run(imp,"Enhance Contrast", "saturated=0.35");
             imp.updateAndDraw();
@@ -138,7 +148,7 @@ public class InteractiveDifferenceOfGaussian extends PlugInTool {
     public static void main(String... args) {
         new ImageJ();
 
-        Toolbar.addPlugInTool(new InteractiveDifferenceOfGaussian());
+        Toolbar.addPlugInTool(new InteractiveSpotDetection());
         ImagePlus imp = IJ.openImage("C:\\structure\\data\\covid-chestxray-dataset\\images\\1-s2.0-S0929664620300449-gr3_lrg-d.jpg");
         //"../clij2-tests/src/test/resources/blobs.tif");
         imp.show();
@@ -149,7 +159,7 @@ public class InteractiveDifferenceOfGaussian extends PlugInTool {
 
     @Override
     public String getToolName() {
-        return "Difference of Gaussian";
+        return "Spot detection";
     }
 
     @Override
@@ -165,14 +175,14 @@ public class InteractiveDifferenceOfGaussian extends PlugInTool {
     {
         return
                 //        0123456789ABCDEF
-                /*0*/	 "                " +
-                /*1*/	 " ###        ### " +
-                /*2*/	 " #  #      #   #" +
-                /*3*/	 " #  #      #    " +
-                /*4*/	 " #  #  ##  # ###" +
-                /*5*/	 " #  # #  # #   #" +
-                /*6*/	 " #  # #  # #   #" +
-                /*7*/	 " ###   ##   ### " +
+                /*0*/	 "     #          " +
+                /*1*/	 " #         #    " +
+                /*2*/	 "    #      #   #" +
+                /*3*/	 "       #        " +
+                /*4*/	 "  #  #      #   " +
+                /*5*/	 "       #        " +
+                /*6*/	 " #   #      #   " +
+                /*7*/	 "   #   #        " +
                 /*8*/	 "                " +
                 /*9*/	 "                " +
                 /*A*/	 "       ##       " +
