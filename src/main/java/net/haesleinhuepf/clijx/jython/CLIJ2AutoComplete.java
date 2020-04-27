@@ -266,6 +266,9 @@ class CLIJ2AutoComplete {
        headline = "clij2.excludeLabelsSubSurface(ClearCLBuffer pointlist, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination, Float centerX, Float centerY, Float centerZ)";
        description = "<b>excludeLabelsSubSurface</b><br><br>This operation follows a ray from a given position towards a label (or opposite direction) and checks if  there is another label between the label an the image border. <br><br>If yes, this label is eliminated from the label map.<br><br>Parameters:<br>ClearCLBuffer pointlist, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination, Float centerX, Float centerY, Float centerZ";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.excludeLabels(ClearCLBuffer binary_flaglist, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination)";
+       description = "<b>excludeLabels</b><br><br>This operation removes labels from a labelmap and renumbers the remaining labels. <br><br>Hand over a binary flag list vector starting with a flag for the background, continuing with label1, label2, ...<br><br>For example if you pass 0,1,0,0,1: Labels 1 and 4 will be removed (those with a 1 in the vector will be excluded). Labels 2 and 3 will be kept and renumbered to 1 and 2.<br><br>Parameters:<br>ClearCLBuffer binary_flaglist, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.exponential(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>exponential</b><br><br>Computes base exponential of all pixels values.<br><br>f(x) = exp(x)<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -956,4 +959,4 @@ class CLIJ2AutoComplete {
         return list;
     }
 }
-// 315 methods generated.
+// 316 methods generated.
