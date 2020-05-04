@@ -65,8 +65,11 @@ class CLIJxAutoComplete {
        headline = "clijx.averageDistanceOfClosestPoints(ClearCLBuffer arg1, ClearCLBuffer arg2, Integer arg3)";
        description = "<b>averageDistanceOfClosestPoints</b><br><br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.averageDistanceOfNClosestPoints(ClearCLBuffer distance_matrix, ClearCLBuffer indexlist_destination, Integer nClosestPointsTofind)";
-       description = "<b>averageDistanceOfNClosestPoints</b><br><br>Determines the average of the n closest points for every point in a distance matrix.<br><br>This corresponds to the average of the n minimum values (rows) for each column of the distance matrix.<br><br>Parameters:<br>ClearCLBuffer distance_matrix, ClearCLBuffer indexlist_destination, Integer nClosestPointsTofind";
+       headline = "clijx.averageDistanceOfNClosestPoints(ClearCLBuffer distance_matrix, ClearCLBuffer distance_list_destination, Integer nClosestPointsTofind)";
+       description = "<b>averageDistanceOfNClosestPoints</b><br><br>Determines the average of the n closest points for every point in a distance matrix.<br><br>This corresponds to the average of the n minimum values (rows) for each column of the distance matrix.<br><br>Parameters:<br>ClearCLBuffer distance_matrix, ClearCLBuffer distance_list_destination, Integer nClosestPointsTofind";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.averageDistanceOfNFarOffPoints(ClearCLBuffer distance_matrix, ClearCLBuffer distance+_list_destination, Integer nFarOffPointsTofind)";
+       description = "<b>averageDistanceOfNFarOffPoints</b><br><br>Determines the average of the n far off (most distant) points for every point in a distance matrix.<br><br>This corresponds to the average of the n maximum values (rows) for each column of the distance matrix.<br><br>Parameters:<br>ClearCLBuffer distance_matrix, ClearCLBuffer distance+_list_destination, Integer nFarOffPointsTofind";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.averageDistanceOfTouchingNeighbors(ClearCLBuffer distance_matrix, ClearCLBuffer touch_matrix, ClearCLBuffer average_distancelist_destination)";
        description = "<b>averageDistanceOfTouchingNeighbors</b><br><br>Takes a touch matrix and a distance matrix to determine the average distance of touching neighbors <br> for every object.<br><br>Parameters:<br>ClearCLBuffer distance_matrix, ClearCLBuffer touch_matrix, ClearCLBuffer average_distancelist_destination";
@@ -656,6 +659,9 @@ class CLIJxAutoComplete {
        headline = "clijx.nClosestPoints(ClearCLBuffer arg1, ClearCLBuffer arg2)";
        description = "<b>nClosestPoints</b><br><br>Determine the n point indices with shortest distance for all points in a distance matrix. <br><br>This corresponds to the n row indices with minimum values for each column of the distance matrix.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.neighborsOfNeighbors(ClearCLBuffer touch_matrix, ClearCLBuffer neighbor_matrix_destination)";
+       description = "<b>neighborsOfNeighbors</b><br><br>Determines neighbors of neigbors from touch matrix and saves the result as a new touch matrix.<br><br>Parameters:<br>ClearCLBuffer touch_matrix, ClearCLBuffer neighbor_matrix_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.nonzeroMaximumBox(ClearCLImageInterface arg1, ClearCLImageInterface arg2, ClearCLImageInterface arg3)";
        description = "<b>nonzeroMaximumBox</b><br><br>Apply a maximum filter (box shape) to the input image. <br><br>The radius is fixed to 1 and pixels with value 0 are ignored.<br><br>Parameters:<br>ClearCLImageInterface arg1, ClearCLImageInterface arg2, ClearCLImageInterface arg3";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -923,6 +929,9 @@ class CLIJxAutoComplete {
        headline = "clijx.standardDeviationOfMaskedPixels(ClearCLBuffer source, ClearCLBuffer mask)";
        description = "<b>standardDeviationOfMaskedPixels</b><br><br>Determines the standard deviation of all pixels in an image which have non-zero value in a corresponding mask image. <br><br>The value will be stored in a new row of ImageJs<br>Results table in the column 'Masked_standard_deviation'.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer mask";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.standardDeviationOfTouchingNeighbors(ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer standard_deviation_values_destination)";
+       description = "<b>standardDeviationOfTouchingNeighbors</b><br><br>Takes a touch matrix and a vector of values to determine the standard deviation value among touching neighbors for every object. <br><br><br><br>Parameters:<br>ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer standard_deviation_values_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.standardDeviationZProjection(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>standardDeviationZProjection</b><br><br>Determines the standard deviation projection of an image stack along Z.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1118,4 +1127,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 369 methods generated.
+// 372 methods generated.
