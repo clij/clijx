@@ -12,6 +12,7 @@ import net.haesleinhuepf.clij.CLIJ;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
 import net.haesleinhuepf.clij.utilities.CLIJOps;
+import net.haesleinhuepf.clijx.te_oki.NapariAutoComplete;
 import net.imglib2.Cursor;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.Img;
@@ -84,6 +85,9 @@ public class ScriptingAutoCompleteProvider extends DefaultCompletionProvider
             addCompletion(basicCompletion);
         }
         for (BasicCompletion basicCompletion : CLIJ2AutoComplete.getCompletions(this)) {
+            addCompletion(basicCompletion);
+        }
+        for (BasicCompletion basicCompletion : NapariAutoComplete.getCompletions(this)) {
             addCompletion(basicCompletion);
         }
 
