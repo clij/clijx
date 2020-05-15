@@ -52,61 +52,70 @@ public class TeOkiEngine extends IJ1MacroEngine {
 	public static String conda_directory = "C:\\Users\\rober\\Anaconda3";
 	public static String conda_env = "te_oki";
 
+
 	public TeOkiEngine(IJ1Helper ij1Helper) {
 		super(ij1Helper);
 	}
 
 	@Override
 	public Object eval(final String macro) throws ScriptException {
-		boolean isWindows = System.getProperty("os.name")
-				.toLowerCase().startsWith("windows");
 
-		File directory = new File(teOkiDirectory);
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
 
-		String conda_code;
+				boolean isWindows = System.getProperty("os.name")
+						.toLowerCase().startsWith("windows");
 
-		if (isWindows) {
-			conda_code = "call " + conda_directory + "\\Scripts\\activate.bat " + conda_directory + "\n" +
-					"call conda activate " + conda_env + "\n" +
-					"cd " + directory + "\n" +
-					"python temp.py";
-		} else {
-			conda_code = "conda activate " + conda_env + "\n" +
-					"cd " + directory + "\n" +
-					"python temp.py";
-		}
+				File directory = new File(teOkiDirectory);
 
-		System.out.println(conda_code);
+				String conda_code;
 
-		Process process;
-		try {
+				if (isWindows) {
+					conda_code = "call " + conda_directory + "\\Scripts\\activate.bat " + conda_directory + "\n" +
+							"call conda activate " + conda_env + "\n" +
+							"cd " + directory + "\n" +
+							"python temp.py";
+				} else {
+					conda_code = "conda activate " + conda_env + "\n" +
+							"cd " + directory + "\n" +
+							"python temp.py";
+				}
 
-			Files.write(Paths.get(directory + "/temp.py"), macro.getBytes());
-			if (isWindows) {
-				System.out.println("Writing to " + directory + "/temp.bat");
-				Files.write(Paths.get(directory + "/temp.bat"), conda_code.getBytes());
-				process = Runtime.getRuntime()
-						.exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + directory + "/temp.bat");
-			} else {
-				Files.write(Paths.get(directory + "/temp.sh"), conda_code.getBytes());
-				process = Runtime.getRuntime()
-						.exec(directory + "/temp.sh");
+				System.out.println(conda_code);
+
+				Process process;
+				try {
+
+					Files.write(Paths.get(directory + "/temp.py"), macro.getBytes());
+					if (isWindows) {
+						System.out.println("Writing to " + directory + "/temp.bat");
+						Files.write(Paths.get(directory + "/temp.bat"), conda_code.getBytes());
+						process = Runtime.getRuntime()
+								.exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + directory + "/temp.bat");
+								//.exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + directory + "/temp.bat");
+					} else {
+						Files.write(Paths.get(directory + "/temp.sh"), conda_code.getBytes());
+						process = Runtime.getRuntime()
+								.exec(directory + "/temp.sh");
+					}
+					process.waitFor();
+					System.out.println("Returned");
+
+					byte[] error = new byte[1024];
+					process.getErrorStream().read(error);
+					IJ.log(new String(error));
+
+				} catch (IOException e) {
+					e.printStackTrace();
+					//} catch (InterruptedException e) {
+					//	e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				IJ.log("Bye.");
 			}
-			process.waitFor();
-			System.out.println("Returned");
-
-			byte[] error = new byte[1024];
-			process.getErrorStream().read(error);
-			IJ.log(new String(error));
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		//} catch (InterruptedException e) {
-		//	e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		IJ.log("Bye.");
+		}).start();
 
 		return null;
 	}
