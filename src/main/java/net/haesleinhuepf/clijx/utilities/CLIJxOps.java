@@ -1,6 +1,7 @@
 package net.haesleinhuepf.clijx.utilities;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clijx.CLIJx;
+import net.haesleinhuepf.clijx.clij2wrappers.SaveAsTIF;
 import net.haesleinhuepf.clijx.weka.CLIJxWeka2;
 import net.haesleinhuepf.clij.CLIJ;
 import net.haesleinhuepf.clij.clearcl.ClearCLKernel;
@@ -35,7 +36,6 @@ import net.haesleinhuepf.clijx.io.PreloadFromDisc;
 import net.haesleinhuepf.clijx.plugins.GaussJordan;
 import net.haesleinhuepf.clijx.plugins.StopWatch;
 import net.haesleinhuepf.clijx.plugins.DrawTwoValueLine;
-import net.haesleinhuepf.clijx.plugins.SaveAsTIF;
 import net.haesleinhuepf.clijx.plugins.ConnectedComponentsLabelingInplace;
 import net.haesleinhuepf.clijx.plugins.AutomaticThresholdInplace;
 import net.haesleinhuepf.clijx.plugins.DifferenceOfGaussianInplace3D;
@@ -629,7 +629,7 @@ public abstract interface CLIJxOps {
      */
     default boolean saveAsTIF(ClearCLBuffer input, String filename) {
         if (doTimeTracing()) {recordMethodStart("SaveAsTIF");}
-        boolean result = SaveAsTIF.saveAsTIF(getCLIJ(), input, filename);
+        boolean result = SaveAsTIF.saveAsTIF(getCLIJ2(), input, filename);
         if (doTimeTracing()) {recordMethodEnd("SaveAsTIF");}
         return result;
     }
