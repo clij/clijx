@@ -15,7 +15,7 @@ import net.haesleinhuepf.clij.clearcl.enums.ImageChannelDataType;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij2.utilities.CLIJUtilities;
 import net.haesleinhuepf.clijx.CLIJx;
-import net.haesleinhuepf.clijx.plugins.DepthColorProjection;
+import net.haesleinhuepf.clij2.plugins.DepthColorProjection;
 import net.imglib2.realtransform.AffineTransform3D;
 
 import java.awt.*;
