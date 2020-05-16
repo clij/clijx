@@ -4,6 +4,7 @@ import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
+import net.haesleinhuepf.clij2.utilities.HasAuthor;
 import net.haesleinhuepf.clijx.CLIJx;
 import net.haesleinhuepf.clijx.utilities.AbstractCLIJxPlugin;
 
@@ -15,7 +16,7 @@ import static net.haesleinhuepf.clij.utilities.CLIJUtilities.assertDifferent;
  * Author: @haesleinhuepf
  * June 2019
  */
-public abstract class AbstractTenengradFusion extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
+public abstract class AbstractTenengradFusion extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor {
 
     @Override
     public boolean executeCL() {
@@ -125,4 +126,8 @@ public abstract class AbstractTenengradFusion extends AbstractCLIJxPlugin implem
         return "3D";
     }
 
+    @Override
+    public String getAuthorName() {
+        return "Robert Haase based on work by Uwe Schmidt";
+    }
 }
