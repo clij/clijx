@@ -116,6 +116,12 @@ class CLIJ2AutoComplete {
        headline = "clij2.closingDiamond(ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_dilations_and_erotions)";
        description = "<b>closingDiamond</b><br><br>Apply a binary closing to the input image by calling n dilations and n erosions subsequently.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_dilations_and_erotions";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.combineHorizontally(ClearCLImageInterface stack1, ClearCLImageInterface stack2, ClearCLImageInterface destination)";
+       description = "<b>combineHorizontally</b><br><br>Combines two images or stacks in X.<br><br>Parameters:<br>ClearCLImageInterface stack1, ClearCLImageInterface stack2, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.combineVertically(ClearCLImageInterface stack1, ClearCLImageInterface stack2, ClearCLImageInterface destination)";
+       description = "<b>combineVertically</b><br><br>Combines two images or stacks in Y.<br><br>Parameters:<br>ClearCLImageInterface stack1, ClearCLImageInterface stack2, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.concatenateStacks(ClearCLImageInterface stack1, ClearCLImageInterface stack2, ClearCLImageInterface destination)";
        description = "<b>concatenateStacks</b><br><br>Concatenates two stacks in Z.<br><br>Parameters:<br>ClearCLImageInterface stack1, ClearCLImageInterface stack2, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -170,20 +176,23 @@ class CLIJ2AutoComplete {
        headline = "clij2.customOperation(String arg1, String arg2, HashMap arg3)";
        description = "<b>customOperation</b><br><br>Executes a custom operation wirtten in OpenCL on a custom list of images. <br><br>All images must be created before calling this method. Image parameters should be handed over as an array with parameter names and image names alternating, e.g.<br><br>Ext.CLIJ2_customOperation(..., ..., newArray(&quot;image1&quot;, &quot;blobs.gif&quot;, &quot;image2&quot;, &quot;Processed_blobs.gif&quot;))<br><br>In the custom code, you can use the predefined variables x, y and z to deal with coordinates.<br>You can for example use it to access pixel intensities like this:<br><br>float value = READ_IMAGE(image, sampler, POS_image_INSTANCE(x, y, z, 0)).x;<br>WRITE_IMAGE(image, POS_image_INSTANCE(x, y, z, 0), CONVERT_image_PIXEL_TYPE(value));<br><br>Note: replace `image` with the given image parameter name. You can furthermore use custom function to organise code in the global_code parameter. In OpenCL they may look like this:<br><br>inline float sum(float a, float b) {<br>    return a + b;<br>}<br><br><br>Parameters:<br>String arg1, String arg2, HashMap arg3";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.depthColorProjection(ClearCLImageInterface source, ClearCLBuffer lookup_table, ClearCLBuffer destination_max, Float min_display_intensity, Float max_display_intensity)";
+       description = "<b>depthColorProjection</b><br><br>Determines a maximum projection of an image stack and does a color coding of the determined arg Z (position of the found maximum). <br><br>Second parameter is a Lookup-Table in the form of an 8-bit image stack 255 pixels wide, 1 pixel high with 3 planes representing red, green and blue intensities.<br>Resulting image is a 3D image with three Z-planes representing red, green and blue channels.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLBuffer lookup_table, ClearCLBuffer destination_max, Float min_display_intensity, Float max_display_intensity";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.detectLabelEdges(ClearCLImageInterface label_map, ClearCLBuffer edge_image_destination)";
        description = "<b>detectLabelEdges</b><br><br>Takes a labelmap and returns an image where all pixels on label edges are set to 1 and all other pixels to 0.<br><br>Parameters:<br>ClearCLImageInterface label_map, ClearCLBuffer edge_image_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.detectMaximaBox(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius)";
        description = "<b>detectMaximaBox</b><br><br>Detects local maxima in a given square/cubic neighborhood. Pixels in the resulting image are set to 1 if<br>there is no other pixel in a given radius which has a higher intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clij2.detectMaximaSliceBySliceBox(ClearCLBuffer source, ClearCLBuffer destination, Integer radius)";
-       description = "<b>detectMaximaSliceBySliceBox</b><br><br>Detects local maxima in a given square neighborhood of an input image stack. The input image stack is <br>processed slice by slice. Pixels in the resulting image are set to 1 if there is no other pixel in a <br>given radius which has a higher intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer radius";
+       headline = "clij2.detectMaximaSliceBySliceBox(ClearCLBuffer arg1, ClearCLBuffer arg2, Integer arg3, Integer arg4)";
+       description = "<b>detectMaximaSliceBySliceBox</b><br><br>Detects local maxima in a given square neighborhood of an input image stack. The input image stack is <br>processed slice by slice. Pixels in the resulting image are set to 1 if there is no other pixel in a <br>given radius which has a higher intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, Integer arg3, Integer arg4";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.detectMinimaBox(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius)";
        description = "<b>detectMinimaBox</b><br><br>Detects local minima in a given square/cubic neighborhood. Pixels in the resulting image are set to 1 if<br>there is no other pixel in a given radius which has a lower intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clij2.detectMinimaSliceBySliceBox(ClearCLBuffer source, ClearCLBuffer destination, Integer radius)";
-       description = "<b>detectMinimaSliceBySliceBox</b><br><br>Detects local minima in a given square neighborhood of an input image stack. The input image stack is <br>processed slice by slice. Pixels in the resulting image are set to 1 if there is no other pixel in a <br>given radius which has a lower intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer radius";
+       headline = "clij2.detectMinimaSliceBySliceBox(ClearCLBuffer arg1, ClearCLBuffer arg2, Integer arg3, Integer arg4)";
+       description = "<b>detectMinimaSliceBySliceBox</b><br><br>Detects local minima in a given square neighborhood of an input image stack. The input image stack is <br>processed slice by slice. Pixels in the resulting image are set to 1 if there is no other pixel in a <br>given radius which has a lower intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, Integer arg3, Integer arg4";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.differenceOfGaussian2D(ClearCLBuffer input, ClearCLBuffer destination, Float sigma1x, Float sigma1y, Float sigma2x, Float sigma2y)";
        description = "<b>differenceOfGaussian2D</b><br><br>Applies Gaussian blur to the input image twice with different sigma values resulting in two images which are then subtracted from each other.<br><br>It is recommended to apply this operation to images of type Float (32 bit) as results might be negative.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float sigma1x, Float sigma1y, Float sigma2x, Float sigma2y";
@@ -269,6 +278,12 @@ class CLIJ2AutoComplete {
        headline = "clij2.excludeLabelsSubSurface(ClearCLBuffer pointlist, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination, Float centerX, Float centerY, Float centerZ)";
        description = "<b>excludeLabelsSubSurface</b><br><br>This operation follows a ray from a given position towards a label (or opposite direction) and checks if  there is another label between the label an the image border. <br><br>If yes, this label is eliminated from the label map.<br><br>Parameters:<br>ClearCLBuffer pointlist, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination, Float centerX, Float centerY, Float centerZ";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.excludeLabelsWithValuesOutOfRange(ClearCLBuffer values_vector, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination, Float minimum_value_range, Float maximum_value_range)";
+       description = "<b>excludeLabelsWithValuesOutOfRange</b><br><br>This operation removes labels from a labelmap and renumbers the remaining labels. <br><br>Hand over a vector of values and a range specifying which labels with which values are eliminated.<br><br>Parameters:<br>ClearCLBuffer values_vector, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination, Float minimum_value_range, Float maximum_value_range";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.excludeLabelsWithValuesWithinRange(ClearCLBuffer values_vector, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination, Float minimum_value_range, Float maximum_value_range)";
+       description = "<b>excludeLabelsWithValuesWithinRange</b><br><br>This operation removes labels from a labelmap and renumbers the remaining labels. <br><br>Hand over a vector of values and a range specifying which labels with which values are eliminated.<br><br>Parameters:<br>ClearCLBuffer values_vector, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination, Float minimum_value_range, Float maximum_value_range";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.excludeLabels(ClearCLBuffer binary_flaglist, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination)";
        description = "<b>excludeLabels</b><br><br>This operation removes labels from a labelmap and renumbers the remaining labels. <br><br>Hand over a binary flag list vector starting with a flag for the background, continuing with label1, label2, ...<br><br>For example if you pass 0,1,0,0,1: Labels 1 and 4 will be removed (those with a 1 in the vector will be excluded). Labels 2 and 3 will be kept and renumbered to 1 and 2.<br><br>Parameters:<br>ClearCLBuffer binary_flaglist, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -299,8 +314,17 @@ class CLIJ2AutoComplete {
        headline = "clij2.gaussianBlur(ClearCLImageInterface source, ClearCLImageInterface destination, Float sigmaX, Float sigmaY)";
        description = "<b>gaussianBlur</b><br><br>Computes the Gaussian blurred image of an image given two sigma values in X and Y. <br><br>Thus, the filterkernel can have non-isotropic shape.<br><br>The implementation is done separable. In case a sigma equals zero, the direction is not blurred.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float sigmaX, Float sigmaY";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.generateBinaryOverlapMatrix(ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer touch_matrix_destination)";
+       description = "<b>generateBinaryOverlapMatrix</b><br><br>Takes two labelmaps with n and m labels and generates a (n+1)*(m+1) matrix where all pixels are set to 0 exept those where labels overlap between the label maps. <br><br>For example, if labels 3 in labelmap1 and 4 in labelmap2 are touching then the pixel (3,4) in the matrix will be set to 1.<br><br>Parameters:<br>ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer touch_matrix_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.generateDistanceMatrix(ClearCLBuffer coordinate_list1, ClearCLBuffer coordinate_list2, ClearCLBuffer distance_matrix_destination)";
        description = "<b>generateDistanceMatrix</b><br><br>Takes two images containing coordinates and builds up a matrix containing distance between the points. <br><br>Convention: image width represents number of points, height represents dimensionality (2D, 3D, ... 10D). The result image has width the first input image and height equals to the width of the second input image.<br><br>Parameters:<br>ClearCLBuffer coordinate_list1, ClearCLBuffer coordinate_list2, ClearCLBuffer distance_matrix_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.generateParametricImageFromResultsTableColumn(ClearCLImageInterface arg1, ClearCLImageInterface arg2, ResultsTable arg3, String arg4)";
+       description = "<b>generateParametricImageFromResultsTableColumn</b><br><br>Take a labelmap and a column from the results table to replace label 1 with the 1st value in the vector. <br><br>Note that indexing in the table column starts at zero. The results table should contain a line at the beginningrepresenting the background.<br><br><br>Parameters:<br>ClearCLImageInterface arg1, ClearCLImageInterface arg2, ResultsTable arg3, String arg4";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.generateParametricImage(ClearCLImageInterface parameter_value_vector, ClearCLImageInterface label_map, ClearCLImageInterface parametric_image_destination)";
+       description = "<b>generateParametricImage</b><br><br>Take a labelmap and a vector of values to replace label 1 with the 1st value in the vector. <br><br>Note that indexing in the vector starts at zero. The 0th entry corresponds to background in the label map.Internally this method just calls ReplaceIntensities.<br><br><br>Parameters:<br>ClearCLImageInterface parameter_value_vector, ClearCLImageInterface label_map, ClearCLImageInterface parametric_image_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.generateTouchMatrix(ClearCLBuffer label_map, ClearCLBuffer touch_matrix_destination)";
        description = "<b>generateTouchMatrix</b><br><br>Takes a labelmap with n labels and generates a (n+1)*(n+1) matrix where all pixels are set to 0 exept those where labels are touching. <br><br>Only half of the matrix is filled (with x < y). For example, if labels 3 and 4 are touching then the pixel (3,4) in the matrix will be set to 1.<br><br>Parameters:<br>ClearCLBuffer label_map, ClearCLBuffer touch_matrix_destination";
@@ -689,6 +713,9 @@ class CLIJ2AutoComplete {
        headline = "clij2.radialProjection(ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3)";
        description = "<b>radialProjection</b><br><br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.reduceStack(ClearCLImageInterface input, ClearCLImageInterface destination, Integer reductionFactor, Integer offset)";
+       description = "<b>reduceStack</b><br><br>Reduces the number of slices in a stack by a given factor.<br>With the offset you have control which slices stay: <br>* With factor 3 and offset 0, slices 0, 3, 6,... are kept. * With factor 4 and offset 1, slices 1, 5, 9,... are kept.<br><br>Parameters:<br>ClearCLImageInterface input, ClearCLImageInterface destination, Integer reductionFactor, Integer offset";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.replaceIntensities(ClearCLImageInterface input, ClearCLImageInterface new_values_vector, ClearCLImageInterface destination)";
        description = "<b>replaceIntensities</b><br><br>Replaces integer intensities specified in a vector image. <br><br>The vector image must be 3D with size (m, 1, 1) where m corresponds to the maximum intensity in the original image. Assuming the vector image contains values (0, 1, 0, 2) means: <br> * All pixels with value 0 (first entry in the vector image) get value 0<br> * All pixels with value 1 get value 1<br> * All pixels with value 2 get value 0<br> * All pixels with value 3 get value 2<br><br><br>Parameters:<br>ClearCLImageInterface input, ClearCLImageInterface new_values_vector, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -742,6 +769,9 @@ class CLIJ2AutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.rotateRight(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>rotateRight</b><br><br>Rotates a given input image by 90 degrees clockwise. For that, X and Y axis of an image stack<br>are flipped. This operation is similar to ImageJs 'Reslice [/]' method but offers less flexibility <br>such as interpolation.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.saveAsTIF(ClearCLBuffer input, String filename)";
+       description = "<b>saveAsTIF</b><br><br>Pulls an image from the GPU memory and saves it as TIF to disc.<br><br>Parameters:<br>ClearCLBuffer input, String filename";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.scale2D(ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Float arg4)";
        description = "<b>scale2D</b><br><br>Scales an image with a given factor.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Float arg4";
@@ -962,10 +992,13 @@ class CLIJ2AutoComplete {
        headline = "clij2.voronoiOctagon(ClearCLBuffer input, ClearCLBuffer destination)";
        description = "<b>voronoiOctagon</b><br><br>Takes a binary image and dilates the regions using a octagon shape until they touch. <br><br>The pixels where  the regions touched are afterwards returned as binary image which corresponds to the Voronoi diagram.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.watershed(ClearCLBuffer binary_source, ClearCLBuffer destination)";
+       description = "<b>watershed</b><br><br>Apply a binary watershed to a binary image and introduces black pixels between objects.<br><br>Parameters:<br>ClearCLBuffer binary_source, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.writeValuesToPositions(ClearCLBuffer positionsAndValues, ClearCLBuffer destination)";
        description = "<b>writeValuesToPositions</b><br><br>Takes an image with three/four rows (2D: height = 3; 3D: height = 4): x, y [, z] and v and target image. <br><br>The value v will be written at position x/y[/z] in the target image.<br><br>Parameters:<br>ClearCLBuffer positionsAndValues, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
         return list;
     }
 }
-// 319 methods generated.
+// 330 methods generated.

@@ -1,7 +1,6 @@
 package net.haesleinhuepf.clijx.utilities;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clijx.CLIJx;
-import net.haesleinhuepf.clijx.clij2wrappers.SaveAsTIF;
 import net.haesleinhuepf.clijx.weka.CLIJxWeka2;
 import net.haesleinhuepf.clij.CLIJ;
 import net.haesleinhuepf.clij.clearcl.ClearCLKernel;
@@ -40,7 +39,6 @@ import net.haesleinhuepf.clijx.plugins.ConnectedComponentsLabelingInplace;
 import net.haesleinhuepf.clijx.plugins.AutomaticThresholdInplace;
 import net.haesleinhuepf.clijx.plugins.DifferenceOfGaussianInplace3D;
 import net.haesleinhuepf.clijx.plugins.AbsoluteInplace;
-import net.haesleinhuepf.clijx.plugins.Watershed;
 import net.haesleinhuepf.clijx.plugins.ShowRGB;
 import net.haesleinhuepf.clijx.plugins.ShowGrey;
 import net.haesleinhuepf.clijx.gui.OrganiseWindows;
@@ -622,19 +620,6 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.SaveAsTIF
-    //----------------------------------------------------
-    /**
-     * Pulls an image from the GPU memory and saves it as TIF to disc.
-     */
-    default boolean saveAsTIF(ClearCLBuffer input, String filename) {
-        if (doTimeTracing()) {recordMethodStart("SaveAsTIF");}
-        boolean result = SaveAsTIF.saveAsTIF(getCLIJ2(), input, filename);
-        if (doTimeTracing()) {recordMethodEnd("SaveAsTIF");}
-        return result;
-    }
-
-
     // net.haesleinhuepf.clijx.plugins.ConnectedComponentsLabelingInplace
     //----------------------------------------------------
     /**
@@ -690,19 +675,6 @@ public abstract interface CLIJxOps {
         if (doTimeTracing()) {recordMethodStart("AbsoluteInplace");}
         boolean result = AbsoluteInplace.absoluteInplace(getCLIJx(), source_destination);
         if (doTimeTracing()) {recordMethodEnd("AbsoluteInplace");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.Watershed
-    //----------------------------------------------------
-    /**
-     * Apply a binary watershed to a binary image and introduces black pixels between objects.
-     */
-    default boolean watershed(ClearCLBuffer binary_source, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("Watershed");}
-        boolean result = Watershed.watershed(getCLIJx(), binary_source, destination);
-        if (doTimeTracing()) {recordMethodEnd("Watershed");}
         return result;
     }
 
@@ -785,6 +757,7 @@ public abstract interface CLIJxOps {
      */
     @Deprecated
     default boolean blurSliceBySlice(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4) {
+        System.out.println("blurSliceBySlice is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("BlurSliceBySlice");}
         boolean result = BlurSliceBySlice.blurSliceBySlice(getCLIJx(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
         if (doTimeTracing()) {recordMethodEnd("BlurSliceBySlice");}
@@ -798,6 +771,7 @@ public abstract interface CLIJxOps {
      */
     @Deprecated
     default boolean blurSliceBySlice(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5, double arg6) {
+        System.out.println("blurSliceBySlice is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("BlurSliceBySlice");}
         boolean result = BlurSliceBySlice.blurSliceBySlice(getCLIJx(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue());
         if (doTimeTracing()) {recordMethodEnd("BlurSliceBySlice");}
@@ -1227,4 +1201,4 @@ public abstract interface CLIJxOps {
     }
 
 }
-// 86 methods generated.
+// 84 methods generated.
