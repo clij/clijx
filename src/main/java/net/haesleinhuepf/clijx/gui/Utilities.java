@@ -12,11 +12,19 @@ public class Utilities {
         ignoreEvent = true;
         //Toolbar.removeMacroTools();
 
+
+        Toolbar.addPlugInTool(new ContinuousWebcamAcquisition());
+        Toolbar.addPlugInTool(new InteractiveBrightnessContrast());
+        Toolbar.addPlugInTool(new InteractiveZoom());
+        Toolbar.addPlugInTool(new InteractiveWindowPosition());
+        Toolbar.addPlugInTool(new InteractiveWand());
+        Toolbar.addPlugInTool(new InteractiveRotation());
         Toolbar.addPlugInTool(new InteractiveThresholding());
+        Toolbar.addPlugInTool(new InteractiveBlurAndThreshold());
+        Toolbar.addPlugInTool(new InteractiveTopMaxAndThreshold());
         Toolbar.addPlugInTool(new InteractiveDifferenceOfGaussian());
         Toolbar.addPlugInTool(new InteractiveSpotDetection());
-        Toolbar.addPlugInTool(new InteractiveWand());
-        Toolbar.addPlugInTool(new ContinuousWebcamAcquisition());
+
         ignoreEvent = false;
 
         IJ.setTool(tool);
