@@ -4,7 +4,8 @@ __kernel void bilateral_3d(
     const int radiusX,
     const int radiusY,
     const int radiusZ,
-    const float sigma
+    const float sigma_intensity,
+    const float sigma_space
   )
 {
 
@@ -25,20 +26,16 @@ __kernel void bilateral_3d(
   for(int i2 = -radiusX; i2 <= radiusX;i2++){
     for(int j2 = -radiusY; j2 <= radiusY;j2++){
   	  for(int k2 = -radiusZ; k2 <= radiusZ;k2++){
+        // source https://en.wikipedia.org/wiki/Bilateral_filter
 
-        double p1 = (double)(READ_IMAGE(input, sampler,      (int4)(i+i2,j+j2,k+k2,0)).x);
+        double p1 = (double)(READ_IMAGE(input, sampler,      (int2)(i+i2,j+j2)).x);
+        double dist_intensity = (p1 - pix0) * (p1 - pix0);
 
-        double temp = (i2 * i2 + j2 * j2);
-        double dist = (p1 - pix0) * (p1 - pix0) * sqrt(temp);
+        double dist_space = (i2 * i2 + j2 * j2 + k2 * k2);
 
-        double weight = exp(-1.f / sigma / sigma * dist);
-
-
-	    double pix1 = READ_IMAGE(input,sampler,(int4)(i + i2, j + j2, k + k2, 0)).x;
-
-
-	    res += pix1 * weight;
-	    sum += weight;
+        double weight = exp(- dist_intensity / sigma_intensity / sigma_intensity / 2.0f - dist_space / sigma_space / sigma_space / 2.0f );
+	    res += p1 * weight;
+        sum += weight;
   	  }
     }
   }

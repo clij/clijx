@@ -27,6 +27,9 @@ __kernel void non_local_mean_3d(
     for(int j2 = -radiusY; j2 <= radiusY;j2++){
   	  for(int k2 = -radiusZ; k2 <= radiusZ;k2++){
 
+  	    // source https://en.wikipedia.org/wiki/Non-local_means
+
+
         double p1 = (double)(READ_IMAGE(input, sampler,      (int4)(i+i2,j+j2,k+k2,0)).x);
         double p2 = (double)(READ_IMAGE(local_mean, sampler, (int4)(i+i2,j+j2,k+k2,0)).x);
 

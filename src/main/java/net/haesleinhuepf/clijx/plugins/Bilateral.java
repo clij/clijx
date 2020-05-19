@@ -20,16 +20,16 @@ public class Bilateral extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, C
 
     @Override
     public String getParameterHelpText() {
-        return "Image input, ByRef Image destination, Number radiusX, Number radiusY, Number radiusZ, Number sigma";
+        return "Image input, ByRef Image destination, Number radiusX, Number radiusY, Number radiusZ, Number sigma_intensity, Number sigma_space";
     }
 
     @Override
     public boolean executeCL() {
-        boolean result = bilateral(getCLIJ2(), (ClearCLBuffer) (args[0]), (ClearCLBuffer) (args[1]), asInteger(args[2]), asInteger(args[3]), asInteger(args[4]), asFloat(args[5]));
+        boolean result = bilateral(getCLIJ2(), (ClearCLBuffer) (args[0]), (ClearCLBuffer) (args[1]), asInteger(args[2]), asInteger(args[3]), asInteger(args[4]), asFloat(args[5]), asFloat(args[6]));
         return result;
     }
 
-    public static boolean bilateral(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, Integer radiusX, Integer radiusY, Integer radiusZ, Float sigma) {
+    public static boolean bilateral(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, Integer radiusX, Integer radiusY, Integer radiusZ, Float sigma_intensity, Float sigma_space) {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("input", input);
         parameters.put("output", output);
@@ -38,7 +38,8 @@ public class Bilateral extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, C
         if (input.getDimension() > 2) {
             parameters.put("radiusZ", radiusZ);
         }
-        parameters.put("sigma", sigma);
+        parameters.put("sigma_intensity", sigma_intensity);
+        parameters.put("sigma_space", sigma_space);
 
         clij2.execute(Bilateral.class, "bilateral_" + input.getDimension() + "d_x.cl", "bilateral_" + input.getDimension() + "d", output.getDimensions(), output.getDimensions(), parameters);
 
@@ -47,7 +48,7 @@ public class Bilateral extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, C
 
     @Override
     public String getDescription() {
-        return "Applies a bilateral filter using a box neighborhood with a Gaussian weight specified with sigma to the input image.";
+        return "Applies a bilateral filter using a box neighborhood with sigma weights for space and intensity to the input image.";
     }
 
     @Override
@@ -71,7 +72,7 @@ public class Bilateral extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, C
         ClearCLBuffer buff = clij2.push(imp);
         ClearCLBuffer res = clij2.create(buff);
 
-        bilateral(clij2, buff, res, 2, 2, 2, 10.0f);
+        bilateral(clij2, buff, res, 2, 2, 2, 10.0f, 10.0f);
 
         clij2.show(res, "res");
 
