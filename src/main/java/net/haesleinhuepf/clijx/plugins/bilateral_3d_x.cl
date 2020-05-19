@@ -1,6 +1,5 @@
-__kernel void non_local_mean_3d(
+__kernel void bilateral_3d(
     IMAGE_input_TYPE input,
-    IMAGE_local_mean_TYPE local_mean,
     IMAGE_output_TYPE output,
     const int radiusX,
     const int radiusY,
@@ -16,7 +15,7 @@ __kernel void non_local_mean_3d(
   uint j = get_global_id(1);
   uint k = get_global_id(2);
 
-  //int pix0 = (int)(READ_IMAGE(input,sampler,(int4)(i,j,k,0)).x);
+  double pix0 = (int)(READ_IMAGE(input,sampler,(int4)(i,j,k,0)).x);
 
   double res = 0;
   double sum = 0;
@@ -28,9 +27,9 @@ __kernel void non_local_mean_3d(
   	  for(int k2 = -radiusZ; k2 <= radiusZ;k2++){
 
         double p1 = (double)(READ_IMAGE(input, sampler,      (int4)(i+i2,j+j2,k+k2,0)).x);
-        double p2 = (double)(READ_IMAGE(local_mean, sampler, (int4)(i+i2,j+j2,k+k2,0)).x);
 
-        double dist = (p1 - p2) * (p1 - p2);
+        double temp = (i2 * i2 + j2 * j2);
+        double dist = (p1 - pix0) * (p1 - pix0) * sqrt(temp);
 
         double weight = exp(-1.f / sigma / sigma * dist);
 

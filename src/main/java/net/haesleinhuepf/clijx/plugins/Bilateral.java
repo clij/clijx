@@ -4,10 +4,7 @@ package net.haesleinhuepf.clijx.plugins;
 import ij.IJ;
 import ij.ImageJ;
 import ij.ImagePlus;
-import net.haesleinhuepf.clij.CLIJ;
-import net.haesleinhuepf.clij.clearcl.ClearCL;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
-import net.haesleinhuepf.clij.macro.AbstractCLIJPlugin;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
@@ -18,8 +15,8 @@ import org.scijava.plugin.Plugin;
 
 import java.util.HashMap;
 
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_nonLocalMaan")
-public class NonLocalMean extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor {
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_bilateral")
+public class Bilateral extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor {
 
     @Override
     public String getParameterHelpText() {
@@ -28,19 +25,13 @@ public class NonLocalMean extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
 
     @Override
     public boolean executeCL() {
-        boolean result = nonLocalMean(getCLIJ2(), (ClearCLBuffer) (args[0]), (ClearCLBuffer) (args[1]), asInteger(args[2]), asInteger(args[3]), asInteger(args[4]), asFloat(args[5]));
+        boolean result = bilateral(getCLIJ2(), (ClearCLBuffer) (args[0]), (ClearCLBuffer) (args[1]), asInteger(args[2]), asInteger(args[3]), asInteger(args[4]), asFloat(args[5]));
         return result;
     }
 
-    public static boolean nonLocalMean(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, Integer radiusX, Integer radiusY, Integer radiusZ, Float sigma) {
-        ClearCLBuffer local_mean = clij2.create(output);
-        clij2.mean3DBox(input, local_mean, radiusX, radiusY, radiusZ);
-
-        clij2.show(local_mean, "local_mean");
-
+    public static boolean bilateral(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, Integer radiusX, Integer radiusY, Integer radiusZ, Float sigma) {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("input", input);
-        parameters.put("local_mean", local_mean);
         parameters.put("output", output);
         parameters.put("radiusX", radiusX);
         parameters.put("radiusY", radiusY);
@@ -49,15 +40,14 @@ public class NonLocalMean extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
         }
         parameters.put("sigma", sigma);
 
-        clij2.execute(NonLocalMean.class, "non_local_mean_" + input.getDimension() + "d_x.cl", "non_local_mean_" + input.getDimension() + "d", output.getDimensions(), output.getDimensions(), parameters);
+        clij2.execute(Bilateral.class, "bilateral_" + input.getDimension() + "d_x.cl", "bilateral_" + input.getDimension() + "d", output.getDimensions(), output.getDimensions(), parameters);
 
-        local_mean.close();
         return true;
     }
 
     @Override
     public String getDescription() {
-        return "Applies a non-local mean filter using a box neighborhood with a Gaussian weight specified with sigma to the input image.";
+        return "Applies a bilateral filter using a box neighborhood with a Gaussian weight specified with sigma to the input image.";
     }
 
     @Override
@@ -74,13 +64,14 @@ public class NonLocalMean extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
         CLIJ2 clij2 = CLIJ2.getInstance();
         new ImageJ();
 
-        ImagePlus imp = IJ.openImage("C:/structure/data/t1-head.tif");
+        //ImagePlus imp = IJ.openImage("C:/structure/data/t1-head.tif");
+        ImagePlus imp = IJ.openImage("C:/structure/data/blobs.tif");
         IJ.run(imp, "32-bit", "");
 
         ClearCLBuffer buff = clij2.push(imp);
         ClearCLBuffer res = clij2.create(buff);
 
-        nonLocalMean(clij2, buff, res, 2, 2, 2, 10.0f);
+        bilateral(clij2, buff, res, 2, 2, 2, 10.0f);
 
         clij2.show(res, "res");
 
