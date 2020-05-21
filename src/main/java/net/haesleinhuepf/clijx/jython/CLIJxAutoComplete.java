@@ -74,6 +74,9 @@ class CLIJxAutoComplete {
        headline = "clijx.averageDistanceOfTouchingNeighbors(ClearCLBuffer distance_matrix, ClearCLBuffer touch_matrix, ClearCLBuffer average_distancelist_destination)";
        description = "<b>averageDistanceOfTouchingNeighbors</b><br><br>Takes a touch matrix and a distance matrix to determine the average distance of touching neighbors <br> for every object.<br><br>Parameters:<br>ClearCLBuffer distance_matrix, ClearCLBuffer touch_matrix, ClearCLBuffer average_distancelist_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.bilateral(ClearCLBuffer input, ClearCLBuffer destination, Integer radiusX, Integer radiusY, Integer radiusZ, Float sigma_intensity, Float sigma_space)";
+       description = "<b>bilateral</b><br><br>Applies a bilateral filter using a box neighborhood with sigma weights for space and intensity to the input image.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer radiusX, Integer radiusY, Integer radiusZ, Float sigma_intensity, Float sigma_space";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.binaryAnd(ClearCLImageInterface operand1, ClearCLImageInterface operand2, ClearCLImageInterface destination)";
        description = "<b>binaryAnd</b><br><br>Computes a binary image (containing pixel values 0 and 1) from two images X and Y by connecting pairs of<br>pixels x and y with the binary AND operator &.<br>All pixel values except 0 in the input images are interpreted as 1.<br><br><pre>f(x, y) = x & y</pre><br><br>Parameters:<br>ClearCLImageInterface operand1, ClearCLImageInterface operand2, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -163,6 +166,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.convertRGBStackToGraySlice(ClearCLBuffer stack_source, ClearCLBuffer slice_destination)";
        description = "<b>convertRGBStackToGraySlice</b><br><br>Converts a three channel image (stack with three slices) to a single channel image (2D image) by multiplying with factors 0.299, 0.587, 0.114.<br><br>Parameters:<br>ClearCLBuffer stack_source, ClearCLBuffer slice_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.convolve(ClearCLBuffer source, ClearCLBuffer convolution_kernel, ClearCLBuffer destination)";
+       description = "<b>convolve</b><br><br>Convolve the image with a given kernel image.<br><br>It is recommended that the kernel image has an odd size in X, Y and Z.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer convolution_kernel, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.copySlice(ClearCLImageInterface source, ClearCLImageInterface destination, Integer sliceIndex)";
        description = "<b>copySlice</b><br><br>This method has two purposes: <br>It copies a 2D image to a given slice z position in a 3D image stack or <br>It copies a given slice at position z in an image stack to a 2D image.<br><br>The first case is only available via ImageJ macro. If you are using it, it is recommended that the <br>target 3D image already pre-exists in GPU memory before calling this method. Otherwise, CLIJ create <br>the image stack with z planes.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer sliceIndex";
@@ -374,8 +380,8 @@ class CLIJxAutoComplete {
        headline = "clijx.generateParametricImageFromResultsTableColumn(ClearCLImageInterface arg1, ClearCLImageInterface arg2, ResultsTable arg3, String arg4)";
        description = "<b>generateParametricImageFromResultsTableColumn</b><br><br>Take a labelmap and a column from the results table to replace label 1 with the 1st value in the vector. <br><br>Note that indexing in the table column starts at zero. The results table should contain a line at the beginningrepresenting the background.<br><br><br>Parameters:<br>ClearCLImageInterface arg1, ClearCLImageInterface arg2, ResultsTable arg3, String arg4";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.generateParametricImage(ClearCLImageInterface parameter_value_vector, ClearCLImageInterface label_map, ClearCLImageInterface parametric_image_destination)";
-       description = "<b>generateParametricImage</b><br><br>Take a labelmap and a vector of values to replace label 1 with the 1st value in the vector. <br><br>Note that indexing in the vector starts at zero. The 0th entry corresponds to background in the label map.Internally this method just calls ReplaceIntensities.<br><br><br>Parameters:<br>ClearCLImageInterface parameter_value_vector, ClearCLImageInterface label_map, ClearCLImageInterface parametric_image_destination";
+       headline = "clijx.generateParametricImage(ClearCLImageInterface label_map, ClearCLImageInterface parameter_value_vector, ClearCLImageInterface parametric_image_destination)";
+       description = "<b>generateParametricImage</b><br><br>Take a labelmap and a vector of values to replace label 1 with the 1st value in the vector. <br><br>Note that indexing in the vector starts at zero. The 0th entry corresponds to background in the label map.Internally this method just calls ReplaceIntensities.<br><br><br>Parameters:<br>ClearCLImageInterface label_map, ClearCLImageInterface parameter_value_vector, ClearCLImageInterface parametric_image_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.generateTouchMatrix(ClearCLBuffer label_map, ClearCLBuffer touch_matrix_destination)";
        description = "<b>generateTouchMatrix</b><br><br>Takes a labelmap with n labels and generates a (n+1)*(n+1) matrix where all pixels are set to 0 exept those where labels are touching. <br><br>Only half of the matrix is filled (with x < y). For example, if labels 3 and 4 are touching then the pixel (3,4) in the matrix will be set to 1.<br><br>Parameters:<br>ClearCLBuffer label_map, ClearCLBuffer touch_matrix_destination";
@@ -685,6 +691,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.neighborsOfNeighbors(ClearCLBuffer touch_matrix, ClearCLBuffer neighbor_matrix_destination)";
        description = "<b>neighborsOfNeighbors</b><br><br>Determines neighbors of neigbors from touch matrix and saves the result as a new touch matrix.<br><br>Parameters:<br>ClearCLBuffer touch_matrix, ClearCLBuffer neighbor_matrix_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.nonLocalMeans(ClearCLBuffer input, ClearCLBuffer destination, Integer radiusX, Integer radiusY, Integer radiusZ, Float sigma)";
+       description = "<b>nonLocalMeans</b><br><br>Applies a non-local means filter using a box neighborhood with a Gaussian weight specified with sigma to the input image.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer radiusX, Integer radiusY, Integer radiusZ, Float sigma";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.nonzeroMaximumBox(ClearCLImageInterface arg1, ClearCLImageInterface arg2, ClearCLImageInterface arg3)";
        description = "<b>nonzeroMaximumBox</b><br><br>Apply a maximum filter (box shape) to the input image. <br><br>The radius is fixed to 1 and pixels with value 0 are ignored.<br><br>Parameters:<br>ClearCLImageInterface arg1, ClearCLImageInterface arg2, ClearCLImageInterface arg3";
@@ -1154,4 +1163,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 381 methods generated.
+// 384 methods generated.

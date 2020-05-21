@@ -66,6 +66,8 @@ import net.haesleinhuepf.clijx.plugins.StartContinuousWebcamAcquisition;
 import net.haesleinhuepf.clijx.plugins.StopContinuousWebcamAcquisition;
 import net.haesleinhuepf.clijx.plugins.CaptureWebcamImage;
 import net.haesleinhuepf.clijx.plugins.ConvertRGBStackToGraySlice;
+import net.haesleinhuepf.clijx.plugins.NonLocalMeans;
+import net.haesleinhuepf.clijx.plugins.Bilateral;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -1200,5 +1202,31 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.NonLocalMeans
+    //----------------------------------------------------
+    /**
+     * Applies a non-local means filter using a box neighborhood with a Gaussian weight specified with sigma to the input image.
+     */
+    default boolean nonLocalMeans(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6) {
+        if (doTimeTracing()) {recordMethodStart("NonLocalMeans");}
+        boolean result = NonLocalMeans.nonLocalMeans(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("NonLocalMeans");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.Bilateral
+    //----------------------------------------------------
+    /**
+     * Applies a bilateral filter using a box neighborhood with sigma weights for space and intensity to the input image.
+     */
+    default boolean bilateral(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6, double arg7) {
+        if (doTimeTracing()) {recordMethodStart("Bilateral");}
+        boolean result = Bilateral.bilateral(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).floatValue(), new Double (arg7).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("Bilateral");}
+        return result;
+    }
+
 }
-// 84 methods generated.
+// 86 methods generated.

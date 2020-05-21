@@ -134,6 +134,9 @@ class CLIJ2AutoComplete {
        headline = "clij2.connectedComponentsLabeling(ClearCLImageInterface binary_input, ClearCLImageInterface labeling_destination)";
        description = "<b>connectedComponentsLabeling</b><br><br>Performs connected components analysis to a binary image and generates a label map.<br><br>DEPRECATED: This method is <b>deprecated</b>. Use ConnectedComponentsLabellingBox (or Diamond) instead.<br><br>Parameters:<br>ClearCLImageInterface binary_input, ClearCLImageInterface labeling_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.convolve(ClearCLBuffer source, ClearCLBuffer convolution_kernel, ClearCLBuffer destination)";
+       description = "<b>convolve</b><br><br>Convolve the image with a given kernel image.<br><br>It is recommended that the kernel image has an odd size in X, Y and Z.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer convolution_kernel, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.copySlice(ClearCLImageInterface source, ClearCLImageInterface destination, Integer sliceIndex)";
        description = "<b>copySlice</b><br><br>This method has two purposes: <br>It copies a 2D image to a given slice z position in a 3D image stack or <br>It copies a given slice at position z in an image stack to a 2D image.<br><br>The first case is only available via ImageJ macro. If you are using it, it is recommended that the <br>target 3D image already pre-exists in GPU memory before calling this method. Otherwise, CLIJ create <br>the image stack with z planes.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer sliceIndex";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -323,8 +326,8 @@ class CLIJ2AutoComplete {
        headline = "clij2.generateParametricImageFromResultsTableColumn(ClearCLImageInterface arg1, ClearCLImageInterface arg2, ResultsTable arg3, String arg4)";
        description = "<b>generateParametricImageFromResultsTableColumn</b><br><br>Take a labelmap and a column from the results table to replace label 1 with the 1st value in the vector. <br><br>Note that indexing in the table column starts at zero. The results table should contain a line at the beginningrepresenting the background.<br><br><br>Parameters:<br>ClearCLImageInterface arg1, ClearCLImageInterface arg2, ResultsTable arg3, String arg4";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clij2.generateParametricImage(ClearCLImageInterface parameter_value_vector, ClearCLImageInterface label_map, ClearCLImageInterface parametric_image_destination)";
-       description = "<b>generateParametricImage</b><br><br>Take a labelmap and a vector of values to replace label 1 with the 1st value in the vector. <br><br>Note that indexing in the vector starts at zero. The 0th entry corresponds to background in the label map.Internally this method just calls ReplaceIntensities.<br><br><br>Parameters:<br>ClearCLImageInterface parameter_value_vector, ClearCLImageInterface label_map, ClearCLImageInterface parametric_image_destination";
+       headline = "clij2.generateParametricImage(ClearCLImageInterface label_map, ClearCLImageInterface parameter_value_vector, ClearCLImageInterface parametric_image_destination)";
+       description = "<b>generateParametricImage</b><br><br>Take a labelmap and a vector of values to replace label 1 with the 1st value in the vector. <br><br>Note that indexing in the vector starts at zero. The 0th entry corresponds to background in the label map.Internally this method just calls ReplaceIntensities.<br><br><br>Parameters:<br>ClearCLImageInterface label_map, ClearCLImageInterface parameter_value_vector, ClearCLImageInterface parametric_image_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.generateTouchMatrix(ClearCLBuffer label_map, ClearCLBuffer touch_matrix_destination)";
        description = "<b>generateTouchMatrix</b><br><br>Takes a labelmap with n labels and generates a (n+1)*(n+1) matrix where all pixels are set to 0 exept those where labels are touching. <br><br>Only half of the matrix is filled (with x < y). For example, if labels 3 and 4 are touching then the pixel (3,4) in the matrix will be set to 1.<br><br>Parameters:<br>ClearCLBuffer label_map, ClearCLBuffer touch_matrix_destination";
@@ -1001,4 +1004,4 @@ class CLIJ2AutoComplete {
         return list;
     }
 }
-// 330 methods generated.
+// 331 methods generated.
