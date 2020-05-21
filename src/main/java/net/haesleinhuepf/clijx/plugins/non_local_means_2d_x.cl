@@ -1,4 +1,4 @@
-__kernel void non_local_mean_2d(
+__kernel void non_local_means_2d(
     IMAGE_input_TYPE input,
     IMAGE_local_mean_TYPE local_mean,
     IMAGE_output_TYPE output,
