@@ -1000,7 +1000,8 @@ public abstract interface CLIJxOps {
      */
     default boolean applyWekaToTable(ResultsTable arg1, String arg2, String arg3) {
         if (doTimeTracing()) {recordMethodStart("ApplyWekaToTable");}
-        boolean result = ApplyWekaToTable.applyWekaToTable(getCLIJ2(), arg1, arg2, arg3);
+        boolean result = true;
+        ApplyWekaToTable.applyWekaToTable(getCLIJ2(), arg1, arg2, arg3);
         if (doTimeTracing()) {recordMethodEnd("ApplyWekaToTable");}
         return result;
     }
@@ -1012,7 +1013,8 @@ public abstract interface CLIJxOps {
      */
     default boolean applyWekaToTable(ResultsTable arg1, String arg2, CLIJxWeka2 arg3) {
         if (doTimeTracing()) {recordMethodStart("ApplyWekaToTable");}
-        boolean result = ApplyWekaToTable.applyWekaToTable(getCLIJ2(), arg1, arg2, arg3);
+        boolean result = true;
+        ApplyWekaToTable.applyWekaToTable(getCLIJ2(), arg1, arg2, arg3);
         if (doTimeTracing()) {recordMethodEnd("ApplyWekaToTable");}
         return result;
     }
