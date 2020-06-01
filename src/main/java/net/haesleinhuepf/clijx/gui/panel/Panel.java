@@ -619,16 +619,34 @@ class Panel {
             {
                 new BinaryXOr(),
                 new BinaryEdgeDetection(),
-                new BinaryFillHoles(),
-                new Watershed()
+                new BinaryFillHoles()//,
+                //new Watershed()
             }
         },
         {
             {
                 new ConnectedComponentsLabelingBox(),
                 new MaskLabel(),
-                new ExcludeLabelsOnEdges()
-            }
+                new ExcludeLabelsOnEdges(),
+                new GenerateParametricImage()
+            },
+            {
+                new LabelVoronoiOctagon()/*,
+                new SpotsToPointList(),
+                new LabelledSpotsToPointList(),
+                new GenerateBinaryOverlapMatrix()
+            },
+            {
+                new GenerateTouchMatrix(),
+                new GenerateDistanceMatrix(),
+                new TouchMatrixToMesh(),
+                new DistanceMatrixToMesh()
+            },
+            {
+                new NeighborsOfNeighbors(),
+                new MultiplyMatrix(),
+                new PointlistToLabelledSpots()
+            */}
         }
     };
 
