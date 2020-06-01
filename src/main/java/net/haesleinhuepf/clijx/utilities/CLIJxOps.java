@@ -998,10 +998,9 @@ public abstract interface CLIJxOps {
      * 
      * It takes a Results Table, sorts its columns by name alphabetically and uses it as extracted features (rows correspond to feature vectors) and applies a pre-trained a Weka model. Take care that the table has been generated in the sameway as for training the model!
      */
-    default boolean applyWekaToTable(ResultsTable arg1, String arg2, String arg3) {
+    default CLIJxWeka2 applyWekaToTable(ResultsTable arg1, String arg2, String arg3) {
         if (doTimeTracing()) {recordMethodStart("ApplyWekaToTable");}
-        boolean result = true;
-        ApplyWekaToTable.applyWekaToTable(getCLIJ2(), arg1, arg2, arg3);
+        CLIJxWeka2 result = ApplyWekaToTable.applyWekaToTable(getCLIJ2(), arg1, arg2, arg3);
         if (doTimeTracing()) {recordMethodEnd("ApplyWekaToTable");}
         return result;
     }
@@ -1011,10 +1010,9 @@ public abstract interface CLIJxOps {
      * 
      * It takes a Results Table, sorts its columns by name alphabetically and uses it as extracted features (rows correspond to feature vectors) and applies a pre-trained a Weka model. Take care that the table has been generated in the sameway as for training the model!
      */
-    default boolean applyWekaToTable(ResultsTable arg1, String arg2, CLIJxWeka2 arg3) {
+    default CLIJxWeka2 applyWekaToTable(ResultsTable arg1, String arg2, CLIJxWeka2 arg3) {
         if (doTimeTracing()) {recordMethodStart("ApplyWekaToTable");}
-        boolean result = true;
-        ApplyWekaToTable.applyWekaToTable(getCLIJ2(), arg1, arg2, arg3);
+        CLIJxWeka2 result = ApplyWekaToTable.applyWekaToTable(getCLIJ2(), arg1, arg2, arg3);
         if (doTimeTracing()) {recordMethodEnd("ApplyWekaToTable");}
         return result;
     }
