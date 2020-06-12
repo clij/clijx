@@ -49,7 +49,6 @@ import net.haesleinhuepf.clijx.plugins.splitstack.AbstractSplitStack;
 import net.haesleinhuepf.clijx.plugins.TopHatOctagonSliceBySlice;
 import net.haesleinhuepf.clijx.io.WriteVTKLineListToDisc;
 import net.haesleinhuepf.clijx.io.WriteXYZPointListToDisc;
-import net.haesleinhuepf.clijx.plugins.AverageAngleBetweenAdjacentTriangles;
 import net.haesleinhuepf.clijx.plugins.tenengradfusion.TenengradFusion;
 import net.haesleinhuepf.clijx.plugins.Skeletonize;
 import net.haesleinhuepf.clijx.plugins.PushTile;
@@ -81,7 +80,9 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clij.kernels.Kernels
     //----------------------------------------------------
     /**
-     * Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. 
+     * Deforms an image according to distances provided in the given vector images.
+     * 
+     *  It is recommended to use 32-bit images for input, output and vector images. 
      */
     default boolean applyVectorfield(ClearCLBuffer source, ClearCLBuffer vectorX, ClearCLBuffer vectorY, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("Kernels");}
@@ -91,7 +92,9 @@ public abstract interface CLIJxOps {
     }
 
     /**
-     * Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. 
+     * Deforms an image according to distances provided in the given vector images.
+     * 
+     *  It is recommended to use 32-bit images for input, output and vector images. 
      */
     default boolean applyVectorfield(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4, ClearCLBuffer arg5) {
         if (doTimeTracing()) {recordMethodStart("Kernels");}
@@ -101,7 +104,9 @@ public abstract interface CLIJxOps {
     }
 
     /**
-     * Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. 
+     * Deforms an image according to distances provided in the given vector images.
+     * 
+     *  It is recommended to use 32-bit images for input, output and vector images. 
      */
     default boolean applyVectorfield(ClearCLImage source, ClearCLImage vectorX, ClearCLImage vectorY, ClearCLImage destination) {
         if (doTimeTracing()) {recordMethodStart("Kernels");}
@@ -111,7 +116,9 @@ public abstract interface CLIJxOps {
     }
 
     /**
-     * Deforms an image according to distances provided in the given vector images. It is recommended to use 32-bit images for input, output and vector images. 
+     * Deforms an image according to distances provided in the given vector images.
+     * 
+     *  It is recommended to use 32-bit images for input, output and vector images. 
      */
     default boolean applyVectorfield(ClearCLImage arg1, ClearCLImage arg2, ClearCLImage arg3, ClearCLImage arg4, ClearCLImage arg5) {
         if (doTimeTracing()) {recordMethodStart("Kernels");}
@@ -203,11 +210,6 @@ public abstract interface CLIJxOps {
     }
 
     /**
-     * Determines the maximum projection of an image along a given dimension. Furthermore, the X and Y
-     *  dimesions of the resulting image must be specified by the user according to its definition:
-     * X = 0
-     * Y = 1
-     * Z = 2
      * 
      */
     default boolean maximumXYZProjection(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5) {
@@ -218,11 +220,6 @@ public abstract interface CLIJxOps {
     }
 
     /**
-     * Determines the maximum projection of an image along a given dimension. Furthermore, the X and Y
-     *  dimesions of the resulting image must be specified by the user according to its definition:
-     * X = 0
-     * Y = 1
-     * Z = 2
      * 
      */
     default boolean maximumXYZProjection(ClearCLImage arg1, ClearCLImage arg2, double arg3, double arg4, double arg5) {
@@ -756,6 +753,8 @@ public abstract interface CLIJxOps {
      * Computes the Gaussian blurred image of an image given two sigma values in X and Y. Thus, the filterkernel can have non-isotropic shape.
      * 
      * The Gaussian blur is applied slice by slice in 2D.
+     * 
+     * DEPRECATED: This method is deprecated. Use gaussianBlur3D instead.
      */
     @Deprecated
     default boolean blurSliceBySlice(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4) {
@@ -770,6 +769,8 @@ public abstract interface CLIJxOps {
      * Computes the Gaussian blurred image of an image given two sigma values in X and Y. Thus, the filterkernel can have non-isotropic shape.
      * 
      * The Gaussian blur is applied slice by slice in 2D.
+     * 
+     * DEPRECATED: This method is deprecated. Use gaussianBlur3D instead.
      */
     @Deprecated
     default boolean blurSliceBySlice(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5, double arg6) {
@@ -821,19 +822,6 @@ public abstract interface CLIJxOps {
         if (doTimeTracing()) {recordMethodStart("WriteXYZPointListToDisc");}
         boolean result = WriteXYZPointListToDisc.writeXYZPointListToDisc(getCLIJx(), pointlist, filename);
         if (doTimeTracing()) {recordMethodEnd("WriteXYZPointListToDisc");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.AverageAngleBetweenAdjacentTriangles
-    //----------------------------------------------------
-    /**
-     * Takes a pointlist and a touch matrix to determine the average angle of adjacent triangles in a surface mesh. For every point, the average angle of adjacent triangles is saved.
-     */
-    default boolean averageAngleBetweenAdjacentTriangles(ClearCLBuffer pointlist, ClearCLBuffer touch_matrix, ClearCLBuffer average_distancelist_destination) {
-        if (doTimeTracing()) {recordMethodStart("AverageAngleBetweenAdjacentTriangles");}
-        boolean result = AverageAngleBetweenAdjacentTriangles.averageAngleBetweenAdjacentTriangles(getCLIJx(), pointlist, touch_matrix, average_distancelist_destination);
-        if (doTimeTracing()) {recordMethodEnd("AverageAngleBetweenAdjacentTriangles");}
         return result;
     }
 
@@ -1229,4 +1217,4 @@ public abstract interface CLIJxOps {
     }
 
 }
-// 86 methods generated.
+// 85 methods generated.
