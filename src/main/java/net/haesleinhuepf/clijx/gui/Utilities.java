@@ -17,13 +17,13 @@ public class Utilities {
         Toolbar.addPlugInTool(new InteractiveBrightnessContrast());
         Toolbar.addPlugInTool(new InteractiveZoom());
         Toolbar.addPlugInTool(new InteractiveWindowPosition());
-        Toolbar.addPlugInTool(new InteractiveWand());
-        Toolbar.addPlugInTool(new InteractiveRotation());
-        Toolbar.addPlugInTool(new InteractiveThresholding());
-        Toolbar.addPlugInTool(new InteractiveBlurAndThreshold());
-        Toolbar.addPlugInTool(new InteractiveTopMaxAndThreshold());
-        Toolbar.addPlugInTool(new InteractiveDifferenceOfGaussian());
-        Toolbar.addPlugInTool(new InteractiveSpotDetection());
+        //Toolbar.addPlugInTool(new InteractiveWand());
+        //Toolbar.addPlugInTool(new InteractiveRotation());
+        //Toolbar.addPlugInTool(new InteractiveThresholding());
+        //Toolbar.addPlugInTool(new InteractiveBlurAndThreshold());
+        //Toolbar.addPlugInTool(new InteractiveTopMaxAndThreshold());
+        //Toolbar.addPlugInTool(new InteractiveDifferenceOfGaussian());
+        //Toolbar.addPlugInTool(new InteractiveSpotDetection());
 
         ignoreEvent = false;
 
