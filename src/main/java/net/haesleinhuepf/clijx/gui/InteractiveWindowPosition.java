@@ -6,6 +6,8 @@ import ij.ImagePlus;
 import ij.gui.Toolbar;
 import ij.plugin.tool.PlugInTool;
 import net.haesleinhuepf.clijx.gui.panel.CLIJxPanel;
+import net.haesleinhuepf.clijx.gui.stickyfilters.AbstractStickyFilter;
+import net.haesleinhuepf.clijx.gui.stickyfilters.StickyImagePlus;
 
 import java.awt.event.MouseEvent;
 
@@ -38,12 +40,14 @@ public class InteractiveWindowPosition extends PlugInTool {
 
     @Override
     public void mouseReleased(ImagePlus imp, MouseEvent e) {
-        if(CLIJxPanel.isPanel(imp)) {
+        if (CLIJxPanel.isPanel(imp)) {
             CLIJxPanel.mouseUp(
                     imp.getWindow().getCanvas().offScreenX(e.getX()),
                     imp.getWindow().getCanvas().offScreenY(e.getY())
             );
             return;
+        } else if (imp instanceof StickyImagePlus) {
+            AbstractStickyFilter.handleCoordinates((StickyImagePlus) imp);
         } else {
             CLIJxPanel.considerTaking(imp);
         }

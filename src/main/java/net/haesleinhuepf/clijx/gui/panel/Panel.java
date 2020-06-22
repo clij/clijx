@@ -738,6 +738,9 @@ class Panel {
     }
 
     public void considerTaking(ImagePlus imp) {
+        if (imageParameterMap == null) {
+            return;
+        }
         for (int i = 0; i < imageParameterMap.length; i++) {
 
             int windowBorderX = 0;
