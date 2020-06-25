@@ -126,7 +126,7 @@ public abstract class AbstractStickyFilter implements PlugInFilter {
         target.setDisplayRange(clijx.getMinimumOfAllPixels(output), clijx.getMaximumOfAllPixels(output));
         if (getClass().getSimpleName().contains("Label")) {
             try {
-                IJ.run("glasbey_on_dark");
+                IJ.run(target, "glasbey_on_dark", "");
             } catch (Exception e) {
                 System.out.println(e);
             }
