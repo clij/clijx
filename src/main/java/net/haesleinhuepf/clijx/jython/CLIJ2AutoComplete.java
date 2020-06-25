@@ -296,6 +296,9 @@ class CLIJ2AutoComplete {
        headline = "clij2.exponential(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>exponential</b><br><br>Computes base exponential of all pixels values.<br><br>f(x) = exp(x)<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.extendLabelingViaVoronoi(ClearCLBuffer input, ClearCLImageInterface destination)";
+       description = "<b>extendLabelingViaVoronoi</b><br><br>Takes a label map image and dilates the regions using a octagon shape until they touch. <br><br>The resulting label map is written to the output.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.fillHistogram(ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Float arg4)";
        description = "<b>fillHistogram</b><br><br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -417,7 +420,7 @@ class CLIJ2AutoComplete {
        description = "<b>labelToMask</b><br><br>Masks a single label in a label map. <br><br>Sets all pixels in the target image to 1, where the given label index was present in the label map. Other pixels are set to 0.<br><br>Parameters:<br>ClearCLBuffer label_map_source, ClearCLBuffer mask_destination, Float label_index";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.labelVoronoiOctagon(ClearCLBuffer label_map, ClearCLBuffer label_voronoi_destination)";
-       description = "<b>labelVoronoiOctagon</b><br><br>Takes a labelled image and dilates the labels using a octagon shape until they touch. <br><br>The pixels where  the regions touched are afterwards returned as binary image which corresponds to the Voronoi diagram.<br><br>DEPRECATED: Use VoronoiLabelin instead.<br><br>Parameters:<br>ClearCLBuffer label_map, ClearCLBuffer label_voronoi_destination";
+       description = "<b>labelVoronoiOctagon</b><br><br>Takes a labelled image and dilates the labels using a octagon shape until they touch. <br><br>The pixels where  the regions touched are afterwards returned as binary image which corresponds to the Voronoi diagram.<br><br>Parameters:<br>ClearCLBuffer label_map, ClearCLBuffer label_voronoi_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.labelledSpotsToPointList(ClearCLBuffer input_labelled_spots, ClearCLBuffer destination_pointlist)";
        description = "<b>labelledSpotsToPointList</b><br><br>Generates a coordinate list of points in a labelled spot image. <br><br>Transforms a labelmap of spots (single pixels with values 1, 2, ..., n for n spots) as resulting <br>from connected components analysis in an image where every column contains d <br>pixels (with d = dimensionality of the original image) with the coordinates of the maxima/minima.<br><br>Parameters:<br>ClearCLBuffer input_labelled_spots, ClearCLBuffer destination_pointlist";
@@ -812,8 +815,8 @@ class CLIJ2AutoComplete {
        headline = "clij2.set(ClearCLImageInterface source, Float value)";
        description = "<b>set</b><br><br>Sets all pixel values x of a given image X to a constant value v.<br><br><pre>f(x) = v</pre><br><br>Parameters:<br>ClearCLImageInterface source, Float value";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clij2.setColumn(ClearCLImageInterface source, Integer columnIndex, Float value)";
-       description = "<b>setColumn</b><br><br>Sets all pixel values x of a given column in X to a constant value v.<br><br>Parameters:<br>ClearCLImageInterface source, Integer columnIndex, Float value";
+       headline = "clij2.setColumn(ClearCLImageInterface source, Integer column_index, Float value)";
+       description = "<b>setColumn</b><br><br>Sets all pixel values x of a given column in X to a constant value v.<br><br>Parameters:<br>ClearCLImageInterface source, Integer column_index, Float value";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.setImageBorders(ClearCLImageInterface destination, Float value)";
        description = "<b>setImageBorders</b><br><br>Sets all pixel values at the image border to a given value.<br><br>Parameters:<br>ClearCLImageInterface destination, Float value";
@@ -821,8 +824,8 @@ class CLIJ2AutoComplete {
        headline = "clij2.setNonZeroPixelsToPixelIndex(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>setNonZeroPixelsToPixelIndex</b><br><br>Sets all pixels in an image which are not zero to the index of the pixel. <br><br>This can be used for Connected Components Analysis.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clij2.setPlane(ClearCLImageInterface source, Integer rowIndex, Float value)";
-       description = "<b>setPlane</b><br><br>Sets all pixel values x of a given plane in X to a constant value v.<br><br>Parameters:<br>ClearCLImageInterface source, Integer rowIndex, Float value";
+       headline = "clij2.setPlane(ClearCLImageInterface source, Integer plane_index, Float value)";
+       description = "<b>setPlane</b><br><br>Sets all pixel values x of a given plane in X to a constant value v.<br><br>Parameters:<br>ClearCLImageInterface source, Integer plane_index, Float value";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.setRampX(ClearCLImageInterface source)";
        description = "<b>setRampX</b><br><br>Sets all pixel values to their X coordinate<br><br>Parameters:<br>ClearCLImageInterface source";
@@ -836,8 +839,8 @@ class CLIJ2AutoComplete {
        headline = "clij2.setRandom(ClearCLBuffer source, Float minimumValue, Float maximumValue, Float seed)";
        description = "<b>setRandom</b><br><br>Fills an image or image stack with uniformly distributed random numbers between given minimum and maximum values. <br><br>Recommendation: For the seed, use getTime().<br><br>Parameters:<br>ClearCLBuffer source, Float minimumValue, Float maximumValue, Float seed";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clij2.setRow(ClearCLImageInterface source, Integer rowIndex, Float value)";
-       description = "<b>setRow</b><br><br>Sets all pixel values x of a given row in X to a constant value v.<br><br>Parameters:<br>ClearCLImageInterface source, Integer rowIndex, Float value";
+       headline = "clij2.setRow(ClearCLImageInterface source, Integer row_index, Float value)";
+       description = "<b>setRow</b><br><br>Sets all pixel values x of a given row in X to a constant value v.<br><br>Parameters:<br>ClearCLImageInterface source, Integer row_index, Float value";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.setWhereXequalsY(ClearCLImageInterface source, Float value)";
        description = "<b>setWhereXequalsY</b><br><br>Sets all pixel values a of a given image A to a constant value v in case its coordinates x == y. <br><br>Otherwise the pixel is not overwritten.<br>If you want to initialize an identity transfrom matrix, set all pixels to 0 first.<br><br>Parameters:<br>ClearCLImageInterface source, Float value";
@@ -1022,6 +1025,9 @@ class CLIJ2AutoComplete {
        headline = "clij2.varianceOfMaskedPixels(ClearCLBuffer source, ClearCLBuffer mask)";
        description = "<b>varianceOfMaskedPixels</b><br><br>Determines the variance in an image, but only in pixels which have non-zero values in another binary mask image. <br><br>The result is put in the results table as new column named 'Masked_variance'.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer mask";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.voronoiLabeling(ClearCLBuffer input, ClearCLImageInterface destination)";
+       description = "<b>voronoiLabeling</b><br><br>Takes a binary image, labels connected components and dilates the regions using a octagon shape until they touch. <br><br>The resulting label map is written to the output.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.voronoiOctagon(ClearCLBuffer input, ClearCLBuffer destination)";
        description = "<b>voronoiOctagon</b><br><br>Takes a binary image and dilates the regions using a octagon shape until they touch. <br><br>The pixels where  the regions touched are afterwards returned as binary image which corresponds to the Voronoi diagram.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1034,4 +1040,4 @@ class CLIJ2AutoComplete {
         return list;
     }
 }
-// 341 methods generated.
+// 343 methods generated.
