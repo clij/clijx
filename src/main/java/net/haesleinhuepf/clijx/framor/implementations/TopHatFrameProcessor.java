@@ -11,17 +11,18 @@ import net.haesleinhuepf.clijx.framor.AbstractFrameProcessor;
 import net.haesleinhuepf.clijx.framor.FrameProcessor;
 import net.haesleinhuepf.clijx.framor.Framor;
 
-public class GaussianBlurFrameProcessor extends AbstractFrameProcessor implements PlugInFilter {
-    private Float sigmaX = 1f;
-    private Float sigmaY = 1f;
-    private Float sigmaZ = 1f;
+public class TopHatFrameProcessor extends AbstractFrameProcessor implements PlugInFilter {
+    private Integer radiusX = 10;
+    private Integer radiusY = 10;
+    private Integer radiusZ = 10;
 
-    public GaussianBlurFrameProcessor() {}
-    public GaussianBlurFrameProcessor(Float sigmaX, Float sigmaY, Float sigmaZ) {
-        this.sigmaX = sigmaX;
-        this.sigmaY = sigmaY;
-        this.sigmaZ = sigmaZ;
+    public TopHatFrameProcessor(){}
+    public TopHatFrameProcessor(Integer radiusX, Integer radiusY, Integer radiusZ) {
+        this.radiusX = radiusX;
+        this.radiusY = radiusY;
+        this.radiusZ = radiusZ;
     }
+
 
     @Override
     public ImagePlus process(ImagePlus imp) {
@@ -29,9 +30,9 @@ public class GaussianBlurFrameProcessor extends AbstractFrameProcessor implement
         ClearCLBuffer input = clij2.push(imp);
         ClearCLBuffer output = clij2.create(input);
         if (imp.getNSlices() > 1) {
-            clij2.gaussianBlur(input, output, sigmaX, sigmaY);
+            clij2.topHatBox(input, output, radiusX, radiusY, 0);
         } else {
-            clij2.gaussianBlur(input, output, sigmaX, sigmaY, sigmaZ);
+            clij2.topHatBox(input, output, radiusX, radiusY, radiusZ);
         }
         ImagePlus result = clij2.pull(output);
         input.close();
@@ -42,7 +43,7 @@ public class GaussianBlurFrameProcessor extends AbstractFrameProcessor implement
 
     @Override
     public FrameProcessor duplicate() {
-        GaussianBlurFrameProcessor frameProcessor = new GaussianBlurFrameProcessor(sigmaX, sigmaY, sigmaZ);
+        TopHatFrameProcessor frameProcessor = new TopHatFrameProcessor(radiusX, radiusY, radiusZ);
         frameProcessor.setCLIJ2(getCLIJ2());
         return frameProcessor;
     }
@@ -54,18 +55,18 @@ public class GaussianBlurFrameProcessor extends AbstractFrameProcessor implement
 
     @Override
     public void run(ImageProcessor ip) {
-        GenericDialog gd = new GenericDialog("Gaussian blur (CLIJxf)");
-        gd.addNumericField("Sigma x", sigmaX);
-        gd.addNumericField("Sigma y", sigmaY);
-        gd.addNumericField("Sigma z", sigmaZ);
+        GenericDialog gd = new GenericDialog("Top-hat background subtraction (CLIJxf)");
+        gd.addNumericField("Sigma x", radiusX);
+        gd.addNumericField("Sigma y", radiusY);
+        gd.addNumericField("Sigma z", radiusZ);
         gd.showDialog();
         if (gd.wasCanceled()) {
             return;
         }
-        sigmaX = (float)gd.getNextNumber();
-        sigmaY = (float)gd.getNextNumber();
-        sigmaZ = (float)gd.getNextNumber();
+        radiusX = (int)gd.getNextNumber();
+        radiusY = (int)gd.getNextNumber();
+        radiusZ = (int)gd.getNextNumber();
 
-        new Framor(IJ.getImage(), new GaussianBlurFrameProcessor(sigmaX, sigmaY, sigmaZ)).getResult().show();
+        new Framor(IJ.getImage(), new TopHatFrameProcessor(radiusX, radiusY, radiusZ)).getResult().show();
     }
 }

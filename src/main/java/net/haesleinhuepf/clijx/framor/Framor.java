@@ -33,8 +33,12 @@ public class Framor {
         }
      }
 
-    private synchronized ImagePlus extractFrame(ImagePlus imp, int frame) {
+    private synchronized ImagePlus extractFrame(ImagePlus imp, int frame_channel) {
+        int frame = frame_channel / input.getNChannels();
+        int channel = frame_channel % input.getNChannels();
+
         ImageStack stack = new ImageStack();
+        imp.setC(channel + 1);
         imp.setT(frame + 1);
         for (int z = 0; z < imp.getNSlices(); z++ ){
             imp.setZ(z + 1);
@@ -47,7 +51,7 @@ public class Framor {
         int framesProcessed = 0;
         ArrayList<ExecutorOnFrame> executors = new ArrayList<>();
         HashMap<Integer, ImagePlus> processedFrames = new HashMap<>();
-        for (int i = 0; i < input.getNFrames() && i < clij2s.length; i++) {
+        for (int i = 0; i < input.getNFrames() * input.getNChannels() && i < clij2s.length; i++) {
             FrameProcessor newProcessor = frameProcessor.duplicate();
             newProcessor.setCLIJ2(clij2s[i]);
             ExecutorOnFrame executor = new ExecutorOnFrame(extractFrame(input, i), i, newProcessor);
@@ -56,14 +60,14 @@ public class Framor {
             framesProcessed++;
         }
 
-        while(processedFrames.size() < input.getNFrames()) {
+        while(processedFrames.size() < input.getNFrames() * input.getNChannels() ) {
             for (int i = 0; i < executors.size(); i++) {
                 ExecutorOnFrame executor = executors.get(i);
                 if (executor != null) {
                     ImagePlus result = executor.getOutput();
                     if (result != null) {
                         processedFrames.put(executor.getFrame(), result);
-                        if (framesProcessed < input.getNFrames()) {
+                        if (framesProcessed < input.getNFrames() * input.getNChannels()) {
                             executor = new ExecutorOnFrame(extractFrame(input, framesProcessed), framesProcessed, executor.getProcessor());
                             new Thread(executor).start();
                             executors.set(i, executor);
@@ -84,16 +88,18 @@ public class Framor {
         }
 
         ImageStack result = new ImageStack();
-        for (int i = 0; i < input.getNFrames(); i++) {
-            ImagePlus frame_imp = processedFrames.get(i);
-            for (int z = 0; z < frame_imp.getNSlices(); z++) {
-                frame_imp.setZ(z + 1);
-                result.addSlice(frame_imp.getProcessor());
+        for (int c = 0; c < input.getNChannels(); c++) {
+            for (int f = 0; f < input.getNFrames(); f++) {
+                ImagePlus frame_imp = processedFrames.get(f + c * input.getNFrames());
+                for (int z = 0; z < input.getNSlices(); z++) {
+                    frame_imp.setZ(z + 1);
+                    result.addSlice(frame_imp.getProcessor());
+                }
             }
         }
         ImagePlus output = new ImagePlus(frameProcessor.getClass().getSimpleName() + "_" + input.getTitle(), result);
 
-        return HyperStackConverter.toHyperStack(output, 1, output.getNSlices() / input.getNFrames(), input.getNFrames());
+        return HyperStackConverter.toHyperStack(output, input.getNChannels(), output.getNSlices() / input.getNFrames() / input.getNChannels(), input.getNFrames());
     }
 
     public static void main(String... args) {
