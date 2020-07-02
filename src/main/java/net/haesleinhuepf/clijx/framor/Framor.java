@@ -11,6 +11,7 @@ import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clijx.framor.implementations.GaussianBlurFrameProcessor;
 import org.apache.commons.math3.distribution.HypergeometricDistribution;
+import org.jocl.CL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,20 +20,42 @@ public class Framor {
     private ImagePlus input;
     private FrameProcessor frameProcessor;
     CLIJ2[] clij2s = null;
-    int numClijsPerDevice = 2;
+    int max_num_clijs_per_device = 2;
+    public static boolean auto_contrast = true;
 
     public Framor(ImagePlus input, FrameProcessor frameProcessor) {
         this.input = input;
         this.frameProcessor = frameProcessor;
 
         ArrayList names = CLIJ.getAvailableDeviceNames();
-        clij2s = new CLIJ2[names.size() * numClijsPerDevice];
+
+        long memoryNeed = frameProcessor.getMemoryNeedInBytes(input);
+
+        ArrayList<CLIJ2> clij2list = new ArrayList<>();
+
+
         for (int i = 0; i < names.size(); i++) {
-            for (int j = 0; j < numClijsPerDevice; j++) {
-                clij2s[i * numClijsPerDevice + j] = new CLIJ2(new CLIJ(i));
+            long availableMemory = new CLIJ(i).getGPUMemoryInBytes();
+            int num_clijs_per_device = 0;
+            while (availableMemory > memoryNeed && num_clijs_per_device < max_num_clijs_per_device) {
+                clij2list.add(new CLIJ2(new CLIJ(i)));
+                availableMemory -= memoryNeed;
+                num_clijs_per_device++;
             }
         }
-     }
+
+        clij2s = new CLIJ2[clij2list.size()];
+        clij2list.toArray(clij2s);
+
+        if (clij2s.length == 0) {
+            throw new IllegalArgumentException("No GPU found with enough memory (> " + memoryNeed + " bytes).");
+        }
+        System.out.println("Available GPUs with enough memory:");
+        for (int i = 0; i < clij2s.length; i++) {
+            System.out.println(" * " + clij2s[i].getGPUName());
+        }
+
+    }
 
     private synchronized ImagePlus extractFrame(ImagePlus imp, int frame_channel) {
         int frame = frame_channel % input.getNFrames();
@@ -45,7 +68,9 @@ public class Framor {
             imp.setZ(z + 1);
             stack.addSlice(imp.getProcessor());
         }
-        return new ImagePlus("Stack", stack);
+        ImagePlus extracted = new ImagePlus("Stack", stack);
+        extracted.setCalibration(imp.getCalibration());
+        return extracted;
     }
 
     public ImagePlus getResult() {
@@ -87,10 +112,11 @@ public class Framor {
                 break;
             }
         }
+        int nSlices = processedFrames.get(0).getNSlices();
 
         ImageStack result = new ImageStack();
         for (int f = 0; f < input.getNFrames(); f++) {
-            for (int z = 0; z < input.getNSlices(); z++) {
+            for (int z = 0; z < nSlices; z++) {
                 for (int c = 0; c < input.getNChannels(); c++) {
                     ImagePlus frame_imp = processedFrames.get(f + c * input.getNFrames());
 
@@ -100,8 +126,14 @@ public class Framor {
             }
         }
         ImagePlus output = new ImagePlus(frameProcessor.getClass().getSimpleName() + "_" + input.getTitle(), result);
+        if (output.getNSlices() > 1) {
+            output = HyperStackConverter.toHyperStack(output, input.getNChannels(), output.getNSlices() / input.getNFrames() / input.getNChannels(), input.getNFrames());
+        }
 
-        return HyperStackConverter.toHyperStack(output, input.getNChannels(), output.getNSlices() / input.getNFrames() / input.getNChannels(), input.getNFrames());
+        if (auto_contrast) {
+            IJ.run(output, "Enhance Contrast", "saturated=0.35");
+        }
+        return output;
     }
 
     public static void main(String... args) {

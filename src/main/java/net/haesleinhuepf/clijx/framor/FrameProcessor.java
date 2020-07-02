@@ -12,4 +12,6 @@ public interface FrameProcessor {
 
     void setFrame(int frame);
     int getFrame();
+
+    long getMemoryNeedInBytes(ImagePlus imp);
 }

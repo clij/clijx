@@ -16,7 +16,7 @@ public class ExecutorOnFrame implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Processing frame " + frame + " on " + frameProcessor.getCLIJ2());
+        System.out.println("Processing frame " + frame + " on " + frameProcessor.getCLIJ2() + " " + frameProcessor.getCLIJ2().getGPUName());
         output = frameProcessor.process(input);
     }
 

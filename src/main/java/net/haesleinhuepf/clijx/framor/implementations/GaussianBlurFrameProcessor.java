@@ -48,6 +48,11 @@ public class GaussianBlurFrameProcessor extends AbstractFrameProcessor implement
     }
 
     @Override
+    public long getMemoryNeedInBytes(ImagePlus imp) {
+        return imp.getBitDepth() / 8 * imp.getWidth() * imp.getHeight() * imp.getNSlices() * 2;
+    }
+
+    @Override
     public int setup(String arg, ImagePlus imp) {
         return DOES_ALL;
     }
