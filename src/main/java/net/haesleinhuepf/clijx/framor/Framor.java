@@ -1,5 +1,6 @@
 package net.haesleinhuepf.clijx.framor;
 
+import ij.IJ;
 import ij.ImageJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -34,8 +35,8 @@ public class Framor {
      }
 
     private synchronized ImagePlus extractFrame(ImagePlus imp, int frame_channel) {
-        int frame = frame_channel / input.getNChannels();
-        int channel = frame_channel % input.getNChannels();
+        int frame = frame_channel % input.getNFrames();
+        int channel = frame_channel / input.getNFrames();
 
         ImageStack stack = new ImageStack();
         imp.setC(channel + 1);
@@ -88,10 +89,11 @@ public class Framor {
         }
 
         ImageStack result = new ImageStack();
-        for (int c = 0; c < input.getNChannels(); c++) {
-            for (int f = 0; f < input.getNFrames(); f++) {
-                ImagePlus frame_imp = processedFrames.get(f + c * input.getNFrames());
-                for (int z = 0; z < input.getNSlices(); z++) {
+        for (int f = 0; f < input.getNFrames(); f++) {
+            for (int z = 0; z < input.getNSlices(); z++) {
+                for (int c = 0; c < input.getNChannels(); c++) {
+                    ImagePlus frame_imp = processedFrames.get(f + c * input.getNFrames());
+
                     frame_imp.setZ(z + 1);
                     result.addSlice(frame_imp.getProcessor());
                 }
@@ -105,10 +107,11 @@ public class Framor {
     public static void main(String... args) {
         new ImageJ();
 
-        ImagePlus input = NewImage.createFloatImage("temp", 100, 100, 100, NewImage.FILL_RANDOM);
-        input = HyperStackConverter.toHyperStack(input, 1, 10, 10);
+        ImagePlus input = IJ.openImage("src/test/resources/stack.tif");
+                //NewImage.createFloatImage("temp", 100, 100, 100, NewImage.FILL_RANDOM);
+        //input = HyperStackConverter.toHyperStack(input, 1, 10, 10);
 
-        FrameProcessor frameProcessor = new GaussianBlurFrameProcessor(5f, 5f, 5f);
+        FrameProcessor frameProcessor = new GaussianBlurFrameProcessor(0f, 0f, 0f);
 
         ImagePlus result = new Framor(input, frameProcessor).getResult();
         result.show();
