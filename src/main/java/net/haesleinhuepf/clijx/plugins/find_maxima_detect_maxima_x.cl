@@ -18,13 +18,13 @@ __kernel void find_maxima_detect_maxima(
 
     if (get_global_size(0) > 1) {
         other_value = READ_IMAGE(src, sampler, POS_src_INSTANCE(x + 1, y, z, 0)).x;
-        if (other_value >= value) {
+        if (other_value > value) {
             WRITE_dst_IMAGE(dst, dpos, 0);
             return;
         }
 
         other_value = READ_IMAGE(src, sampler, POS_src_INSTANCE(x - 1, y, z, 0)).x;
-        if (other_value >= value) {
+        if (other_value > value) {
             WRITE_dst_IMAGE(dst, dpos, 0);
             return;
         }
@@ -33,13 +33,13 @@ __kernel void find_maxima_detect_maxima(
 
     if (get_global_size(1) > 1) {
         other_value = READ_IMAGE(src, sampler, POS_src_INSTANCE(x, y + 1, z, 0)).x;
-        if (other_value >= value) {
+        if (other_value > value) {
             WRITE_dst_IMAGE(dst, dpos, 0);
             return;
         }
 
         other_value = READ_IMAGE(src, sampler, POS_src_INSTANCE(x, y - 1, z, 0)).x;
-        if (other_value >= value) {
+        if (other_value > value) {
             WRITE_dst_IMAGE(dst, dpos, 0);
             return;
         }
@@ -48,13 +48,13 @@ __kernel void find_maxima_detect_maxima(
 
     if (get_global_size(2) > 1) {
         other_value = READ_IMAGE(src, sampler, POS_src_INSTANCE(x, y, z + 1, 0)).x;
-        if (other_value >= value) {
+        if (other_value > value) {
             WRITE_dst_IMAGE(dst, dpos, 0);
             return;
         }
 
         other_value = READ_IMAGE(src, sampler, POS_src_INSTANCE(x, y, z - 1, 0)).x;
-        if (other_value >= value) {
+        if (other_value > value) {
             WRITE_dst_IMAGE(dst, dpos, 0);
             return;
         }

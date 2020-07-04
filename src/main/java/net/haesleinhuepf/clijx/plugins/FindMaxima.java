@@ -3,6 +3,7 @@ package net.haesleinhuepf.clijx.plugins;
 import ij.IJ;
 import ij.ImageJ;
 import net.haesleinhuepf.clij.CLIJ;
+import net.haesleinhuepf.clij.clearcl.ClearCL;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
@@ -36,7 +37,14 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
 
     public static boolean findMaxima(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, Float noise_threshold) {
         ClearCLBuffer labelled_spots1 = clij2.create(output.getDimensions(), clij2.Float);
+        ClearCLBuffer label_map = clij2.create(labelled_spots1);
+
+        //clij2.show(input, "inp");
         detectMaxima(clij2, input, labelled_spots1);
+        clij2.connectedComponentsLabelingBox(labelled_spots1, label_map);
+        //clij2.show(label_map, "init label");
+        eliminateWrongMaxima(clij2, input, label_map, labelled_spots1);
+        //clij2.show(labelled_spots1, "init label corrected");
 
         ClearCLBuffer initially_labeled_spots = clij2.create(output.getDimensions(), clij2.Float);
         clij2.labelSpots(labelled_spots1, initially_labeled_spots);
@@ -106,8 +114,9 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
             }
             former_touching_labels = touching_labels;
         }
+        clij2.closeIndexGapsInLabelMap(touching_labels, former_touching_labels);
 
-        mergeTouchingLabelsSpecial(clij2, initially_labeled_spots, touching_labels, intensities, output);
+        mergeTouchingLabelsSpecial(clij2, initially_labeled_spots, former_touching_labels, intensities, output);
         initially_labeled_spots.close();
         labelled_spots1.close();
         labelled_spots2.close();
@@ -117,8 +126,29 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         return true;
     }
 
+    private static boolean eliminateWrongMaxima(CLIJ2 clij2, ClearCLBuffer intensity, ClearCLBuffer src, ClearCLBuffer dst) {
+
+        int number_of_objects = (int) clij2.maximumOfAllPixels(src);
+        ClearCLBuffer exclude_vector = clij2.create(number_of_objects + 1, 1);
+        clij2.set(exclude_vector, 0);
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("intensity", intensity);
+        parameters.put("src_labels", src);
+        parameters.put("dst_vector", exclude_vector);
+
+        clij2.execute(FindMaxima.class, "find_maxima_determine_labels_to_exclude_x.cl", "find_maxima_determine_labels_to_exclude", dst.getDimensions(), dst.getDimensions(), parameters);
+
+        clij2.excludeLabels(exclude_vector, src, dst);
+        exclude_vector.close();
+
+        return true;
+    }
+
     public static boolean mergeTouchingLabelsSpecial(CLIJ2 clij2, ClearCLBuffer initially_labeled_spots, ClearCLBuffer input, ClearCLBuffer intensities_vector, ClearCLBuffer output) {
         int number_of_objects = (int) clij2.maximumOfAllPixels(input);
+        System.out.println("Object found : " + number_of_objects);
+        //clij2.show(input, "label map?");
 
         ClearCLBuffer touch_matrix = clij2.create(number_of_objects + 1, number_of_objects + 1);
         clij2.generateTouchMatrix(input, touch_matrix);
@@ -168,9 +198,6 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
 
 
     private static boolean multiplyImages(CLIJ2 clij2, ClearCLImageInterface src, ClearCLImageInterface src1, ClearCLImageInterface dst) {
-        assertDifferent(src, dst);
-        assertDifferent(src1, dst);
-
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("src", src);
         parameters.put("src1", src1);
@@ -290,7 +317,7 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         //findMaxima(clij2, temp, output, 3f);
         //clijx.stopWatch("second");
 
-        clij2.show(output, "output");
+        //clij2.show(output, "output");
 
         input.close();
         temp.close();
