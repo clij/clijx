@@ -1,0 +1,147 @@
+package net.haesleinhuepf.clijx.gui;
+
+import ij.IJ;
+import ij.ImageJ;
+import ij.ImagePlus;
+import ij.gui.GenericDialog;
+import ij.gui.Roi;
+import ij.plugin.filter.PlugInFilter;
+import ij.process.ImageProcessor;
+import net.haesleinhuepf.clij.clearcl.ClearCL;
+import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
+import net.haesleinhuepf.clij2.CLIJ2;
+import net.haesleinhuepf.clijx.CLIJx;
+
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.TextEvent;
+import java.awt.event.TextListener;
+
+public class FindMaximaPreview implements PlugInFilter {
+    double sigma = 0.5;
+    int noise_threshold = 10;
+    boolean invert = false;
+
+    ImagePlus imp;
+    CLIJx clijx;
+
+    @Override
+    public int setup(String arg, ImagePlus imp) {
+        return DOES_ALL;
+    }
+
+    @Override
+    public void run(ImageProcessor ip) {
+        clijx = CLIJx.getInstance();
+        imp = IJ.getImage();
+        preview();
+
+        //if (true) return;
+
+        GenericDialog gd = new GenericDialog("Find Maxima Preview");
+
+        gd.addNumericField("Gaussian blur sigma", sigma);
+        TextField tf1 = (TextField) gd.getNumericFields().get(0);
+        tf1.addTextListener(new TextListener() {
+            @Override
+            public void textValueChanged(TextEvent e) {
+                System.out.println("Text1 changed: " + tf1.getText());
+                try
+                {
+                    double value = Integer.parseInt(tf1.getText());
+                    if (value > 0) {
+                        sigma = value;
+                        preview();
+                    }
+                } catch (Exception ex) {
+                    System.out.println("Exception: " + ex);
+                }
+            }
+        });
+
+        gd.addNumericField("Tolerance", noise_threshold);
+        TextField tf2 = (TextField) gd.getNumericFields().get(1);
+        tf2.addTextListener(new TextListener() {
+            @Override
+            public void textValueChanged(TextEvent e) {
+                System.out.println("Text2 changed: " + tf2.getText());
+                try
+                {
+                    int value = Integer.parseInt(tf2.getText());
+                    if (value > 0) {
+                        noise_threshold = value;
+                        preview();
+                    }
+                } catch (Exception ex) {
+                    System.out.println("Exception: " + ex);
+                }
+            }
+        });
+
+        gd.addCheckbox("Invert before detecting maxima", false);
+        Checkbox cb = (Checkbox) gd.getCheckboxes().get(0);
+        cb.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                System.out.println("Text changed: " + tf2.getText());
+                invert = cb.getState();
+                preview();
+            }
+        });
+
+        gd.showDialog();
+
+
+    }
+
+    private void preview() {
+        System.out.println("Preview: sigma = " + sigma + " tolerance = " + noise_threshold);
+        imp.killRoi();
+
+        ClearCLBuffer input = clijx.pushCurrentSlice(imp);
+        if (!(input.getNativeType() == NativeTypeEnum.Float)) {
+            ClearCLBuffer temp1 = clijx.create(input.getDimensions(), NativeTypeEnum.Float);
+            clijx.copy(input, temp1);
+            input.close();
+            input = temp1;
+        }
+        ClearCLBuffer temp = clijx.create(input.getDimensions(), NativeTypeEnum.Float);
+        ClearCLBuffer output = clijx.create(input);
+
+        if (sigma > 0) {
+            clijx.gaussianBlur(input, temp, sigma, sigma);
+            clijx.copy(temp, input);
+        }
+
+        if (invert) {
+            double maximum = clijx.maximumOfAllPixels(input);
+            clijx.subtractImageFromScalar(input, temp, maximum);
+            clijx.copy(temp, input);
+        }
+
+        clijx.findMaxima(input, output, noise_threshold);
+        clijx.maximum2DSphere(output, temp, 3, 3);
+
+        Roi roi = clijx.pullAsROI(temp);
+        imp.setRoi(roi);
+        //clijx.multiplyImageAndScalar(temp, output, 255);
+
+        //clijx.showRGB(input, output, input, "Find Maxima Preview");
+        //clijx.show(output, "output");
+        input.close();
+        temp.close();
+        output.close();
+        System.out.println("Preview done");
+    }
+
+    public static void main(String[] args) {
+        new ImageJ();
+        CLIJ2 clij2 = CLIJ2.getInstance("HD");
+        System.out.println(clij2.getGPUName());
+
+        IJ.openImage("src/test/resources/blobs.tif").show();
+        new FindMaximaPreview().run(null);
+    }
+}

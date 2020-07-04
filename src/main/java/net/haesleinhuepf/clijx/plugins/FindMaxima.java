@@ -12,6 +12,7 @@ import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij2.plugins.MultiplyImages;
+import net.haesleinhuepf.clijx.CLIJx;
 import net.imglib2.img.array.ArrayImgs;
 import org.scijava.plugin.Plugin;
 
@@ -38,29 +39,33 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         detectMaxima(clij2, input, labelled_spots1);
 
         ClearCLBuffer initially_labeled_spots = clij2.create(output.getDimensions(), clij2.Float);
-        ClearCLBuffer labelled_spots2 = clij2.create(output.getDimensions(), clij2.Float);
         clij2.labelSpots(labelled_spots1, initially_labeled_spots);
 
         int number_of_objects = (int) clij2.maximumOfAllPixels(initially_labeled_spots);
+        if (number_of_objects == 0) {
+            System.err.println("Warning: No maxima found (CLIJx_findMaxima)");
+            clij2.set(output, 0);
+            labelled_spots1.close();
+            initially_labeled_spots.close();
+            return false;
+        }
+
+        ClearCLBuffer labelled_spots2 = clij2.create(output.getDimensions(), clij2.Float);
+
         ClearCLBuffer pointlist = clij2.create(number_of_objects, initially_labeled_spots.getDimension());
 
         clij2.labelledSpotsToPointList(initially_labeled_spots, pointlist);
 
-        ClearCLBuffer intensities_at_postions = clij2.create(number_of_objects, 1);
-        readIntensities(clij2, pointlist, input, intensities_at_postions);
-        pointlist.close();
-
         ClearCLBuffer intensities = clij2.create(number_of_objects + 1, 1);
-        clij2.setColumn(intensities, 0, 0);
-        clij2.paste(intensities_at_postions, intensities, 1, 0);
-        intensities_at_postions.close();
-        //clij2.show(intensities, "intensities");
+        readIntensities(clij2, pointlist, input, intensities);
+        pointlist.close();
 
         ClearCLBuffer threshold_list = clij2.create(number_of_objects, 1);
         clij2.addImageAndScalar(intensities, threshold_list, -noise_threshold);
-        //clij2.show(threshold_list, "threshold_list");
+        //clij2.show(threshold_list, "threshold_list")
+        //
         //clij2.show(input, "input");
-        //clij2.show(pointlist, "pointlist");
+        //clij2.show(initially_labeled_spots, "initially_labeled_spots");
         //if (true) return true;
 
         float[] flag_arr = new float[]{0};
@@ -72,11 +77,19 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
 
         ClearCLBuffer touching_labels = initially_labeled_spots;
         ClearCLBuffer former_touching_labels = initially_labeled_spots;
-        for (int i = 0; i < 10; i++) {
+
+        long timeout = 60000;
+        long start_Time = System.currentTimeMillis();
+        for (int i = 0; i > -1; i++) { // endless loop
+            if (System.currentTimeMillis() - start_Time > timeout) {
+                System.err.println("Warning: Time out while applying Find Maxima on GPU: CLIJx_findMxima.");
+                break;
+            }
+
             flag_arr[0] = 0;
             flag.readFrom(flag_buffer, true);
 
-            System.out.println("-------------------------- " + i);
+            //System.out.println("-------------------------- " + i);
             if (i % 2 == 0) {
                 touching_labels = labelled_spots2;
             } else {
@@ -85,8 +98,7 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
             localThreshold(clij2, input, flag, threshold_list, former_touching_labels, touching_labels);
 
             //clij2.show(touching_labels, "value " + i);
-
-            clij2.print(flag);
+            //clij2.print(flag);
 
             flag.writeTo(flag_buffer, true);
             if (flag_arr[0] == 0) {
@@ -268,10 +280,15 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         ClearCLBuffer temp = clij2.create(input.getDimensions(), NativeTypeEnum.Float);
         ClearCLBuffer output = clij2.create(input);
 
-        //clij2.copy(input, temp);
-        clij2.gaussianBlur(input, temp, 10, 10);
+        clij2.copy(input, temp);
+        //clij2.gaussianBlur(input, temp, 10, 10);
 
-        findMaxima(clij2, temp, output, 3f);
+        CLIJx clijx = CLIJx.getInstance();
+        clijx.stopWatch("");
+        findMaxima(clij2, temp, output, 20f);
+        clijx.stopWatch("first");
+        //findMaxima(clij2, temp, output, 3f);
+        //clijx.stopWatch("second");
 
         clij2.show(output, "output");
 
