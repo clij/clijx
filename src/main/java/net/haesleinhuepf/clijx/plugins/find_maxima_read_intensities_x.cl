@@ -18,6 +18,6 @@ __kernel void find_maxima_read_intensities(
 
     float intensity = READ_IMAGE(input, sampler, POS_input_INSTANCE(x, y, z, 0)).x;
 
-    POS_intensities_TYPE dpos = POS_intensities_INSTANCE(pointlist_x, 0, 0, 0);
+    POS_intensities_TYPE dpos = POS_intensities_INSTANCE(pointlist_x + 1, 0, 0, 0);
     WRITE_intensities_IMAGE(intensities, dpos, CONVERT_intensities_PIXEL_TYPE(intensity));
 }

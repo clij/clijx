@@ -4,17 +4,22 @@ import ij.IJ;
 import ij.ImageJ;
 import net.haesleinhuepf.clij.CLIJ;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
+import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
+import net.haesleinhuepf.clij2.plugins.MultiplyImages;
 import net.imglib2.img.array.ArrayImgs;
 import org.scijava.plugin.Plugin;
 
 import java.nio.FloatBuffer;
 import java.util.HashMap;
+
+import static net.haesleinhuepf.clij.utilities.CLIJUtilities.assertDifferent;
+import static net.haesleinhuepf.clij2.utilities.CLIJUtilities.checkDimensions;
 
 /**
  * Author: @haesleinhuepf
@@ -29,20 +34,27 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
     }
 
     public static boolean findMaxima(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, Float noise_threshold) {
-        ClearCLBuffer initial_maxima = clij2.create(output.getDimensions(), clij2.UnsignedByte);
-        detectMaxima(clij2, input, initial_maxima);
-
         ClearCLBuffer labelled_spots1 = clij2.create(output.getDimensions(), clij2.Float);
+        detectMaxima(clij2, input, labelled_spots1);
+
+        ClearCLBuffer initially_labeled_spots = clij2.create(output.getDimensions(), clij2.Float);
         ClearCLBuffer labelled_spots2 = clij2.create(output.getDimensions(), clij2.Float);
-        clij2.labelSpots(initial_maxima, labelled_spots1);
+        clij2.labelSpots(labelled_spots1, initially_labeled_spots);
 
-        int number_of_objects = (int) clij2.maximumOfAllPixels(labelled_spots1);
-        ClearCLBuffer pointlist = clij2.create(number_of_objects, labelled_spots1.getDimension());
+        int number_of_objects = (int) clij2.maximumOfAllPixels(initially_labeled_spots);
+        ClearCLBuffer pointlist = clij2.create(number_of_objects, initially_labeled_spots.getDimension());
 
-        clij2.labelledSpotsToPointList(labelled_spots1, pointlist);
+        clij2.labelledSpotsToPointList(initially_labeled_spots, pointlist);
 
-        ClearCLBuffer intensities = clij2.create(number_of_objects, 1);
-        readIntensities(clij2, pointlist, input, intensities);
+        ClearCLBuffer intensities_at_postions = clij2.create(number_of_objects, 1);
+        readIntensities(clij2, pointlist, input, intensities_at_postions);
+        pointlist.close();
+
+        ClearCLBuffer intensities = clij2.create(number_of_objects + 1, 1);
+        clij2.setColumn(intensities, 0, 0);
+        clij2.paste(intensities_at_postions, intensities, 1, 0);
+        intensities_at_postions.close();
+        //clij2.show(intensities, "intensities");
 
         ClearCLBuffer threshold_list = clij2.create(number_of_objects, 1);
         clij2.addImageAndScalar(intensities, threshold_list, -noise_threshold);
@@ -56,162 +68,103 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         ClearCLBuffer flag = clij2.create(1, 1, 1);
 
 
-        clij2.show(labelled_spots1, "before");
+        //clij2.show(initially_labeled_spots, "before");
 
-        ClearCLBuffer touching_labels = labelled_spots1;
-        ClearCLBuffer former_touching_labels = labelled_spots2;
+        ClearCLBuffer touching_labels = initially_labeled_spots;
+        ClearCLBuffer former_touching_labels = initially_labeled_spots;
         for (int i = 0; i < 10; i++) {
-            former_touching_labels = touching_labels;
             flag_arr[0] = 0;
             flag.readFrom(flag_buffer, true);
 
             System.out.println("-------------------------- " + i);
             if (i % 2 == 0) {
-                localThreshold(clij2, input, flag, threshold_list, labelled_spots1, labelled_spots2);
                 touching_labels = labelled_spots2;
-                //System.out.println("local_maxima_values2");
-                clij2.show(labelled_spots2, "value " + i);
-                //clij2.print(local_maxima_values2);
             } else {
-                localThreshold(clij2, input, flag, threshold_list, labelled_spots2, labelled_spots1);
                 touching_labels = labelled_spots1;
-                //System.out.println("local_maxima_values1");
-                clij2.show(labelled_spots1, "value " + i);
-                //clij2.print(local_maxima_values1);
             }
+            localThreshold(clij2, input, flag, threshold_list, former_touching_labels, touching_labels);
+
+            //clij2.show(touching_labels, "value " + i);
+
             clij2.print(flag);
 
             flag.writeTo(flag_buffer, true);
             if (flag_arr[0] == 0) {
                 break;
             }
+            former_touching_labels = touching_labels;
         }
 
-        MergeTouchingLabels.mergeTouchingLabels(clij2, touching_labels, former_touching_labels);
-
-        int number_of_remaining_objects = (int)clij2.maximumOfAllPixels(former_touching_labels);
-
-
-        ClearCLBuffer pointlist2 = clij2.create(number_of_remaining_objects, former_touching_labels.getDimension());
-        clij2.centroidsOfLabels(former_touching_labels, pointlist2);
-
-        ClearCLBuffer pointlist_with_values = clij2.create(number_of_remaining_objects, former_touching_labels.getDimension() + 1);
-        clij2.setRampX(pointlist_with_values);
-
-        clij2.paste(pointlist2, pointlist_with_values, 0, 0);
-        pointlist.close();
-
-        clij2.set(output, 0);
-        clij2.writeValuesToPositions(pointlist_with_values, output);
-
-        pointlist_with_values.close();
-
-
-        /*
-        ClearCLBuffer initial_maxima = clij2.create(output.getDimensions(), clij2.UnsignedByte);
-        ClearCLBuffer local_maxima1 = clij2.create(output.getDimensions(), clij2.UnsignedByte);
-        ClearCLBuffer local_maxima2 = clij2.create(output.getDimensions(), clij2.UnsignedByte);
-        ClearCLBuffer temp_binary = clij2.create(output.getDimensions(), clij2.UnsignedByte);
-        detectMaxima(clij2, input, initial_maxima);
-        clij2.show(input, "input");
-        clij2.show(initial_maxima, "maxima initially");
-
-        //clij2.print(input);
-        //System.out.println("");
-        //clij2.print(local_maxima2);
-        //if (true) return true;
-
-        float[] flag_arr = new float[]{0};
-        FloatBuffer flag_buffer = FloatBuffer.wrap(flag_arr);
-
-        ClearCLBuffer local_maxima_values1 = clij2.create(input);
-        ClearCLBuffer local_maxima_values2 = clij2.create(input);
-        clij2.multiplyImages(initial_maxima, input, local_maxima_values1);
-
-        clij2.show(local_maxima_values1, "maxima before");
-        clij2.print(local_maxima_values2);
-
-        ClearCLBuffer flag = clij2.create(1, 1, 1);
-
-        for (int i = 0; i < 10; i++) {
-            flag_arr[0] = 0;
-            flag.readFrom(flag_buffer, true);
-
-            clij2.dilateSphere(local_maxima2, local_maxima1);
-
-            System.out.println("-------------------------- " + i);
-            if (i % 2 == 0) {
-                extendMaxima(clij2, initial_maxima, flag, local_maxima1, input, local_maxima_values1, local_maxima_values2, noise_threshold);
-                //System.out.println("local_maxima_values2");
-                clij2.show(local_maxima_values2, "value " + i);
-                //clij2.print(local_maxima_values2);
-            } else {
-                extendMaxima(clij2, initial_maxima, flag, local_maxima1, input, local_maxima_values2, local_maxima_values1, noise_threshold);
-                //System.out.println("local_maxima_values1");
-                clij2.show(local_maxima_values1, "value " + i);
-                //clij2.print(local_maxima_values1);
-            }
-            clij2.print(flag);
-
-            flag.writeTo(flag_buffer, true);
-            if (flag_arr[0] == 0) {
-                break;
-            }
-
-            clij2.notEqual(local_maxima_values1, local_maxima_values2, local_maxima2);
-
-            clij2.binaryOr(local_maxima1, local_maxima2, temp_binary);
-            clij2.copy(temp_binary, local_maxima2);
-            //System.out.println("local_maxima1");
-            //clij2.print(local_maxima1);
-            //System.out.println("local_maxima_values1");
-            //clij2.print(local_maxima_values1);
-
-        }
-        //clij2.dilateSphere(local_maxima2, local_maxima1);
-
-        clij2.onlyzeroOverwriteMaximumDiamond(local_maxima_values2, flag, local_maxima_values1);
-        clij2.onlyzeroOverwriteMaximumDiamond(local_maxima_values1, flag, local_maxima_values2);
-
-        {
-            ClearCLBuffer edges = local_maxima1; // reuse memory
-            ClearCLBuffer binary = local_maxima2; // reuse memory
-
-            clij2.detectLabelEdges(local_maxima_values2, edges);
-            clij2.binaryNot(edges, binary);
-
-            clij2.mask(local_maxima_values2, binary, local_maxima_values1);
-            clij2.greaterConstant(local_maxima_values1, temp_binary, 0);
-        }
-
-        {
-            ClearCLBuffer label_map = local_maxima_values2; // reuse memory
-            clij2.connectedComponentsLabelingDiamond(temp_binary, label_map);
-
-            int number_of_objects = (int) clij2.maximumOfAllPixels(label_map);
-
-            ClearCLBuffer pointlist = clij2.create(number_of_objects, label_map.getDimension());
-            clij2.centroidsOfLabels(label_map, pointlist);
-
-            ClearCLBuffer pointlist_with_values = clij2.create(number_of_objects, label_map.getDimension() + 1);
-            clij2.setRampX(pointlist_with_values);
-
-            clij2.paste(pointlist, pointlist_with_values, 0, 0);
-            pointlist.close();
-
-            clij2.set(output, 0);
-            clij2.writeValuesToPositions(pointlist_with_values, output);
-
-            pointlist_with_values.close();
-        }
-
-        local_maxima1.close();
-        local_maxima2.close();
-        local_maxima_values1.close();
-        local_maxima_values2.close();
-        temp_binary.close();
+        mergeTouchingLabelsSpecial(clij2, initially_labeled_spots, touching_labels, intensities, output);
+        initially_labeled_spots.close();
+        labelled_spots1.close();
+        labelled_spots2.close();
         flag.close();
-*/
+        intensities.close();
+        threshold_list.close();
+        return true;
+    }
+
+    public static boolean mergeTouchingLabelsSpecial(CLIJ2 clij2, ClearCLBuffer initially_labeled_spots, ClearCLBuffer input, ClearCLBuffer intensities_vector, ClearCLBuffer output) {
+        int number_of_objects = (int) clij2.maximumOfAllPixels(input);
+
+        ClearCLBuffer touch_matrix = clij2.create(number_of_objects + 1, number_of_objects + 1);
+        clij2.generateTouchMatrix(input, touch_matrix);
+
+        ClearCLBuffer adjacency_matrix = clij2.create(number_of_objects + 1, number_of_objects + 1);
+        clij2.touchMatrixToAdjacencyMatrix(touch_matrix, adjacency_matrix);
+        touch_matrix.close();
+
+        clij2.setWhereXequalsY(adjacency_matrix, 1);
+        clij2.setRow(adjacency_matrix, 0, 0);
+
+        ClearCLBuffer adjacency_matrix_transposed = clij2.create(number_of_objects + 1, 1, number_of_objects + 1);
+        ClearCLBuffer temp2 = clij2.create(adjacency_matrix);
+        multiplyImages(clij2, intensities_vector, adjacency_matrix, temp2);
+
+        //clij2.show(adjacency_matrix, "adj");
+        //clij2.show(temp2, "temp");
+        adjacency_matrix.close();
+
+        clij2.transposeYZ(temp2, adjacency_matrix_transposed);
+        temp2.close();
+
+        ClearCLBuffer max = clij2.create(number_of_objects + 1, 1);
+        ClearCLBuffer arg_max = clij2.create(number_of_objects + 1, 1);
+
+        clij2.argMaximumZProjection(adjacency_matrix_transposed, max, arg_max);
+        adjacency_matrix_transposed.close();
+        max.close();
+
+        ClearCLBuffer rampX = clij2.create(arg_max);
+        clij2.setRampX(rampX);
+
+        ClearCLBuffer binary = clij2.create(arg_max);
+        clij2.equal(rampX, arg_max, binary);
+        //clij2.show(rampX, "rampx");
+        //clij2.show(arg_max, "arg_max");
+
+        clij2.setColumn(binary, 0, 0); // background stays background
+
+        clij2.replaceIntensities(initially_labeled_spots, binary, output);
+        arg_max.close();
+        binary.close();
+        rampX.close();
+
+        return true;
+    }
+
+
+    private static boolean multiplyImages(CLIJ2 clij2, ClearCLImageInterface src, ClearCLImageInterface src1, ClearCLImageInterface dst) {
+        assertDifferent(src, dst);
+        assertDifferent(src1, dst);
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("src", src);
+        parameters.put("src1", src1);
+        parameters.put("dst", dst);
+
+        clij2.execute(FindMaxima.class, "find_maxima_multiply_images_x.cl", "find_maxima_multiply_images", dst.getDimensions(), dst.getDimensions(), parameters);
         return true;
     }
 
@@ -321,6 +274,12 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         findMaxima(clij2, temp, output, 3f);
 
         clij2.show(output, "output");
+
+        input.close();
+        temp.close();
+        output.close();
+        System.out.println(clij2.reportMemory());
+
     }
 
 
