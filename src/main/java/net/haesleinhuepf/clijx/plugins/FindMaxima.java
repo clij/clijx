@@ -37,17 +37,21 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
 
     public static boolean findMaxima(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, Float noise_threshold) {
         ClearCLBuffer labelled_spots1 = clij2.create(output.getDimensions(), clij2.Float);
-        ClearCLBuffer label_map = clij2.create(labelled_spots1);
+        //ClearCLBuffer label_map = clij2.create(labelled_spots1);
 
         //clij2.show(input, "inp");
-        detectMaxima(clij2, input, labelled_spots1);
-        clij2.connectedComponentsLabelingBox(labelled_spots1, label_map);
+        //detectMaxima(clij2, input, labelled_spots1);
+        //clij2.connectedComponentsLabelingBox(labelled_spots1, label_map);
         //clij2.show(label_map, "init label");
-        eliminateWrongMaxima(clij2, input, label_map, labelled_spots1);
+        //eliminateWrongMaxima(clij2, input, label_map, labelled_spots1);
         //clij2.show(labelled_spots1, "init label corrected");
 
+        FindMaximaPlateaus.findMaximaPlateaus(clij2, input, labelled_spots1);
+        //clij2.show(labelled_spots1, "init");
+
         ClearCLBuffer initially_labeled_spots = clij2.create(output.getDimensions(), clij2.Float);
-        clij2.labelSpots(labelled_spots1, initially_labeled_spots);
+        clij2.connectedComponentsLabelingDiamond(labelled_spots1, initially_labeled_spots);
+        //clij2.show(initially_labeled_spots, "init label");
 
         int number_of_objects = (int) clij2.maximumOfAllPixels(initially_labeled_spots);
         if (number_of_objects == 0) {
@@ -69,6 +73,7 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         pointlist.close();
 
         ClearCLBuffer threshold_list = clij2.create(number_of_objects, 1);
+        ClearCLBuffer threshold_list2 = clij2.create(number_of_objects, 1);
         clij2.addImageAndScalar(intensities, threshold_list, -noise_threshold);
         //clij2.show(threshold_list, "threshold_list")
         //
@@ -105,6 +110,14 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
             }
             localThreshold(clij2, input, flag, threshold_list, former_touching_labels, touching_labels);
 
+            // adapt threshold
+            {
+                clij2.maximumOfTouchingNeighbors(threshold_list, touching_labels, threshold_list2);
+                ClearCLBuffer holder = threshold_list;
+                threshold_list = threshold_list2;
+                threshold_list2 = holder;
+            }
+
             //clij2.show(touching_labels, "value " + i);
             //clij2.print(flag);
 
@@ -123,6 +136,7 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         flag.close();
         intensities.close();
         threshold_list.close();
+        threshold_list2.close();
         return true;
     }
 
@@ -182,13 +196,14 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         clij2.setRampX(rampX);
 
         ClearCLBuffer binary = clij2.create(arg_max);
-        clij2.equal(rampX, arg_max, binary);
+        clij2.notEqual(rampX, arg_max, binary);
         //clij2.show(rampX, "rampx");
         //clij2.show(arg_max, "arg_max");
 
         clij2.setColumn(binary, 0, 0); // background stays background
 
-        clij2.replaceIntensities(initially_labeled_spots, binary, output);
+        clij2.excludeLabels(binary, initially_labeled_spots, output);
+        //clij2.repl(initially_labeled_spots, binary, output);
         arg_max.close();
         binary.close();
         rampX.close();
@@ -317,7 +332,9 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         //findMaxima(clij2, temp, output, 3f);
         //clijx.stopWatch("second");
 
-        //clij2.show(output, "output");
+        clij2.show(output, "output");
+
+
 
         input.close();
         temp.close();

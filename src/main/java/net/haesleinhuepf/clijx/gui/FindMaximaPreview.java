@@ -12,6 +12,7 @@ import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clijx.CLIJx;
+import net.haesleinhuepf.clijx.plugins.Pull2DPointListAsRoi;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -122,11 +123,20 @@ public class FindMaximaPreview implements PlugInFilter {
         }
 
         clijx.findMaxima(input, output, noise_threshold);
-        clijx.maximum2DSphere(output, temp, 3, 3);
+        //clijx.maximum2DSphere(output, temp, 3, 3);
 
-        Roi roi = clijx.pullAsROI(temp);
+        int number_of_objects = (int) clijx.maximumOfAllPixels(output);
+        System.out.println("Number of points: " + number_of_objects );
+        ClearCLBuffer pointlist = clijx.create(number_of_objects + 1, 2);
+        clijx.centroidsOfLabels(output, pointlist);
+
+        Roi roi = Pull2DPointListAsRoi.pull2DPointListAsRoi(clijx, pointlist);
+        pointlist.close();
+
         imp.setRoi(roi);
-        //clijx.multiplyImageAndScalar(temp, output, 255);
+
+
+        //clijx.multiplyImageAndScalar(temp, outp, 255);
 
         //clijx.showRGB(input, output, input, "Find Maxima Preview");
         //clijx.show(output, "output");
