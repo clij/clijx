@@ -51,10 +51,10 @@ public class FindMaximaPlateaus extends AbstractCLIJ2Plugin implements CLIJMacro
 
         if ( output.getDepth() > 1) {
             if (result == null) {
-                findMaxima1D(clij2, input, output, 1);
+                findMaxima1D(clij2, input, output, 2);
             } else {
                 ClearCLBuffer temp1 = clij2.create(output.getDimensions(), NativeTypeEnum.UnsignedByte);
-                findMaxima1D(clij2, input, temp1, 1);
+                findMaxima1D(clij2, input, temp1, 2);
                 clij2.binaryAnd(result, temp1, output);
                 temp1.close();
                 result.close();
@@ -86,10 +86,13 @@ public class FindMaximaPlateaus extends AbstractCLIJ2Plugin implements CLIJMacro
 
         if (dimension == 0) {
             global_sizes[0] = 1;
-            clij2.execute(FindMaximaPlateaus.class, "find_maxima_1d_x.cl", "find_maxima_1d_x", output.getDimensions(), global_sizes, parameters);
+            clij2.execute(FindMaximaPlateaus.class, "find_maxima_plateau_x.cl", "find_maxima_1d_x", output.getDimensions(), global_sizes, parameters);
         } else if (dimension == 1) {
             global_sizes[1] = 1;
-            clij2.execute(FindMaximaPlateaus.class, "find_maxima_1d_x.cl", "find_maxima_1d_y", output.getDimensions(), global_sizes, parameters);
+            clij2.execute(FindMaximaPlateaus.class, "find_maxima_plateau_x.cl", "find_maxima_1d_y", output.getDimensions(), global_sizes, parameters);
+        } else if (dimension == 2) {
+            global_sizes[2] = 1;
+            clij2.execute(FindMaximaPlateaus.class, "find_maxima_plateau_x.cl", "find_maxima_1d_z", output.getDimensions(), global_sizes, parameters);
         }
         return true;
     }
