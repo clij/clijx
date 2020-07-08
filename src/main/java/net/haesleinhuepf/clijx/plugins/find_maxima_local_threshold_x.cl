@@ -25,7 +25,7 @@ __kernel void find_maxima_local_threshold (
       other_label = READ_IMAGE(labelmap_src, sampler, POS_labelmap_src_INSTANCE(x - 1, y, z, 0)).x;
       if (other_label > 0) {
         float other_threshold = READ_IMAGE(threshold_list, sampler, POS_threshold_list_INSTANCE(other_label, 0, 0, 0)).x;
-        if (other_threshold < value) {
+        if (other_threshold <= value) {
           new_label = other_label;
           value = other_threshold;
         }
@@ -34,7 +34,7 @@ __kernel void find_maxima_local_threshold (
       other_label = READ_IMAGE(labelmap_src, sampler, POS_labelmap_src_INSTANCE(x + 1, y, z, 0)).x;
       if (other_label > 0) {
         float other_threshold = READ_IMAGE(threshold_list, sampler, POS_threshold_list_INSTANCE(other_label, 0, 0, 0)).x;
-        if (other_threshold < value) {
+        if (other_threshold <= value) {
           new_label = other_label;
           value = other_threshold;
         }
@@ -45,7 +45,7 @@ __kernel void find_maxima_local_threshold (
       other_label = READ_IMAGE(labelmap_src, sampler, POS_labelmap_src_INSTANCE(x, y - 1, z, 0)).x;
       if (other_label > 0) {
         float other_threshold = READ_IMAGE(threshold_list, sampler, POS_threshold_list_INSTANCE(other_label, 0, 0, 0)).x;
-        if (other_threshold < value) {
+        if (other_threshold <= value) {
           new_label = other_label;
           value = other_threshold;
         }
@@ -54,7 +54,7 @@ __kernel void find_maxima_local_threshold (
       other_label = READ_IMAGE(labelmap_src, sampler, POS_labelmap_src_INSTANCE(x, y + 1, z, 0)).x;
       if (other_label > 0) {
         float other_threshold = READ_IMAGE(threshold_list, sampler, POS_threshold_list_INSTANCE(other_label, 0, 0, 0)).x;
-        if (other_threshold < value) {
+        if (other_threshold <= value) {
           new_label = other_label;
           value = other_threshold;
         }
@@ -65,7 +65,7 @@ __kernel void find_maxima_local_threshold (
       other_label = READ_IMAGE(labelmap_src, sampler, POS_labelmap_src_INSTANCE(x, y, z - 1, 0)).x;
       if (other_label > 0) {
         float other_threshold = READ_IMAGE(threshold_list, sampler, POS_threshold_list_INSTANCE(other_label, 0, 0, 0)).x;
-        if (other_threshold < value) {
+        if (other_threshold <= value) {
           new_label = other_label;
           value = other_threshold;
         }
@@ -74,7 +74,7 @@ __kernel void find_maxima_local_threshold (
       other_label = READ_IMAGE(labelmap_src, sampler, POS_labelmap_src_INSTANCE(1, y, z + 1, 0)).x;
       if (other_label > 0) {
         float other_threshold = READ_IMAGE(threshold_list, sampler, POS_threshold_list_INSTANCE(other_label, 0, 0, 0)).x;
-        if (other_threshold < value) {
+        if (other_threshold <= value) {
           new_label = other_label;
           value = other_threshold;
         }

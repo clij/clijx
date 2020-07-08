@@ -53,7 +53,7 @@ public class FindMaximaPreview implements PlugInFilter {
                 try
                 {
                     double value = Integer.parseInt(tf1.getText());
-                    if (value > 0) {
+                    if (value >= 0) {
                         sigma = value;
                         preview();
                     }

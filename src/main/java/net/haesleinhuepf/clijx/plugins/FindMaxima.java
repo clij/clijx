@@ -2,6 +2,7 @@ package net.haesleinhuepf.clijx.plugins;
 
 import ij.IJ;
 import ij.ImageJ;
+import ij.measure.ResultsTable;
 import net.haesleinhuepf.clij.CLIJ;
 import net.haesleinhuepf.clij.clearcl.ClearCL;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
@@ -13,6 +14,7 @@ import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij2.plugins.MultiplyImages;
+import net.haesleinhuepf.clij2.plugins.StatisticsOfLabelledPixels;
 import net.haesleinhuepf.clijx.CLIJx;
 import net.imglib2.img.array.ArrayImgs;
 import org.scijava.plugin.Plugin;
@@ -129,7 +131,9 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         }
         clij2.closeIndexGapsInLabelMap(touching_labels, former_touching_labels);
 
-        mergeTouchingLabelsSpecial(clij2, initially_labeled_spots, former_touching_labels, intensities, output);
+        mergeTouchingLabelsSpecial(clij2, initially_labeled_spots, former_touching_labels, intensities, touching_labels);
+        clij2.onlyzeroOverwriteMaximumDiamond(touching_labels, flag, output);
+
         initially_labeled_spots.close();
         labelled_spots1.close();
         labelled_spots2.close();
@@ -137,6 +141,55 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         intensities.close();
         threshold_list.close();
         threshold_list2.close();
+
+
+        ResultsTable table = new ResultsTable();
+        clij2.statisticsOfBackgroundAndLabelledPixels(input, output, table);
+        table.show("t" +
+                "");
+
+        int min_index = table.getColumnIndex("" + StatisticsOfLabelledPixels.STATISTICS_ENTRY.MINIMUM_INTENSITY);
+        int max_index = table.getColumnIndex("" + StatisticsOfLabelledPixels.STATISTICS_ENTRY.MAXIMUM_INTENSITY);
+        int x_index = table.getColumnIndex("" + StatisticsOfLabelledPixels.STATISTICS_ENTRY.CENTROID_X);
+        int y_index = table.getColumnIndex("" + StatisticsOfLabelledPixels.STATISTICS_ENTRY.CENTROID_Y);
+        int z_index = table.getColumnIndex("" + StatisticsOfLabelledPixels.STATISTICS_ENTRY.CENTROID_Z);
+
+
+        int value_index = (output.getDimension() > 2)?3:2;
+        double [][] point_value_list = new double[table.size()][value_index + 1];
+        int count = 0;
+            for (int i = 0; i < table.size(); i++ ) {
+            double minimum = table.getValueAsDouble(min_index, i );
+            double maximum = table.getValueAsDouble(max_index, i );
+            double x = table.getValueAsDouble(x_index, i );
+            double y = table.getValueAsDouble(y_index, i );
+            double z = table.getValueAsDouble(z_index, i );
+
+            point_value_list[i][0] = x;
+            point_value_list[i][1] = y;
+            if (output.getDimension() > 2) {
+                point_value_list[i][2] = z;
+            }
+
+            if ( (maximum - minimum) > 5) {
+                System.out.println("" + i + " range " + (maximum - minimum));
+            }
+
+            if (maximum - minimum >= noise_threshold && i > 0) {
+                count++;
+                point_value_list[i][value_index] = count;
+            } else {
+                point_value_list[i][value_index] = 0;
+            }
+        }
+
+        ClearCLBuffer pointvalue_image = clij2.pushMatXYZ(point_value_list);
+        clij2.print(pointvalue_image);
+        clij2.set(output, 0);
+        clij2.writeValuesToPositions(pointvalue_image, output);
+        pointvalue_image.close();
+        //clij2.show(output, "p");
+
         return true;
     }
 
@@ -203,7 +256,7 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
         clij2.setColumn(binary, 0, 0); // background stays background
 
         clij2.excludeLabels(binary, initially_labeled_spots, output);
-        //clij2.repl(initially_labeled_spots, binary, output);
+
         arg_max.close();
         binary.close();
         rampX.close();
