@@ -12,8 +12,8 @@ scaleFactor = 2;
 run("Close All");
 
 // init GPU
-run("CLIJ Macro Extensions", "cl_device=");
-Ext.CLIJ_clear();
+run("CLIJ2 Macro Extensions", "cl_device=");
+Ext.CLIJ2_clear();
 
 // -------------------------------------------------------------------
 // Get test data
@@ -29,7 +29,7 @@ run("Scale...", "x=" + scaleFactor + " y=" + scaleFactor + " width=" + width * s
 // push images to GPU
 original = "original";
 rename(original);
-Ext.CLIJ_push(original);
+Ext.CLIJ2_push(original);
 
 // -------------------------------------------------------------------
 // generate some ground truth
@@ -48,7 +48,7 @@ makeRectangle(176 * scaleFactor, 88 * scaleFactor, 12 * scaleFactor, 2 * scaleFa
 run("Add...", "value=3");
 
 run("Select None");
-Ext.CLIJ_push(ground_truth);
+Ext.CLIJ2_push(ground_truth);
 
 
 
@@ -58,30 +58,30 @@ Ext.CLIJ_push(ground_truth);
 feature_stack = "feature_stack";
 feature_slice = "feature_slice";
 number_of_features = 10;
-Ext.CLIJ_create3D(feature_stack, width, height, number_of_features, 32);
-Ext.CLIJ_create2D(feature_slice, width, height, 32);
+Ext.CLIJ2_create3D(feature_stack, width, height, number_of_features, 32);
+Ext.CLIJ2_create2D(feature_slice, width, height, 32);
 
 feature = 0;
 // 1. feature: original
-Ext.CLIJ_copySlice(original, feature_stack, feature);
+Ext.CLIJ2_copySlice(original, feature_stack, feature);
 feature++;
 
 // 2. feature: sobel
-Ext.CLIJx_sobel(original, feature_slice);
-Ext.CLIJ_copySlice(feature_slice, feature_stack, feature);
+Ext.CLIJ2_sobel(original, feature_slice);
+Ext.CLIJ2_copySlice(feature_slice, feature_stack, feature);
 feature++;
 
 // 3. feature: blurred with given sigma
 sigma = 2;
 while (feature < number_of_features) {  
-	Ext.CLIJ_blur2D(original, feature_slice, sigma, sigma);
+	Ext.CLIJ2_gaussianBlur2D(original, feature_slice, sigma, sigma);
 	sigma = sigma + 2;
-	Ext.CLIJ_copySlice(feature_slice, feature_stack, feature);
+	Ext.CLIJ2_copySlice(feature_slice, feature_stack, feature);
 	feature++;
 }
 
-Ext.CLIJ_pull(ground_truth);
-Ext.CLIJ_pull(feature_stack);
+Ext.CLIJ2_pull(ground_truth);
+Ext.CLIJ2_pull(feature_stack);
 
 // -------------------------------------------------------------------
 // train classifier
@@ -93,15 +93,9 @@ time = getTime();
 Ext.CLIJx_applyWekaModel(feature_stack, result, "test4.model");
 print("Apply weka model took " + (getTime() - time) + " msec");
 
-Ext.CLIJ_pull(result);
+Ext.CLIJ2_pull(result);
 run("glasbey on dark");
 
-
-
-result1 = "result1";
-
-Ext.CLIJ_pull(result1);
-run("glasbey on dark");
 
 // clean up by the end
-Ext.CLIJ_clear();
+Ext.CLIJ2_clear();

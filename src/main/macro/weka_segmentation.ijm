@@ -1,4 +1,4 @@
-// CLIJ example macro: weka_segmentation.ijm
+// weka_segmentation.ijm
 //
 // This macro shows how to train and apply weka models
 // to feature stacks made by CLIJ.
@@ -25,54 +25,49 @@ makeRectangle(101,37,20,16);
 run("Add...", "value=1");
 
 // init GPU
-run("CLIJ Macro Extensions", "cl_device=");
-Ext.CLIJ_clear();
+run("CLIJ2 Macro Extensions", "cl_device=");
+Ext.CLIJ2_clear();
 
 // push images to GPU
-Ext.CLIJ_push(original);
-Ext.CLIJ_push(partialGroundTruth);
+Ext.CLIJ2_push(original);
+Ext.CLIJ2_push(partialGroundTruth);
 
 // cleanup imagej
 run("Close All");
 
 featureStack = "featureStack";
-Ext.CLIJ_create3D(featureStack, width, height, 11, 32);
+Ext.CLIJ2_create3D(featureStack, width, height, 11, 32);
 
 featureCount = 0;
 
-Ext.CLIJ_copySlice(original, featureStack, featureCount);
+Ext.CLIJ2_copySlice(original, featureStack, featureCount);
 featureCount ++;
 
 for (i = 0; i < 5; i++) {
     sigma = (i + 1);
     temp = "temp";
-    Ext.CLIJ_blur2D(original, temp, sigma, sigma);
+    Ext.CLIJ2_gaussianBlur2D(original, temp, sigma, sigma);
 
 	temp2 = "temp2";
-    Ext.CLIJx_sobel(temp, temp2);
+    Ext.CLIJ2_sobel(temp, temp2);
 
-    Ext.CLIJ_copySlice(temp, featureStack, featureCount);
+    Ext.CLIJ2_copySlice(temp, featureStack, featureCount);
     featureCount ++;
-    Ext.CLIJ_copySlice(temp2, featureStack, featureCount);
+    Ext.CLIJ2_copySlice(temp2, featureStack, featureCount);
     featureCount ++;
 
 }
 
-Ext.CLIJ_pull(original);
-Ext.CLIJ_pull(partialGroundTruth);
-Ext.CLIJ_pull(featureStack);
+Ext.CLIJ2_pull(original);
+Ext.CLIJ2_pull(partialGroundTruth);
+Ext.CLIJ2_pull(featureStack);
 
 Ext.CLIJx_trainWekaModel(featureStack, partialGroundTruth, "test.model");
 
 result = "result";
 Ext.CLIJx_applyWekaModel(featureStack, result, "test.model");
 
-Ext.CLIJ_pull(result);
+Ext.CLIJ2_pull(result);
 
 
-
-
-
-
-
-Ext.CLIJ_clear();
+Ext.CLIJ2_clear();
