@@ -17,7 +17,8 @@ __kernel void reslice_polar(
     float startAzimuthDegrees,
     float scaleX,
     float scaleY,
-    float scaleZ
+    float scaleZ,
+    IMAGE_mat_TYPE mat
 ) {
   const sampler_t sampler = CLK_NORMALIZED_COORDS_TRUE | SAMPLER_ADDRESS |	SAMPLER_FILTER;
 
@@ -35,14 +36,16 @@ __kernel void reslice_polar(
   float inclinationInRad = (((float)inclination) * deltaAngle + startInclinationDegrees) / 180.0 * M_PI;
   float azimuthInRad = (((float)azimuth) * deltaAngle + startAzimuthDegrees) / 180.0 * M_PI;
 
-  const float sx = (centerX + sin(inclinationInRad) * cos(azimuthInRad) * (float)radius * scaleX) + 0.5f;
-  const float sy = (centerY + sin(inclinationInRad) * sin(azimuthInRad) * (float)radius * scaleY) + 0.5f;
-  const float sz = (centerZ + cos(inclinationInRad) * (float)radius * scaleZ) + 0.5f;
+  const float sx = (centerX + cos(inclinationInRad) * (float)radius * scaleZ) + 0.5f;
+  const float sy = (centerY + sin(inclinationInRad) * cos(azimuthInRad) * (float)radius * scaleY) + 0.5f;
+  const float sz = (centerZ + sin(inclinationInRad) * sin(azimuthInRad) * (float)radius * scaleX) + 0.5f;
+
+  float z2 = (mat[8] * sx + mat[9] * sy + mat[10] * sz + mat[11]);
+  float y2 = (mat[4] * sx + mat[5] * sy + mat[6]  * sz + mat[7]);
+  float x2 = (mat[0] * sx + mat[1] * sy + mat[2]  * sz + mat[3]);
 
 
 
-
-
-  IMAGE_src_PIXEL_TYPE value = READ_src_IMAGE(src,sampler,(float4)(sx / Nx, sy / Ny, sz / Nz, 0)).x;
+  IMAGE_src_PIXEL_TYPE value = READ_src_IMAGE(src,sampler,(float4)(x2 / Nx, y2 / Ny, z2 / Nz, 0)).x;
   WRITE_dst_IMAGE(dst,(int4)(inclination, azimuth, radius, 0), CONVERT_dst_PIXEL_TYPE(value));
 }
