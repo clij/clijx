@@ -59,13 +59,9 @@ public class ReslicePolar extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
         ClearCLImage image = clij2.create(src.getDimensions(), CLIJUtilities.nativeToChannelType(src.getNativeType()));
         clij2.copy(src, image);
 
-        ClearCLBuffer output = clij2.create(image.getDimensions(), NativeTypeEnum.Byte);
-        clij2.set(output, 127);
-
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("src", image);
         parameters.put("dst", dst);
-        parameters.put("output", output);
         parameters.put("deltaAngle", deltaAngle);
         parameters.put("centerX", centerX);
         parameters.put("centerY", centerY);
@@ -76,10 +72,8 @@ public class ReslicePolar extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
         parameters.put("scaleY", scaleFactorY);
         parameters.put("scaleZ", scaleFactorZ);
 
-
         clij2.execute(ReslicePolar.class, "reslice_polar_interpolate_x.cl", "reslice_polar", dst.getDimensions(), dst.getDimensions(), parameters);
 
-        clij2.show(output, "image");
         clij2.release(image);
         return true;
     }
@@ -124,28 +118,50 @@ public class ReslicePolar extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
 
 
     public static void main(String[] args) {
-        float zoom = 0.5f;
+        float zoom = 1f;
         float delta_angle = 0.5f;
 
         new ImageJ();
         ImagePlus imp = IJ.openImage("C:/structure/data/clincubator_data/ISB200714_well5_1pos_ON_t000000.tif");
         imp.show();
 
-        float scale_x = (float) (1.0 / imp.getCalibration().pixelWidth) / zoom;
-        float scale_y = (float) (1.0 / imp.getCalibration().pixelHeight) / zoom;
-        float scale_z = (float) (1.0 / imp.getCalibration().pixelDepth) / zoom;
+        float scale_y = (float) (imp.getCalibration().pixelWidth) / zoom;
+        float scale_z = (float) (imp.getCalibration().pixelHeight)/ zoom;
+        float scale_x = (float) (imp.getCalibration().pixelDepth) / zoom;
 
         CLIJ2 clij2 = CLIJ2.getInstance();
 
         ClearCLBuffer input = clij2.push(imp);
-        ClearCLBuffer output = clij2.create((long)(360 / delta_angle), (long)(180 / delta_angle), 300);
+        ClearCLBuffer resliced = clij2.create(input.getHeight(), input.getDepth(), input.getWidth());
+        clij2.resliceLeft(input, resliced);
+        //clij2.show(resliced, "resliced");
+        input.close();
+        input = resliced;
 
+        ClearCLBuffer output = clij2.create((long)(360 / delta_angle), (long)(180 / delta_angle), 200);
+        ClearCLBuffer projection = clij2.create((long)(360 / delta_angle), (long)(180 / delta_angle));
 
-        reslicePolar(clij2, input, output, delta_angle, 0f, 0f,
-                (float)(input.getWidth() /  2), (float)(input.getHeight() / 2), (float)(input.getDepth() / 2),
-                scale_x, scale_y, scale_z);
+        //ClearCLBuffer video = clij2.create((long)(360 / delta_angle), (long)(180 / delta_angle), 180 / 5);
 
+        //for (float angle = 0; angle < 180; angle += 5) {
+            reslicePolar(clij2, input, output, delta_angle, 0f, 0f,
+                    (float) (input.getWidth() / 2), (float) (input.getHeight() / 2), (float) (input.getDepth() / 2),
+                    scale_x, scale_y, scale_z);
         clij2.show(output, "output");
+
+            clij2.maximumZProjection(output, projection);
+        clij2.show(projection, "projection");
+            //    clij2.copySlice(projection, video, angle / 5);
+        //}
+
+        //clij2.show(video, "video");
+
+
+
+        //clij2.show(output, "output");
+
+
+
     }
 
 }

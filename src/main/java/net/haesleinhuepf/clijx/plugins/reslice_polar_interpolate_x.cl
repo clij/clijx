@@ -9,7 +9,6 @@
 __kernel void reslice_polar(
     IMAGE_dst_TYPE dst,
     IMAGE_src_TYPE src,
-    IMAGE_output_TYPE output,
     float deltaAngle,
     float centerX,
     float centerY,
@@ -40,7 +39,10 @@ __kernel void reslice_polar(
   const float sy = (centerY + sin(inclinationInRad) * sin(azimuthInRad) * (float)radius * scaleY) + 0.5f;
   const float sz = (centerZ + cos(inclinationInRad) * (float)radius * scaleZ) + 0.5f;
 
+
+
+
+
   IMAGE_src_PIXEL_TYPE value = READ_src_IMAGE(src,sampler,(float4)(sx / Nx, sy / Ny, sz / Nz, 0)).x;
   WRITE_dst_IMAGE(dst,(int4)(inclination, azimuth, radius, 0), CONVERT_dst_PIXEL_TYPE(value));
-  WRITE_output_IMAGE(output,(int4)((int)(sx / Nx), (int)(sy / Ny), (int)(sz / Nz), 0), 255);
 }
