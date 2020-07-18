@@ -23,38 +23,41 @@ public class Framor {
     int max_num_clijs_per_device = 2;
     public static boolean auto_contrast = true;
 
+    public static boolean multi_gpu_support = false;
+
     public Framor(ImagePlus input, FrameProcessor frameProcessor) {
         this.input = input;
         this.frameProcessor = frameProcessor;
 
-        ArrayList names = CLIJ.getAvailableDeviceNames();
-
-        long memoryNeed = frameProcessor.getMemoryNeedInBytes(input);
-
-        ArrayList<CLIJ2> clij2list = new ArrayList<>();
-
-
-        for (int i = 0; i < names.size(); i++) {
-            long availableMemory = new CLIJ(i).getGPUMemoryInBytes();
-            int num_clijs_per_device = 0;
-            while (availableMemory > memoryNeed && num_clijs_per_device < max_num_clijs_per_device) {
-                clij2list.add(new CLIJ2(new CLIJ(i)));
-                availableMemory -= memoryNeed;
-                num_clijs_per_device++;
+        if (multi_gpu_support) {
+            ArrayList names = CLIJ.getAvailableDeviceNames();
+            long memoryNeed = frameProcessor.getMemoryNeedInBytes(input);
+            ArrayList<CLIJ2> clij2list = new ArrayList<>();
+            for (int i = 0; i < names.size(); i++) {
+                long availableMemory = new CLIJ(i).getGPUMemoryInBytes();
+                int num_clijs_per_device = 0;
+                while (availableMemory > memoryNeed && num_clijs_per_device < max_num_clijs_per_device) {
+                    clij2list.add(new CLIJ2(new CLIJ(i)));
+                    availableMemory -= memoryNeed;
+                    num_clijs_per_device++;
+                }
             }
-        }
 
-        clij2s = new CLIJ2[clij2list.size()];
-        clij2list.toArray(clij2s);
+            clij2s = new CLIJ2[clij2list.size()];
+            clij2list.toArray(clij2s);
 
-        if (clij2s.length == 0) {
-            throw new IllegalArgumentException("No GPU found with enough memory (> " + memoryNeed + " bytes).");
+            if (clij2s.length == 0) {
+                throw new IllegalArgumentException("No GPU found with enough memory (> " + memoryNeed + " bytes).");
+            }
+            System.out.println("Available GPUs with enough memory:");
+
+        } else {
+            clij2s = new CLIJ2[1];
+            clij2s[0] = CLIJ2.getInstance();
         }
-        System.out.println("Available GPUs with enough memory:");
         for (int i = 0; i < clij2s.length; i++) {
             System.out.println(" * " + clij2s[i].getGPUName());
         }
-
     }
 
     private synchronized ImagePlus extractFrame(ImagePlus imp, int frame_channel) {
