@@ -347,6 +347,9 @@ class CLIJxAutoComplete {
        headline = "clijx.fillHistogram(ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Float arg4)";
        description = "<b>fillHistogram</b><br><br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.findMaxima(ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3)";
+       description = "<b>findMaxima</b><br><br><br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.flip(ClearCLImageInterface source, ClearCLImageInterface destination, Boolean flipX, Boolean flipY)";
        description = "<b>flip</b><br><br>Flips an image in X and/or Y direction depending on boolean flags.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Boolean flipX, Boolean flipY";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -628,6 +631,12 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.medianZProjection(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>medianZProjection</b><br><br>Determines the median intensity projection of an image stack along Z.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.mergeTouchingLabels(ClearCLBuffer arg1, ClearCLBuffer arg2)";
+       description = "<b>mergeTouchingLabels</b><br><br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.mergeTouchingLabelsSpecial(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4)";
+       description = "<b>mergeTouchingLabelsSpecial</b><br><br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.minimum2DBox(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radiusX, Integer radiusY)";
        description = "<b>minimum2DBox</b><br><br>Computes the local minimum of a pixels rectangular neighborhood. <br><br>The rectangles size is specified by <br>its half-width and half-height (radius).<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radiusX, Integer radiusY";
@@ -1196,4 +1205,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 395 methods generated.
+// 398 methods generated.

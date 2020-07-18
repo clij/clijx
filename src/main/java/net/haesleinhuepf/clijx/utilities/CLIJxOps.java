@@ -67,6 +67,8 @@ import net.haesleinhuepf.clijx.plugins.CaptureWebcamImage;
 import net.haesleinhuepf.clijx.plugins.ConvertRGBStackToGraySlice;
 import net.haesleinhuepf.clijx.plugins.NonLocalMeans;
 import net.haesleinhuepf.clijx.plugins.Bilateral;
+import net.haesleinhuepf.clijx.plugins.FindMaxima;
+import net.haesleinhuepf.clijx.plugins.MergeTouchingLabels;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -1216,5 +1218,41 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.FindMaxima
+    //----------------------------------------------------
+    /**
+     * 
+     */
+    default boolean findMaxima(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("FindMaxima");}
+        boolean result = FindMaxima.findMaxima(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("FindMaxima");}
+        return result;
+    }
+
+    /**
+     * 
+     */
+    default boolean mergeTouchingLabelsSpecial(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4) {
+        if (doTimeTracing()) {recordMethodStart("FindMaxima");}
+        boolean result = FindMaxima.mergeTouchingLabelsSpecial(getCLIJ2(), arg1, arg2, arg3, arg4);
+        if (doTimeTracing()) {recordMethodEnd("FindMaxima");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MergeTouchingLabels
+    //----------------------------------------------------
+    /**
+     * 
+     */
+    default boolean mergeTouchingLabels(ClearCLBuffer arg1, ClearCLBuffer arg2) {
+        if (doTimeTracing()) {recordMethodStart("MergeTouchingLabels");}
+        boolean result = MergeTouchingLabels.mergeTouchingLabels(getCLIJ2(), arg1, arg2);
+        if (doTimeTracing()) {recordMethodEnd("MergeTouchingLabels");}
+        return result;
+    }
+
 }
-// 85 methods generated.
+// 88 methods generated.
