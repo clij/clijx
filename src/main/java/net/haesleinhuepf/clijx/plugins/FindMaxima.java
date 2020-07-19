@@ -145,8 +145,8 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
 
         ResultsTable table = new ResultsTable();
         clij2.statisticsOfBackgroundAndLabelledPixels(input, output, table);
-        table.show("t" +
-                "");
+        //table.show("t" +
+        //        "");
 
         int min_index = table.getColumnIndex("" + StatisticsOfLabelledPixels.STATISTICS_ENTRY.MINIMUM_INTENSITY);
         int max_index = table.getColumnIndex("" + StatisticsOfLabelledPixels.STATISTICS_ENTRY.MAXIMUM_INTENSITY);
