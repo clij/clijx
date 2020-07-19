@@ -171,9 +171,9 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
                 point_value_list[i][2] = z;
             }
 
-            if ( (maximum - minimum) > 5) {
-                System.out.println("" + i + " range " + (maximum - minimum));
-            }
+            //if ( (maximum - minimum) > 5) {
+            //    System.out.println("" + i + " range " + (maximum - minimum));
+            //}
 
             if (maximum - minimum >= noise_threshold && i > 0) {
                 count++;
