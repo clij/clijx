@@ -17,11 +17,13 @@ import java.util.TimerTask;
 public class MemoryDisplay implements PlugIn, ImageListener {
     static ImagePlus viewer;
     float[] measurements = new float[200];
-    int measurement_count = 0;
+    int measurement_count = 200;
 
     Timer heartbeat = null;
 
     static String status = "";
+
+    final static int delay = 500;
 
     @Override
     public void run(String arg) {
@@ -38,7 +40,6 @@ public class MemoryDisplay implements PlugIn, ImageListener {
         Font font = new Font("Arial", 0, 12);
 
 
-        int delay = 500; //milliseconds
         heartbeat = new Timer();
         heartbeat.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -56,20 +57,29 @@ public class MemoryDisplay implements PlugIn, ImageListener {
         ip.setColor(new Color(255, 255, 255));
         ip.fill();
 
-        if (measurement_count < 200) {
-            measurement_count ++;
-        } else {
-            for (int i = 1; i < 200; i++) {
-                measurements[i - 1] = measurements[i];
-            }
+        for (int i = 1; i < 200; i++) {
+            measurements[i - 1] = measurements[i];
         }
+
         measurements[measurement_count - 1] = getMemoryConsumption(CLIJx.getInstance());
 
+        int now = (int) (System.currentTimeMillis() / delay);
         for (int i = 0; i < measurement_count; i++) {
             float relative = measurements[i];
-            ip.setRoi(i, (int) (100 * (1.0 - relative)), 1, (int) (100 * (relative)));
+            ip.setRoi(i, (int) (100 * (1.0 - relative)) + 1, 1, (int) (100 * (relative)));
             ip.setColor(new Color(relative, (1.0f - relative), 0));
             ip.fill();
+
+            if ((now + i) % 20 == 0) {
+                ip.setRoi(i, 97, 1, 3);
+                ip.setColor(Color.black);
+                ip.fill();
+            }
+            if ((now + i) % 60 == 0) {
+                ip.setRoi(i, 95, 1, 5);
+                ip.setColor(Color.black);
+                ip.fill();
+            }
         }
 
 //        TextRoi roi = new TextRoi(status, 0, 15, font);
@@ -98,9 +108,9 @@ public class MemoryDisplay implements PlugIn, ImageListener {
         long available_bytes = instance.getCLIJ().getGPUMemoryInBytes();
 
         long unit_factor = 1024 * 1024 * 1024;
-        status = String.format("%.1f / %.1f GB", (float)sum / unit_factor, (float)available_bytes / unit_factor);
+        status = String.format("%.1f / %.1f GB", (float) sum / unit_factor, (float)available_bytes / unit_factor);
 
-        return (float) (sum / available_bytes);
+        return (float) Math.min(sum / available_bytes, 1.0);
 
     }
 
