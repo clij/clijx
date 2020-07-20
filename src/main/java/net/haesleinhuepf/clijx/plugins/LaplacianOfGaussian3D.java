@@ -11,7 +11,7 @@ import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
 import org.scijava.plugin.Plugin;
 
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_laplacianOfGaussianInplace3D")
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_laplacianOfGaussian3D")
 public class LaplacianOfGaussian3D extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
 
     @Override
@@ -22,11 +22,11 @@ public class LaplacianOfGaussian3D extends AbstractCLIJ2Plugin implements CLIJMa
     @Override
     public boolean executeCL() {
 
-        boolean result = differenceOfGaussianInplace3D(getCLIJ2(), (ClearCLBuffer) (args[0]),  (ClearCLBuffer) (args[1]), asFloat(args[2]), asFloat(args[3]), asFloat(args[4]));
+        boolean result = laplacianOfGaussian3D(getCLIJ2(), (ClearCLBuffer) (args[0]),  (ClearCLBuffer) (args[1]), asFloat(args[2]), asFloat(args[3]), asFloat(args[4]));
         return result;
     }
 
-    public static boolean differenceOfGaussianInplace3D(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, Float sigma_x, Float sigma_y, Float sigma_z) {
+    public static boolean laplacianOfGaussian3D(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, Float sigma_x, Float sigma_y, Float sigma_z) {
 
         ClearCLBuffer temp1 = clij2.create(input);
 
