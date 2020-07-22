@@ -29,6 +29,9 @@ class CLIJxAutoComplete {
        headline = "clijx.adjacencyMatrixToTouchMatrix(ClearCLBuffer adjacency_matrix, ClearCLBuffer touch_matrix)";
        description = "<b>adjacencyMatrixToTouchMatrix</b><br><br>Converts a adjacency matrix in a touch matrix<br><br>Parameters:<br>ClearCLBuffer adjacency_matrix, ClearCLBuffer touch_matrix";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.affineTransform(null)";
+       description = "<b>affineTransform</b><br><br>Applies an affine transform to a 3D image. Individual transforms must be separated by spaces.<br><br>Supported transforms:<br>* center: translate the coordinate origin to the center of the image<br>* -center: translate the coordinate origin back to the initial origin<br>* rotate=[angle]: rotate in X/Y plane (around Z-axis) by the given angle in degrees<br>* rotateX=[angle]: rotate in Y/Z plane (around X-axis) by the given angle in degrees<br>* rotateY=[angle]: rotate in X/Z plane (around Y-axis) by the given angle in degrees<br>* rotateZ=[angle]: rotate in X/Y plane (around Z-axis) by the given angle in degrees<br>* scale=[factor]: isotropic scaling according to given zoom factor<br>* scaleX=[factor]: scaling along X-axis according to given zoom factor<br>* scaleY=[factor]: scaling along Y-axis according to given zoom factor<br>* scaleZ=[factor]: scaling along Z-axis according to given zoom factor<br>* shearXY=[factor]: shearing along X-axis in XY plane according to given factor<br>* shearXZ=[factor]: shearing along X-axis in XZ plane according to given factor<br>* shearYX=[factor]: shearing along Y-axis in XY plane according to given factor<br>* shearYZ=[factor]: shearing along Y-axis in YZ plane according to given factor<br>* shearZX=[factor]: shearing along Z-axis in XZ plane according to given factor<br>* shearZY=[factor]: shearing along Z-axis in YZ plane according to given factor<br>* translateX=[distance]: translate along X-axis by distance given in pixels<br>* translateY=[distance]: translate along X-axis by distance given in pixels<br>* translateZ=[distance]: translate along X-axis by distance given in pixels<br><br>Example transform:<br>transform = &quot;center scale=2 rotate=45 -center&quot;;<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.affineTransform2D(ClearCLBuffer source, ClearCLImageInterface destination, String transform)";
        description = "<b>affineTransform2D</b><br><br>Applies an affine transform to a 2D image. Individual transforms must be separated by spaces.<br><br>Supported transforms:<br>* center: translate the coordinate origin to the center of the image<br>* -center: translate the coordinate origin back to the initial origin<br>* rotate=[angle]: rotate in X/Y plane (around Z-axis) by the given angle in degrees<br>* scale=[factor]: isotropic scaling according to given zoom factor<br>* scaleX=[factor]: scaling along X-axis according to given zoom factor<br>* scaleY=[factor]: scaling along Y-axis according to given zoom factor<br>* shearXY=[factor]: shearing along X-axis in XY plane according to given factor<br>* translateX=[distance]: translate along X-axis by distance given in pixels<br>* translateY=[distance]: translate along X-axis by distance given in pixels<br><br>Example transform:<br>transform = &quot;center scale=2 rotate=45 -center&quot;;<br><br>Parameters:<br>ClearCLBuffer source, ClearCLImageInterface destination, String transform";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -137,6 +140,12 @@ class CLIJxAutoComplete {
        headline = "clijx.centroidsOfLabels(ClearCLBuffer source, ClearCLBuffer pointlist_destination)";
        description = "<b>centroidsOfLabels</b><br><br>Determines the centroids of all labels in a label image or image stack. <br><br>It writes the resulting  coordinates in a pointlist image. Depending on the dimensionality d of the labelmap and the number  of labels n, the pointlist image will have n*d pixels.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer pointlist_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.clInfo(null)";
+       description = "<b>clInfo</b><br><br>Outputs information about available OpenCL devices.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.clear(null)";
+       description = "<b>clear</b><br><br>Resets the GPUs memory by deleting all cached images.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.closeIndexGapsInLabelMap(ClearCLBuffer labeling_input, ClearCLImageInterface labeling_destination)";
        description = "<b>closeIndexGapsInLabelMap</b><br><br>Analyses a label map and if there are gaps in the indexing (e.g. label 5 is not present) all <br>subsequent labels will be relabelled. <br><br>Thus, afterwards number of labels and maximum label index are equal.<br>This operation is mostly performed on the CPU.<br><br>Parameters:<br>ClearCLBuffer labeling_input, ClearCLImageInterface labeling_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -167,8 +176,17 @@ class CLIJxAutoComplete {
        headline = "clijx.connectedComponentsLabelingInplace(ClearCLBuffer binary_source_labeling_destination)";
        description = "<b>connectedComponentsLabelingInplace</b><br><br>Performs connected components analysis to a binary image and generates a label map.<br><br>Parameters:<br>ClearCLBuffer binary_source_labeling_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.convertFloat(null)";
+       description = "<b>convertFloat</b><br><br>Convert the input image to a float image with 32 bits per pixel.<br><br>The target image should not exist with a different type before this <br>method is called.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.convertRGBStackToGraySlice(ClearCLBuffer stack_source, ClearCLBuffer slice_destination)";
        description = "<b>convertRGBStackToGraySlice</b><br><br>Converts a three channel image (stack with three slices) to a single channel image (2D image) by multiplying with factors 0.299, 0.587, 0.114.<br><br>Parameters:<br>ClearCLBuffer stack_source, ClearCLBuffer slice_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.convertUInt16(null)";
+       description = "<b>convertUInt16</b><br><br>Convert the input image to a unsigned integer image with 16 bits per pixel.<br><br>Pixel values are copied as they are. Use multiplyImageWithScalar in order to scalepixel values when reducing bit-depth to prevent cutting-off intensity ranges.<br>The target image should not exist with a different type before this <br>method is called.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.convertUInt8(null)";
+       description = "<b>convertUInt8</b><br><br>Convert the input image to a unsigned integer image with 8 bits per pixel.<br><br>Pixel values are copied as they are. Use multiplyImageWithScalar in order to scalepixel values when reducing bit-depth to prevent cutting-off intensity ranges.<br>The target image should not exist with a different type before this <br>method is called.<br><br>Parameters:<br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.convolve(ClearCLBuffer source, ClearCLBuffer convolution_kernel, ClearCLBuffer destination)";
        description = "<b>convolve</b><br><br>Convolve the image with a given kernel image.<br><br>It is recommended that the kernel image has an odd size in X, Y and Z.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer convolution_kernel, ClearCLBuffer destination";
@@ -203,6 +221,12 @@ class CLIJxAutoComplete {
        headline = "clijx.countTouchingNeighbors(ClearCLBuffer touch_matrix, ClearCLBuffer touching_neighbors_count_destination)";
        description = "<b>countTouchingNeighbors</b><br><br>Takes a touch matrix as input and delivers a vector with number of touching neighbors per label as a vector.<br><br>Parameters:<br>ClearCLBuffer touch_matrix, ClearCLBuffer touching_neighbors_count_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.create2D(null)";
+       description = "<b>create2D</b><br><br>Allocated memory for a new 2D image in the GPU memory. <br><br>BitDepth must be 8 (unsigned byte), 16 (unsigned short) or 32 (float).<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.create3D(null)";
+       description = "<b>create3D</b><br><br>Allocated memory for a new 3D image in the GPU memory. <br><br>BitDepth must be 8 (unsigned byte), 16 (unsigned short) or 32 (float).<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.crop(ClearCLImageInterface arg1, ClearCLImageInterface arg2, Integer arg3, Integer arg4)";
        description = "<b>crop</b><br><br>Crops a given rectangle out of a given image. <br><br>Note: If the destination image pre-exists already, it will be overwritten and keep it's dimensions.<br><br>Parameters:<br>ClearCLImageInterface arg1, ClearCLImageInterface arg2, Integer arg3, Integer arg4";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -233,11 +257,23 @@ class CLIJxAutoComplete {
        headline = "clijx.detectLabelEdges(ClearCLImageInterface label_map, ClearCLBuffer edge_image_destination)";
        description = "<b>detectLabelEdges</b><br><br>Takes a labelmap and returns an image where all pixels on label edges are set to 1 and all other pixels to 0.<br><br>Parameters:<br>ClearCLImageInterface label_map, ClearCLBuffer edge_image_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.detectMaxima2DBox(null)";
+       description = "<b>detectMaxima2DBox</b><br><br>Detects local maxima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>higher intensity, and to 0 otherwise.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.detectMaxima3DBox(null)";
+       description = "<b>detectMaxima3DBox</b><br><br>Detects local maxima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>higher intensity, and to 0 otherwise.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.detectMaximaBox(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius)";
        description = "<b>detectMaximaBox</b><br><br>Detects local maxima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>higher intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.detectMaximaSliceBySliceBox(ClearCLBuffer source, ClearCLBuffer destination, Integer radiusX, Integer radiusY)";
        description = "<b>detectMaximaSliceBySliceBox</b><br><br>Detects local maxima in a given square neighborhood of an input image stack. <br><br>The input image stack is processed slice by slice. Pixels in the resulting image are set to 1 if <br>there is no other pixel in a given radius which has a higher intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer radiusX, Integer radiusY";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.detectMinima2DBox(null)";
+       description = "<b>detectMinima2DBox</b><br><br>Detects local minima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>lower intensity, and to 0 otherwise.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.detectMinima3DBox(null)";
+       description = "<b>detectMinima3DBox</b><br><br>Detects local minima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>lower intensity, and to 0 otherwise.<br><br>Parameters:<br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.detectMinimaBox(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius)";
        description = "<b>detectMinimaBox</b><br><br>Detects local minima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>lower intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius";
@@ -434,6 +470,9 @@ class CLIJxAutoComplete {
        headline = "clijx.getDimensions(ClearCLBuffer arg1)";
        description = "<b>getDimensions</b><br><br>Reads out the size of an image [stack] and writes it to the variables 'width', 'height' and 'depth'.<br><br>Parameters:<br>ClearCLBuffer arg1";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.getGPUProperties(null)";
+       description = "<b>getGPUProperties</b><br><br>Reads out properties of the currently active GPU and write it in the variables 'GPU_name', <br>'global_memory_in_bytes' and 'OpenCL_Version'.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.getJaccardIndex(ClearCLBuffer arg1, ClearCLBuffer arg2)";
        description = "<b>getJaccardIndex</b><br><br>Determines the overlap of two binary images using the Jaccard index. <br><br>A value of 0 suggests no overlap, 1 means perfect overlap.<br>The resulting Jaccard index is saved to the results table in the 'Jaccard_Index' column.<br>Note that the Sorensen-Dice coefficient can be calculated from the Jaccard index j using this formula:<br><pre>s = f(j) = 2 j / (j + 1)</pre><br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -484,6 +523,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.imageToStack(ClearCLBuffer source, ClearCLBuffer destination, Integer num_slices)";
        description = "<b>imageToStack</b><br><br>Copies a single slice into a stack a given number of times.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer num_slices";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.invalidateKernelCache(null)";
+       description = "<b>invalidateKernelCache</b><br><br>Invalidates all cached OpenCL programs and kernels.<br><br>Parameters:<br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.invert(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>invert</b><br><br>Computes the negative value of all pixels in a given image. <br><br>It is recommended to convert images to <br>32-bit float before applying this operation.<br><br><pre>f(x) = - x</pre><br><br>For binary images, use binaryNot.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
@@ -827,8 +869,14 @@ class CLIJxAutoComplete {
        headline = "clijx.print(ClearCLImageInterface input)";
        description = "<b>print</b><br><br>Visualises an image on standard out (console).<br><br>Parameters:<br>ClearCLImageInterface input";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.pull(null)";
+       description = "<b>pull</b><br><br>Copies an image specified by its name from GPU memory back to ImageJ and shows it.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.pullAsROI(ClearCLBuffer binary_input)";
        description = "<b>pullAsROI</b><br><br>Pulls a binary image from the GPU memory and puts it on the currently active ImageJ window as region of interest.<br><br>Parameters:<br>ClearCLBuffer binary_input";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.pullBinary(null)";
+       description = "<b>pullBinary</b><br><br>Copies a binary image specified by its name from GPU memory back to ImageJ and shows it. This binary image will have 0 and 255 pixel intensities as needed for ImageJ to interpret it as binary.<br><br>Parameters:<br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.pullLabelsToROIList(ClearCLBuffer labelmap_input)";
        description = "<b>pullLabelsToROIList</b><br><br>Pulls all labels in a label map as ROIs to a list. <br><br>From ImageJ macro this list is written to the log <br>window. From ImageJ macro conside using pullLabelsToROIManager.<br><br>Parameters:<br>ClearCLBuffer labelmap_input";
@@ -845,8 +893,23 @@ class CLIJxAutoComplete {
        headline = "clijx.pullToResultsTable(ClearCLBuffer arg1, ResultsTable arg2)";
        description = "<b>pullToResultsTable</b><br><br>Converts an image into a table.<br><br>Parameters:<br>ClearCLBuffer arg1, ResultsTable arg2";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.push(null)";
+       description = "<b>push</b><br><br>Copies an image specified by its name to GPU memory in order to process it there later.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.pushArray(ClearCLBuffer arg1, Object arg2)";
        description = "<b>pushArray</b><br><br>Converts an array to an image.<br><br>Parameters:<br>ClearCLBuffer arg1, Object arg2";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.pushCurrentSelection(null)";
+       description = "<b>pushCurrentSelection</b><br><br>Copies an image specified by its name to GPU memory in order to process it there later.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.pushCurrentSlice(null)";
+       description = "<b>pushCurrentSlice</b><br><br>Copies an image specified by its name to GPU memory in order to process it there later.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.pushCurrentSliceSelection(null)";
+       description = "<b>pushCurrentSliceSelection</b><br><br>Copies an image specified by its name to GPU memory in order to process it there later.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.pushCurrentZStack(null)";
+       description = "<b>pushCurrentZStack</b><br><br>Copies an image specified by its name to GPU memory in order to process it there later.<br><br>Parameters:<br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.pushResultsTable(ClearCLBuffer arg1, ResultsTable arg2)";
        description = "<b>pushResultsTable</b><br><br>Converts a table to an image. <br><br>Rows stay rows, columns stay columns.<br><br>Parameters:<br>ClearCLBuffer arg1, ResultsTable arg2";
@@ -872,6 +935,9 @@ class CLIJxAutoComplete {
        headline = "clijx.reduceStack(ClearCLImageInterface input, ClearCLImageInterface destination, Integer reductionFactor, Integer offset)";
        description = "<b>reduceStack</b><br><br>Reduces the number of slices in a stack by a given factor.<br>With the offset you have control which slices stay: <br>* With factor 3 and offset 0, slices 0, 3, 6,... are kept. * With factor 4 and offset 1, slices 1, 5, 9,... are kept.<br><br>Parameters:<br>ClearCLImageInterface input, ClearCLImageInterface destination, Integer reductionFactor, Integer offset";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.release(null)";
+       description = "<b>release</b><br><br>Frees memory of a specified image in GPU memory.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.replaceIntensities(ClearCLImageInterface input, ClearCLImageInterface new_values_vector, ClearCLImageInterface destination)";
        description = "<b>replaceIntensities</b><br><br>Replaces integer intensities specified in a vector image. <br><br>The vector image must be 3D with size (m, 1, 1) where m corresponds to the maximum intensity in the original image. Assuming the vector image contains values (0, 1, 0, 2) means: <br> * All pixels with value 0 (first entry in the vector image) get value 0<br> * All pixels with value 1 get value 1<br> * All pixels with value 2 get value 0<br> * All pixels with value 3 get value 2<br><br><br>Parameters:<br>ClearCLImageInterface input, ClearCLImageInterface new_values_vector, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -880,6 +946,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.replacePixelsIfZero(ClearCLImageInterface input1, ClearCLImageInterface input2, ClearCLImageInterface destination)";
        description = "<b>replacePixelsIfZero</b><br><br>Replaces pixel values x with y in case x is zero.<br><br>This functionality is comparable to ImageJs image calculator operator 'transparent zero'.<br><br>Parameters:<br>ClearCLImageInterface input1, ClearCLImageInterface input2, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.reportMemory(null)";
+       description = "<b>reportMemory</b><br><br>Prints a list of all images cached in the GPU to ImageJs log window together with a sum of memory <br>consumption.<br><br>Parameters:<br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.resample(ClearCLImageInterface source, ClearCLImageInterface destination, Float factorX, Float factorY, Float factorZ, Boolean linearInterpolation)";
        description = "<b>resample</b><br><br>Resamples an image with given size factors using an affine transform.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float factorX, Float factorY, Float factorZ, Boolean linearInterpolation";
@@ -898,6 +967,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.resliceRadial(ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3)";
        description = "<b>resliceRadial</b><br><br>Computes a radial projection of an image stack. <br><br>Starting point for the line is the given point in any <br>X/Y-plane of a given input image stack. Furthermore, radius of the resulting projection must be given and scaling factors in X and Y in case pixels are not isotropic.This operation is similar to ImageJs 'Radial Reslice' method but offers less flexibility.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.resliceRadialTop(null)";
+       description = "<b>resliceRadialTop</b><br><br>Computes a radial projection of an image stack and reslices it from top. <br><br>Starting point for the line is the given point in any <br>X/Y-plane of a given input image stack. Furthermore, radius of the resulting projection must be given and scaling factors in X and Y in case pixels are not isotropic.This operation is similar to ImageJs 'Radial Reslice' method combined with 'Reslice from top' but offers less flexibility.<br><br>Parameters:<br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.resliceRight(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>resliceRight</b><br><br>Flippes X, Y and Z axis of an image stack. This operation is similar to ImageJs 'Reslice [/]' method <br> but offers less flexibility such as interpolation.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
@@ -1247,4 +1319,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 412 methods generated.
+// 436 methods generated.
