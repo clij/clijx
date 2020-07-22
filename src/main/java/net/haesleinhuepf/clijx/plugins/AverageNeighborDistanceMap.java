@@ -20,10 +20,10 @@ public class AverageNeighborDistanceMap extends AbstractCLIJ2Plugin implements C
 
     @Override
     public boolean executeCL() {
-        return averageNeighborDistance(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1]);
+        return averageNeighborDistanceMap(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1]);
     }
 
-    public static boolean averageNeighborDistance(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result) {
+    public static boolean averageNeighborDistanceMap(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result) {
         int number_of_labels = (int)clij2.maximumOfAllPixels(pushed);
         ClearCLBuffer touch_matrix = clij2.create(number_of_labels + 1, number_of_labels + 1);
         clij2.generateTouchMatrix(pushed, touch_matrix);

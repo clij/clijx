@@ -9,8 +9,8 @@ import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_neighborCountMap")
-public class NeighborCountMap extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized {
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_touchingNeighborCountMap")
+public class TouchingNeighborCountMap extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized {
 
     @Override
     public String getParameterHelpText() {
@@ -19,10 +19,10 @@ public class NeighborCountMap extends AbstractCLIJ2Plugin implements CLIJMacroPl
 
     @Override
     public boolean executeCL() {
-        return countNeighbors(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1]);
+        return touchingNeighborCountMap(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1]);
     }
 
-    public static boolean countNeighbors(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result) {
+    public static boolean touchingNeighborCountMap(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result) {
         int number_of_labels = (int)clij2.maximumOfAllPixels(pushed);
         ClearCLBuffer touch_matrix = clij2.create(number_of_labels + 1, number_of_labels + 1);
         clij2.generateTouchMatrix(pushed, touch_matrix);
