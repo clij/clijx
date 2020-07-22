@@ -69,6 +69,20 @@ import net.haesleinhuepf.clijx.plugins.NonLocalMeans;
 import net.haesleinhuepf.clijx.plugins.Bilateral;
 import net.haesleinhuepf.clijx.plugins.FindMaxima;
 import net.haesleinhuepf.clijx.plugins.MergeTouchingLabels;
+import net.haesleinhuepf.clijx.plugins.AverageNeighborDistanceMap;
+import net.haesleinhuepf.clijx.plugins.CylinderTransform;
+import net.haesleinhuepf.clijx.plugins.DetectAndLabelMaxima;
+import net.haesleinhuepf.clijx.plugins.DrawDistanceMeshBetweenTouchingLabels;
+import net.haesleinhuepf.clijx.plugins.DrawMeshBetweenTouchingLabels;
+import net.haesleinhuepf.clijx.plugins.ExcludeLabelsOutsideSizeRange;
+import net.haesleinhuepf.clijx.plugins.ExtendLabelsWithMaximumRadius;
+import net.haesleinhuepf.clijx.plugins.FindAndLabelMaxima;
+import net.haesleinhuepf.clijx.plugins.MakeIsotropic;
+import net.haesleinhuepf.clijx.plugins.TouchingNeighborCountMap;
+import net.haesleinhuepf.clijx.plugins.RigidTransform;
+import net.haesleinhuepf.clijx.plugins.SphereTransform;
+import net.haesleinhuepf.clijx.plugins.SubtractGaussianBackground;
+import net.haesleinhuepf.clijx.plugins.ThresholdDoG;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -1254,5 +1268,212 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.AverageNeighborDistanceMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch and replaces every label with the average distance to their neighboring labels.
+     * 
+     * To determine the distances, the centroid of the labels is determined internally.
+     */
+    default boolean averageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("AverageNeighborDistanceMap");}
+        boolean result = AverageNeighborDistanceMap.averageNeighborDistanceMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("AverageNeighborDistanceMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.CylinderTransform
+    //----------------------------------------------------
+    /**
+     * Applies a cylinder transform to an image stack assuming the center line goes in Y direction in the center of the stack.
+     * 
+     * This transforms an image stack from an XYZ coordinate system to a AYD coordinate system with 
+     * A the angle around the center line, 
+     * Y the original Y coordinate and 
+     * D, the distance from the center.
+     * 
+     * Thus, going in virtual Z direction (actually D) in the resulting stack, you go from the center to theperiphery.
+     */
+    default boolean cylinderTransform(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6) {
+        if (doTimeTracing()) {recordMethodStart("CylinderTransform");}
+        boolean result = CylinderTransform.cylinderTransform(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("CylinderTransform");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.DetectAndLabelMaxima
+    //----------------------------------------------------
+    /**
+     * Determines maximum regions in a Gaussian blurred version of the oriignal image.
+     * 
+     * The regions do not not necessarily have to be single pixels. 
+     * It is also possible to invert the image before determining the maxima.
+     */
+    default boolean detectAndLabelMaxima(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, boolean arg6) {
+        if (doTimeTracing()) {recordMethodStart("DetectAndLabelMaxima");}
+        boolean result = DetectAndLabelMaxima.detectAndLabelMaxima(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), arg6);
+        if (doTimeTracing()) {recordMethodEnd("DetectAndLabelMaxima");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.DrawDistanceMeshBetweenTouchingLabels
+    //----------------------------------------------------
+    /**
+     * Starting from a label map, draw lines between touching neighbors resulting in a mesh.
+     * 
+     * The end points of the lines correspond to the centroids of the labels. The intensity of the lines 
+     * cooresponds to the distance between these labels (in pixels or voxels).
+     */
+    default boolean drawDistanceMeshBetweenTouchingLabels(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("DrawDistanceMeshBetweenTouchingLabels");}
+        boolean result = DrawDistanceMeshBetweenTouchingLabels.drawDistanceMeshBetweenTouchingLabels(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("DrawDistanceMeshBetweenTouchingLabels");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.DrawMeshBetweenTouchingLabels
+    //----------------------------------------------------
+    /**
+     * Starting from a label map, draw lines between touching neighbors resulting in a mesh.
+     * 
+     * The end points of the lines correspond to the centroids of the labels. 
+     */
+    default boolean drawMeshBetweenTouchingLabels(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("DrawMeshBetweenTouchingLabels");}
+        boolean result = DrawMeshBetweenTouchingLabels.drawMeshBetweenTouchingLabels(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("DrawMeshBetweenTouchingLabels");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ExcludeLabelsOutsideSizeRange
+    //----------------------------------------------------
+    /**
+     * Removes labels from a label map which are not within a certain size range.
+     * 
+     * Size of the labels is given as the number of pixel or voxels per label.
+     */
+    default boolean excludeLabelsOutsideSizeRange(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("ExcludeLabelsOutsideSizeRange");}
+        boolean result = ExcludeLabelsOutsideSizeRange.excludeLabelsOutsideSizeRange(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("ExcludeLabelsOutsideSizeRange");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ExtendLabelsWithMaximumRadius
+    //----------------------------------------------------
+    /**
+     * Extend labels with a given radius.
+     * 
+     * This is actually a local maximum filter applied to a label map which does not overwrite labels.
+     */
+    default boolean extendLabelsWithMaximumRadius(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("ExtendLabelsWithMaximumRadius");}
+        boolean result = ExtendLabelsWithMaximumRadius.extendLabelsWithMaximumRadius(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
+        if (doTimeTracing()) {recordMethodEnd("ExtendLabelsWithMaximumRadius");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.FindAndLabelMaxima
+    //----------------------------------------------------
+    /**
+     * Determine maxima with a given tolerance to surrounding maxima and background and label them.
+     */
+    default boolean findAndLabelMaxima(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, boolean arg4) {
+        if (doTimeTracing()) {recordMethodStart("FindAndLabelMaxima");}
+        boolean result = FindAndLabelMaxima.findAndLabelMaxima(getCLIJx(), arg1, arg2, new Double (arg3).floatValue(), arg4);
+        if (doTimeTracing()) {recordMethodEnd("FindAndLabelMaxima");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MakeIsotropic
+    //----------------------------------------------------
+    /**
+     * Applies a scaling operation using linear interpolation to generate an image stack with a given isotropic voxel size.
+     */
+    default boolean makeIsoTropic(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6) {
+        if (doTimeTracing()) {recordMethodStart("MakeIsotropic");}
+        boolean result = MakeIsotropic.makeIsoTropic(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("MakeIsotropic");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.TouchingNeighborCountMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch and replaces every label with the number of touching neighboring labels.
+     * 
+     * 
+     */
+    default boolean touchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("TouchingNeighborCountMap");}
+        boolean result = TouchingNeighborCountMap.touchingNeighborCountMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("TouchingNeighborCountMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.RigidTransform
+    //----------------------------------------------------
+    /**
+     * Applies a rigid transform using linear interpolation to an image stack.
+     */
+    default boolean rigidTransform(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8) {
+        if (doTimeTracing()) {recordMethodStart("RigidTransform");}
+        boolean result = RigidTransform.rigidTransform(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue(), new Double (arg7).floatValue(), new Double (arg8).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("RigidTransform");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.SphereTransform
+    //----------------------------------------------------
+    /**
+     * Turns an image stack in XYZ cartesian coordinate system to an AID polar coordinate system.
+     * 
+     * A corresponds to azimut,I to inclination and D to the distance from the center.Thus, going in virtual Z direction (actually D) in the resulting stack, you go from the center to theperiphery.
+     */
+    default boolean sphereTransform(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6, double arg7) {
+        if (doTimeTracing()) {recordMethodStart("SphereTransform");}
+        boolean result = SphereTransform.sphereTransform(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue(), new Double (arg7).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("SphereTransform");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.SubtractGaussianBackground
+    //----------------------------------------------------
+    /**
+     * Applies Gaussian blur to the input image and subtracts the result from the original image.
+     */
+    default boolean subtractGaussianBackground(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("SubtractGaussianBackground");}
+        boolean result = SubtractGaussianBackground.subtractGaussianBackground(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("SubtractGaussianBackground");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ThresholdDoG
+    //----------------------------------------------------
+    /**
+     * 
+     */
+    default boolean localDoGThreshold(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, boolean arg6) {
+        if (doTimeTracing()) {recordMethodStart("ThresholdDoG");}
+        boolean result = ThresholdDoG.localDoGThreshold(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), arg6);
+        if (doTimeTracing()) {recordMethodEnd("ThresholdDoG");}
+        return result;
+    }
+
 }
-// 88 methods generated.
+// 102 methods generated.

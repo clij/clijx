@@ -74,6 +74,9 @@ class CLIJxAutoComplete {
        headline = "clijx.averageDistanceOfTouchingNeighbors(ClearCLBuffer distance_matrix, ClearCLBuffer touch_matrix, ClearCLBuffer average_distancelist_destination)";
        description = "<b>averageDistanceOfTouchingNeighbors</b><br><br>Takes a touch matrix and a distance matrix to determine the average distance of touching neighbors <br> for every object.<br><br>Parameters:<br>ClearCLBuffer distance_matrix, ClearCLBuffer touch_matrix, ClearCLBuffer average_distancelist_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.averageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>averageNeighborDistanceMap</b><br><br>Takes a label map, determines which labels touch and replaces every label with the average distance to their neighboring labels.<br><br>To determine the distances, the centroid of the labels is determined internally.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.bilateral(ClearCLBuffer input, ClearCLBuffer destination, Integer radiusX, Integer radiusY, Integer radiusZ, Float sigma_intensity, Float sigma_space)";
        description = "<b>bilateral</b><br><br>Applies a bilateral filter using a box neighborhood with sigma weights for space and intensity to the input image.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer radiusX, Integer radiusY, Integer radiusZ, Float sigma_intensity, Float sigma_space";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -215,11 +218,17 @@ class CLIJxAutoComplete {
        headline = "clijx.customOperation(String arg1, String arg2, HashMap arg3)";
        description = "<b>customOperation</b><br><br>Executes a custom operation wirtten in OpenCL on a custom list of images. <br><br>All images must be created before calling this method. Image parameters should be handed over as an array with parameter names and image names alternating, e.g.<br><br>Ext.CLIJ2_customOperation(..., ..., newArray(&quot;image1&quot;, &quot;blobs.gif&quot;, &quot;image2&quot;, &quot;Processed_blobs.gif&quot;))<br><br>In the custom code, you can use the predefined variables x, y and z to deal with coordinates.<br>You can for example use it to access pixel intensities like this:<br><br>float value = READ_IMAGE(image, sampler, POS_image_INSTANCE(x, y, z, 0)).x;<br>WRITE_IMAGE(image, POS_image_INSTANCE(x, y, z, 0), CONVERT_image_PIXEL_TYPE(value));<br><br>Note: replace `image` with the given image parameter name. You can furthermore use custom function to organise code in the global_code parameter. In OpenCL they may look like this:<br><br>inline float sum(float a, float b) {<br>    return a + b;<br>}<br><br><br>Parameters:<br>String arg1, String arg2, HashMap arg3";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.cylinderTransform(ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_angles, Float delta_angle_in_degrees, Float relative_center_x, Float relative_center_z)";
+       description = "<b>cylinderTransform</b><br><br>Applies a cylinder transform to an image stack assuming the center line goes in Y direction in the center of the stack.<br><br>This transforms an image stack from an XYZ coordinate system to a AYD coordinate system with <br>A the angle around the center line, <br>Y the original Y coordinate and <br>D, the distance from the center.<br><br>Thus, going in virtual Z direction (actually D) in the resulting stack, you go from the center to theperiphery.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_angles, Float delta_angle_in_degrees, Float relative_center_x, Float relative_center_z";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.deformableRegistration2D(ClearCLBuffer input1, ClearCLBuffer input2, ClearCLBuffer destination, Integer maxDeltaX, Integer maxDeltaY)";
        description = "<b>deformableRegistration2D</b><br><br>Applies particle image velocimetry to two images and registers them afterwards by warping input image 2 with a smoothed vector field.<br><br>Parameters:<br>ClearCLBuffer input1, ClearCLBuffer input2, ClearCLBuffer destination, Integer maxDeltaX, Integer maxDeltaY";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.depthColorProjection(ClearCLImageInterface source, ClearCLBuffer lookup_table, ClearCLBuffer destination_max, Float min_display_intensity, Float max_display_intensity)";
        description = "<b>depthColorProjection</b><br><br>Determines a maximum projection of an image stack and does a color coding of the determined arg Z (position of the found maximum). <br><br>Second parameter is a Lookup-Table in the form of an 8-bit image stack 255 pixels wide, 1 pixel high with 3 planes representing red, green and blue intensities.<br>Resulting image is a 3D image with three Z-planes representing red, green and blue channels.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLBuffer lookup_table, ClearCLBuffer destination_max, Float min_display_intensity, Float max_display_intensity";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.detectAndLabelMaxima(ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Float arg4, Float arg5, Boolean arg6)";
+       description = "<b>detectAndLabelMaxima</b><br><br>Determines maximum regions in a Gaussian blurred version of the oriignal image.<br><br>The regions do not not necessarily have to be single pixels. <br>It is also possible to invert the image before determining the maxima.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Float arg4, Float arg5, Boolean arg6";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.detectLabelEdges(ClearCLImageInterface label_map, ClearCLBuffer edge_image_destination)";
        description = "<b>detectLabelEdges</b><br><br>Takes a labelmap and returns an image where all pixels on label edges are set to 1 and all other pixels to 0.<br><br>Parameters:<br>ClearCLImageInterface label_map, ClearCLBuffer edge_image_destination";
@@ -284,8 +293,14 @@ class CLIJxAutoComplete {
        headline = "clijx.drawBox(ClearCLImageInterface destination, Float x, Float y, Float z, Float width, Float height, Float depth, Float value)";
        description = "<b>drawBox</b><br><br>Draws a box at a given start point with given size. <br>All pixels other than in the box are untouched. Consider using `set(buffer, 0);` in advance.<br><br>Parameters:<br>ClearCLImageInterface destination, Float x, Float y, Float z, Float width, Float height, Float depth, Float value";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.drawDistanceMeshBetweenTouchingLabels(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>drawDistanceMeshBetweenTouchingLabels</b><br><br>Starting from a label map, draw lines between touching neighbors resulting in a mesh.<br><br>The end points of the lines correspond to the centroids of the labels. The intensity of the lines <br>cooresponds to the distance between these labels (in pixels or voxels).<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.drawLine(ClearCLImageInterface destination, Float x1, Float y1, Float z1, Float x2, Float y2, Float z2, Float thickness, Float value)";
        description = "<b>drawLine</b><br><br>Draws a line between two points with a given thickness. <br><br>All pixels other than on the line are untouched. Consider using `set(buffer, 0);` in advance.<br><br>Parameters:<br>ClearCLImageInterface destination, Float x1, Float y1, Float z1, Float x2, Float y2, Float z2, Float thickness, Float value";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.drawMeshBetweenTouchingLabels(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>drawMeshBetweenTouchingLabels</b><br><br>Starting from a label map, draw lines between touching neighbors resulting in a mesh.<br><br>The end points of the lines correspond to the centroids of the labels. <br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.drawSphere(ClearCLImageInterface destination, Float x, Float y, Float z, Float radius_x, Float radius_y, Float radius_z, Float value)";
        description = "<b>drawSphere</b><br><br>Draws a sphere around a given point with given radii in x, y and z (if 3D). <br><br> All pixels other than in the sphere are untouched. Consider using `set(buffer, 0);` in advance.<br><br>Parameters:<br>ClearCLImageInterface destination, Float x, Float y, Float z, Float radius_x, Float radius_y, Float radius_z, Float value";
@@ -326,6 +341,9 @@ class CLIJxAutoComplete {
        headline = "clijx.excludeLabelsOnSurface(ClearCLBuffer pointlist, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination, Float centerX, Float centerY, Float centerZ)";
        description = "<b>excludeLabelsOnSurface</b><br><br>This operation follows a ray from a given position towards a label (or opposite direction) and checks if  there is another label between the label an the image border. <br><br>If yes, this label is eliminated from the label map.<br><br>Parameters:<br>ClearCLBuffer pointlist, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination, Float centerX, Float centerY, Float centerZ";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.excludeLabelsOutsideSizeRange(ClearCLBuffer input, ClearCLBuffer destination, Float minimum_size, Float maximum_size)";
+       description = "<b>excludeLabelsOutsideSizeRange</b><br><br>Removes labels from a label map which are not within a certain size range.<br><br>Size of the labels is given as the number of pixel or voxels per label.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float minimum_size, Float maximum_size";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.excludeLabelsSubSurface(ClearCLBuffer pointlist, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination, Float centerX, Float centerY, Float centerZ)";
        description = "<b>excludeLabelsSubSurface</b><br><br>This operation follows a ray from a given position towards a label (or opposite direction) and checks if  there is another label between the label an the image border. <br><br>If yes, this label is eliminated from the label map.<br><br>Parameters:<br>ClearCLBuffer pointlist, ClearCLBuffer label_map_input, ClearCLBuffer label_map_destination, Float centerX, Float centerY, Float centerZ";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -341,11 +359,17 @@ class CLIJxAutoComplete {
        headline = "clijx.extendLabelingViaVoronoi(ClearCLBuffer input, ClearCLImageInterface destination)";
        description = "<b>extendLabelingViaVoronoi</b><br><br>Takes a label map image and dilates the regions using a octagon shape until they touch. <br><br>The resulting label map is written to the output.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.extendLabelsWithMaximumRadius(ClearCLBuffer input, ClearCLBuffer destination, Integer radius)";
+       description = "<b>extendLabelsWithMaximumRadius</b><br><br>Extend labels with a given radius.<br><br>This is actually a local maximum filter applied to a label map which does not overwrite labels.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer radius";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.extrema(ClearCLBuffer input1, ClearCLBuffer input2, ClearCLBuffer destination)";
        description = "<b>extrema</b><br><br>Returns an image with pixel values most distant from 0: <br><br>f(x, y) = x if abs(x) > abs(y), y else.<br><br>Parameters:<br>ClearCLBuffer input1, ClearCLBuffer input2, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.fillHistogram(ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Float arg4)";
        description = "<b>fillHistogram</b><br><br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.findAndLabelMaxima(ClearCLBuffer input, ClearCLBuffer destination, Float tolerance, Boolean invert)";
+       description = "<b>findAndLabelMaxima</b><br><br>Determine maxima with a given tolerance to surrounding maxima and background and label them.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float tolerance, Boolean invert";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.findMaxima(ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3)";
        description = "<b>findMaxima</b><br><br><br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3";
@@ -485,6 +509,9 @@ class CLIJxAutoComplete {
        headline = "clijx.laplaceSphere(ClearCLBuffer input, ClearCLBuffer destination)";
        description = "<b>laplaceSphere</b><br><br>Applies the Laplace operator (Diamond neighborhood) to an image.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localDoGThreshold(ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Float arg4, Float arg5, Boolean arg6)";
+       description = "<b>localDoGThreshold</b><br><br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.localExtremaBox(ClearCLBuffer input, ClearCLBuffer destination, Integer radiusX, Integer radiusY, Integer radiusZ)";
        description = "<b>localExtremaBox</b><br><br>Applies a local minimum and maximum filter. <br><br>Afterwards, the value is returned which is more far from zero.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer radiusX, Integer radiusY, Integer radiusZ";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -496,6 +523,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.logarithm(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>logarithm</b><br><br>Computes base e logarithm of all pixels values.<br><br>f(x) = log(x)<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.makeIsoTropic(ClearCLBuffer input, ClearCLBuffer destination, Float original_voxel_size_x, Float original_voxel_size_y, Float original_voxel_size_z, Float new_voxel_size)";
+       description = "<b>makeIsoTropic</b><br><br>Applies a scaling operation using linear interpolation to generate an image stack with a given isotropic voxel size.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float original_voxel_size_x, Float original_voxel_size_y, Float original_voxel_size_z, Float new_voxel_size";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.mask(ClearCLImageInterface source, ClearCLImageInterface mask, ClearCLImageInterface destination)";
        description = "<b>mask</b><br><br>Computes a masked image by applying a binary mask to an image. <br><br>All pixel values x of image X will be copied<br>to the destination image in case pixel value m at the same position in the mask image is not equal to <br>zero.<br><br><pre>f(x,m) = (x if (m != 0); (0 otherwise))</pre><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface mask, ClearCLImageInterface destination";
@@ -881,6 +911,9 @@ class CLIJxAutoComplete {
        headline = "clijx.resultsTableToImage2D(ClearCLBuffer arg1, ResultsTable arg2)";
        description = "<b>resultsTableToImage2D</b><br><br>Converts a table to an image. <br><br>Rows stay rows, columns stay columns.<br><br>Parameters:<br>ClearCLBuffer arg1, ResultsTable arg2";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.rigidTransform(ClearCLBuffer input, ClearCLBuffer destination, Float translation_x, Float translation_y, Float translation_z, Float rotation_angle_x, Float rotation_angle_y, Float rotation_angle_z)";
+       description = "<b>rigidTransform</b><br><br>Applies a rigid transform using linear interpolation to an image stack.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float translation_x, Float translation_y, Float translation_z, Float rotation_angle_x, Float rotation_angle_y, Float rotation_angle_z";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.rotate2D(ClearCLBuffer source, ClearCLBuffer destination, Float angle, Boolean rotateAroundCenter)";
        description = "<b>rotate2D</b><br><br>Rotates an image in plane. <br><br>All angles are entered in degrees. If the image is not rotated around <br>the center, it is rotated around the coordinate origin.<br><br>It is recommended to apply the rotation to an isotropic image.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Float angle, Boolean rotateAroundCenter";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -986,6 +1019,9 @@ class CLIJxAutoComplete {
        headline = "clijx.sorensenDiceCoefficient(ClearCLBuffer source1, ClearCLBuffer source2)";
        description = "<b>sorensenDiceCoefficient</b><br><br>Determines the overlap of two binary images using the Sorensen-Dice coefficent. <br><br>A value of 0 suggests no overlap, 1 means perfect overlap.<br>The Sorensen-Dice coefficient is saved in the colum 'Sorensen_Dice_coefficient'.<br>Note that the Sorensen-Dice coefficient s can be calculated from the Jaccard index j using this formula:<br><pre>s = f(j) = 2 j / (j + 1)</pre><br><br>Parameters:<br>ClearCLBuffer source1, ClearCLBuffer source2";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.sphereTransform(ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_angles, Float delta_angle_in_degrees, Float relative_center_x, Float relative_center_y, Float relative_center_z)";
+       description = "<b>sphereTransform</b><br><br>Turns an image stack in XYZ cartesian coordinate system to an AID polar coordinate system.<br><br>A corresponds to azimut,I to inclination and D to the distance from the center.Thus, going in virtual Z direction (actually D) in the resulting stack, you go from the center to theperiphery.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_angles, Float delta_angle_in_degrees, Float relative_center_x, Float relative_center_y, Float relative_center_z";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.spotsToPointList(ClearCLBuffer input_spots, ClearCLBuffer destination_pointlist)";
        description = "<b>spotsToPointList</b><br><br>Transforms a spots image as resulting from maximum/minimum detection in an image where every column contains d <br>pixels (with d = dimensionality of the original image) with the coordinates of the maxima/minima.<br><br>Parameters:<br>ClearCLBuffer input_spots, ClearCLBuffer destination_pointlist";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1039,6 +1075,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.subtractBackground3D(ClearCLImageInterface input, ClearCLImageInterface destination, Float sigmaX, Float sigmaY, Float sigmaZ)";
        description = "<b>subtractBackground3D</b><br><br>Applies Gaussian blur to the input image and subtracts the result from the original image.<br><br>Parameters:<br>ClearCLImageInterface input, ClearCLImageInterface destination, Float sigmaX, Float sigmaY, Float sigmaZ";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.subtractGaussianBackground(ClearCLImageInterface input, ClearCLImageInterface destination, Float sigmaX, Float sigmaY, Float sigmaZ)";
+       description = "<b>subtractGaussianBackground</b><br><br>Applies Gaussian blur to the input image and subtracts the result from the original image.<br><br>Parameters:<br>ClearCLImageInterface input, ClearCLImageInterface destination, Float sigmaX, Float sigmaY, Float sigmaZ";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.subtractImageFromScalar(ClearCLImageInterface input, ClearCLImageInterface destination, Float scalar)";
        description = "<b>subtractImageFromScalar</b><br><br>Subtracts one image X from a scalar s pixel wise.<br><br><pre>f(x, s) = s - x</pre><br><br>Parameters:<br>ClearCLImageInterface input, ClearCLImageInterface destination, Float scalar";
@@ -1142,6 +1181,9 @@ class CLIJxAutoComplete {
        headline = "clijx.touchMatrixToMesh(ClearCLBuffer pointlist, ClearCLBuffer touch_matrix, ClearCLBuffer mesh_destination)";
        description = "<b>touchMatrixToMesh</b><br><br>Takes a pointlist with dimensions n*d with n point coordinates in d dimensions and a touch matrix of <br>size n*n to draw lines from all points to points if the corresponding pixel in the touch matrix is 1.<br><br>Parameters:<br>ClearCLBuffer pointlist, ClearCLBuffer touch_matrix, ClearCLBuffer mesh_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.touchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>touchingNeighborCountMap</b><br><br>Takes a label map, determines which labels touch and replaces every label with the number of touching neighboring labels.<br><br><br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.trainAutoContextWekaModelWithOptions(ClearCLBuffer arg1, ClearCLBuffer arg2, String arg3, String arg4, int arg5, Integer arg6, Integer arg7, Integer arg8)";
        description = "<b>trainAutoContextWekaModelWithOptions</b><br><br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1205,4 +1247,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 398 methods generated.
+// 412 methods generated.
