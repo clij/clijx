@@ -105,7 +105,7 @@ public class FindMaximaPlateaus extends AbstractCLIJ2Plugin implements CLIJMacro
 
     @Override
     public String getDescription() {
-        return "";
+        return "Finds local maxima, which might be groups of pixels with the same intensity and marks them in a binary image.";
     }
 
     @Override

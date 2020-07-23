@@ -328,7 +328,7 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
 
     @Override
     public String getDescription() {
-        return "";
+        return "Finds and labels local maxima with neighboring maxima and background above a given tolerance threshold.\n\n";
     }
 
     @Override
