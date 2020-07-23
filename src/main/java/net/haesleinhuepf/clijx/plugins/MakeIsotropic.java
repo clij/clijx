@@ -8,11 +8,12 @@ import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
+import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import net.imglib2.realtransform.AffineTransform3D;
 import org.scijava.plugin.Plugin;
 
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_makeIsotropic")
-public class MakeIsotropic extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
+public class MakeIsotropic extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized {
 
     @Override
     public Object[] getDefaultValues() {
@@ -37,7 +38,6 @@ public class MakeIsotropic extends AbstractCLIJ2Plugin implements CLIJMacroPlugi
         ClearCLImage temp = clij2.create(pushed.getDimensions(), ImageChannelDataType.Float);
 
         clij2.copy(pushed, temp);
-        pushed.close();
 
         AffineTransform3D scaleTransform = new AffineTransform3D();
         scaleTransform.scale(1.0 / scale1X, 1.0 / scale1Y, 1.0 / scale1Z);
@@ -73,5 +73,10 @@ public class MakeIsotropic extends AbstractCLIJ2Plugin implements CLIJMacroPlugi
     @Override
     public String getAvailableForDimensions() {
         return "2D, 3D";
+    }
+
+    @Override
+    public String getCategories() {
+        return "Transform";
     }
 }
