@@ -98,11 +98,11 @@ public class MemoryDisplay implements PlugIn, ImageListener {
         for(String line : report.split("\n")) {
             //System.out.println(line);
             if (!line.contains("* ")) {
-                String[] temp = line.split(" ");
-                double memory = Double.parseDouble(temp[temp.length - 2]) * unitToFactor(temp[temp.length - 1]);
-                sum += memory;
-
-                //System.out.println(memory);
+                if (!line.startsWith("= ")) {
+                    String[] temp = line.split(" ");
+                    double memory = Double.parseDouble(temp[temp.length - 2]) * unitToFactor(temp[temp.length - 1]);
+                    sum += memory;
+                }
             }
         }
         long available_bytes = instance.getCLIJ().getGPUMemoryInBytes();
