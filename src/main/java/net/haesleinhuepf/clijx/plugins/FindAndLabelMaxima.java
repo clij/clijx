@@ -31,7 +31,7 @@ public class FindAndLabelMaxima extends AbstractCLIJxPlugin implements CLIJMacro
     }
 
     public static boolean findAndLabelMaxima(CLIJx clijx, ClearCLBuffer pushed, ClearCLBuffer result, Float tolerance, Boolean invert) {
-
+        clijx.set(result, 0);
         if (invert) {
             ClearCLBuffer inverted = clijx.create(pushed.getDimensions(), NativeTypeEnum.Float);
             clijx.invert(pushed, inverted);

@@ -37,7 +37,9 @@ public class DetectAndLabelMaxima extends AbstractCLIJ2Plugin implements CLIJMac
         FindMaximaPlateaus.findMaximaPlateaus(clijx, blurred, maxima);
         blurred.close();
 
+        clijx.set(result, 0);
         clijx.connectedComponentsLabelingBox(maxima, result);
+        maxima.close();
 
         return true;
     }
