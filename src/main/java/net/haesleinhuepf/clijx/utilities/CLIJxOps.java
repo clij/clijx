@@ -83,6 +83,7 @@ import net.haesleinhuepf.clijx.plugins.RigidTransform;
 import net.haesleinhuepf.clijx.plugins.SphereTransform;
 import net.haesleinhuepf.clijx.plugins.SubtractGaussianBackground;
 import net.haesleinhuepf.clijx.plugins.ThresholdDoG;
+import net.haesleinhuepf.clijx.plugins.MeanZProjectionAboveThreshold;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -1475,5 +1476,18 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.MeanZProjectionAboveThreshold
+    //----------------------------------------------------
+    /**
+     * Determines the mean average intensity projection of an image along Z but only for pixels above a given threshold.
+     */
+    default boolean meanZProjectionAboveThreshold(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("MeanZProjectionAboveThreshold");}
+        boolean result = MeanZProjectionAboveThreshold.meanZProjectionAboveThreshold(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("MeanZProjectionAboveThreshold");}
+        return result;
+    }
+
 }
-// 102 methods generated.
+// 103 methods generated.
