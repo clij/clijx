@@ -90,6 +90,8 @@ import net.haesleinhuepf.clijx.plugins.IntensityCorrectionAboveThresholdOtsu;
 import net.haesleinhuepf.clijx.plugins.LabelMeanIntensityMap;
 import net.haesleinhuepf.clijx.plugins.LabelStandardDeviationIntensityMap;
 import net.haesleinhuepf.clijx.plugins.LabelPixelCountMap;
+import net.haesleinhuepf.clijx.plugins.ParametricWatershed;
+import net.haesleinhuepf.clijx.plugins.MeanZProjectionAboveThreshold;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -1580,5 +1582,33 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.ParametricWatershed
+    //----------------------------------------------------
+    /**
+     * Apply a binary watershed to a binary image and introduce black pixels between objects.
+     * 
+     * To have control about where objects are cut, the sigma parameters allow to control a Gaussian blur filter applied to the internally used distance map.
+     */
+    default boolean parametricWatershed(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("ParametricWatershed");}
+        boolean result = ParametricWatershed.parametricWatershed(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("ParametricWatershed");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MeanZProjectionAboveThreshold
+    //----------------------------------------------------
+    /**
+     * Determines the mean average intensity projection of an image along Z but only for pixels above a given threshold.
+     */
+    default boolean meanZProjectionAboveThreshold(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("MeanZProjectionAboveThreshold");}
+        boolean result = MeanZProjectionAboveThreshold.meanZProjectionAboveThreshold(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("MeanZProjectionAboveThreshold");}
+        return result;
+    }
+
 }
-// 109 methods generated.
+// 111 methods generated.

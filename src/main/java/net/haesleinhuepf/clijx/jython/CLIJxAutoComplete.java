@@ -533,6 +533,9 @@ class CLIJxAutoComplete {
        headline = "clijx.intensityCorrection(ClearCLBuffer input, ClearCLBuffer destination, Float reference_mean_intensity)";
        description = "<b>intensityCorrection</b><br><br>Determines the mean intensity of the image stack and multiplies it with a factor so that the mean intensity becomes equal to a given value.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float reference_mean_intensity";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.intensityCorrectionAboveThresholdOtsu(ClearCLBuffer input, ClearCLBuffer destination, Float reference_mean_intensity)";
+       description = "<b>intensityCorrectionAboveThresholdOtsu</b><br><br>Determines the mean intensity of all pixel the image stack which are above a determined Threshold (Otsu et al. 1979) and multiplies it with a factor so that the mean intensity becomes equal to a given value.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float reference_mean_intensity";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.invalidateKernelCache(null)";
        description = "<b>invalidateKernelCache</b><br><br>Invalidates all cached OpenCL programs and kernels.<br><br>Parameters:<br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -695,6 +698,9 @@ class CLIJxAutoComplete {
        headline = "clijx.meanZProjection(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>meanZProjection</b><br><br>Determines the mean average intensity projection of an image along Z.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.meanZProjectionAboveThreshold(ClearCLImageInterface source, ClearCLImageInterface destination, Float threshold)";
+       description = "<b>meanZProjectionAboveThreshold</b><br><br>Determines the mean average intensity projection of an image along Z but only for pixels above a given threshold.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float threshold";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.meanZProjectionBounded(ClearCLImageInterface source, ClearCLImageInterface destination_mean, Integer min_z, Integer max_z)";
        description = "<b>meanZProjectionBounded</b><br><br>Determines the mean average intensity projection of an image along Z within a given z range.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination_mean, Integer min_z, Integer max_z";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -847,6 +853,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.organiseWindows(Integer startX, Integer startY, Integer tilesX, Integer tilesY, Integer tileWidth, Integer tileHeight)";
        description = "<b>organiseWindows</b><br><br>Organises windows on screen.<br><br>Parameters:<br>Integer startX, Integer startY, Integer tilesX, Integer tilesY, Integer tileWidth, Integer tileHeight";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.parametricWatershed(ClearCLBuffer binary_source, ClearCLBuffer destination, Float sigma_x, Float sigma_y, Float sigma_z)";
+       description = "<b>parametricWatershed</b><br><br>Apply a binary watershed to a binary image and introduce black pixels between objects.<br><br>To have control about where objects are cut, the sigma parameters allow to control a Gaussian blur filter applied to the internally used distance map.<br><br>Parameters:<br>ClearCLBuffer binary_source, ClearCLBuffer destination, Float sigma_x, Float sigma_y, Float sigma_z";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.particleImageVelocimetry(ClearCLBuffer source1, ClearCLBuffer source2, ClearCLBuffer destinationDeltaX, ClearCLBuffer destinationDeltaY, ClearCLBuffer destinationDeltaZ, Integer maxDeltaX, Integer maxDeltaY, Integer maxDeltaZ, Boolean correctLocalShift)";
        description = "<b>particleImageVelocimetry</b><br><br>For every pixel in source image 1, determine the pixel with the most similar intensity in <br> the local neighborhood with a given radius in source image 2. Write the distance in <br>X and Y in the two corresponding destination images.<br><br>Parameters:<br>ClearCLBuffer source1, ClearCLBuffer source2, ClearCLBuffer destinationDeltaX, ClearCLBuffer destinationDeltaY, ClearCLBuffer destinationDeltaZ, Integer maxDeltaX, Integer maxDeltaY, Integer maxDeltaZ, Boolean correctLocalShift";
@@ -1337,4 +1346,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 442 methods generated.
+// 445 methods generated.
