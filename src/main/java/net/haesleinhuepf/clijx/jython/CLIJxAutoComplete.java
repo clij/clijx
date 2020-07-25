@@ -344,6 +344,12 @@ class CLIJxAutoComplete {
        headline = "clijx.drawTwoValueLine(ClearCLBuffer destination, Float x1, Float y1, Float z1, Float x2, Float y2, Float z2, Float thickness, Float value1, Float destination0)";
        description = "<b>drawTwoValueLine</b><br><br>Draws a line between two points with a given thickness. <br><br>Pixels close to point 1 are set to value1. Pixels closer to point 2 are set to value2 All pixels other than on the line are untouched. Consider using clij.set(buffer, 0); in advance.<br><br>Parameters:<br>ClearCLBuffer destination, Float x1, Float y1, Float z1, Float x2, Float y2, Float z2, Float thickness, Float value1, Float destination0";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.driftCorrectionByCenterOfMassFixation(ClearCLBuffer input, ClearCLBuffer destination, Float relative_center_x, Float relative_center_y, Float relative_center_z)";
+       description = "<b>driftCorrectionByCenterOfMassFixation</b><br><br>Determines the centerOfMass of the image stack and translates it so that it stays in a defined position.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float relative_center_x, Float relative_center_y, Float relative_center_z";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.driftCorrectionByCentroidFixation(ClearCLBuffer input, ClearCLBuffer destination, Float relative_center_x, Float relative_center_y, Float relative_center_z, Float threshold)";
+       description = "<b>driftCorrectionByCentroidFixation</b><br><br>Threshold the image stack, determines the centroid of the resulting binary image and <br>translates the image stack so that its centroid sits in a defined position.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float relative_center_x, Float relative_center_y, Float relative_center_z, Float threshold";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.entropyBox(ClearCLBuffer arg1, ClearCLBuffer arg2, Integer arg3, Integer arg4, Integer arg5)";
        description = "<b>entropyBox</b><br><br>Determines the local entropy in a box with a given radius around every pixel.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, Integer arg3, Integer arg4, Integer arg5";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -524,6 +530,9 @@ class CLIJxAutoComplete {
        headline = "clijx.imageToStack(ClearCLBuffer source, ClearCLBuffer destination, Integer num_slices)";
        description = "<b>imageToStack</b><br><br>Copies a single slice into a stack a given number of times.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer num_slices";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.intensityCorrection(ClearCLBuffer input, ClearCLBuffer destination, Float reference_mean_intensity)";
+       description = "<b>intensityCorrection</b><br><br>Determines the mean intensity of the image stack and multiplies it with a factor so that the mean intensity becomes equal to a given value.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float reference_mean_intensity";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.invalidateKernelCache(null)";
        description = "<b>invalidateKernelCache</b><br><br>Invalidates all cached OpenCL programs and kernels.<br><br>Parameters:<br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -533,8 +542,17 @@ class CLIJxAutoComplete {
        headline = "clijx.jaccardIndex(ClearCLBuffer source1, ClearCLBuffer source2)";
        description = "<b>jaccardIndex</b><br><br>Determines the overlap of two binary images using the Jaccard index. <br><br>A value of 0 suggests no overlap, 1 means perfect overlap.<br>The resulting Jaccard index is saved to the results table in the 'Jaccard_Index' column.<br>Note that the Sorensen-Dice coefficient can be calculated from the Jaccard index j using this formula:<br><pre>s = f(j) = 2 j / (j + 1)</pre><br><br>Parameters:<br>ClearCLBuffer source1, ClearCLBuffer source2";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.labelMeanIntensityMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>labelMeanIntensityMap</b><br><br>Takes a label map, determines the mean intensity per label and replaces every label with the that number.<br><br>This results in a parametric image expressing mean object intensity.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.labelPixelCountMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>labelPixelCountMap</b><br><br>Takes a label map, determines the number of pixels per label and replaces every label with the that number.<br><br>This results in a parametric image expressing area or volume.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.labelSpots(ClearCLBuffer input_spots, ClearCLBuffer labelled_spots_destination)";
        description = "<b>labelSpots</b><br><br>Transforms a binary image with single pixles set to 1 to a labelled spots image. <br><br>Transforms a spots image as resulting from maximum/minimum detection in an image of the same size where every spot has a number 1, 2, ... n.<br><br>Parameters:<br>ClearCLBuffer input_spots, ClearCLBuffer labelled_spots_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.labelStandardDeviationIntensityMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>labelStandardDeviationIntensityMap</b><br><br>Takes a label map, determines the standard deviation of the intensity per label and replaces every label with the that number.<br><br>This results in a parametric image expressing standard deviation of object intensity.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.labelToMask(ClearCLBuffer label_map_source, ClearCLBuffer mask_destination, Float label_index)";
        description = "<b>labelToMask</b><br><br>Masks a single label in a label map. <br><br>Sets all pixels in the target image to 1, where the given label index was present in the label map. Other pixels are set to 0.<br><br>Parameters:<br>ClearCLBuffer label_map_source, ClearCLBuffer mask_destination, Float label_index";
@@ -676,9 +694,6 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.meanZProjection(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>meanZProjection</b><br><br>Determines the mean average intensity projection of an image along Z.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
-       list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.meanZProjectionAboveThreshold(ClearCLImageInterface source, ClearCLImageInterface destination, Float threshold)";
-       description = "<b>meanZProjectionAboveThreshold</b><br><br>Determines the mean average intensity projection of an image along Z but only for pixels above a given threshold.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float threshold";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.meanZProjectionBounded(ClearCLImageInterface source, ClearCLImageInterface destination_mean, Integer min_z, Integer max_z)";
        description = "<b>meanZProjectionBounded</b><br><br>Determines the mean average intensity projection of an image along Z within a given z range.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination_mean, Integer min_z, Integer max_z";
@@ -1322,4 +1337,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 437 methods generated.
+// 442 methods generated.

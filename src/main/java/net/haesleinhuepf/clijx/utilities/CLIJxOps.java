@@ -83,7 +83,13 @@ import net.haesleinhuepf.clijx.plugins.RigidTransform;
 import net.haesleinhuepf.clijx.plugins.SphereTransform;
 import net.haesleinhuepf.clijx.plugins.SubtractGaussianBackground;
 import net.haesleinhuepf.clijx.plugins.ThresholdDoG;
-import net.haesleinhuepf.clijx.plugins.MeanZProjectionAboveThreshold;
+import net.haesleinhuepf.clijx.plugins.DriftCorrectionByCenterOfMassFixation;
+import net.haesleinhuepf.clijx.plugins.DriftCorrectionByCentroidFixation;
+import net.haesleinhuepf.clijx.plugins.IntensityCorrection;
+import net.haesleinhuepf.clijx.plugins.IntensityCorrectionAboveThresholdOtsu;
+import net.haesleinhuepf.clijx.plugins.LabelMeanIntensityMap;
+import net.haesleinhuepf.clijx.plugins.LabelStandardDeviationIntensityMap;
+import net.haesleinhuepf.clijx.plugins.LabelPixelCountMap;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -1477,17 +1483,102 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.MeanZProjectionAboveThreshold
+    // net.haesleinhuepf.clijx.plugins.DriftCorrectionByCenterOfMassFixation
     //----------------------------------------------------
     /**
-     * Determines the mean average intensity projection of an image along Z but only for pixels above a given threshold.
+     * Determines the centerOfMass of the image stack and translates it so that it stays in a defined position.
      */
-    default boolean meanZProjectionAboveThreshold(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3) {
-        if (doTimeTracing()) {recordMethodStart("MeanZProjectionAboveThreshold");}
-        boolean result = MeanZProjectionAboveThreshold.meanZProjectionAboveThreshold(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("MeanZProjectionAboveThreshold");}
+    default boolean driftCorrectionByCenterOfMassFixation(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("DriftCorrectionByCenterOfMassFixation");}
+        boolean result = DriftCorrectionByCenterOfMassFixation.driftCorrectionByCenterOfMassFixation(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("DriftCorrectionByCenterOfMassFixation");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.DriftCorrectionByCentroidFixation
+    //----------------------------------------------------
+    /**
+     * Threshold the image stack, determines the centroid of the resulting binary image and 
+     * translates the image stack so that its centroid sits in a defined position.
+     */
+    default boolean driftCorrectionByCentroidFixation(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6) {
+        if (doTimeTracing()) {recordMethodStart("DriftCorrectionByCentroidFixation");}
+        boolean result = DriftCorrectionByCentroidFixation.driftCorrectionByCentroidFixation(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("DriftCorrectionByCentroidFixation");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.IntensityCorrection
+    //----------------------------------------------------
+    /**
+     * Determines the mean intensity of the image stack and multiplies it with a factor so that the mean intensity becomes equal to a given value.
+     */
+    default boolean intensityCorrection(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("IntensityCorrection");}
+        boolean result = IntensityCorrection.intensityCorrection(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("IntensityCorrection");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.IntensityCorrectionAboveThresholdOtsu
+    //----------------------------------------------------
+    /**
+     * Determines the mean intensity of the image stack and multiplies it with a factor so that the mean intensity becomes equal to a given value.
+     */
+    default boolean intensityCorrection(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("IntensityCorrectionAboveThresholdOtsu");}
+        boolean result = IntensityCorrectionAboveThresholdOtsu.intensityCorrection(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("IntensityCorrectionAboveThresholdOtsu");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LabelMeanIntensityMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines the mean intensity per label and replaces every label with the that number.
+     * 
+     * This results in a parametric image expressing mean object intensity.
+     */
+    default boolean labelMeanIntensityMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LabelMeanIntensityMap");}
+        boolean result = LabelMeanIntensityMap.labelMeanIntensityMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LabelMeanIntensityMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LabelStandardDeviationIntensityMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines the standard deviation of the intensity per label and replaces every label with the that number.
+     * 
+     * This results in a parametric image expressing standard deviation of object intensity.
+     */
+    default boolean labelStandardDeviationIntensityMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LabelStandardDeviationIntensityMap");}
+        boolean result = LabelStandardDeviationIntensityMap.labelStandardDeviationIntensityMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LabelStandardDeviationIntensityMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LabelPixelCountMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines the number of pixels per label and replaces every label with the that number.
+     * 
+     * This results in a parametric image expressing area or volume.
+     */
+    default boolean labelPixelCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LabelPixelCountMap");}
+        boolean result = LabelPixelCountMap.labelPixelCountMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LabelPixelCountMap");}
         return result;
     }
 
 }
-// 103 methods generated.
+// 109 methods generated.
