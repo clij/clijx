@@ -25,10 +25,10 @@ public class IntensityCorrectionAboveThresholdOtsu extends AbstractCLIJ2Plugin i
 
     @Override
     public boolean executeCL() {
-        return intensityCorrection(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1], asFloat(args[2]));
+        return intensityCorrectionAboveThresholdOtsu(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1], asFloat(args[2]));
     }
 
-    public static boolean intensityCorrection(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result,
+    public static boolean intensityCorrectionAboveThresholdOtsu(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result,
                                           Float reference_mean_intensity) {
 
         ClearCLBuffer binary = clij2.create(pushed.getDimensions(), NativeTypeEnum.UnsignedByte);

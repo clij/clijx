@@ -1526,11 +1526,11 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.IntensityCorrectionAboveThresholdOtsu
     //----------------------------------------------------
     /**
-     * Determines the mean intensity of the image stack and multiplies it with a factor so that the mean intensity becomes equal to a given value.
+     * Determines the mean intensity of all pixel the image stack which are above a determined Threshold (Otsu et al. 1979) and multiplies it with a factor so that the mean intensity becomes equal to a given value.
      */
-    default boolean intensityCorrection(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+    default boolean intensityCorrectionAboveThresholdOtsu(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
         if (doTimeTracing()) {recordMethodStart("IntensityCorrectionAboveThresholdOtsu");}
-        boolean result = IntensityCorrectionAboveThresholdOtsu.intensityCorrection(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        boolean result = IntensityCorrectionAboveThresholdOtsu.intensityCorrectionAboveThresholdOtsu(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
         if (doTimeTracing()) {recordMethodEnd("IntensityCorrectionAboveThresholdOtsu");}
         return result;
     }
