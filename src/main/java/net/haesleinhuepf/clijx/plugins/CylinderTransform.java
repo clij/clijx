@@ -47,7 +47,7 @@ public class CylinderTransform extends AbstractCLIJ2Plugin implements CLIJMacroP
 
         ClearCLBuffer radial_resliced = clij2.create(radius, pushed.getHeight(), number_of_angles);
 
-        float start_angle = 0;
+        float start_angle = -90;
         float scale_x = 1f;
         float scale_z = 1f;
 
