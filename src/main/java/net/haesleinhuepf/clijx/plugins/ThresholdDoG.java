@@ -55,6 +55,6 @@ public class ThresholdDoG extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
 
     @Override
     public String getCategories() {
-        return "Segmentation,Binary";
+        return "Binary";
     }
 }
