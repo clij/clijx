@@ -35,6 +35,10 @@ public class ParametricWatershed extends AbstractCLIJ2Plugin implements CLIJMacr
         clij2.distanceMap(thresholded, distanceMap);
 
         ClearCLBuffer localMaxima = clij2.create(thresholded);
+
+        clij2.addImages(thresholded, distanceMap, localMaxima);
+        clij2.copy(localMaxima, distanceMap);
+
         ClearCLBuffer localMaxima2 = clij2.create(thresholded);
 
         if (thresholded.getDimension() > 2 && thresholded.getDepth() > 1) {
