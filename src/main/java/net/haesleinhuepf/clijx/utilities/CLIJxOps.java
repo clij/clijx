@@ -92,6 +92,7 @@ import net.haesleinhuepf.clijx.plugins.LabelStandardDeviationIntensityMap;
 import net.haesleinhuepf.clijx.plugins.LabelPixelCountMap;
 import net.haesleinhuepf.clijx.plugins.ParametricWatershed;
 import net.haesleinhuepf.clijx.plugins.MeanZProjectionAboveThreshold;
+import net.haesleinhuepf.clijx.plugins.SeededWatershed;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -1610,5 +1611,18 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.SeededWatershed
+    //----------------------------------------------------
+    /**
+     * Takes a label map (seeds) and an input image with gray values to apply the watershed algorithm and split the image above a given threshold in labels.
+     */
+    default boolean seededWatershed(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("SeededWatershed");}
+        boolean result = SeededWatershed.seededWatershed(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("SeededWatershed");}
+        return result;
+    }
+
 }
-// 111 methods generated.
+// 112 methods generated.
