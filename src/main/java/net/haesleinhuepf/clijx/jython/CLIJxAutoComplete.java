@@ -137,6 +137,9 @@ class CLIJxAutoComplete {
        headline = "clijx.centerOfMass(ClearCLBuffer source)";
        description = "<b>centerOfMass</b><br><br>Determines the center of mass of an image or image stack. <br><br>It writes the result in the results table<br>in the columns MassX, MassY and MassZ.<br><br>Parameters:<br>ClearCLBuffer source";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.centroidsOfBackgroundAndLabels(ClearCLBuffer source, ClearCLBuffer pointlist_destination)";
+       description = "<b>centroidsOfBackgroundAndLabels</b><br><br>Determines the centroids of the background and all labels in a label image or image stack. <br><br>It writes the resulting  coordinates in a pointlist image. Depending on the dimensionality d of the labelmap and the number  of labels n, the pointlist image will have n*d pixels.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer pointlist_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.centroidsOfLabels(ClearCLBuffer source, ClearCLBuffer pointlist_destination)";
        description = "<b>centroidsOfLabels</b><br><br>Determines the centroids of all labels in a label image or image stack. <br><br>It writes the resulting  coordinates in a pointlist image. Depending on the dimensionality d of the labelmap and the number  of labels n, the pointlist image will have n*d pixels.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer pointlist_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1043,6 +1046,9 @@ class CLIJxAutoComplete {
        headline = "clijx.scale3D(ClearCLBuffer source, ClearCLBuffer destination, Float scaling_factor_x, Float scaling_factor_y, Float scaling_factor_z, Boolean scale_to_center)";
        description = "<b>scale3D</b><br><br>Scales an image with a given factor.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Float scaling_factor_x, Float scaling_factor_y, Float scaling_factor_z, Boolean scale_to_center";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.seededWatershed(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, Float arg4)";
+       description = "<b>seededWatershed</b><br><br>Takes a label map (seeds) and an input image with gray values to apply the watershed algorithm and split the image above a given threshold in labels.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, Float arg4";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.set(ClearCLImageInterface source, Float value)";
        description = "<b>set</b><br><br>Sets all pixel values x of a given image X to a constant value v.<br><br><pre>f(x) = v</pre><br><br>Parameters:<br>ClearCLImageInterface source, Float value";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1145,8 +1151,8 @@ class CLIJxAutoComplete {
        headline = "clijx.startContinuousWebcamAcquisition(Integer cameraDeviceIndex, Integer imageWidth, Integer imageHeight)";
        description = "<b>startContinuousWebcamAcquisition</b><br><br>Starts acquistion of images from a webcam.<br><br>Parameters:<br>Integer cameraDeviceIndex, Integer imageWidth, Integer imageHeight";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.statisticsOfBackgroundAndLabelledPixels(ClearCLBuffer arg1, ClearCLBuffer arg2, ResultsTable arg3)";
-       description = "<b>statisticsOfBackgroundAndLabelledPixels</b><br><br>Determines bounding box, area (in pixels/voxels), min, max and mean intensity <br> of background and labelled objects in a label map and corresponding pixels in the original image.<br><br>Instead of a label map, you can also use a binary image as a binary image is a label map with just one label.<br><br>This method is executed on the CPU and not on the GPU/OpenCL device.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, ResultsTable arg3";
+       headline = "clijx.statisticsOfBackgroundAndLabelledPixels(ClearCLBuffer input, ClearCLBuffer labelmap)";
+       description = "<b>statisticsOfBackgroundAndLabelledPixels</b><br><br>Determines bounding box, area (in pixels/voxels), min, max and mean intensity <br> of background and labelled objects in a label map and corresponding pixels in the original image.<br><br>Instead of a label map, you can also use a binary image as a binary image is a label map with just one label.<br><br>This method is executed on the CPU and not on the GPU/OpenCL device.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer labelmap";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.statisticsOfImage(ClearCLBuffer arg1, ResultsTable arg2)";
        description = "<b>statisticsOfImage</b><br><br>Determines image size (bounding box), area (in pixels/voxels), min, max and mean intensity <br> of all pixels in the original image.<br><br>This method is executed on the CPU and not on the GPU/OpenCL device.<br><br>Parameters:<br>ClearCLBuffer arg1, ResultsTable arg2";
@@ -1346,4 +1352,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 445 methods generated.
+// 447 methods generated.
