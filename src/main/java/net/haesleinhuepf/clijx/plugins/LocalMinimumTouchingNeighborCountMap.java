@@ -55,6 +55,6 @@ public class LocalMinimumTouchingNeighborCountMap extends AbstractCLIJ2Plugin im
 
     @Override
     public String getCategories() {
-        return "Measurements";
+        return "Measurements,Neighbors";
     }
 }

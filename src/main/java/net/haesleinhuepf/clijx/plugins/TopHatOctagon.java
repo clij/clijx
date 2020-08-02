@@ -6,6 +6,7 @@ import net.haesleinhuepf.clij.clearcl.ClearCLKernel;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
+import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import net.haesleinhuepf.clijx.CLIJx;
 import net.haesleinhuepf.clijx.utilities.AbstractCLIJxPlugin;
 import net.haesleinhuepf.clij2.utilities.CLIJUtilities;
@@ -21,7 +22,7 @@ import static net.haesleinhuepf.clij2.plugins.MinimumOctagon.minimumDiamond;
  *         December 2019
  */
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_topHatOctagon")
-public class TopHatOctagon extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
+public class TopHatOctagon extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized {
 
     @Override
     public boolean executeCL() {
@@ -101,5 +102,10 @@ public class TopHatOctagon extends AbstractCLIJxPlugin implements CLIJMacroPlugi
     @Override
     public String getAvailableForDimensions() {
         return "2D, 3D";
+    }
+
+    @Override
+    public String getCategories() {
+        return "Filter,Background removal";
     }
 }

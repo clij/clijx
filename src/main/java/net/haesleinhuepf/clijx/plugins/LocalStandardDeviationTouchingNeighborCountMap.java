@@ -55,6 +55,6 @@ public class LocalStandardDeviationTouchingNeighborCountMap extends AbstractCLIJ
 
     @Override
     public String getCategories() {
-        return "Measurements";
+        return "Measurements,Neighbors";
     }
 }

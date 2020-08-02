@@ -55,6 +55,6 @@ public class LocalMedianTouchingNeighborCountMap extends AbstractCLIJ2Plugin imp
 
     @Override
     public String getCategories() {
-        return "Measurements";
+        return "Measurements,Neighbors";
     }
 }

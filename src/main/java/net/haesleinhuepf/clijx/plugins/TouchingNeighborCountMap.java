@@ -50,6 +50,6 @@ public class TouchingNeighborCountMap extends AbstractCLIJ2Plugin implements CLI
 
     @Override
     public String getCategories() {
-        return "Measurements";
+        return "Measurements,Neighbors";
     }
 }

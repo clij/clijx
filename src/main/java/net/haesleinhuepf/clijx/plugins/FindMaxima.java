@@ -15,6 +15,7 @@ import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij2.plugins.MultiplyImages;
 import net.haesleinhuepf.clij2.plugins.StatisticsOfLabelledPixels;
+import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import net.haesleinhuepf.clijx.CLIJx;
 import net.imglib2.img.array.ArrayImgs;
 import org.scijava.plugin.Plugin;

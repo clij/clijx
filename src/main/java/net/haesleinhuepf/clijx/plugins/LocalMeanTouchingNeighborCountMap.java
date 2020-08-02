@@ -55,6 +55,6 @@ public class LocalMeanTouchingNeighborCountMap extends AbstractCLIJ2Plugin imple
 
     @Override
     public String getCategories() {
-        return "Measurements";
+        return "Measurements,Neighbors";
     }
 }
