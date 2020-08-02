@@ -554,8 +554,20 @@ class CLIJxAutoComplete {
        headline = "clijx.jaccardIndex(ClearCLBuffer source1, ClearCLBuffer source2)";
        description = "<b>jaccardIndex</b><br><br>Determines the overlap of two binary images using the Jaccard index. <br><br>A value of 0 suggests no overlap, 1 means perfect overlap.<br>The resulting Jaccard index is saved to the results table in the 'Jaccard_Index' column.<br>Note that the Sorensen-Dice coefficient can be calculated from the Jaccard index j using this formula:<br><pre>s = f(j) = 2 j / (j + 1)</pre><br><br>Parameters:<br>ClearCLBuffer source1, ClearCLBuffer source2";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.labelMeanIntensityMap(ClearCLBuffer input, ClearCLBuffer destination)";
-       description = "<b>labelMeanIntensityMap</b><br><br>Takes a label map, determines the mean intensity per label and replaces every label with the that number.<br><br>This results in a parametric image expressing mean object intensity.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       headline = "clijx.labelMaximumExtensionMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>labelMaximumExtensionMap</b><br><br>Takes a label map, determines for every label the maximum distance of any pixel to the centroid and replaces every label with the that number.<br><br><br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.labelMaximumExtensionRatioMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>labelMaximumExtensionRatioMap</b><br><br>Takes a label map, determines for every label the maximum distance of any pixel to the centroid and replaces every label with the that number.<br><br><br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.labelMaximumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3)";
+       description = "<b>labelMaximumIntensityMap</b><br><br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.labelMeanIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3)";
+       description = "<b>labelMeanIntensityMap</b><br><br>Takes an image and a corresponding label map, determines the mean intensity per label and replaces every label with the that number.<br><br>This results in a parametric image expressing mean object intensity.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.labelMinimumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3)";
+       description = "<b>labelMinimumIntensityMap</b><br><br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.labelPixelCountMap(ClearCLBuffer input, ClearCLBuffer destination)";
        description = "<b>labelPixelCountMap</b><br><br>Takes a label map, determines the number of pixels per label and replaces every label with the that number.<br><br>This results in a parametric image expressing area or volume.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
@@ -563,8 +575,8 @@ class CLIJxAutoComplete {
        headline = "clijx.labelSpots(ClearCLBuffer input_spots, ClearCLBuffer labelled_spots_destination)";
        description = "<b>labelSpots</b><br><br>Transforms a binary image with single pixles set to 1 to a labelled spots image. <br><br>Transforms a spots image as resulting from maximum/minimum detection in an image of the same size where every spot has a number 1, 2, ... n.<br><br>Parameters:<br>ClearCLBuffer input_spots, ClearCLBuffer labelled_spots_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.labelStandardDeviationIntensityMap(ClearCLBuffer input, ClearCLBuffer destination)";
-       description = "<b>labelStandardDeviationIntensityMap</b><br><br>Takes a label map, determines the standard deviation of the intensity per label and replaces every label with the that number.<br><br>This results in a parametric image expressing standard deviation of object intensity.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       headline = "clijx.labelStandardDeviationIntensityMap(ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination)";
+       description = "<b>labelStandardDeviationIntensityMap</b><br><br>Takes an image and a corresponding label map, determines the standard deviation of the intensity per label and replaces every label with the that number.<br><br>This results in a parametric image expressing standard deviation of object intensity.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.labelToMask(ClearCLBuffer label_map_source, ClearCLBuffer mask_destination, Float label_index)";
        description = "<b>labelToMask</b><br><br>Masks a single label in a label map. <br><br>Sets all pixels in the target image to 1, where the given label index was present in the label map. Other pixels are set to 0.<br><br>Parameters:<br>ClearCLBuffer label_map_source, ClearCLBuffer mask_destination, Float label_index";
@@ -1415,4 +1427,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 468 methods generated.
+// 472 methods generated.

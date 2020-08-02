@@ -114,6 +114,10 @@ import net.haesleinhuepf.clijx.plugins.LocalMinimumTouchingNeighborCountMap;
 import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageNeighborDistanceMap;
 import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationTouchingNeighborCountMap;
+import net.haesleinhuepf.clijx.plugins.LabelMinimumIntensityMap;
+import net.haesleinhuepf.clijx.plugins.LabelMaximumIntensityMap;
+import net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionRatioMap;
+import net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionMap;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -1563,13 +1567,13 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LabelMeanIntensityMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines the mean intensity per label and replaces every label with the that number.
+     * Takes an image and a corresponding label map, determines the mean intensity per label and replaces every label with the that number.
      * 
      * This results in a parametric image expressing mean object intensity.
      */
-    default boolean labelMeanIntensityMap(ClearCLBuffer input, ClearCLBuffer destination) {
+    default boolean labelMeanIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3) {
         if (doTimeTracing()) {recordMethodStart("LabelMeanIntensityMap");}
-        boolean result = LabelMeanIntensityMap.labelMeanIntensityMap(getCLIJ2(), input, destination);
+        boolean result = LabelMeanIntensityMap.labelMeanIntensityMap(getCLIJ2(), arg1, arg2, arg3);
         if (doTimeTracing()) {recordMethodEnd("LabelMeanIntensityMap");}
         return result;
     }
@@ -1578,13 +1582,13 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LabelStandardDeviationIntensityMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines the standard deviation of the intensity per label and replaces every label with the that number.
+     * Takes an image and a corresponding label map, determines the standard deviation of the intensity per label and replaces every label with the that number.
      * 
      * This results in a parametric image expressing standard deviation of object intensity.
      */
-    default boolean labelStandardDeviationIntensityMap(ClearCLBuffer input, ClearCLBuffer destination) {
+    default boolean labelStandardDeviationIntensityMap(ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("LabelStandardDeviationIntensityMap");}
-        boolean result = LabelStandardDeviationIntensityMap.labelStandardDeviationIntensityMap(getCLIJ2(), input, destination);
+        boolean result = LabelStandardDeviationIntensityMap.labelStandardDeviationIntensityMap(getCLIJ2(), input, label_map, destination);
         if (doTimeTracing()) {recordMethodEnd("LabelStandardDeviationIntensityMap");}
         return result;
     }
@@ -1915,5 +1919,61 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.LabelMinimumIntensityMap
+    //----------------------------------------------------
+    /**
+     * 
+     */
+    default boolean labelMinimumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3) {
+        if (doTimeTracing()) {recordMethodStart("LabelMinimumIntensityMap");}
+        boolean result = LabelMinimumIntensityMap.labelMinimumIntensityMap(getCLIJ2(), arg1, arg2, arg3);
+        if (doTimeTracing()) {recordMethodEnd("LabelMinimumIntensityMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LabelMaximumIntensityMap
+    //----------------------------------------------------
+    /**
+     * 
+     */
+    default boolean labelMaximumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3) {
+        if (doTimeTracing()) {recordMethodStart("LabelMaximumIntensityMap");}
+        boolean result = LabelMaximumIntensityMap.labelMaximumIntensityMap(getCLIJ2(), arg1, arg2, arg3);
+        if (doTimeTracing()) {recordMethodEnd("LabelMaximumIntensityMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionRatioMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines for every label the maximum distance of any pixel to the centroid and replaces every label with the that number.
+     * 
+     * 
+     */
+    default boolean labelMaximumExtensionRatioMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LabelMaximumExtensionRatioMap");}
+        boolean result = LabelMaximumExtensionRatioMap.labelMaximumExtensionRatioMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LabelMaximumExtensionRatioMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines for every label the maximum distance of any pixel to the centroid and replaces every label with the that number.
+     * 
+     * 
+     */
+    default boolean labelMaximumExtensionMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LabelMaximumExtensionMap");}
+        boolean result = LabelMaximumExtensionMap.labelMaximumExtensionMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LabelMaximumExtensionMap");}
+        return result;
+    }
+
 }
-// 130 methods generated.
+// 134 methods generated.
