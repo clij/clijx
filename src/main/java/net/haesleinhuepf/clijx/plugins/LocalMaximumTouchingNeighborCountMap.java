@@ -29,11 +29,11 @@ public class LocalMaximumTouchingNeighborCountMap extends AbstractCLIJ2Plugin im
 
         ClearCLBuffer touch_count_vector = clij2.create(number_of_labels + 1, 1, 1);
         clij2.countTouchingNeighbors(touch_matrix, touch_count_vector);
-        touch_matrix.close();
 
         ClearCLBuffer maximum_vector = clij2.create(number_of_labels, 1, 1);
         clij2.maximumOfTouchingNeighbors(touch_count_vector, touch_matrix, maximum_vector);
         touch_count_vector.close();
+        touch_matrix.close();
 
         clij2.replaceIntensities(pushed, maximum_vector, result);
         maximum_vector.close();

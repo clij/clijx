@@ -29,11 +29,11 @@ public class LocalMinimumTouchingNeighborCountMap extends AbstractCLIJ2Plugin im
 
         ClearCLBuffer touch_count_vector = clij2.create(number_of_labels + 1, 1, 1);
         clij2.countTouchingNeighbors(touch_matrix, touch_count_vector);
-        touch_matrix.close();
 
         ClearCLBuffer minimum_vector = clij2.create(number_of_labels, 1, 1);
         clij2.minimumOfTouchingNeighbors(touch_count_vector, touch_matrix, minimum_vector);
         touch_count_vector.close();
+        touch_matrix.close();
 
         clij2.replaceIntensities(pushed, minimum_vector, result);
         minimum_vector.close();

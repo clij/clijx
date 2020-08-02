@@ -29,11 +29,11 @@ public class LocalMeanTouchingNeighborCountMap extends AbstractCLIJ2Plugin imple
 
         ClearCLBuffer touch_count_vector = clij2.create(number_of_labels + 1, 1, 1);
         clij2.countTouchingNeighbors(touch_matrix, touch_count_vector);
-        touch_matrix.close();
 
         ClearCLBuffer mean_vector = clij2.create(number_of_labels, 1, 1);
         clij2.meanOfTouchingNeighbors(touch_count_vector, touch_matrix, mean_vector);
         touch_count_vector.close();
+        touch_matrix.close();
 
         clij2.replaceIntensities(pushed, mean_vector, result);
         mean_vector.close();

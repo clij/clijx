@@ -29,11 +29,11 @@ public class LocalMedianTouchingNeighborCountMap extends AbstractCLIJ2Plugin imp
 
         ClearCLBuffer touch_count_vector = clij2.create(number_of_labels + 1, 1, 1);
         clij2.countTouchingNeighbors(touch_matrix, touch_count_vector);
-        touch_matrix.close();
 
         ClearCLBuffer median_vector = clij2.create(number_of_labels, 1, 1);
         clij2.medianOfTouchingNeighbors(touch_count_vector, touch_matrix, median_vector);
         touch_count_vector.close();
+        touch_matrix.close();
 
         clij2.replaceIntensities(pushed, median_vector, result);
         median_vector.close();

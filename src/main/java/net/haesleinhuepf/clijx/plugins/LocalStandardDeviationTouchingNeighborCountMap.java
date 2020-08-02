@@ -1,5 +1,6 @@
 package net.haesleinhuepf.clijx.plugins;
 
+import ij.IJ;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
@@ -23,20 +24,25 @@ public class LocalStandardDeviationTouchingNeighborCountMap extends AbstractCLIJ
     }
 
     public static boolean localStandardDeviationTouchingNeighborCountMap(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result) {
+        IJ.log("A");
         int number_of_labels = (int)clij2.maximumOfAllPixels(pushed);
         ClearCLBuffer touch_matrix = clij2.create(number_of_labels + 1, number_of_labels + 1);
         clij2.generateTouchMatrix(pushed, touch_matrix);
+        IJ.log("B");
 
         ClearCLBuffer touch_count_vector = clij2.create(number_of_labels + 1, 1, 1);
         clij2.countTouchingNeighbors(touch_matrix, touch_count_vector);
-        touch_matrix.close();
+        IJ.log("C");
 
         ClearCLBuffer stddev_vector = clij2.create(number_of_labels, 1, 1);
         clij2.standardDeviationOfTouchingNeighbors(touch_count_vector, touch_matrix, stddev_vector);
+        touch_matrix.close();
         touch_count_vector.close();
+        IJ.log("D");
 
         clij2.replaceIntensities(pushed, stddev_vector, result);
         stddev_vector.close();
+        IJ.log("E");
 
         return true;
     }
