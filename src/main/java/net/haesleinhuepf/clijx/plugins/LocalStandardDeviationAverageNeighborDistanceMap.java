@@ -1,7 +1,6 @@
 package net.haesleinhuepf.clijx.plugins;
 
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
-import net.haesleinhuepf.clij.macro.AbstractCLIJPlugin;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
@@ -10,8 +9,8 @@ import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_averageNeighborDistanceMap")
-public class AverageNeighborDistanceMap extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized {
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_localStandardDeviationAverageNeighborDistanceMap")
+public class LocalStandardDeviationAverageNeighborDistanceMap extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized {
 
     @Override
     public String getParameterHelpText() {
@@ -20,10 +19,10 @@ public class AverageNeighborDistanceMap extends AbstractCLIJ2Plugin implements C
 
     @Override
     public boolean executeCL() {
-        return averageNeighborDistanceMap(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1]);
+        return localStandardDeviationAverageNeighborDistanceMap(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1]);
     }
 
-    public static boolean averageNeighborDistanceMap(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result) {
+    public static boolean localStandardDeviationAverageNeighborDistanceMap(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result) {
         int number_of_labels = (int)clij2.maximumOfAllPixels(pushed);
         ClearCLBuffer touch_matrix = clij2.create(number_of_labels + 1, number_of_labels + 1);
         clij2.generateTouchMatrix(pushed, touch_matrix);
@@ -36,20 +35,28 @@ public class AverageNeighborDistanceMap extends AbstractCLIJ2Plugin implements C
 
         ClearCLBuffer distance_vector = clij2.create(number_of_labels + 1, 1, 1);
         clij2.averageDistanceOfTouchingNeighbors(distance_matrix, touch_matrix, distance_vector);
+
+
+        ClearCLBuffer stddev_vector = clij2.create(number_of_labels, 1, 1);
+        clij2.standardDeviationOfTouchingNeighbors(distance_vector, touch_matrix, stddev_vector);
+        distance_vector.close();
+
+
+
         touch_matrix.close();
         distance_matrix.close();
         pointlist.close();
 
-        clij2.replaceIntensities(pushed, distance_vector, result);
-        distance_vector.close();
+        clij2.replaceIntensities(pushed, stddev_vector, result);
+        stddev_vector.close();
 
         return true;
     }
 
     @Override
     public String getDescription() {
-        return "Takes a label map, determines which labels touch and replaces every label with the average distance to their neighboring labels.\n\n" +
-                "To determine the distances, the centroid of the labels is determined internally.";
+        return "Takes a label map, determines which labels touch, the distance between their centroids and the standard deviation distance" +
+                "between touching neighbors. It then replaces every label with the that value.";
     }
 
     @Override

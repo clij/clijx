@@ -68,6 +68,9 @@ class CLIJxAutoComplete {
        headline = "clijx.averageDistanceOfClosestPoints(ClearCLBuffer arg1, ClearCLBuffer arg2, Integer arg3)";
        description = "<b>averageDistanceOfClosestPoints</b><br><br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.averageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3)";
+       description = "<b>averageDistanceOfNClosestNeighborsMap</b><br><br>Takes a label map, determines distances between all centroids and replaces every label with the average distance to the n closest neighboring labels.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.averageDistanceOfNClosestPoints(ClearCLBuffer distance_matrix, ClearCLBuffer distance_list_destination, Integer nClosestPointsTofind)";
        description = "<b>averageDistanceOfNClosestPoints</b><br><br>Determines the average of the n closest points for every point in a distance matrix.<br><br>This corresponds to the average of the n minimum values (rows) for each column of the distance matrix.<br><br>Parameters:<br>ClearCLBuffer distance_matrix, ClearCLBuffer distance_list_destination, Integer nClosestPointsTofind";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -333,7 +336,7 @@ class CLIJxAutoComplete {
        description = "<b>drawBox</b><br><br>Draws a box at a given start point with given size. <br>All pixels other than in the box are untouched. Consider using `set(buffer, 0);` in advance.<br><br>Parameters:<br>ClearCLImageInterface destination, Float x, Float y, Float z, Float width, Float height, Float depth, Float value";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.drawDistanceMeshBetweenTouchingLabels(ClearCLBuffer input, ClearCLBuffer destination)";
-       description = "<b>drawDistanceMeshBetweenTouchingLabels</b><br><br>Starting from a label map, draw lines between touching neighbors resulting in a mesh.<br><br>The end points of the lines correspond to the centroids of the labels. The intensity of the lines <br>cooresponds to the distance between these labels (in pixels or voxels).<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       description = "<b>drawDistanceMeshBetweenTouchingLabels</b><br><br>Starting from a label map, draw lines between touching neighbors resulting in a mesh.<br><br>The end points of the lines correspond to the centroids of the labels. The intensity of the lines <br>corresponds to the distance between these labels (in pixels or voxels).<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.drawLine(ClearCLImageInterface destination, Float x1, Float y1, Float z1, Float x2, Float y2, Float z2, Float thickness, Float value)";
        description = "<b>drawLine</b><br><br>Draws a line between two points with a given thickness. <br><br>All pixels other than on the line are untouched. Consider using `set(buffer, 0);` in advance.<br><br>Parameters:<br>ClearCLImageInterface destination, Float x1, Float y1, Float z1, Float x2, Float y2, Float z2, Float thickness, Float value";
@@ -343,6 +346,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.drawSphere(ClearCLImageInterface destination, Float x, Float y, Float z, Float radius_x, Float radius_y, Float radius_z, Float value)";
        description = "<b>drawSphere</b><br><br>Draws a sphere around a given point with given radii in x, y and z (if 3D). <br><br> All pixels other than in the sphere are untouched. Consider using `set(buffer, 0);` in advance.<br><br>Parameters:<br>ClearCLImageInterface destination, Float x, Float y, Float z, Float radius_x, Float radius_y, Float radius_z, Float value";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.drawTouchCountMeshBetweenTouchingLabels(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>drawTouchCountMeshBetweenTouchingLabels</b><br><br>Starting from a label map, draw lines between touching neighbors resulting in a mesh.<br><br>The end points of the lines correspond to the centroids of the labels. The intensity of the lines <br>corresponds to the touch count between these labels.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.drawTwoValueLine(ClearCLBuffer destination, Float x1, Float y1, Float z1, Float x2, Float y2, Float z2, Float thickness, Float value1, Float destination0)";
        description = "<b>drawTwoValueLine</b><br><br>Draws a line between two points with a given thickness. <br><br>Pixels close to point 1 are set to value1. Pixels closer to point 2 are set to value2 All pixels other than on the line are untouched. Consider using clij.set(buffer, 0); in advance.<br><br>Parameters:<br>ClearCLBuffer destination, Float x1, Float y1, Float z1, Float x2, Float y2, Float z2, Float thickness, Float value1, Float destination0";
@@ -583,6 +589,54 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.localID(ClearCLBuffer input, ClearCLBuffer destination)";
        description = "<b>localID</b><br><br>local id<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMaximumAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3)";
+       description = "<b>localMaximumAverageDistanceOfNClosestNeighborsMap</b><br><br>Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point<br> and replaces every label with the maximum distance of touching labels.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMaximumAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>localMaximumAverageNeighborDistanceMap</b><br><br>Takes a label map, determines which labels touch, the distance between their centroids and the maximum distancebetween touching neighbors. It then replaces every label with the that value.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMaximumTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>localMaximumTouchingNeighborCountMap</b><br><br>Takes a label map, determines which labels touch, determines for every label with the number of touching <br>neighboring labels and replaces the label index with the local maximum of this count.<br><br><br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMeanAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3)";
+       description = "<b>localMeanAverageDistanceOfNClosestNeighborsMap</b><br><br>Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point<br> and replaces every label with the mean distance of touching labels.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMeanAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>localMeanAverageNeighborDistanceMap</b><br><br>Takes a label map, determines which labels touch, the distance between their centroids and the mean distancebetween touching neighbors. It then replaces every label with the that value.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMeanTouchPortionMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>localMeanTouchPortionMap</b><br><br>Takes a label map, determines which labels touch and how much, relatively taking the whole outline of <br>each label into account, and determines for every label with the mean of this value and replaces the <br>label index with that value.<br><br><br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMeanTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>localMeanTouchingNeighborCountMap</b><br><br>Takes a label map, determines which labels touch, determines for every label with the number of touching <br>neighboring labels and replaces the label index with the local mean of this count.<br><br><br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMedianAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3)";
+       description = "<b>localMedianAverageDistanceOfNClosestNeighborsMap</b><br><br>Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point<br> and replaces every label with the median distance of touching labels.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMedianAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>localMedianAverageNeighborDistanceMap</b><br><br>Takes a label map, determines which labels touch, the distance between their centroids and the median distancebetween touching neighbors. It then replaces every label with the that value.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMedianTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>localMedianTouchingNeighborCountMap</b><br><br>Takes a label map, determines which labels touch, determines for every label with the number of touching <br>neighboring labels and replaces the label index with the local median of this count.<br><br><br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMinimumAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3)";
+       description = "<b>localMinimumAverageDistanceOfNClosestNeighborsMap</b><br><br>Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point<br> and replaces every label with the minimum distance of touching labels.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMinimumAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>localMinimumAverageNeighborDistanceMap</b><br><br>Takes a label map, determines which labels touch, the distance between their centroids and the minimum distancebetween touching neighbors. It then replaces every label with the that value.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localMinimumTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>localMinimumTouchingNeighborCountMap</b><br><br>Takes a label map, determines which labels touch, determines for every label with the number of touching <br>neighboring labels and replaces the label index with the local minimum of this count.<br><br><br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localStandardDeviationAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3)";
+       description = "<b>localStandardDeviationAverageDistanceOfNClosestNeighborsMap</b><br><br>Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point<br> and replaces every label with the standard deviation distance of touching labels.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localStandardDeviationAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>localStandardDeviationAverageNeighborDistanceMap</b><br><br>Takes a label map, determines which labels touch, the distance between their centroids and the standard deviation distancebetween touching neighbors. It then replaces every label with the that value.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localStandardDeviationTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>localStandardDeviationTouchingNeighborCountMap</b><br><br>Takes a label map, determines which labels touch, determines for every label with the number of touching <br>neighboring labels and replaces the label index with the local standard deviation of this count.<br><br><br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.localThreshold(ClearCLImageInterface source, ClearCLImageInterface localThreshold, ClearCLImageInterface destination)";
        description = "<b>localThreshold</b><br><br>Computes a binary image with pixel values 0 and 1 depending on if a pixel value x in image X <br>was above of equal to the pixel value m in mask image M.<br><br><pre>f(x) = (1 if (x >=  m)); (0 otherwise)</pre><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface localThreshold, ClearCLImageInterface destination";
@@ -884,6 +938,9 @@ class CLIJxAutoComplete {
        headline = "clijx.pointlistToLabelledSpots(ClearCLBuffer pointlist, ClearCLBuffer spots_destination)";
        description = "<b>pointlistToLabelledSpots</b><br><br>Takes a pointlist with dimensions n*d with n point coordinates in d dimensions and a touch matrix of <br>size n*n to draw lines from all points to points if the corresponding pixel in the touch matrix is 1.<br><br>Parameters:<br>ClearCLBuffer pointlist, ClearCLBuffer spots_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.popMetaData(null)";
+       description = "<b>popMetaData</b><br><br>Takes meta data from a stack and assigns it to the current image. The stack implements the Last-In-First-Out (LIFO) principle.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.power(ClearCLImageInterface source, ClearCLImageInterface destination, Float exponent)";
        description = "<b>power</b><br><br>Computes all pixels value x to the power of a given exponent a.<br><br><pre>f(x, a) = x ^ a</pre><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float exponent";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -941,6 +998,9 @@ class CLIJxAutoComplete {
        headline = "clijx.pushCurrentZStack(null)";
        description = "<b>pushCurrentZStack</b><br><br>Copies an image specified by its name to GPU memory in order to process it there later.<br><br>Parameters:<br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.pushMetaData(null)";
+       description = "<b>pushMetaData</b><br><br>Stores meta data in a stack. The stack implements the Last-In-First-Out (LIFO) principle.<br><br>Parameters:<br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.pushResultsTable(ClearCLBuffer arg1, ResultsTable arg2)";
        description = "<b>pushResultsTable</b><br><br>Converts a table to an image. <br><br>Rows stay rows, columns stay columns.<br><br>Parameters:<br>ClearCLBuffer arg1, ResultsTable arg2";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -988,6 +1048,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.resample3D(ClearCLImageInterface arg1, ClearCLImageInterface arg2, Float arg3, Float arg4, Float arg5, Boolean arg6)";
        description = "<b>resample3D</b><br><br>null";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.resetMetaData(null)";
+       description = "<b>resetMetaData</b><br><br>Resets the meta data stack.<br><br>Parameters:<br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.resliceBottom(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>resliceBottom</b><br><br>Flippes Y and Z axis of an image stack. This operation is similar to ImageJs 'Reslice [/]' method but<br>offers less flexibility such as interpolation.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
@@ -1352,4 +1415,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 447 methods generated.
+// 468 methods generated.

@@ -93,6 +93,27 @@ import net.haesleinhuepf.clijx.plugins.LabelPixelCountMap;
 import net.haesleinhuepf.clijx.plugins.ParametricWatershed;
 import net.haesleinhuepf.clijx.plugins.MeanZProjectionAboveThreshold;
 import net.haesleinhuepf.clijx.plugins.SeededWatershed;
+import net.haesleinhuepf.clijx.plugins.PushMetaData;
+import net.haesleinhuepf.clijx.plugins.PopMetaData;
+import net.haesleinhuepf.clijx.plugins.ResetMetaData;
+import net.haesleinhuepf.clijx.plugins.AverageDistanceOfNClosestNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.DrawTouchCountMeshBetweenTouchingLabels;
+import net.haesleinhuepf.clijx.plugins.LocalMaximumAverageDistanceOfNClosestNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.LocalMaximumAverageNeighborDistanceMap;
+import net.haesleinhuepf.clijx.plugins.LocalMaximumTouchingNeighborCountMap;
+import net.haesleinhuepf.clijx.plugins.LocalMeanAverageDistanceOfNClosestNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.LocalMeanAverageNeighborDistanceMap;
+import net.haesleinhuepf.clijx.plugins.LocalMeanTouchingNeighborCountMap;
+import net.haesleinhuepf.clijx.plugins.LocalMeanTouchPortionMap;
+import net.haesleinhuepf.clijx.plugins.LocalMedianAverageDistanceOfNClosestNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.LocalMedianAverageNeighborDistanceMap;
+import net.haesleinhuepf.clijx.plugins.LocalMedianTouchingNeighborCountMap;
+import net.haesleinhuepf.clijx.plugins.LocalMinimumAverageDistanceOfNClosestNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.LocalMinimumAverageNeighborDistanceMap;
+import net.haesleinhuepf.clijx.plugins.LocalMinimumTouchingNeighborCountMap;
+import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageNeighborDistanceMap;
+import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationTouchingNeighborCountMap;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -1336,7 +1357,7 @@ public abstract interface CLIJxOps {
      * Starting from a label map, draw lines between touching neighbors resulting in a mesh.
      * 
      * The end points of the lines correspond to the centroids of the labels. The intensity of the lines 
-     * cooresponds to the distance between these labels (in pixels or voxels).
+     * corresponds to the distance between these labels (in pixels or voxels).
      */
     default boolean drawDistanceMeshBetweenTouchingLabels(ClearCLBuffer input, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("DrawDistanceMeshBetweenTouchingLabels");}
@@ -1624,5 +1645,275 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.PushMetaData
+    //----------------------------------------------------
+
+    // net.haesleinhuepf.clijx.plugins.PopMetaData
+    //----------------------------------------------------
+
+    // net.haesleinhuepf.clijx.plugins.ResetMetaData
+    //----------------------------------------------------
+
+    // net.haesleinhuepf.clijx.plugins.AverageDistanceOfNClosestNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines distances between all centroids and replaces every label with the average distance to the n closest neighboring labels.
+     */
+    default boolean averageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3) {
+        if (doTimeTracing()) {recordMethodStart("AverageDistanceOfNClosestNeighborsMap");}
+        boolean result = AverageDistanceOfNClosestNeighborsMap.averageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, arg3);
+        if (doTimeTracing()) {recordMethodEnd("AverageDistanceOfNClosestNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.DrawTouchCountMeshBetweenTouchingLabels
+    //----------------------------------------------------
+    /**
+     * Starting from a label map, draw lines between touching neighbors resulting in a mesh.
+     * 
+     * The end points of the lines correspond to the centroids of the labels. The intensity of the lines 
+     * corresponds to the touch count between these labels.
+     */
+    default boolean drawTouchCountMeshBetweenTouchingLabels(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("DrawTouchCountMeshBetweenTouchingLabels");}
+        boolean result = DrawTouchCountMeshBetweenTouchingLabels.drawTouchCountMeshBetweenTouchingLabels(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("DrawTouchCountMeshBetweenTouchingLabels");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMaximumAverageDistanceOfNClosestNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
+     *  and replaces every label with the maximum distance of touching labels.
+     */
+    default boolean localMaximumAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3) {
+        if (doTimeTracing()) {recordMethodStart("LocalMaximumAverageDistanceOfNClosestNeighborsMap");}
+        boolean result = LocalMaximumAverageDistanceOfNClosestNeighborsMap.localMaximumAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, arg3);
+        if (doTimeTracing()) {recordMethodEnd("LocalMaximumAverageDistanceOfNClosestNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMaximumAverageNeighborDistanceMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch, the distance between their centroids and the maximum distancebetween touching neighbors. It then replaces every label with the that value.
+     */
+    default boolean localMaximumAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LocalMaximumAverageNeighborDistanceMap");}
+        boolean result = LocalMaximumAverageNeighborDistanceMap.localMaximumAverageNeighborDistanceMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LocalMaximumAverageNeighborDistanceMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMaximumTouchingNeighborCountMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch, determines for every label with the number of touching 
+     * neighboring labels and replaces the label index with the local maximum of this count.
+     * 
+     * 
+     */
+    default boolean localMaximumTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LocalMaximumTouchingNeighborCountMap");}
+        boolean result = LocalMaximumTouchingNeighborCountMap.localMaximumTouchingNeighborCountMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LocalMaximumTouchingNeighborCountMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMeanAverageDistanceOfNClosestNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
+     *  and replaces every label with the mean distance of touching labels.
+     */
+    default boolean localMeanAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3) {
+        if (doTimeTracing()) {recordMethodStart("LocalMeanAverageDistanceOfNClosestNeighborsMap");}
+        boolean result = LocalMeanAverageDistanceOfNClosestNeighborsMap.localMeanAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, arg3);
+        if (doTimeTracing()) {recordMethodEnd("LocalMeanAverageDistanceOfNClosestNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMeanAverageNeighborDistanceMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch, the distance between their centroids and the mean distancebetween touching neighbors. It then replaces every label with the that value.
+     */
+    default boolean localMeanAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LocalMeanAverageNeighborDistanceMap");}
+        boolean result = LocalMeanAverageNeighborDistanceMap.localMeanAverageNeighborDistanceMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LocalMeanAverageNeighborDistanceMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMeanTouchingNeighborCountMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch, determines for every label with the number of touching 
+     * neighboring labels and replaces the label index with the local mean of this count.
+     * 
+     * 
+     */
+    default boolean localMeanTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LocalMeanTouchingNeighborCountMap");}
+        boolean result = LocalMeanTouchingNeighborCountMap.localMeanTouchingNeighborCountMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LocalMeanTouchingNeighborCountMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMeanTouchPortionMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch and how much, relatively taking the whole outline of 
+     * each label into account, and determines for every label with the mean of this value and replaces the 
+     * label index with that value.
+     * 
+     * 
+     */
+    default boolean localMeanTouchPortionMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LocalMeanTouchPortionMap");}
+        boolean result = LocalMeanTouchPortionMap.localMeanTouchPortionMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LocalMeanTouchPortionMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMedianAverageDistanceOfNClosestNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
+     *  and replaces every label with the median distance of touching labels.
+     */
+    default boolean localMedianAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3) {
+        if (doTimeTracing()) {recordMethodStart("LocalMedianAverageDistanceOfNClosestNeighborsMap");}
+        boolean result = LocalMedianAverageDistanceOfNClosestNeighborsMap.localMedianAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, arg3);
+        if (doTimeTracing()) {recordMethodEnd("LocalMedianAverageDistanceOfNClosestNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMedianAverageNeighborDistanceMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch, the distance between their centroids and the median distancebetween touching neighbors. It then replaces every label with the that value.
+     */
+    default boolean localMedianAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LocalMedianAverageNeighborDistanceMap");}
+        boolean result = LocalMedianAverageNeighborDistanceMap.localMedianAverageNeighborDistanceMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LocalMedianAverageNeighborDistanceMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMedianTouchingNeighborCountMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch, determines for every label with the number of touching 
+     * neighboring labels and replaces the label index with the local median of this count.
+     * 
+     * 
+     */
+    default boolean localMedianTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LocalMedianTouchingNeighborCountMap");}
+        boolean result = LocalMedianTouchingNeighborCountMap.localMedianTouchingNeighborCountMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LocalMedianTouchingNeighborCountMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMinimumAverageDistanceOfNClosestNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
+     *  and replaces every label with the minimum distance of touching labels.
+     */
+    default boolean localMinimumAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3) {
+        if (doTimeTracing()) {recordMethodStart("LocalMinimumAverageDistanceOfNClosestNeighborsMap");}
+        boolean result = LocalMinimumAverageDistanceOfNClosestNeighborsMap.localMinimumAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, arg3);
+        if (doTimeTracing()) {recordMethodEnd("LocalMinimumAverageDistanceOfNClosestNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMinimumAverageNeighborDistanceMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch, the distance between their centroids and the minimum distancebetween touching neighbors. It then replaces every label with the that value.
+     */
+    default boolean localMinimumAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LocalMinimumAverageNeighborDistanceMap");}
+        boolean result = LocalMinimumAverageNeighborDistanceMap.localMinimumAverageNeighborDistanceMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LocalMinimumAverageNeighborDistanceMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalMinimumTouchingNeighborCountMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch, determines for every label with the number of touching 
+     * neighboring labels and replaces the label index with the local minimum of this count.
+     * 
+     * 
+     */
+    default boolean localMinimumTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LocalMinimumTouchingNeighborCountMap");}
+        boolean result = LocalMinimumTouchingNeighborCountMap.localMinimumTouchingNeighborCountMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LocalMinimumTouchingNeighborCountMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
+     *  and replaces every label with the standard deviation distance of touching labels.
+     */
+    default boolean localStandardDeviationAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3) {
+        if (doTimeTracing()) {recordMethodStart("LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap");}
+        boolean result = LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap.localStandardDeviationAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, arg3);
+        if (doTimeTracing()) {recordMethodEnd("LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageNeighborDistanceMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch, the distance between their centroids and the standard deviation distancebetween touching neighbors. It then replaces every label with the that value.
+     */
+    default boolean localStandardDeviationAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LocalStandardDeviationAverageNeighborDistanceMap");}
+        boolean result = LocalStandardDeviationAverageNeighborDistanceMap.localStandardDeviationAverageNeighborDistanceMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LocalStandardDeviationAverageNeighborDistanceMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalStandardDeviationTouchingNeighborCountMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch, determines for every label with the number of touching 
+     * neighboring labels and replaces the label index with the local standard deviation of this count.
+     * 
+     * 
+     */
+    default boolean localStandardDeviationTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LocalStandardDeviationTouchingNeighborCountMap");}
+        boolean result = LocalStandardDeviationTouchingNeighborCountMap.localStandardDeviationTouchingNeighborCountMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LocalStandardDeviationTouchingNeighborCountMap");}
+        return result;
+    }
+
 }
-// 112 methods generated.
+// 130 methods generated.
