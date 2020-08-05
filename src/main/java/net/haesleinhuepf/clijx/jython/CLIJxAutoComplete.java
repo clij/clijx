@@ -458,6 +458,12 @@ class CLIJxAutoComplete {
        headline = "clijx.generateFeatureStack(ClearCLBuffer input, ClearCLBuffer feature_stack_destination, String feature_definitions)";
        description = "<b>generateFeatureStack</b><br><br>Generates a feature stack for Trainable Weka Segmentation. <br><br>Use this terminology to specifiy which stacks should be generated:<br>* &quot;original&quot; original slice<br>* &quot;GaussianBlur=s&quot; Gaussian blurred image with sigma s<br>* &quot;LaplacianOfGaussian=s&quot; Laplacian of Gaussian blurred image with sigma s<br>* &quot;SobelOfGaussian=s&quot; Sobel filter applied to Gaussian blurred image with sigma s<br>* &quot;minimum=r&quot; local minimum with radius r<br>* &quot;maximum=r&quot; local maximum with radius r<br>* &quot;mean=r&quot; local mean with radius r<br>* &quot;entropy=r&quot; local entropy with radius r<br>* &quot;gradientX&quot; local gradient in X direction<br>* &quot;gradientY&quot; local gradient in Y direction<br><br>Use sigma=0 to apply a filter to the original image. Feature definitions are not case sensitive.<br><br>Example: &quot;original gaussianBlur=1 gaussianBlur=5 laplacianOfGaussian=1 laplacianOfGaussian=7 entropy=3&quot;<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer feature_stack_destination, String feature_definitions";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.generateIntegerGreyValueCooccurrenceCountMatrixHalfBox(ClearCLBuffer integer_image, ClearCLBuffer grey_value_cooccurrence_matrix_destination)";
+       description = "<b>generateIntegerGreyValueCooccurrenceCountMatrixHalfBox</b><br><br>Takes an image and assumes its grey values are integers. It builds up a grey-level co-occurence matrix of neigboring (left, bottom, back, left-bottom, left-back, bottom-back, left-bottom-back) pixel intensities. <br><br>Major parts of this operation run on the CPU.<br><br>Parameters:<br>ClearCLBuffer integer_image, ClearCLBuffer grey_value_cooccurrence_matrix_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.generateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond(ClearCLBuffer integer_image, ClearCLBuffer grey_value_cooccurrence_matrix_destination)";
+       description = "<b>generateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond</b><br><br>Takes an image and assumes its grey values are integers. It builds up a grey-level co-occurence matrix of neigboring (left, bottom, back) pixel intensities. <br><br>Major parts of this operation run on the CPU.<br><br>Parameters:<br>ClearCLBuffer integer_image, ClearCLBuffer grey_value_cooccurrence_matrix_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.generateJaccardIndexMatrix(ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer jaccard_index_matrix_destination)";
        description = "<b>generateJaccardIndexMatrix</b><br><br>Takes two labelmaps with n and m labels_2 and generates a (n+1)*(m+1) matrix where all labels_1 are set to 0 exept those where labels_2 overlap between the label maps. <br><br>For the remaining labels_1, the value will be between 0 and 1 indicating the overlap as measured by the Jaccard Index.<br>Major parts of this operation run on the CPU.<br><br>Parameters:<br>ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer jaccard_index_matrix_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1427,4 +1433,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 472 methods generated.
+// 474 methods generated.
