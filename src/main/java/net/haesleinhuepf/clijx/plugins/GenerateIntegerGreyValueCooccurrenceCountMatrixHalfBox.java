@@ -128,22 +128,26 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfBox extends Abst
                 if (x < width - 1) {
                     value_2 = (int) image[i + 1];
                     counts[value_1][value_2]++;
+                    counts[value_2][value_1]++;
                }
                 // bottom
                 if (y < height - 1) {
                     value_2 = (int) image[i + width];
                     counts[value_1][value_2]++;
+                    counts[value_2][value_1]++;
                 }
                 // bottom, right
                 if (x < width - 1 && y < height - 1) {
                     value_2 = (int) image[i + width + 1];
                     counts[value_1][value_2]++;
+                    counts[value_2][value_1]++;
                 }
 
                 // top, right
                 if (y > 0 && x < width - 1) {
                     value_2 = (int) image[i - width + 1];
                     counts[value_1][value_2]++;
+                    counts[value_2][value_1]++;
                 }
 
                 // next plane
@@ -158,6 +162,7 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfBox extends Abst
                                 index >= 0 && index < image_next_slice.length) {
                                 value_2 = (int) image_next_slice[index];
                                 counts[value_1][value_2]++;
+                                counts[value_2][value_1]++;
                             }
                         }
                     }

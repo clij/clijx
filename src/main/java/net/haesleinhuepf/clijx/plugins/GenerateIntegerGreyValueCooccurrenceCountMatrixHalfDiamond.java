@@ -121,27 +121,30 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends 
             int x = 0;
             int y = 0;
             for (int i = 0; i < image.length; i++) {
-                int label_1;
-                int label_2;
+                int value_1;
+                int value_2;
 
                 // right
                 if (x < width - 1) {
-                    label_1 = (int) image[i];
-                    label_2 = (int) image[i + 1];
-                    counts[label_1][label_2]++;
+                    value_1 = (int) image[i];
+                    value_2 = (int) image[i + 1];
+                    counts[value_1][value_2]++;
+                    counts[value_2][value_1]++;
                 }
                 // bottom
                 if (y < height - 1) {
-                    label_1 = (int) image[i];
-                    label_2 = (int) image[i + width];
-                    counts[label_1][label_2]++;
+                    value_1 = (int) image[i];
+                    value_2 = (int) image[i + width];
+                    counts[value_1][value_2]++;
+                    counts[value_2][value_1]++;
                 }
 
                 // next plane
                 if (image_next_plane != null) {
-                    label_1 = (int) image[i];
-                    label_2 = (int) image_next_plane[i];
-                    counts[label_1][label_2]++;
+                    value_1 = (int) image[i];
+                    value_2 = (int) image_next_plane[i];
+                    counts[value_1][value_2]++;
+                    counts[value_2][value_1]++;
                 }
 
                 x++;
