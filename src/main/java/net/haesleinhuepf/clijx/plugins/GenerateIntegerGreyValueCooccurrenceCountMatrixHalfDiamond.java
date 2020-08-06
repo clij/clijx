@@ -61,7 +61,7 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends 
             }
 
 
-            statisticians[i] = new Statistician(counts[i], clij2, labels_1, labels_2, (int)src_label_map1.getWidth(), (int)src_label_map1.getHeight(), i);
+            statisticians[i] = new Statistician(counts[i], labels_1, labels_2, (int)src_label_map1.getWidth(), (int)src_label_map1.getHeight());
             threads[i] = new Thread(statisticians[i]);
             threads[i].start();
         }
@@ -99,29 +99,20 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends 
 
 
     private static class Statistician implements Runnable{
-
-
-        private ClearCLBuffer label_map_1_slice;
-        private ClearCLBuffer label_map_2_slice;
         private final int width;
         private final int height;
-        private final int zPlane;
-        private final CLIJ2 clij2;
 
-        long[][] tps;
+        long[][] counts;
 
-        private float[] labels_1;
-        private float[] labels_2;
+        private float[] image;
+        private float[] image_next_plane;
 
-        Statistician(long[][] tps, CLIJ2 clij2, float[] labels_1, float[] labels_2, int width, int height, int zPlane) {
-            this.tps = tps;
-            this.labels_1 = labels_1;
-            this.labels_2 = labels_2;
+        Statistician(long[][] counts, float[] image, float[] image_next_plane, int width, int height) {
+            this.counts = counts;
+            this.image = image;
+            this.image_next_plane = image_next_plane;
             this.width = width;
             this.height = height;
-
-            this.zPlane = zPlane;
-            this.clij2 = clij2;
         }
 
         @Override
@@ -129,40 +120,28 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends 
 
             int x = 0;
             int y = 0;
-            for (int i = 0; i < labels_1.length; i++) {
+            for (int i = 0; i < image.length; i++) {
                 int label_1;
                 int label_2;
 
                 // right
                 if (x < width - 1) {
-                    label_1 = (int) labels_1[i];
-                    label_2 = (int) labels_1[i + 1];
-                    if (label_1 >= label_2) {
-                        tps[label_1][label_2]++;
-                    } else if (label_1 < label_2) {
-                        tps[label_2][label_1]++;
-                    }
+                    label_1 = (int) image[i];
+                    label_2 = (int) image[i + 1];
+                    counts[label_1][label_2]++;
                 }
                 // bottom
                 if (y < height - 1) {
-                    label_1 = (int) labels_1[i];
-                    label_2 = (int) labels_1[i + width];
-                    if (label_1 >= label_2) {
-                        tps[label_1][label_2]++;
-                    } else if (label_1 < label_2) {
-                        tps[label_2][label_1]++;
-                    }
+                    label_1 = (int) image[i];
+                    label_2 = (int) image[i + width];
+                    counts[label_1][label_2]++;
                 }
 
                 // next plane
-                if (label_map_2_slice != null) {
-                    label_1 = (int) labels_1[i];
-                    label_2 = (int) labels_2[i];
-                    if (label_1 >= label_2) {
-                        tps[label_1][label_2]++;
-                    } else if (label_1 < label_2) {
-                        tps[label_2][label_1]++;
-                    }
+                if (image_next_plane != null) {
+                    label_1 = (int) image[i];
+                    label_2 = (int) image_next_plane[i];
+                    counts[label_1][label_2]++;
                 }
 
                 x++;
@@ -198,11 +177,18 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends 
         CLIJ2 clij2 = CLIJ2.getInstance();
 
         ClearCLBuffer buffer = clij2.pushString(
-                "1 1 1\n" +
-                      "2 2 2\n" +
-                      "3 3 4");
+                "0 0 0\n" +
+                        "0 1 0\n" +
+                        "0 0 0\n\n" +
+                        "2 2 2\n" +
+                        "2 2 2\n" +
+                        "2 2 2\n\n" +
+                        "0 0 0\n" +
+                        "0 0 0\n" +
+                        "0 0 0"
+        );
 
-        ClearCLBuffer matrix = clij2.create(5, 5);
+        ClearCLBuffer matrix = clij2.create(3, 3);
 
         GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond.generateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond(clij2, buffer, matrix);
 
