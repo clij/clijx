@@ -25,10 +25,10 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends 
         return result;
     }
 
-    public static boolean generateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond(CLIJ2 clij2, ClearCLBuffer src_label_map1, ClearCLBuffer dst_touch_count_matrix) {
+    public static boolean generateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond(CLIJ2 clij2, ClearCLBuffer src_label_map1, ClearCLBuffer dst_cooccurrence_matrix) {
         int num_threads = (int) src_label_map1.getDepth();
 
-        long[][][] counts = new long[num_threads][(int)dst_touch_count_matrix.getWidth()][(int)dst_touch_count_matrix.getHeight()];
+        long[][][] counts = new long[num_threads][(int)dst_cooccurrence_matrix.getWidth()][(int)dst_cooccurrence_matrix.getHeight()];
 
         Thread[] threads = new Thread[num_threads];
         Statistician[] statisticians = new Statistician[num_threads];
@@ -36,32 +36,32 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends 
         ArrayList<float[]> buffers = new ArrayList<>();
 
         for (int i = 0; i < num_threads; i++) {
-            float[] labels_1;
+            float[] image_slice;
             if (i == 0) {
-                ClearCLBuffer label_map_1_slice = clij2.create(src_label_map1.getWidth(), src_label_map1.getHeight());
-                clij2.copySlice(src_label_map1, label_map_1_slice, i);
-                labels_1 = new float[(int) (label_map_1_slice.getWidth() * label_map_1_slice.getHeight())];
-                label_map_1_slice.writeTo(FloatBuffer.wrap(labels_1), true);
+                ClearCLBuffer image_slice_buffer = clij2.create(src_label_map1.getWidth(), src_label_map1.getHeight());
+                clij2.copySlice(src_label_map1, image_slice_buffer, i);
+                image_slice = new float[(int) (image_slice_buffer.getWidth() * image_slice_buffer.getHeight())];
+                image_slice_buffer.writeTo(FloatBuffer.wrap(image_slice), true);
 
-                buffers.add(labels_1);
+                buffers.add(image_slice);
             } else {
-                labels_1 = buffers.get(i);
+                image_slice = buffers.get(i);
             }
 
-            float[] labels_2;
+            float[] image_next_slice;
             if (i < num_threads - 1) {
-                ClearCLBuffer label_map_2_slice = clij2.create(src_label_map1.getWidth(), src_label_map1.getHeight());
-                clij2.copySlice(src_label_map1, label_map_2_slice, i + 1);
-                labels_2 = new float[(int) (label_map_2_slice.getWidth() * label_map_2_slice.getHeight())];
-                label_map_2_slice.writeTo(FloatBuffer.wrap(labels_2), true);
+                ClearCLBuffer image_next_slice_buffer = clij2.create(src_label_map1.getWidth(), src_label_map1.getHeight());
+                clij2.copySlice(src_label_map1, image_next_slice_buffer, i + 1);
+                image_next_slice = new float[(int) (image_next_slice_buffer.getWidth() * image_next_slice_buffer.getHeight())];
+                image_next_slice_buffer.writeTo(FloatBuffer.wrap(image_next_slice), true);
 
-                buffers.add(labels_2);
+                buffers.add(image_next_slice);
             } else {
-                labels_2 = null;
+                image_next_slice = null;
             }
 
 
-            statisticians[i] = new Statistician(counts[i], labels_1, labels_2, (int)src_label_map1.getWidth(), (int)src_label_map1.getHeight());
+            statisticians[i] = new Statistician(counts[i], image_slice, image_next_slice, (int)src_label_map1.getWidth(), (int)src_label_map1.getHeight());
             threads[i] = new Thread(statisticians[i]);
             threads[i].start();
         }
@@ -75,7 +75,7 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends 
 
         buffers.clear();
 
-        float[][] matrix = new float[(int)dst_touch_count_matrix.getWidth()][(int)dst_touch_count_matrix.getHeight()];
+        float[][] matrix = new float[(int)dst_cooccurrence_matrix.getWidth()][(int)dst_cooccurrence_matrix.getHeight()];
 
         for (int t = 0; t < num_threads; t++) {
             for (int j = 0; j < counts[0].length; j++) {
@@ -86,7 +86,7 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends 
         }
 
         ClearCLBuffer countMatrix = clij2.pushMat(matrix);
-        clij2.copy(countMatrix, dst_touch_count_matrix);
+        clij2.copy(countMatrix, dst_cooccurrence_matrix);
         countMatrix.close();
 
         return true;
@@ -164,7 +164,7 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends 
 
     @Override
     public String getDescription() {
-        return "Takes an image and assumes its grey values are integers. It builds up a grey-level co-occurence matrix of neigboring (left, bottom, back) pixel intensities. \n\n"+
+        return "Takes an image and assumes its grey values are integers. It builds up a grey-level co-occurrence matrix of neighboring (left, bottom, back) pixel intensities. \n\n"+
                 "Major parts of this operation run on the CPU.";
     }
 
