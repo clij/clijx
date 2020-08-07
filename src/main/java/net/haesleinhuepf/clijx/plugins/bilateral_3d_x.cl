@@ -28,7 +28,7 @@ __kernel void bilateral_3d(
   	  for(int k2 = -radiusZ; k2 <= radiusZ;k2++){
         // source https://en.wikipedia.org/wiki/Bilateral_filter
 
-        double p1 = (double)(READ_IMAGE(input, sampler,      (int2)(i+i2,j+j2)).x);
+        double p1 = (double)(READ_IMAGE(input, sampler,      (int4)(i + i2,j + j2,k + k2, 0)).x);
         double dist_intensity = (p1 - pix0) * (p1 - pix0);
 
         double dist_space = (i2 * i2 + j2 * j2 + k2 * k2);

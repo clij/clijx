@@ -66,8 +66,8 @@ public class Bilateral extends AbstractCLIJxPlugin implements CLIJMacroPlugin, C
         CLIJ2 clij2 = CLIJ2.getInstance();
         new ImageJ();
 
-        //ImagePlus imp = IJ.openImage("C:/structure/data/t1-head.tif");
-        ImagePlus imp = IJ.openImage("C:/structure/data/blobs.tif");
+        ImagePlus imp = IJ.openImage("C:/structure/data/t1-head.tif");
+        //ImagePlus imp = IJ.openImage("C:/structure/data/blobs.tif");
         IJ.run(imp, "32-bit", "");
 
         ClearCLBuffer buff = clij2.push(imp);
