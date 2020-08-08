@@ -121,6 +121,8 @@ import net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionMap;
 import net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfBox;
 import net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond;
 import net.haesleinhuepf.clijx.plugins.DivideByGaussianBackground;
+import net.haesleinhuepf.clijx.plugins.GenerateGreyValueCooccurrenceMatrixBox;
+import net.haesleinhuepf.clijx.plugins.GreyLevelAtttributeFiltering;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2021,5 +2023,36 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.GenerateGreyValueCooccurrenceMatrixBox
+    //----------------------------------------------------
+    /**
+     * Takes an image and an intensity range to determine a grey value co-occurrence matrix.
+     * 
+     * For determining which pixel intensities are neighbors, the box neighborhood is taken into account.
+     * Pixels with intensity below minimum of the given range are considered having the minimum intensity.
+     * Pixels with intensity above the maximimum of the given range are treated analogously.
+     * The resulting co-occurrence matrix contains probability values between 0 and 1.
+     */
+    default boolean generateGreyValueCooccurrenceMatrixBox(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("GenerateGreyValueCooccurrenceMatrixBox");}
+        boolean result = GenerateGreyValueCooccurrenceMatrixBox.generateGreyValueCooccurrenceMatrixBox(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("GenerateGreyValueCooccurrenceMatrixBox");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.GreyLevelAtttributeFiltering
+    //----------------------------------------------------
+    /**
+     * Todo.
+     */
+    default boolean greyLevelAtttributeFiltering(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("GreyLevelAtttributeFiltering");}
+        boolean result = GreyLevelAtttributeFiltering.greyLevelAtttributeFiltering(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue());
+        if (doTimeTracing()) {recordMethodEnd("GreyLevelAtttributeFiltering");}
+        return result;
+    }
+
 }
-// 137 methods generated.
+// 139 methods generated.
