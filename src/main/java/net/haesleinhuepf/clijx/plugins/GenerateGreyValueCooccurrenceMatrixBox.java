@@ -56,7 +56,7 @@ public class GenerateGreyValueCooccurrenceMatrixBox extends AbstractCLIJ2Plugin 
     @Override
     public ClearCLBuffer createOutputBufferFromSource(ClearCLBuffer input)
     {
-        double range = asFloat(args[2]) - asFloat(args[1]) + 1;
+        double range = asFloat(args[3]) - asFloat(args[2]) + 1;
         ClearCLBuffer output = clij.createCLBuffer(new long[]{(long)range, (long)range}, NativeTypeEnum.Float);
         return output;
     }
