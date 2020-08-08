@@ -407,6 +407,9 @@ class CLIJ2AutoComplete {
        headline = "clij2.getMeanOfAllPixels(ClearCLImageInterface arg1)";
        description = "<b>getMeanOfAllPixels</b><br><br>Determines the mean of all pixels in a given image. <br><br>It will be stored in the variable mean_of_all_pixels.<br><br>Parameters:<br>ClearCLImageInterface arg1";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.getMeanOfMaskedPixels(ClearCLBuffer arg1, ClearCLBuffer arg2)";
+       description = "<b>getMeanOfMaskedPixels</b><br><br>Determines the mean of all pixels in a given image which have non-zero value in a corresponding mask image. <br><br>It will be stored in the variable mean_of_masked_pixels.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.getMinimumOfAllPixels(ClearCLImageInterface arg1)";
        description = "<b>getMinimumOfAllPixels</b><br><br>Determines the minimum of all pixels in a given image. <br><br>It will be stored in the variable minimum_of_all_pixels.<br><br>Parameters:<br>ClearCLImageInterface arg1";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1115,4 +1118,4 @@ class CLIJ2AutoComplete {
         return list;
     }
 }
-// 368 methods generated.
+// 369 methods generated.

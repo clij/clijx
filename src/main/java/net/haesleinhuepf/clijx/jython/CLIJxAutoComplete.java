@@ -258,7 +258,7 @@ class CLIJxAutoComplete {
        description = "<b>depthColorProjection</b><br><br>Determines a maximum projection of an image stack and does a color coding of the determined arg Z (position of the found maximum). <br><br>Second parameter is a Lookup-Table in the form of an 8-bit image stack 255 pixels wide, 1 pixel high with 3 planes representing red, green and blue intensities.<br>Resulting image is a 3D image with three Z-planes representing red, green and blue channels.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLBuffer lookup_table, ClearCLBuffer destination_max, Float min_display_intensity, Float max_display_intensity";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.detectAndLabelMaxima(ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Float arg4, Float arg5, Boolean arg6)";
-       description = "<b>detectAndLabelMaxima</b><br><br>Determines maximum regions in a Gaussian blurred version of the oriignal image.<br><br>The regions do not not necessarily have to be single pixels. <br>It is also possible to invert the image before determining the maxima.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Float arg4, Float arg5, Boolean arg6";
+       description = "<b>detectAndLabelMaxima</b><br><br>Determines maximum regions in a Gaussian blurred version of the original image.<br><br>The regions do not not necessarily have to be single pixels. <br>It is also possible to invert the image before determining the maxima.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Float arg4, Float arg5, Boolean arg6";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.detectLabelEdges(ClearCLImageInterface label_map, ClearCLBuffer edge_image_destination)";
        description = "<b>detectLabelEdges</b><br><br>Takes a labelmap and returns an image where all pixels on label edges are set to 1 and all other pixels to 0.<br><br>Parameters:<br>ClearCLImageInterface label_map, ClearCLBuffer edge_image_destination";
@@ -316,6 +316,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.distanceMatrixToMesh(ClearCLBuffer pointlist, ClearCLBuffer distance_matrix, ClearCLBuffer mesh_destination, Float maximum_distance)";
        description = "<b>distanceMatrixToMesh</b><br><br>Generates a mesh from a distance matric and a list of point coordinates.<br><br>Takes a pointlist with dimensions n*d with n point coordinates in d dimensions and a distance matrix of size n*n to draw lines from all points to points if the corresponding pixel in the distance matrix is smaller than a given distance threshold.<br><br>Parameters:<br>ClearCLBuffer pointlist, ClearCLBuffer distance_matrix, ClearCLBuffer mesh_destination, Float maximum_distance";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.divideByGaussianBackground(ClearCLImageInterface input, ClearCLImageInterface destination, Float sigmaX, Float sigmaY, Float sigmaZ)";
+       description = "<b>divideByGaussianBackground</b><br><br>Applies Gaussian blur to the input image and divides the original by the result.<br><br>Parameters:<br>ClearCLImageInterface input, ClearCLImageInterface destination, Float sigmaX, Float sigmaY, Float sigmaZ";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.divideImages(ClearCLImageInterface divident, ClearCLImageInterface divisor, ClearCLImageInterface destination)";
        description = "<b>divideImages</b><br><br>Divides two images X and Y by each other pixel wise. <br><br><pre>f(x, y) = x / y</pre><br><br>Parameters:<br>ClearCLImageInterface divident, ClearCLImageInterface divisor, ClearCLImageInterface destination";
@@ -459,10 +462,10 @@ class CLIJxAutoComplete {
        description = "<b>generateFeatureStack</b><br><br>Generates a feature stack for Trainable Weka Segmentation. <br><br>Use this terminology to specifiy which stacks should be generated:<br>* &quot;original&quot; original slice<br>* &quot;GaussianBlur=s&quot; Gaussian blurred image with sigma s<br>* &quot;LaplacianOfGaussian=s&quot; Laplacian of Gaussian blurred image with sigma s<br>* &quot;SobelOfGaussian=s&quot; Sobel filter applied to Gaussian blurred image with sigma s<br>* &quot;minimum=r&quot; local minimum with radius r<br>* &quot;maximum=r&quot; local maximum with radius r<br>* &quot;mean=r&quot; local mean with radius r<br>* &quot;entropy=r&quot; local entropy with radius r<br>* &quot;gradientX&quot; local gradient in X direction<br>* &quot;gradientY&quot; local gradient in Y direction<br><br>Use sigma=0 to apply a filter to the original image. Feature definitions are not case sensitive.<br><br>Example: &quot;original gaussianBlur=1 gaussianBlur=5 laplacianOfGaussian=1 laplacianOfGaussian=7 entropy=3&quot;<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer feature_stack_destination, String feature_definitions";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.generateIntegerGreyValueCooccurrenceCountMatrixHalfBox(ClearCLBuffer integer_image, ClearCLBuffer grey_value_cooccurrence_matrix_destination)";
-       description = "<b>generateIntegerGreyValueCooccurrenceCountMatrixHalfBox</b><br><br>Takes an image and assumes its grey values are integers. It builds up a grey-level co-occurence matrix of neigboring (left, bottom, back, left-bottom, left-back, bottom-back, left-bottom-back) pixel intensities. <br><br>Major parts of this operation run on the CPU.<br><br>Parameters:<br>ClearCLBuffer integer_image, ClearCLBuffer grey_value_cooccurrence_matrix_destination";
+       description = "<b>generateIntegerGreyValueCooccurrenceCountMatrixHalfBox</b><br><br>Takes an image and assumes its grey values are integers. It builds up a grey-level co-occurrence matrix of neighboring (west, south-west, south, south-east, in 3D 9 pixels on the next plane) pixel intensities. <br><br>Major parts of this operation run on the CPU.<br><br>Parameters:<br>ClearCLBuffer integer_image, ClearCLBuffer grey_value_cooccurrence_matrix_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.generateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond(ClearCLBuffer integer_image, ClearCLBuffer grey_value_cooccurrence_matrix_destination)";
-       description = "<b>generateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond</b><br><br>Takes an image and assumes its grey values are integers. It builds up a grey-level co-occurence matrix of neigboring (left, bottom, back) pixel intensities. <br><br>Major parts of this operation run on the CPU.<br><br>Parameters:<br>ClearCLBuffer integer_image, ClearCLBuffer grey_value_cooccurrence_matrix_destination";
+       description = "<b>generateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond</b><br><br>Takes an image and assumes its grey values are integers. It builds up a grey-level co-occurrence matrix of neighboring (left, bottom, back) pixel intensities. <br><br>Major parts of this operation run on the CPU.<br><br>Parameters:<br>ClearCLBuffer integer_image, ClearCLBuffer grey_value_cooccurrence_matrix_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.generateJaccardIndexMatrix(ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer jaccard_index_matrix_destination)";
        description = "<b>generateJaccardIndexMatrix</b><br><br>Takes two labelmaps with n and m labels_2 and generates a (n+1)*(m+1) matrix where all labels_1 are set to 0 exept those where labels_2 overlap between the label maps. <br><br>For the remaining labels_1, the value will be between 0 and 1 indicating the overlap as measured by the Jaccard Index.<br>Major parts of this operation run on the CPU.<br><br>Parameters:<br>ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer jaccard_index_matrix_destination";
@@ -502,6 +505,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.getMeanOfAllPixels(ClearCLImageInterface arg1)";
        description = "<b>getMeanOfAllPixels</b><br><br>Determines the mean of all pixels in a given image. <br><br>It will be stored in the variable mean_of_all_pixels.<br><br>Parameters:<br>ClearCLImageInterface arg1";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.getMeanOfMaskedPixels(ClearCLBuffer arg1, ClearCLBuffer arg2)";
+       description = "<b>getMeanOfMaskedPixels</b><br><br>Determines the mean of all pixels in a given image which have non-zero value in a corresponding mask image. <br><br>It will be stored in the variable mean_of_masked_pixels.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.getMinimumOfAllPixels(ClearCLImageInterface arg1)";
        description = "<b>getMinimumOfAllPixels</b><br><br>Determines the minimum of all pixels in a given image. <br><br>It will be stored in the variable minimum_of_all_pixels.<br><br>Parameters:<br>ClearCLImageInterface arg1";
@@ -1433,4 +1439,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 474 methods generated.
+// 476 methods generated.

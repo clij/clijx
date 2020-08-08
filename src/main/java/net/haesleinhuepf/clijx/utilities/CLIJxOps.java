@@ -120,6 +120,7 @@ import net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionRatioMap;
 import net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionMap;
 import net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfBox;
 import net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond;
+import net.haesleinhuepf.clijx.plugins.DivideByGaussianBackground;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -1344,7 +1345,7 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.DetectAndLabelMaxima
     //----------------------------------------------------
     /**
-     * Determines maximum regions in a Gaussian blurred version of the oriignal image.
+     * Determines maximum regions in a Gaussian blurred version of the original image.
      * 
      * The regions do not not necessarily have to be single pixels. 
      * It is also possible to invert the image before determining the maxima.
@@ -1981,7 +1982,7 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfBox
     //----------------------------------------------------
     /**
-     * Takes an image and assumes its grey values are integers. It builds up a grey-level co-occurence matrix of neigboring (left, bottom, back, left-bottom, left-back, bottom-back, left-bottom-back) pixel intensities. 
+     * Takes an image and assumes its grey values are integers. It builds up a grey-level co-occurrence matrix of neighboring (west, south-west, south, south-east, in 3D 9 pixels on the next plane) pixel intensities. 
      * 
      * Major parts of this operation run on the CPU.
      */
@@ -1996,7 +1997,7 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond
     //----------------------------------------------------
     /**
-     * Takes an image and assumes its grey values are integers. It builds up a grey-level co-occurence matrix of neigboring (left, bottom, back) pixel intensities. 
+     * Takes an image and assumes its grey values are integers. It builds up a grey-level co-occurrence matrix of neighboring (left, bottom, back) pixel intensities. 
      * 
      * Major parts of this operation run on the CPU.
      */
@@ -2007,5 +2008,18 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.DivideByGaussianBackground
+    //----------------------------------------------------
+    /**
+     * Applies Gaussian blur to the input image and divides the original by the result.
+     */
+    default boolean divideByGaussianBackground(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("DivideByGaussianBackground");}
+        boolean result = DivideByGaussianBackground.divideByGaussianBackground(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("DivideByGaussianBackground");}
+        return result;
+    }
+
 }
-// 136 methods generated.
+// 137 methods generated.
