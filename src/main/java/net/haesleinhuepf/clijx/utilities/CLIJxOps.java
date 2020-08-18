@@ -123,6 +123,7 @@ import net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCount
 import net.haesleinhuepf.clijx.plugins.DivideByGaussianBackground;
 import net.haesleinhuepf.clijx.plugins.GenerateGreyValueCooccurrenceMatrixBox;
 import net.haesleinhuepf.clijx.plugins.GreyLevelAtttributeFiltering;
+import net.haesleinhuepf.clijx.plugins.BinaryFillHolesSliceBySlice;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2054,5 +2055,18 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.BinaryFillHolesSliceBySlice
+    //----------------------------------------------------
+    /**
+     * Fills holes (pixels with value 0 surrounded by pixels with value 1) in a binary image stack slice by slice.
+     */
+    default boolean binaryFillHolesSliceBySlice(ClearCLImageInterface source, ClearCLImageInterface destination) {
+        if (doTimeTracing()) {recordMethodStart("BinaryFillHolesSliceBySlice");}
+        boolean result = BinaryFillHolesSliceBySlice.binaryFillHolesSliceBySlice(getCLIJ2(), source, destination);
+        if (doTimeTracing()) {recordMethodEnd("BinaryFillHolesSliceBySlice");}
+        return result;
+    }
+
 }
-// 139 methods generated.
+// 140 methods generated.

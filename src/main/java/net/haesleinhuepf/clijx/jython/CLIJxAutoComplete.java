@@ -95,6 +95,9 @@ class CLIJxAutoComplete {
        headline = "clijx.binaryFillHoles(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>binaryFillHoles</b><br><br>Fills holes (pixels with value 0 surrounded by pixels with value 1) in a binary image.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.binaryFillHolesSliceBySlice(ClearCLImageInterface source, ClearCLImageInterface destination)";
+       description = "<b>binaryFillHolesSliceBySlice</b><br><br>Fills holes (pixels with value 0 surrounded by pixels with value 1) in a binary image stack slice by slice.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.binaryIntersection(ClearCLBuffer operand1, ClearCLBuffer operand2, ClearCLBuffer destination)";
        description = "<b>binaryIntersection</b><br><br>Computes a binary image (containing pixel values 0 and 1) from two images X and Y by connecting pairs of<br>pixels x and y with the binary intersection operator &.<br>All pixel values except 0 in the input images are interpreted as 1.<br><br><pre>f(x, y) = x & y</pre><br><br>Parameters:<br>ClearCLBuffer operand1, ClearCLBuffer operand2, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -545,8 +548,8 @@ class CLIJxAutoComplete {
        headline = "clijx.greaterOrEqualConstant(ClearCLImageInterface source, ClearCLImageInterface destination, Float constant)";
        description = "<b>greaterOrEqualConstant</b><br><br>Determines if two images A and B greater or equal pixel wise. <br><br>f(a, b) = 1 if a >= b; 0 otherwise. <br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float constant";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.greyLevelAtttributeFiltering(ClearCLBuffer integer_image, ClearCLBuffer grey_value_cooccurrence_matrix_destination, Integer min_grey_value, Integer max_grey_value)";
-       description = "<b>greyLevelAtttributeFiltering</b><br><br>Todo.<br><br>Parameters:<br>ClearCLBuffer integer_image, ClearCLBuffer grey_value_cooccurrence_matrix_destination, Integer min_grey_value, Integer max_grey_value";
+       headline = "clijx.greyLevelAtttributeFiltering(ClearCLBuffer source, ClearCLBuffer destination, Integer number_of_bins, Integer minimum_pixel_count)";
+       description = "<b>greyLevelAtttributeFiltering</b><br><br>Todo.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer number_of_bins, Integer minimum_pixel_count";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.histogram(ClearCLBuffer source, ClearCLBuffer destination, Integer numberOfBins, Float minimumGreyValue, Float maximumGreyValue, Boolean determineMinAndMax)";
        description = "<b>histogram</b><br><br>Determines the histogram of a given image.<br><br>The histogram image is of dimensions number_of_bins/1/1; a 3D image with height=1 and depth=1. <br>Histogram bins contain the number of pixels with intensity in this corresponding bin. <br>The histogram bins are uniformly distributed between given minimum and maximum grey value intensity. <br>If the flag determine_min_max is set, minimum and maximum intensity will be determined. <br>When calling this operation many times, it is recommended to determine minimum and maximum intensity <br>once at the beginning and handing over these values.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer numberOfBins, Float minimumGreyValue, Float maximumGreyValue, Boolean determineMinAndMax";
@@ -1445,4 +1448,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 478 methods generated.
+// 479 methods generated.
