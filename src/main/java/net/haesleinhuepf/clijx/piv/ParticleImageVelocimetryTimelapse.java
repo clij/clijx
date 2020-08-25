@@ -6,6 +6,8 @@ import net.haesleinhuepf.clij.macro.AbstractCLIJPlugin;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
+import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
+import net.haesleinhuepf.clij2.CLIJ2;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -15,32 +17,30 @@ import org.scijava.plugin.Plugin;
  * 12 2018
  */
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_particleImageVelocimetryTimelapse")
-public class ParticleImageVelocimetryTimelapse extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
+public class ParticleImageVelocimetryTimelapse extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
 
     @Override
     public boolean executeCL() {
-        Object[] args = openCLBufferArgs();
-        boolean result = particleImageVelocimetryTimelapse(clij, (ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]), (ClearCLBuffer)(args[2]), (ClearCLBuffer)(args[3]), asInteger(args[4]), asInteger(args[5]), asInteger(args[6]), asBoolean(args[7]));
-        releaseBuffers(args);
+        boolean result = particleImageVelocimetryTimelapse(getCLIJ2(), (ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]), (ClearCLBuffer)(args[2]), (ClearCLBuffer)(args[3]), asInteger(args[4]), asInteger(args[5]), asInteger(args[6]), asBoolean(args[7]));
         return result;
     }
 
-    public static boolean particleImageVelocimetryTimelapse(CLIJ clij, ClearCLBuffer input, ClearCLBuffer destinationDeltaX, ClearCLBuffer destinationDeltaY, ClearCLBuffer destinationDeltaZ, Integer maxDeltaX, Integer maxDeltaY, Integer maxDeltaZ, Boolean correctLocalShift) {
-        ClearCLBuffer slice1 = clij.create(new long[] {input.getWidth(), input.getHeight()}, input.getNativeType());
-        ClearCLBuffer slice2 = clij.create(slice1);
-        ClearCLBuffer deltaXslice = clij.create(slice1);
-        ClearCLBuffer deltaYslice = clij.create(slice1);
-        ClearCLBuffer deltaZslice = clij.create(slice1);
+    public static boolean particleImageVelocimetryTimelapse(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer destinationDeltaX, ClearCLBuffer destinationDeltaY, ClearCLBuffer destinationDeltaZ, Integer maxDeltaX, Integer maxDeltaY, Integer maxDeltaZ, Boolean correctLocalShift) {
+        ClearCLBuffer slice1 = clij2.create(new long[] {input.getWidth(), input.getHeight()}, input.getNativeType());
+        ClearCLBuffer slice2 = clij2.create(slice1);
+        ClearCLBuffer deltaXslice = clij2.create(slice1);
+        ClearCLBuffer deltaYslice = clij2.create(slice1);
+        ClearCLBuffer deltaZslice = clij2.create(slice1);
         for (int t = 0; t < input.getDepth() - 1; t++) {
             System.out.println("PIVt " + t + "/" + input.getDepth());
-            clij.op().copySlice(input, slice1, t);
-            clij.op().copySlice(input, slice2, t + 1);
+            clij2.copySlice(input, slice1, t);
+            clij2.copySlice(input, slice2, t + 1);
 
-            ParticleImageVelocimetry.particleImageVelocimetry(clij, slice1, slice2, deltaXslice, deltaYslice, deltaZslice, maxDeltaX, maxDeltaY, maxDeltaZ, correctLocalShift);
+            ParticleImageVelocimetry.particleImageVelocimetry(clij2, slice1, slice2, deltaXslice, deltaYslice, deltaZslice, maxDeltaX, maxDeltaY, maxDeltaZ);
 
-            clij.op().copySlice(deltaXslice, destinationDeltaX, t);
-            clij.op().copySlice(deltaYslice, destinationDeltaY, t);
-            clij.op().copySlice(deltaZslice, destinationDeltaZ, t);
+            clij2.copySlice(deltaXslice, destinationDeltaX, t);
+            clij2.copySlice(deltaYslice, destinationDeltaY, t);
+            clij2.copySlice(deltaZslice, destinationDeltaZ, t);
         }
         slice1.close();
         slice2.close();
