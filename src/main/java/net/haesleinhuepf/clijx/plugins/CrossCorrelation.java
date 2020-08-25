@@ -8,6 +8,8 @@ import net.haesleinhuepf.clij.macro.AbstractCLIJPlugin;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
+import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
+import net.haesleinhuepf.clij2.CLIJ2;
 import org.scijava.plugin.Plugin;
 
 import java.util.HashMap;
@@ -15,7 +17,7 @@ import java.util.HashMap;
 import static net.haesleinhuepf.clij.utilities.CLIJUtilities.assertDifferent;
 
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_crossCorrelation")
-public class CrossCorrelation extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
+public class CrossCorrelation extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
 
     @Override
     public String getParameterHelpText() {
@@ -24,8 +26,7 @@ public class CrossCorrelation extends AbstractCLIJPlugin implements CLIJMacroPlu
 
     @Override
     public boolean executeCL() {
-        Object[] args = openCLBufferArgs();
-        boolean result = crossCorrelation(clij,
+        boolean result = crossCorrelation(getCLIJ2(),
                 (ClearCLBuffer) (args[0]),
                 (ClearCLBuffer) (args[1]),
                 (ClearCLBuffer) (args[2]),
@@ -34,11 +35,10 @@ public class CrossCorrelation extends AbstractCLIJPlugin implements CLIJMacroPlu
                 asInteger(args[5]),
                 asInteger(args[6]),
                 asInteger(args[7]));
-        releaseBuffers(args);
         return result;
     }
 
-    public static boolean crossCorrelation(CLIJ clij, ClearCLBuffer src1, ClearCLBuffer meanSrc1, ClearCLBuffer src2, ClearCLBuffer meanSrc2, ClearCLBuffer dst, Integer radius, Integer deltaPos, Integer dimension) {
+    public static boolean crossCorrelation(CLIJ2 clij2, ClearCLBuffer src1, ClearCLBuffer meanSrc1, ClearCLBuffer src2, ClearCLBuffer meanSrc2, ClearCLBuffer dst, Integer radius, Integer deltaPos, Integer dimension) {
         assertDifferent(src1, dst);
         assertDifferent(src2, dst);
         assertDifferent(meanSrc1, dst);
@@ -53,10 +53,13 @@ public class CrossCorrelation extends AbstractCLIJPlugin implements CLIJMacroPlu
         parameters.put("radius", radius);
         parameters.put("i", deltaPos);
         parameters.put("dimension", dimension);
-        return clij.execute(CrossCorrelation.class, "cross_correlation.cl", "cross_correlation_3d", parameters);
+        clij2.execute(CrossCorrelation.class, "cross_correlation_2d_x.cl", "cross_correlation_3d", src1.getDimensions(), src1.getDimensions(), parameters);
+        return true;
+
+        //return clij.execute(CrossCorrelation.class, "cross_correlation.cl", "cross_correlation_3d", parameters);
     }
 
-    public static boolean crossCorrelation(CLIJ clij, ClearCLImage src1, ClearCLImage meanSrc1, ClearCLImage src2, ClearCLImage meanSrc2, ClearCLImage dst, Integer radius, Integer deltaPos, Integer dimension) {
+    public static boolean crossCorrelation(CLIJ2 clij2, ClearCLImage src1, ClearCLImage meanSrc1, ClearCLImage src2, ClearCLImage meanSrc2, ClearCLImage dst, Integer radius, Integer deltaPos, Integer dimension) {
         assertDifferent(src1, dst);
         assertDifferent(src2, dst);
         assertDifferent(meanSrc1, dst);
@@ -71,7 +74,8 @@ public class CrossCorrelation extends AbstractCLIJPlugin implements CLIJMacroPlu
         parameters.put("radius", radius);
         parameters.put("i", deltaPos);
         parameters.put("dimension", dimension);
-        return clij.execute(CrossCorrelation.class, "cross_correlation.cl", "cross_correlation_3d", parameters);
+        clij2.execute(CrossCorrelation.class, "cross_correlation_" + src1.getDimension() + "d_x.cl", "cross_correlation_" + src1.getDimension() + "d", src1.getDimensions(), src1.getDimensions(), parameters);
+        return true;
     }
 
     @Override
