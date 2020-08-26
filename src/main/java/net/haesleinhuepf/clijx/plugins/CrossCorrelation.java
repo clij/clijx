@@ -53,7 +53,10 @@ public class CrossCorrelation extends AbstractCLIJ2Plugin implements CLIJMacroPl
         parameters.put("radius", radius);
         parameters.put("i", deltaPos);
         parameters.put("dimension", dimension);
-        clij2.execute(CrossCorrelation.class, "cross_correlation_2d_x.cl", "cross_correlation_3d", src1.getDimensions(), src1.getDimensions(), parameters);
+
+
+
+        clij2.execute(CrossCorrelation.class, "cross_correlation_" + src1.getDimension() + "d_x.cl", "cross_correlation_" + src1.getDimension() + "d", src1.getDimensions(), src1.getDimensions(), parameters);
         return true;
 
         //return clij.execute(CrossCorrelation.class, "cross_correlation.cl", "cross_correlation_3d", parameters);

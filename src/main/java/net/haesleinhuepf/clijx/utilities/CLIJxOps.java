@@ -478,17 +478,7 @@ public abstract interface CLIJxOps {
      */
     default boolean particleImageVelocimetry2D(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4, double arg5) {
         if (doTimeTracing()) {recordMethodStart("FastParticleImageVelocimetry");}
-        boolean result = FastParticleImageVelocimetry.particleImageVelocimetry2D(getCLIJ(), arg1, arg2, arg3, arg4, new Double (arg5).intValue());
-        if (doTimeTracing()) {recordMethodEnd("FastParticleImageVelocimetry");}
-        return result;
-    }
-
-    /**
-     * 
-     */
-    default boolean particleImageVelocimetry2D(ClearCLImage arg1, ClearCLImage arg2, ClearCLImage arg3, ClearCLImage arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("FastParticleImageVelocimetry");}
-        boolean result = FastParticleImageVelocimetry.particleImageVelocimetry2D(getCLIJ(), arg1, arg2, arg3, arg4, new Double (arg5).intValue());
+        boolean result = FastParticleImageVelocimetry.particleImageVelocimetry2D(getCLIJ2(), arg1, arg2, arg3, arg4, new Double (arg5).intValue());
         if (doTimeTracing()) {recordMethodEnd("FastParticleImageVelocimetry");}
         return result;
     }

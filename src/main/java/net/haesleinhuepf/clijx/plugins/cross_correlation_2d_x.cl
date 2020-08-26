@@ -23,7 +23,7 @@ __kernel void cross_correlation_2d(
     {
         if (dimension == 0) {
             deltaPos.x = get_global_id(dimension) + k;
-        } else if (dimension == 0) {
+        } else if (dimension == 1) {
             deltaPos.y = get_global_id(dimension) + k;
         }
         float Ia = READ_IMAGE(src1, sampler, deltaPos).x;
@@ -31,7 +31,7 @@ __kernel void cross_correlation_2d(
         //deltaPos[dimension] = get_global_id(dimension) + k + i;
         if (dimension == 0) {
             deltaPos.x = get_global_id(dimension) + k + i;
-        } else if (dimension == 0) {
+        } else if (dimension == 1) {
             deltaPos.y = get_global_id(dimension) + k + i;
         }
         float Ib = READ_IMAGE(src2, sampler, deltaPos).x;

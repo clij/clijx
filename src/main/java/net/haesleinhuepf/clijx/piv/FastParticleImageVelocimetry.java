@@ -1,6 +1,10 @@
 package net.haesleinhuepf.clijx.piv;
 
+import ij.IJ;
+import ij.ImageJ;
+import ij.ImagePlus;
 import net.haesleinhuepf.clij.CLIJ;
+import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clijx.plugins.CrossCorrelation;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
@@ -17,18 +21,12 @@ import org.scijava.plugin.Plugin;
  * December 2018
  */
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_fastParticleImageVelocimetry")
-public class FastParticleImageVelocimetry extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
+public class FastParticleImageVelocimetry extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
 
     @Override
     public boolean executeCL() {
-        if (containsCLImageArguments()) {
-            return particleImageVelocimetry2D(clij, (ClearCLImage)( args[0]), (ClearCLImage)(args[1]), (ClearCLImage)(args[2]), (ClearCLImage)(args[3]), asInteger(args[4]));
-        } else {
-            Object[] args = openCLBufferArgs();
-            boolean result = particleImageVelocimetry2D(clij, (ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]), (ClearCLBuffer)(args[2]), (ClearCLBuffer)(args[3]), asInteger(args[4]));
-            releaseBuffers(args);
-            return result;
-        }
+        boolean result = particleImageVelocimetry2D(getCLIJ2(), (ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]), (ClearCLBuffer)(args[2]), (ClearCLBuffer)(args[3]), asInteger(args[4]));
+        return result;
     }
 
     @Override
@@ -48,34 +46,26 @@ public class FastParticleImageVelocimetry extends AbstractCLIJPlugin implements 
         return "2D";
     }
 
-    public boolean particleImageVelocimetry2D( ClearCLBuffer input1,  ClearCLBuffer input2,  ClearCLBuffer vfX,  ClearCLBuffer vfY,  Integer maxDelta  ) {
-        return particleImageVelocimetry2D(clij, input1, input2, vfX, vfY, maxDelta);
-    }
-
-    public boolean particleImageVelocimetry2D( ClearCLImage input1,  ClearCLImage input2,  ClearCLImage vfX,  ClearCLImage vfY,  Integer maxDelta  ) {
-        return particleImageVelocimetry2D(clij, input1, input2, vfX, vfY, maxDelta);
-    }
-
-    public static boolean particleImageVelocimetry2D(CLIJ clij, ClearCLBuffer input1, ClearCLBuffer input2, ClearCLBuffer vfX, ClearCLBuffer vfY, Integer maxDelta ) {
+    public static boolean particleImageVelocimetry2D(CLIJ2 clij2, ClearCLBuffer input1, ClearCLBuffer input2, ClearCLBuffer vfX, ClearCLBuffer vfY, Integer maxDelta ) {
         // prepare cross-correlation analysis
         int meanRange = maxDelta + 1;
         int scanRange = 5; // has influence on precision / correctness
 
-        ClearCLBuffer meanInput1 = clij.create(input1);
-        ClearCLBuffer meanInput2 = clij.create(input2);
+        ClearCLBuffer meanInput1 = clij2.create(input1);
+        ClearCLBuffer meanInput2 = clij2.create(input2);
 
 
-        ClearCLBuffer crossCorrCoeff = clij.create(input1);
-        ClearCLBuffer crossCorrCoeffStack = clij.create(new long[] {input1.getWidth(), input1.getHeight(), 2 * maxDelta + 1}, input1.getNativeType());
+        ClearCLBuffer crossCorrCoeff = clij2.create(input1);
+        ClearCLBuffer crossCorrCoeffStack = clij2.create(new long[] {input1.getWidth(), input1.getHeight(), 2 * maxDelta + 1}, input1.getNativeType());
 
         // analyse shift in X
-        Kernels.meanBox(clij, input1, meanInput1, meanRange, 0, 0);
-        Kernels.meanBox(clij, input2, meanInput2, meanRange, 0, 0);
-        analyseShift(clij, input1, input2, vfX, maxDelta, scanRange, meanInput1, meanInput2, crossCorrCoeff, crossCorrCoeffStack, 0);
+        clij2.meanBox(input1, meanInput1, meanRange, 0, 0);
+        clij2.meanBox(input2, meanInput2, meanRange, 0, 0);
+        analyseShift(clij2, input1, input2, vfX, maxDelta, scanRange, meanInput1, meanInput2, crossCorrCoeff, crossCorrCoeffStack, 0);
 
-        Kernels.meanBox(clij, input1, meanInput1, 0, meanRange, 0);
-        Kernels.meanBox(clij, input2, meanInput2, 0, meanRange, 0);
-        analyseShift(clij, input1, input2, vfY, maxDelta, scanRange, meanInput1, meanInput2, crossCorrCoeff, crossCorrCoeffStack, 1);
+        clij2.meanBox(input1, meanInput1, 0, meanRange, 0);
+        clij2.meanBox(input2, meanInput2, 0, meanRange, 0);
+        analyseShift(clij2, input1, input2, vfY, maxDelta, scanRange, meanInput1, meanInput2, crossCorrCoeff, crossCorrCoeffStack, 1);
 
         meanInput1.close();
         meanInput2.close();
@@ -86,60 +76,56 @@ public class FastParticleImageVelocimetry extends AbstractCLIJPlugin implements 
         return true;
     }
 
-    public static boolean particleImageVelocimetry2D(CLIJ clij, ClearCLImage input1, ClearCLImage input2, ClearCLImage vfX, ClearCLImage vfY, Integer maxDelta ) {
-        // prepare cross-correlation analysis
-        int meanRange = maxDelta + 1;
-        int scanRange = 1; // has influence on precision / correctness
-
-        ClearCLImage meanInput1 = clij.create(input1);
-        ClearCLImage meanInput2 = clij.create(input2);
-
-
-        ClearCLImage crossCorrCoeff = clij.create(input1);
-        ClearCLImage crossCorrCoeffStack = clij.create(new long[] {input1.getWidth(), input1.getHeight(), 2 * maxDelta + 1}, input1.getChannelDataType());
-
-        // analyse shift in X
-        Kernels.meanBox(clij, input1, meanInput1, meanRange, 0, 0);
-        Kernels.meanBox(clij, input2, meanInput2, meanRange, 0, 0);
-        analyseShift(clij, input1, input2, vfX, maxDelta, scanRange, meanInput1, meanInput2, crossCorrCoeff, crossCorrCoeffStack, 0);
-
-        Kernels.meanBox(clij, input1, meanInput1, 0, meanRange, 0);
-        Kernels.meanBox(clij, input2, meanInput2, 0, meanRange, 0);
-        analyseShift(clij, input1, input2, vfY, maxDelta, scanRange, meanInput1, meanInput2, crossCorrCoeff, crossCorrCoeffStack, 1);
-
-        meanInput1.close();
-        meanInput2.close();
-
-        crossCorrCoeff.close();
-        crossCorrCoeffStack.close();
-
-        return true;
-    }
-
-    private static void analyseShift(CLIJ clij, ClearCLBuffer input1, ClearCLBuffer input2, ClearCLBuffer vf, int maxDelta, int scanRange, ClearCLBuffer meanInput1, ClearCLBuffer meanInput2, ClearCLBuffer crossCorrCoeff, ClearCLBuffer crossCorrCoeffStack, int dimension) {
+    private static void analyseShift(CLIJ2 clij2, ClearCLBuffer input1, ClearCLBuffer input2, ClearCLBuffer vf, int maxDelta, int scanRange, ClearCLBuffer meanInput1, ClearCLBuffer meanInput2, ClearCLBuffer crossCorrCoeff, ClearCLBuffer crossCorrCoeffStack, int dimension) {
         for (int i = -maxDelta; i <=maxDelta; i++) {
-            CrossCorrelation.crossCorrelation(new CLIJ2(clij), input1, meanInput1, input2, meanInput2, crossCorrCoeff, scanRange, i, dimension);
-            Kernels.copySlice(clij, crossCorrCoeff, crossCorrCoeffStack, i + maxDelta);
+            CrossCorrelation.crossCorrelation(clij2, input1, meanInput1, input2, meanInput2, crossCorrCoeff, scanRange, i, dimension);
+            clij2.copySlice(crossCorrCoeff, crossCorrCoeffStack, i + maxDelta);
         }
 
-        ClearCLBuffer argMaxProj = clij.create(input1);
+        ClearCLBuffer argMaxProj = clij2.create(input1);
 
-        Kernels.argMaximumZProjection(clij, crossCorrCoeffStack, vf, argMaxProj);
-        Kernels.addImageAndScalar(clij, argMaxProj, vf, new Float(-maxDelta));
+        clij2.argMaximumZProjection(crossCorrCoeffStack, vf, argMaxProj);
+        //clij2.show(crossCorrCoeffStack, "stack");
+
+        clij2.addImageAndScalar(argMaxProj, vf, new Float(-maxDelta));
         argMaxProj.close();
     }
 
-    private static void analyseShift(CLIJ clij, ClearCLImage input1, ClearCLImage input2, ClearCLImage vf, int maxDelta, int scanRange, ClearCLImage meanInput1, ClearCLImage meanInput2, ClearCLImage crossCorrCoeff, ClearCLImage crossCorrCoeffStack, int dimension) {
-        for (int i = -maxDelta; i <=maxDelta; i++) {
-            CrossCorrelation.crossCorrelation(new CLIJ2(clij), input1, meanInput1, input2, meanInput2, crossCorrCoeff, scanRange, i, dimension);
-            Kernels.copySlice(clij, crossCorrCoeff, crossCorrCoeffStack, i + maxDelta);
-        }
+    public static void main(String[] args) {
+        new ImageJ();
 
-        ClearCLImage argMaxProj = clij.create(input1);
+        ImagePlus input = IJ.openImage("C:/structure/data/Irene/ISB200522_well1_pos1_fast_cropped2.tif");
 
-        Kernels.argMaximumZProjection(clij, crossCorrCoeffStack, vf, argMaxProj);
-        Kernels.addImageAndScalar(clij, argMaxProj, vf, new Float(-maxDelta));
-        argMaxProj.close();
+        CLIJ2 clij2 = CLIJ2.getInstance("RTX");
+
+        input.setT(1);
+        ClearCLBuffer in1 = clij2.pushCurrentZStack(input);
+        input.setT(2);
+        ClearCLBuffer in2 = clij2.pushCurrentZStack(input);
+
+        ClearCLBuffer max1 = clij2.create(in1.getWidth(), in1.getHeight());
+        ClearCLBuffer max2 = clij2.create(in2.getWidth(), in2.getHeight());
+
+        ClearCLBuffer vfx = clij2.create(in2.getWidth(), in2.getHeight());
+        ClearCLBuffer vfy = clij2.create(in2.getWidth(), in2.getHeight());
+
+        clij2.maximumZProjection(in1, max1);
+        clij2.maximumZProjection(in2, max2);
+
+
+        ClearCLBuffer blur1 = clij2.create(in1.getWidth(), in1.getHeight());
+        ClearCLBuffer blur2 = clij2.create(in2.getWidth(), in2.getHeight());
+
+        clij2.gaussianBlur2D(max1, blur1, 1, 1);
+        clij2.gaussianBlur2D(max2, blur2, 1, 1);
+
+        particleImageVelocimetry2D(clij2, blur1, blur2, vfx, vfy, 3);
+
+
+        clij2.show(max1, "max1");
+        clij2.show(max2, "max2");
+
+        clij2.show(vfx, "vfx");
+        clij2.show(vfy, "vfy");
     }
-
 }
