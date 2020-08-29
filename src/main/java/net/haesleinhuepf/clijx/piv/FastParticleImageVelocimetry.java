@@ -6,6 +6,7 @@ import ij.ImagePlus;
 import net.haesleinhuepf.clij.CLIJ;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
+import net.haesleinhuepf.clijx.piv.visualisation.VisualiseVectorFieldsPlugin;
 import net.haesleinhuepf.clijx.plugins.CrossCorrelation;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.clearcl.ClearCLImage;
@@ -94,7 +95,10 @@ public class FastParticleImageVelocimetry extends AbstractCLIJ2Plugin implements
     public static void main(String[] args) {
         new ImageJ();
 
-        ImagePlus input = IJ.openImage("C:/structure/data/Irene/ISB200522_well1_pos1_fast_cropped2.tif");
+        ImagePlus input = IJ.openImage("C:/structure/data/Irene/" +
+                //"ISB200522_well1_pos1_fast_cropped2.tif"
+                "piv/C2-ISB200522_well2_pos1cropped_1sphere-1.tif"
+        );
 
         CLIJ2 clij2 = CLIJ2.getInstance("RTX");
 
@@ -116,16 +120,45 @@ public class FastParticleImageVelocimetry extends AbstractCLIJ2Plugin implements
         ClearCLBuffer blur1 = clij2.create(in1.getWidth(), in1.getHeight());
         ClearCLBuffer blur2 = clij2.create(in2.getWidth(), in2.getHeight());
 
-        clij2.gaussianBlur2D(max1, blur1, 1, 1);
-        clij2.gaussianBlur2D(max2, blur2, 1, 1);
+        clij2.mean2DBox(max1, blur1, 3, 3);
+        clij2.mean2DBox(max2, blur2, 3, 3);
 
-        particleImageVelocimetry2D(clij2, blur1, blur2, vfx, vfy, 3);
+        particleImageVelocimetry2D(clij2, blur1, blur2, vfx, vfy, 5);
+
+        ImagePlus result = VisualiseVectorFieldsPlugin.visualiseVectorField(
+                clij2.pull(max1),
+                clij2.pull(vfx),
+                clij2.pull(vfy),
+                5
+        );
+        result.show();
+
+        /*
+        VisualiseVectorFieldsPlugin vvpd = new VisualiseVectorFieldsPlugin();
+        ImagePlus imp = clij2.pull(max1);
+        IJ.run(imp, "Enhance Contrast", "saturated=0.35");
+        //imp.show();
+        //if (true) return;
+        //IJ.run(imp, "8-bit", "");
+        //imp.show();
+        vvpd.setInputImage(imp);
+        vvpd.setVectorXImage(clij2.pull(vfx));
+        vvpd.setVectorYImage(clij2.pull(vfy));
+        vvpd.setSilent(true);
+        vvpd.setShowResult(false);
+        vvpd.setMaximumLength(5);
+        vvpd.setMinimumLength(2);
+        vvpd.setStepSize(5);
+        vvpd.setLineWidth(1);
+        vvpd.run();
+        vvpd.getOutputImage().show();
+*/
 
 
-        clij2.show(max1, "max1");
-        clij2.show(max2, "max2");
+        //clij2.show(max1, "max1");
+        //clij2.show(max2, "max2");
 
-        clij2.show(vfx, "vfx");
-        clij2.show(vfy, "vfy");
+        //clij2.show(vfx, "vfx");
+        //clij2.show(vfy, "vfy");
     }
 }
