@@ -336,7 +336,7 @@ public abstract interface CLIJxOps {
      */
     default boolean crossCorrelation(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4, ClearCLBuffer arg5, double arg6, double arg7, double arg8) {
         if (doTimeTracing()) {recordMethodStart("CrossCorrelation");}
-        boolean result = CrossCorrelation.crossCorrelation(getCLIJ(), arg1, arg2, arg3, arg4, arg5, new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue());
+        boolean result = CrossCorrelation.crossCorrelation(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue());
         if (doTimeTracing()) {recordMethodEnd("CrossCorrelation");}
         return result;
     }
@@ -348,7 +348,7 @@ public abstract interface CLIJxOps {
      */
     default boolean crossCorrelation(ClearCLImage arg1, ClearCLImage arg2, ClearCLImage arg3, ClearCLImage arg4, ClearCLImage arg5, double arg6, double arg7, double arg8) {
         if (doTimeTracing()) {recordMethodStart("CrossCorrelation");}
-        boolean result = CrossCorrelation.crossCorrelation(getCLIJ(), arg1, arg2, arg3, arg4, arg5, new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue());
+        boolean result = CrossCorrelation.crossCorrelation(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue());
         if (doTimeTracing()) {recordMethodEnd("CrossCorrelation");}
         return result;
     }
@@ -478,17 +478,7 @@ public abstract interface CLIJxOps {
      */
     default boolean particleImageVelocimetry2D(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4, double arg5) {
         if (doTimeTracing()) {recordMethodStart("FastParticleImageVelocimetry");}
-        boolean result = FastParticleImageVelocimetry.particleImageVelocimetry2D(getCLIJ(), arg1, arg2, arg3, arg4, new Double (arg5).intValue());
-        if (doTimeTracing()) {recordMethodEnd("FastParticleImageVelocimetry");}
-        return result;
-    }
-
-    /**
-     * 
-     */
-    default boolean particleImageVelocimetry2D(ClearCLImage arg1, ClearCLImage arg2, ClearCLImage arg3, ClearCLImage arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("FastParticleImageVelocimetry");}
-        boolean result = FastParticleImageVelocimetry.particleImageVelocimetry2D(getCLIJ(), arg1, arg2, arg3, arg4, new Double (arg5).intValue());
+        boolean result = FastParticleImageVelocimetry.particleImageVelocimetry2D(getCLIJ2(), arg1, arg2, arg3, arg4, new Double (arg5).intValue());
         if (doTimeTracing()) {recordMethodEnd("FastParticleImageVelocimetry");}
         return result;
     }
