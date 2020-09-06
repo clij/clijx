@@ -166,7 +166,7 @@ public class InteractiveParticleImageVelocimetry implements PlugInFilter, ImageL
         if (fast_piv) {
             FastParticleImageVelocimetry.particleImageVelocimetry2D(clij2, blur1, blur2, vfx, vfy, max_distance);
         } else {
-            ParticleImageVelocimetry.particleImageVelocimetry(clij2.getCLIJ(), blur1, blur2, vfx, vfy, vfz, max_distance, max_distance, max_distance, false);
+            ParticleImageVelocimetry.particleImageVelocimetry(clij2, blur1, blur2, vfx, vfy, vfz, max_distance, max_distance, max_distance);
         }
 
         clij2.copy(vfx, blur1);
