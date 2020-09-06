@@ -7,11 +7,13 @@ import net.haesleinhuepf.clij.macro.AbstractCLIJPlugin;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
+import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
+import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clijx.piv.ParticleImageVelocimetry;
 import org.scijava.plugin.Plugin;
 
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_deformableRegistration2D")
-public class DeformableRegistration2D extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
+public class DeformableRegistration2D extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
 
     @Override
     public String getParameterHelpText() {
@@ -20,24 +22,22 @@ public class DeformableRegistration2D extends AbstractCLIJPlugin implements CLIJ
 
     @Override
     public boolean executeCL() {
-        Object[] args = openCLBufferArgs();
-        boolean result = deformableRegistration2D(clij, (ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]), (ClearCLBuffer)(args[2]), asInteger(args[3]), asInteger(args[4]));
-        releaseBuffers(args);
+        boolean result = deformableRegistration2D(getCLIJ2(), (ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]), (ClearCLBuffer)(args[2]), asInteger(args[3]), asInteger(args[4]));
         return result;
     }
 
-    public static boolean deformableRegistration2D(CLIJ clij, ClearCLBuffer input1, ClearCLBuffer input2, ClearCLBuffer output, Integer maxDeltaX, Integer maxDeltaY) {
-        ClearCLBuffer vectorfieldX = clij.create(input1.getDimensions(), NativeTypeEnum.Float);
-        ClearCLBuffer vectorfieldY = clij.create(vectorfieldX);
-        ClearCLBuffer tempX = clij.create(vectorfieldX);
-        ClearCLBuffer tempY = clij.create(vectorfieldX);
+    public static boolean deformableRegistration2D(CLIJ2 clij2, ClearCLBuffer input1, ClearCLBuffer input2, ClearCLBuffer output, Integer maxDeltaX, Integer maxDeltaY) {
+        ClearCLBuffer vectorfieldX = clij2.create(input1.getDimensions(), NativeTypeEnum.Float);
+        ClearCLBuffer vectorfieldY = clij2.create(vectorfieldX);
+        ClearCLBuffer tempX = clij2.create(vectorfieldX);
+        ClearCLBuffer tempY = clij2.create(vectorfieldX);
 
-        ParticleImageVelocimetry.particleImageVelocimetry(clij, input1, input2, vectorfieldX, vectorfieldY, tempX, maxDeltaX, maxDeltaY, 0, false);
+        ParticleImageVelocimetry.particleImageVelocimetry(clij2, input1, input2, vectorfieldX, vectorfieldY, tempX, maxDeltaX, maxDeltaY, 0);
 
-        clij.op().blur(vectorfieldX, tempX, (float)maxDeltaX, (float)maxDeltaY);
-        clij.op().blur(vectorfieldY, tempY, (float)maxDeltaX, (float)maxDeltaY);
+        clij2.gaussianBlur(vectorfieldX, tempX, (float)maxDeltaX, (float)maxDeltaY);
+        clij2.gaussianBlur(vectorfieldY, tempY, (float)maxDeltaX, (float)maxDeltaY);
 
-        clij.op().applyVectorfield(input2, tempX, tempY, output);
+        clij2.applyVectorField(input2, tempX, tempY, output);
 
         vectorfieldX.close();
         vectorfieldY.close();

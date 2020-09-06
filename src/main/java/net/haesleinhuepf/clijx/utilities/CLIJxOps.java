@@ -493,7 +493,7 @@ public abstract interface CLIJxOps {
      */
     default boolean particleImageVelocimetry(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4, ClearCLBuffer arg5, double arg6, double arg7, double arg8, boolean arg9) {
         if (doTimeTracing()) {recordMethodStart("ParticleImageVelocimetry");}
-        boolean result = ParticleImageVelocimetry.particleImageVelocimetry(getCLIJ(), arg1, arg2, arg3, arg4, arg5, new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), arg9);
+        boolean result = ParticleImageVelocimetry.particleImageVelocimetry(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue());
         if (doTimeTracing()) {recordMethodEnd("ParticleImageVelocimetry");}
         return result;
     }
@@ -506,7 +506,7 @@ public abstract interface CLIJxOps {
      */
     default boolean particleImageVelocimetryTimelapse(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4, double arg5, double arg6, double arg7, boolean arg8) {
         if (doTimeTracing()) {recordMethodStart("ParticleImageVelocimetryTimelapse");}
-        boolean result = ParticleImageVelocimetryTimelapse.particleImageVelocimetryTimelapse(getCLIJ(), arg1, arg2, arg3, arg4, new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), arg8);
+        boolean result = ParticleImageVelocimetryTimelapse.particleImageVelocimetryTimelapse(getCLIJ2(), arg1, arg2, arg3, arg4, new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), arg8);
         if (doTimeTracing()) {recordMethodEnd("ParticleImageVelocimetryTimelapse");}
         return result;
     }
@@ -519,7 +519,7 @@ public abstract interface CLIJxOps {
      */
     default boolean deformableRegistration2D(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
         if (doTimeTracing()) {recordMethodStart("DeformableRegistration2D");}
-        boolean result = DeformableRegistration2D.deformableRegistration2D(getCLIJ(), arg1, arg2, arg3, new Double (arg4).intValue(), new Double (arg5).intValue());
+        boolean result = DeformableRegistration2D.deformableRegistration2D(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), new Double (arg5).intValue());
         if (doTimeTracing()) {recordMethodEnd("DeformableRegistration2D");}
         return result;
     }
