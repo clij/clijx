@@ -489,9 +489,9 @@ public abstract interface CLIJxOps {
     /**
      * For every pixel in source image 1, determine the pixel with the most similar intensity in 
      *  the local neighborhood with a given radius in source image 2. Write the distance in 
-     * X and Y in the two corresponding destination images.
+     * X, Y and Z in the three corresponding destination images.
      */
-    default boolean particleImageVelocimetry(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4, ClearCLBuffer arg5, double arg6, double arg7, double arg8, boolean arg9) {
+    default boolean particleImageVelocimetry(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4, ClearCLBuffer arg5, double arg6, double arg7, double arg8) {
         if (doTimeTracing()) {recordMethodStart("ParticleImageVelocimetry");}
         boolean result = ParticleImageVelocimetry.particleImageVelocimetry(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue());
         if (doTimeTracing()) {recordMethodEnd("ParticleImageVelocimetry");}
@@ -2036,7 +2036,13 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.GreyLevelAtttributeFiltering
     //----------------------------------------------------
     /**
-     * Todo.
+     * Inspired by Grayscale attribute filtering from MorpholibJ library by David Legland & Ignacio Arganda-Carreras.
+     * This plugin will remove components in a grayscale image based on user-specified area (for 2D: pixels) or volume (3D: voxels).
+     * For each gray level specified in the number of bins, binary images will be generated, followed by exclusion of objects (labels)
+     * below a minimum pixel count.
+     * All the binary images for each gray level are combined to form the final image. The output is a grayscale image, where bright objects
+     * below pixel count are removed.
+     * It is recommended that low values be used for number of bins, especially for large 3D images, or it may take long time.
      */
     default boolean greyLevelAtttributeFiltering(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4) {
         if (doTimeTracing()) {recordMethodStart("GreyLevelAtttributeFiltering");}
@@ -2059,4 +2065,4 @@ public abstract interface CLIJxOps {
     }
 
 }
-// 140 methods generated.
+// 139 methods generated.
