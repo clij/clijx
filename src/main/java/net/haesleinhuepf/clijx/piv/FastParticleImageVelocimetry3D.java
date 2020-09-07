@@ -36,7 +36,7 @@ public class FastParticleImageVelocimetry3D extends AbstractCLIJ2Plugin implemen
 
     @Override
     public String getParameterHelpText() {
-        return "Image source1, Image source2, Image destinationDeltaX, Image destinationDeltaY, Image destinationDeltaZ, Number maxDelta";
+        return "Image source1, Image source2, ByRef Image destinationDeltaX, ByRef Image destinationDeltaY, ByRef Image destinationDeltaZ, Number maxDelta";
     }
 
     @Override
@@ -75,7 +75,7 @@ public class FastParticleImageVelocimetry3D extends AbstractCLIJ2Plugin implemen
         clij2.transposeXZ(input1, t_Input1);
         clij2.transposeXZ(input2, t_Input2);
 
-        analyseShift_stack(clij2 ,input1, input2, t_vf, maxDelta, 0);
+        analyseShift_stack(clij2 ,t_Input1, t_Input2, t_vf, maxDelta, 0);
 
         clij2.transposeXZ(t_vf, vf);
 
