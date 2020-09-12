@@ -10,6 +10,7 @@ import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij2.utilities.HasAuthor;
+import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
 import java.nio.FloatBuffer;
@@ -22,7 +23,7 @@ import static ij.plugin.filter.Analyzer.setOption;
  *         August 2020
  */
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_greyLevelAtttributeFiltering")
-public class GreyLevelAtttributeFiltering extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor {
+public class GreyLevelAtttributeFiltering extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized {
 
     @Override
     public String getDescription() {
@@ -192,4 +193,8 @@ public class GreyLevelAtttributeFiltering extends AbstractCLIJ2Plugin implements
         clij2.show(result, "Result");
     }
 
+    @Override
+    public String getCategories() {
+        return "Filter";
+    }
 }

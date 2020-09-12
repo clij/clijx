@@ -66,6 +66,6 @@ public class LocalMinimumAverageNeighborDistanceMap extends AbstractCLIJ2Plugin 
 
     @Override
     public String getCategories() {
-        return "Measurements, Neighbors";
+        return "Visualisation, Graph, Label, Measurements";
     }
 }

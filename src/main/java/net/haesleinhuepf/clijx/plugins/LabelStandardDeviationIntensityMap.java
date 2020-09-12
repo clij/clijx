@@ -51,6 +51,6 @@ public class LabelStandardDeviationIntensityMap extends AbstractCLIJ2Plugin impl
 
     @Override
     public String getCategories() {
-        return "Measurements";
+        return "Visualisation, Label, Measurements";
     }
 }

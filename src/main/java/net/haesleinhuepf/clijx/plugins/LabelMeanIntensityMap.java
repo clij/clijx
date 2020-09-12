@@ -51,6 +51,6 @@ public class LabelMeanIntensityMap extends AbstractCLIJ2Plugin implements CLIJMa
 
     @Override
     public String getCategories() {
-        return "Measurements";
+        return "Visualisation, Label, Measurements";
     }
 }

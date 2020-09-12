@@ -53,6 +53,6 @@ public class DrawMeshBetweenTouchingLabels extends AbstractCLIJ2Plugin implement
 
     @Override
     public String getCategories() {
-        return "Measurement,Neighbors";
+        return "Measurement, Graph";
     }
 }

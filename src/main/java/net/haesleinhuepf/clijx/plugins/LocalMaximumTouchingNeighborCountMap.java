@@ -55,6 +55,6 @@ public class LocalMaximumTouchingNeighborCountMap extends AbstractCLIJ2Plugin im
 
     @Override
     public String getCategories() {
-        return "Measurements,Neighbors";
+        return "Visualisation, Graph, Label, Measurements";
     }
 }

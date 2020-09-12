@@ -115,6 +115,6 @@ public class TopHatOctagonSliceBySlice extends AbstractCLIJxPlugin implements CL
 
     @Override
     public String getCategories() {
-        return "Filter,Background removal";
+        return "Filter, Background";
     }
 }

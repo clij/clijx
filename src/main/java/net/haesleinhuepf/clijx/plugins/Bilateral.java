@@ -11,13 +11,14 @@ import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij2.utilities.HasAuthor;
+import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import net.haesleinhuepf.clijx.utilities.AbstractCLIJxPlugin;
 import org.scijava.plugin.Plugin;
 
 import java.util.HashMap;
 
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_bilateral")
-public class Bilateral extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor {
+public class Bilateral extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized {
 
     @Override
     public String getParameterHelpText() {
@@ -77,5 +78,10 @@ public class Bilateral extends AbstractCLIJxPlugin implements CLIJMacroPlugin, C
 
         clij2.show(res, "res");
 
+    }
+
+    @Override
+    public String getCategories() {
+        return "Noise, Filter";
     }
 }

@@ -49,7 +49,7 @@ public class DivideByGaussianBackground extends AbstractCLIJ2Plugin implements C
 
     @Override
     public String getCategories() {
-        return "Filter,Background removal";
+        return "Filter, Background";
     }
 
     @Override

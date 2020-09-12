@@ -119,9 +119,8 @@ public class MergeTouchingLabels extends AbstractCLIJ2Plugin implements CLIJMacr
     }
 
 
-
-
-
-
-
+    @Override
+    public String getCategories() {
+        return "Label, Filter";
+    }
 }

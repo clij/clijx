@@ -51,6 +51,6 @@ public class LabelPixelCountMap extends AbstractCLIJ2Plugin implements CLIJMacro
 
     @Override
     public String getCategories() {
-        return "Measurements";
+        return "Visualisation, Label, Measurements";
     }
 }

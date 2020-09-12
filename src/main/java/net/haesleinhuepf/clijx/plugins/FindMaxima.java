@@ -31,7 +31,7 @@ import static net.haesleinhuepf.clij2.utilities.CLIJUtilities.checkDimensions;
  *         June 2020
  */
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_findMaxima")
-public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
+public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized {
 
     @Override
     public boolean executeCL() {
@@ -398,9 +398,8 @@ public class FindMaxima extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, 
     }
 
 
-
-
-
-
-
+    @Override
+    public String getCategories() {
+        return "Binary, Detection";
+    }
 }

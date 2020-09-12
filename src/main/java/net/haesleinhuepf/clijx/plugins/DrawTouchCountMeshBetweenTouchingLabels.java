@@ -63,6 +63,6 @@ public class DrawTouchCountMeshBetweenTouchingLabels extends AbstractCLIJ2Plugin
 
     @Override
     public String getCategories() {
-        return "Measurement,Neighbors";
+        return "Measurement,Graph";
     }
 }

@@ -70,6 +70,6 @@ public class DrawTouchPortionMeshBetweenTouchingLabels extends AbstractCLIJ2Plug
 
     @Override
     public String getCategories() {
-        return "Measurement,Neighbors";
+        return "Measurement,Graph";
     }
 }

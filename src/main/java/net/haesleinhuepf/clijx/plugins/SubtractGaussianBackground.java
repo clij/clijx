@@ -49,6 +49,6 @@ public class SubtractGaussianBackground extends AbstractCLIJ2Plugin implements C
 
     @Override
     public String getCategories() {
-        return "Filter,Background removal";
+        return "Filter,Background";
     }
 }

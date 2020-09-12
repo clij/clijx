@@ -59,6 +59,6 @@ public class AverageNeighborDistanceMap extends AbstractCLIJ2Plugin implements C
 
     @Override
     public String getCategories() {
-        return "Measurements, Neighbors";
+        return "Measurements, Graph";
     }
 }

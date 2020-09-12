@@ -54,6 +54,6 @@ public class AverageDistanceOfNClosestNeighborsMap extends AbstractCLIJ2Plugin i
 
     @Override
     public String getCategories() {
-        return "Measurements, Neighbors";
+        return "Measurements, Graph";
     }
 }

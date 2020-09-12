@@ -65,6 +65,6 @@ public class LocalMaximumAverageDistanceOfNClosestNeighborsMap extends AbstractC
 
     @Override
     public String getCategories() {
-        return "Measurements, Neighbors";
+        return "Visualisation, Graph, Label, Measurements";
     }
 }

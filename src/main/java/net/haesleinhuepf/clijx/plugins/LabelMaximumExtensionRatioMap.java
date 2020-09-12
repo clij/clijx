@@ -51,6 +51,6 @@ public class LabelMaximumExtensionRatioMap extends AbstractCLIJ2Plugin implement
 
     @Override
     public String getCategories() {
-        return "Measurements";
+        return "Visualisation, Label, Measurements";
     }
 }

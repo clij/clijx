@@ -51,6 +51,6 @@ public class LabelMinimumIntensityMap extends AbstractCLIJ2Plugin implements CLI
 
     @Override
     public String getCategories() {
-        return "Measurements";
+        return "Visualisation, Label, Measurements";
     }
 }

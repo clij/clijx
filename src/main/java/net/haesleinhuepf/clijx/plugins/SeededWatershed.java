@@ -24,7 +24,7 @@ import java.util.HashMap;
 public class SeededWatershed extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized {
     @Override
     public String getCategories() {
-        return "Binary, Filtering";
+        return "Binary, Filter";
     }
 
     @Override

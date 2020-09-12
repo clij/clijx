@@ -64,6 +64,6 @@ public class LocalMeanAverageDistanceOfNClosestNeighborsMap extends AbstractCLIJ
 
     @Override
     public String getCategories() {
-        return "Measurements, Neighbors";
+        return "Visualisation, Graph, Label, Measurements";
     }
 }

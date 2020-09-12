@@ -8,6 +8,7 @@ import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij2.plugins.FloodFillDiamond;
+import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
 import static net.haesleinhuepf.clij.utilities.CLIJUtilities.assertDifferent;
@@ -18,7 +19,7 @@ import static net.haesleinhuepf.clij.utilities.CLIJUtilities.assertDifferent;
  */
 
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_binaryFillHolesSliceBySlice")
-public class BinaryFillHolesSliceBySlice extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
+public class BinaryFillHolesSliceBySlice extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized {
 
     @Override
     public boolean executeCL() {
@@ -60,5 +61,10 @@ public class BinaryFillHolesSliceBySlice extends AbstractCLIJ2Plugin implements 
     @Override
     public String getAvailableForDimensions() {
         return "2D, 3D";
+    }
+
+    @Override
+    public String getCategories() {
+        return "Binary, Filter";
     }
 }

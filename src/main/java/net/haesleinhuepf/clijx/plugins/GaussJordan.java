@@ -11,13 +11,14 @@ import net.haesleinhuepf.clij.test.TestUtilities;
 import net.haesleinhuepf.clij2.plugins.MultiplyMatrix;
 import net.haesleinhuepf.clij2.utilities.HasAuthor;
 import net.haesleinhuepf.clij2.utilities.HasLicense;
+import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
 import java.util.HashMap;
 
 
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_gaussJordan")
-public class GaussJordan extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, HasLicense {
+public class GaussJordan extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, HasLicense, IsCategorized {
 
     @Override
     public String getParameterHelpText() {
@@ -158,5 +159,10 @@ public class GaussJordan extends AbstractCLIJPlugin implements CLIJMacroPlugin, 
                 "//- S. Che, M. Boyer, J. Meng, D. Tarjan, J. W. Sheaffer, and K. Skadron. \"A Performance\n" +
                 "//Study of General Purpose Applications on Graphics Processors using CUDA\" Journal of\n" +
                 "//Parallel and Distributed Computing, Elsevier, June 2008.";
+    }
+
+    @Override
+    public String getCategories() {
+        return "Math";
     }
 }

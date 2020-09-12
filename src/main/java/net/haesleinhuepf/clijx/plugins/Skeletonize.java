@@ -10,6 +10,7 @@ import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij2.plugins.SetImageBorders;
 import net.haesleinhuepf.clij2.utilities.HasAuthor;
 import net.haesleinhuepf.clij2.utilities.HasLicense;
+import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
 import java.nio.FloatBuffer;
@@ -23,7 +24,7 @@ import static net.haesleinhuepf.clij2.utilities.CLIJUtilities.checkDimensions;
  *         March 2020
  */
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_skeletonize")
-public class Skeletonize extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, HasLicense {
+public class Skeletonize extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, HasLicense, IsCategorized {
 
     @Override
     public boolean executeCL() {
@@ -144,5 +145,10 @@ public class Skeletonize extends AbstractCLIJ2Plugin implements CLIJMacroPlugin,
                 " Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.\n" +
                 " \n" +
                 "";
+    }
+
+    @Override
+    public String getCategories() {
+        return "Binary, Filter";
     }
 }

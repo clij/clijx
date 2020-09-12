@@ -52,6 +52,6 @@ public class LaplacianOfGaussian3D extends AbstractCLIJ2Plugin implements CLIJMa
 
     @Override
     public String getCategories() {
-        return "Filter,Background removal";
+        return "Filter,Background";
     }
 }

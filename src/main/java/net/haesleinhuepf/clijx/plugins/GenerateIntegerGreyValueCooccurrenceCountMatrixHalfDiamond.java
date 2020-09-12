@@ -7,6 +7,7 @@ import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
+import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
 import java.nio.FloatBuffer;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  *         August 2020
  */
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_generateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond")
-public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
+public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized {
 
     @Override
     public boolean executeCL() {
@@ -95,6 +96,11 @@ public class GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond extends 
     @Override
     public String getParameterHelpText() {
         return "Image integer_image, ByRef Image grey_value_cooccurrence_matrix_destination";
+    }
+
+    @Override
+    public String getCategories() {
+        return "Measurement";
     }
 
 
