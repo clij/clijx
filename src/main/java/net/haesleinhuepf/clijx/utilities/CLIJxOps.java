@@ -1267,6 +1267,8 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.FindMaxima
     //----------------------------------------------------
     /**
+     * Finds and labels local maxima with neighboring maxima and background above a given tolerance threshold.
+     * 
      * 
      */
     default boolean findMaxima(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
@@ -1292,9 +1294,9 @@ public abstract interface CLIJxOps {
     /**
      * 
      */
-    default boolean mergeTouchingLabels(ClearCLBuffer arg1, ClearCLBuffer arg2) {
+    default boolean mergeTouchingLabels(ClearCLBuffer source, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("MergeTouchingLabels");}
-        boolean result = MergeTouchingLabels.mergeTouchingLabels(getCLIJ2(), arg1, arg2);
+        boolean result = MergeTouchingLabels.mergeTouchingLabels(getCLIJ2(), source, destination);
         if (doTimeTracing()) {recordMethodEnd("MergeTouchingLabels");}
         return result;
     }
