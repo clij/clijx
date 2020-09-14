@@ -27,7 +27,7 @@ public class GreyLevelAtttributeFiltering extends AbstractCLIJ2Plugin implements
 
     @Override
     public String getDescription() {
-        return "Inspired by Grayscale attribute filtering from MorpholibJ library by David Legland & Ignacio Arganda-Carreras.\n" +
+        return "Inspired by Grayscale attribute filtering from MorpholibJ library by David Legland & Ignacio Arganda-Carreras.\n\n" +
             "This plugin will remove components in a grayscale image based on user-specified area (for 2D: pixels) or volume (3D: voxels).\n" +
             "For each gray level specified in the number of bins, binary images will be generated, followed by exclusion of objects (labels)\n"+ 
             "below a minimum pixel count.\n"+
