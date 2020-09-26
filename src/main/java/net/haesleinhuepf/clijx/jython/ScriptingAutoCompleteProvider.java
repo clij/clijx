@@ -2,8 +2,11 @@ package net.haesleinhuepf.clijx.jython;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.ImageStack;
 import ij.gui.Overlay;
+import ij.gui.PolygonRoi;
 import ij.gui.Roi;
+import ij.gui.TextRoi;
 import ij.macro.Interpreter;
 import ij.measure.ResultsTable;
 import ij.plugin.frame.RoiManager;
@@ -87,19 +90,24 @@ public class ScriptingAutoCompleteProvider extends DefaultCompletionProvider
             addCompletion(basicCompletion);
         }
 
-        addClassToAutoCompletion(CLIJOps.class, "clij.op().");
-        addClassToAutoCompletion(CLIJ.class, "clij.");
+        //addClassToAutoCompletion(CLIJOps.class, "clij.op().");
+        //addClassToAutoCompletion(CLIJ.class, "clij.");
         addClassToAutoCompletion(ClearCLBuffer.class, "buffer.");
 
         addClassToAutoCompletion(ImagePlus.class, "imp.");
+        addClassToAutoCompletion(ImageStack.class, "is.");
         addClassToAutoCompletion(ImageProcessor.class, "ip.");
         addClassToAutoCompletion(IJ.class, "IJ.");
         addClassToAutoCompletion(Roi.class, "roi.");
+        addClassToAutoCompletion(TextRoi.class, "textroi.");
+        addClassToAutoCompletion(PolygonRoi.class, "polygonroi.");
+
         addClassToAutoCompletion(RoiManager.class, "rm.");
         addClassToAutoCompletion(Color.class, "Color.");
         addClassToAutoCompletion(Overlay.class, "overlay.");
         addClassToAutoCompletion(ResultsTable.class, "table.");
 
+        addClassToAutoCompletion(List.class, "list.");
 
         addClassToAutoCompletion(ArrayImgs.class, "ArrayImgs.");
         addClassToAutoCompletion(Cursor.class, "cursor.");
@@ -109,6 +117,9 @@ public class ScriptingAutoCompleteProvider extends DefaultCompletionProvider
         addClassToAutoCompletion(Views.class, "Views.");
         addClassToAutoCompletion(Regions.class, "Regions.");
         addClassToAutoCompletion(ImageJFunctions.class, "ImageJFunctions.");
+
+
+
     }
 
     private void addClassToAutoCompletion(Class c, String prefix) {
