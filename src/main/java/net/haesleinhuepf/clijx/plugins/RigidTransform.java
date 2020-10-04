@@ -31,15 +31,18 @@ public class RigidTransform extends AbstractCLIJ2Plugin implements CLIJMacroPlug
 
     public static boolean rigidTransform(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result, Float translation_x, Float translation_y, Float translation_z, Float rotation_x, Float rotation_y, Float rotation_z) {
 
-        String transform = getTransform(translation_x, translation_y, translation_z, rotation_x, rotation_y, rotation_z);
-
-        clij2.affineTransform3D(pushed, result, transform);
-
+        if (pushed.getDimension() == 2) {
+            String transform = getTransform2D(translation_x, translation_y, translation_z, rotation_x, rotation_y, rotation_z);
+            clij2.affineTransform2D(pushed, result, transform);
+        } else {
+            String transform = getTransform3D(translation_x, translation_y, translation_z, rotation_x, rotation_y, rotation_z);
+            clij2.affineTransform3D(pushed, result, transform);
+        }
         return true;
     }
 
 
-    public static String getTransform(Float translation_x, Float translation_y, Float translation_z, Float rotation_x, Float rotation_y, Float rotation_z) {
+    public static String getTransform3D(Float translation_x, Float translation_y, Float translation_z, Float rotation_x, Float rotation_y, Float rotation_z) {
             return
                     "-center" +
                             " translateX=" + translation_x +
@@ -49,6 +52,15 @@ public class RigidTransform extends AbstractCLIJ2Plugin implements CLIJMacroPlug
                             " rotateY=" + rotation_y +
                             " rotateZ=" + rotation_z +
                             " center";
+    }
+
+    public static String getTransform2D(Float translation_x, Float translation_y, Float translation_z, Float rotation_x, Float rotation_y, Float rotation_z) {
+        return
+                "-center" +
+                        " translateX=" + translation_x +
+                        " translateY=" + translation_y +
+                        " rotate=" + rotation_z +
+                        " center";
     }
 
     @Override
