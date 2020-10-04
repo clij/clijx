@@ -17,6 +17,7 @@ import org.scijava.plugin.Plugin;
 
 import java.util.HashMap;
 
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_bilateral")
 public class Bilateral extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized {
 
@@ -31,6 +32,7 @@ public class Bilateral extends AbstractCLIJxPlugin implements CLIJMacroPlugin, C
         return result;
     }
 
+    @Deprecated
     public static boolean bilateral(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, Integer radiusX, Integer radiusY, Integer radiusZ, Float sigma_intensity, Float sigma_space) {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("input", input);
@@ -50,7 +52,8 @@ public class Bilateral extends AbstractCLIJxPlugin implements CLIJMacroPlugin, C
 
     @Override
     public String getDescription() {
-        return "Applies a bilateral filter using a box neighborhood with sigma weights for space and intensity to the input image.";
+        return "Applies a bilateral filter using a box neighborhood with sigma weights for space and intensity to the input image.\n\n" +
+                "Deprecated: Use SimpleITK bilateral() instead.";
     }
 
     @Override

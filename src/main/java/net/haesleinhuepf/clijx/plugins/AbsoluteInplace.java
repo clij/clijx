@@ -13,7 +13,7 @@ import org.scijava.plugin.Plugin;
  * Author: @haesleinhuepf
  *         November 2019
  */
-
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_absoluteInplace")
 public class AbsoluteInplace extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
 
@@ -22,6 +22,7 @@ public class AbsoluteInplace extends AbstractCLIJxPlugin implements CLIJMacroPlu
         return absoluteInplace(getCLIJx(), (ClearCLBuffer) args[0]);
     }
 
+    @Deprecated
     public static boolean absoluteInplace(CLIJx clijx, ClearCLBuffer input_output) {
         ClearCLBuffer buffer = clijx.create(input_output);
         clijx.copy(input_output, buffer);
@@ -38,7 +39,8 @@ public class AbsoluteInplace extends AbstractCLIJxPlugin implements CLIJMacroPlu
 
     @Override
     public String getDescription() {
-        return "Computes the absolute value of every individual pixel x in a given image.\n\n<pre>f(x) = |x| </pre>";
+        return "Computes the absolute value of every individual pixel x in a given image.\n\n<pre>f(x) = |x| </pre>\n\n" +
+                "Deprecated: Use absolute() instead.";
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Author: @haesleinhuepf
  *         March 2020
  */
-
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_customBinaryOperation")
 public class CustomBinaryOperation extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
 
@@ -25,6 +25,7 @@ public class CustomBinaryOperation extends AbstractCLIJxPlugin implements CLIJMa
         return customBinaryOperation(getCLIJx(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1], (String)args[2]);
     }
 
+    @Deprecated
     private static boolean customBinaryOperation(CLIJx clijx, ClearCLImageInterface image1, ClearCLImageInterface image2, String openCLCode) {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("image1", image1);
@@ -52,7 +53,8 @@ public class CustomBinaryOperation extends AbstractCLIJxPlugin implements CLIJMa
 
     @Override
     public String getDescription() {
-        return "Executes custom OpenCL code on a pair of images.";
+        return "Executes custom OpenCL code on a pair of images.\n\n" +
+                "Deprecated: Use customOperation() instead.";
     }
 
     @Override

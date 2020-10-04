@@ -23,6 +23,7 @@ import static net.haesleinhuepf.clij2.utilities.CLIJUtilities.checkDimensions;
  * Author: @haesleinhuepf
  *         March 2020
  */
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_skeletonize")
 public class Skeletonize extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, HasLicense, IsCategorized {
 
@@ -31,6 +32,7 @@ public class Skeletonize extends AbstractCLIJ2Plugin implements CLIJMacroPlugin,
         return skeletonize(getCLIJ2(), (ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]));
     }
 
+    @Deprecated
     public static boolean skeletonize(CLIJ2 clij2, ClearCLBuffer src, ClearCLBuffer dst) {
         assertDifferent(src, dst);
         if (!checkDimensions(src.getDimension(), src.getDimension(), dst.getDimension())) {
@@ -111,7 +113,8 @@ public class Skeletonize extends AbstractCLIJ2Plugin implements CLIJMacroPlugin,
 
     @Override
     public String getDescription() {
-        return "Erodes a binary image until just its skeleton is left. \n\nThe result is similar to Skeletonize3D in Fiji.";
+        return "Erodes a binary image until just its skeleton is left. \n\nThe result is similar to Skeletonize3D in Fiji.\n\n" +
+                "Deprecated: Use SimpleITK binaryThinning() instead.";
     }
 
     @Override

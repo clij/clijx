@@ -10,6 +10,7 @@ import net.haesleinhuepf.clijx.CLIJx;
 import net.haesleinhuepf.clijx.utilities.AbstractCLIJxPlugin;
 import org.scijava.plugin.Plugin;
 
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_subtractBackground3D")
 public class SubtractBackground3D extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
 
@@ -44,7 +45,8 @@ public class SubtractBackground3D extends AbstractCLIJxPlugin implements CLIJMac
 
     @Override
     public String getDescription() {
-        return "Applies Gaussian blur to the input image and subtracts the result from the original image.";
+        return "Applies Gaussian blur to the input image and subtracts the result from the original image.\n\n" +
+                "Deprecated: Use topHat() or differenceOfGaussian() instead.";
     }
 
     @Override

@@ -8,7 +8,7 @@ import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
 import org.scijava.plugin.Plugin;
-
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_differenceOfGaussianInplace3D")
 public class DifferenceOfGaussianInplace3D extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
 
@@ -26,6 +26,7 @@ public class DifferenceOfGaussianInplace3D extends AbstractCLIJPlugin implements
         return result;
     }
 
+    @Deprecated
     public static boolean differenceOfGaussianInplace3D(CLIJ clij, ClearCLBuffer input_output, Float sigma1x, Float sigma1y, Float sigma1z, Float sigma2x, Float sigma2y, Float sigma2z) {
 
         ClearCLBuffer temp1 = clij.create(input_output);
@@ -44,7 +45,8 @@ public class DifferenceOfGaussianInplace3D extends AbstractCLIJPlugin implements
     @Override
     public String getDescription() {
         return "Applies Gaussian blur to the input image twice with different sigma values resulting in two images which are then subtracted from each other.\n\n" +
-                "It is recommended to apply this operation to images of type Float (32 bit) as results might be negative.";
+                "It is recommended to apply this operation to images of type Float (32 bit) as results might be negative.\n\n" +
+                "Deprecated: Use differenceOfGaussian3D instead.";
     }
 
     @Override

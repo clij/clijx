@@ -16,7 +16,7 @@ import org.scijava.plugin.Plugin;
 
 import java.util.HashMap;
 
-
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_gaussJordan")
 public class GaussJordan extends AbstractCLIJPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, HasLicense, IsCategorized {
 

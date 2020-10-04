@@ -21,6 +21,7 @@ import static net.haesleinhuepf.clij2.plugins.MinimumOctagon.minimumDiamond;
  * Author: @haesleinhuepf
  *         December 2019
  */
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_topHatOctagonSliceBySlice")
 public class TopHatOctagonSliceBySlice extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized {
 

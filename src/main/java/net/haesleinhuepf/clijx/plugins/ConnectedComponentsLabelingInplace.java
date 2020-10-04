@@ -28,6 +28,7 @@ import static net.haesleinhuepf.clij2.plugins.ConnectedComponentsLabeling.*;
  * Author: @haesleinhuepf
  * 06 2019
  */
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_connectedComponentsLabelingInplace")
 public class ConnectedComponentsLabelingInplace extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
 
@@ -41,6 +42,7 @@ public class ConnectedComponentsLabelingInplace extends AbstractCLIJxPlugin impl
         return result;
     }
 
+    @Deprecated
     public static boolean connectedComponentsLabelingInplace(CLIJx clijx, ClearCLBuffer output) {
         ClearCLImage temp1 = clijx.create(output.getDimensions(), ImageChannelDataType.Float);
         ClearCLImage temp2 = clijx.create(output.getDimensions(), ImageChannelDataType.Float);
@@ -121,7 +123,8 @@ public class ConnectedComponentsLabelingInplace extends AbstractCLIJxPlugin impl
 
     @Override
     public String getDescription() {
-        return "Performs connected components analysis to a binary image and generates a label map.";
+        return "Performs connected components analysis to a binary image and generates a label map.\n\n" +
+                "Deprecated: Use connectedComponentsLabelingBox() instead.";
     }
 
     @Override

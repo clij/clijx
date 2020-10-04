@@ -18,6 +18,7 @@ import java.util.Arrays;
  * Author: @haesleinhuepf
  *         November 2019
  */
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_automaticThresholdInplace")
 public class AutomaticThresholdInplace extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation {
 
@@ -31,6 +32,7 @@ public class AutomaticThresholdInplace extends AbstractCLIJxPlugin implements CL
         return true;
     }
 
+    @Deprecated
     public static boolean automaticThresholdInplace(CLIJx clijx, ClearCLBuffer src_dst, String userSelectedMethod) {
         ClearCLBuffer buffer = clijx.create(src_dst);
         clijx.copy(src_dst, buffer);
@@ -46,7 +48,8 @@ public class AutomaticThresholdInplace extends AbstractCLIJxPlugin implements CL
         doc.append("The automatic thresholder utilizes the threshold methods from ImageJ on a histogram determined on \n" +
                 "the GPU to create binary images as similar as possible to ImageJ 'Apply Threshold' method. Enter one \n" +
                 "of these methods in the method text field:\n" +
-                Arrays.toString(AutoThresholder.getMethods()) );
+                Arrays.toString(AutoThresholder.getMethods()) + "\n\n" +
+                "Deprecated: Use threshold* instead.");
         return doc.toString();
     }
 
