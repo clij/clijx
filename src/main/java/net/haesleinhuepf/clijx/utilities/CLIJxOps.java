@@ -432,6 +432,8 @@ public abstract interface CLIJxOps {
     //----------------------------------------------------
     /**
      * Applies Gaussian blur to the input image and subtracts the result from the original image.
+     * 
+     * Deprecated: Use topHat() or differenceOfGaussian() instead.
      */
     default boolean subtractBackground(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4) {
         if (doTimeTracing()) {recordMethodStart("SubtractBackground2D");}
@@ -442,6 +444,8 @@ public abstract interface CLIJxOps {
 
     /**
      * Applies Gaussian blur to the input image and subtracts the result from the original image.
+     * 
+     * Deprecated: Use topHat() or differenceOfGaussian() instead.
      */
     default boolean subtractBackground2D(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4) {
         if (doTimeTracing()) {recordMethodStart("SubtractBackground2D");}
@@ -455,6 +459,8 @@ public abstract interface CLIJxOps {
     //----------------------------------------------------
     /**
      * Applies Gaussian blur to the input image and subtracts the result from the original image.
+     * 
+     * Deprecated: Use topHat() or differenceOfGaussian() instead.
      */
     default boolean subtractBackground(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
         if (doTimeTracing()) {recordMethodStart("SubtractBackground3D");}
@@ -465,6 +471,8 @@ public abstract interface CLIJxOps {
 
     /**
      * Applies Gaussian blur to the input image and subtracts the result from the original image.
+     * 
+     * Deprecated: Use topHat() or differenceOfGaussian() instead.
      */
     default boolean subtractBackground3D(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
         if (doTimeTracing()) {recordMethodStart("SubtractBackground3D");}
@@ -673,8 +681,12 @@ public abstract interface CLIJxOps {
     //----------------------------------------------------
     /**
      * Performs connected components analysis to a binary image and generates a label map.
+     * 
+     * Deprecated: Use connectedComponentsLabelingBox() instead.
      */
+    @Deprecated
     default boolean connectedComponentsLabelingInplace(ClearCLBuffer binary_source_labeling_destination) {
+        System.out.println("connectedComponentsLabelingInplace is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("ConnectedComponentsLabelingInplace");}
         boolean result = ConnectedComponentsLabelingInplace.connectedComponentsLabelingInplace(getCLIJx(), binary_source_labeling_destination);
         if (doTimeTracing()) {recordMethodEnd("ConnectedComponentsLabelingInplace");}
@@ -689,8 +701,12 @@ public abstract interface CLIJxOps {
      * the GPU to create binary images as similar as possible to ImageJ 'Apply Threshold' method. Enter one 
      * of these methods in the method text field:
      * [Default, Huang, Intermodes, IsoData, IJ_IsoData, Li, MaxEntropy, Mean, MinError, Minimum, Moments, Otsu, Percentile, RenyiEntropy, Shanbhag, Triangle, Yen]
+     * 
+     * Deprecated: Use threshold* instead.
      */
+    @Deprecated
     default boolean automaticThresholdInplace(ClearCLBuffer input_and_destination, String method) {
+        System.out.println("automaticThresholdInplace is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("AutomaticThresholdInplace");}
         boolean result = AutomaticThresholdInplace.automaticThresholdInplace(getCLIJx(), input_and_destination, method);
         if (doTimeTracing()) {recordMethodEnd("AutomaticThresholdInplace");}
@@ -704,8 +720,12 @@ public abstract interface CLIJxOps {
      * Applies Gaussian blur to the input image twice with different sigma values resulting in two images which are then subtracted from each other.
      * 
      * It is recommended to apply this operation to images of type Float (32 bit) as results might be negative.
+     * 
+     * Deprecated: Use differenceOfGaussian3D instead.
      */
+    @Deprecated
     default boolean differenceOfGaussianInplace3D(ClearCLBuffer arg1, double arg2, double arg3, double arg4, double arg5, double arg6, double arg7) {
+        System.out.println("differenceOfGaussianInplace3D is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("DifferenceOfGaussianInplace3D");}
         boolean result = DifferenceOfGaussianInplace3D.differenceOfGaussianInplace3D(getCLIJ(), arg1, new Double (arg2).floatValue(), new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue(), new Double (arg7).floatValue());
         if (doTimeTracing()) {recordMethodEnd("DifferenceOfGaussianInplace3D");}
@@ -719,8 +739,12 @@ public abstract interface CLIJxOps {
      * Computes the absolute value of every individual pixel x in a given image.
      * 
      * <pre>f(x) = |x| </pre>
+     * 
+     * Deprecated: Use absolute() instead.
      */
+    @Deprecated
     default boolean absoluteInplace(ClearCLBuffer source_destination) {
+        System.out.println("absoluteInplace is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("AbsoluteInplace");}
         boolean result = AbsoluteInplace.absoluteInplace(getCLIJx(), source_destination);
         if (doTimeTracing()) {recordMethodEnd("AbsoluteInplace");}
@@ -905,8 +929,12 @@ public abstract interface CLIJxOps {
      * Erodes a binary image until just its skeleton is left. 
      * 
      * The result is similar to Skeletonize3D in Fiji.
+     * 
+     * Deprecated: Use SimpleITK binaryThinning() instead.
      */
+    @Deprecated
     default boolean skeletonize(ClearCLBuffer source, ClearCLBuffer destination) {
+        System.out.println("skeletonize is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("Skeletonize");}
         boolean result = Skeletonize.skeletonize(getCLIJ2(), source, destination);
         if (doTimeTracing()) {recordMethodEnd("Skeletonize");}
@@ -1258,8 +1286,12 @@ public abstract interface CLIJxOps {
     //----------------------------------------------------
     /**
      * Applies a bilateral filter using a box neighborhood with sigma weights for space and intensity to the input image.
+     * 
+     * Deprecated: Use SimpleITK bilateral() instead.
      */
+    @Deprecated
     default boolean bilateral(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6, double arg7) {
+        System.out.println("bilateral is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("Bilateral");}
         boolean result = Bilateral.bilateral(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).floatValue(), new Double (arg7).floatValue());
         if (doTimeTracing()) {recordMethodEnd("Bilateral");}
@@ -1490,6 +1522,8 @@ public abstract interface CLIJxOps {
     //----------------------------------------------------
     /**
      * Applies Gaussian blur to the input image and subtracts the result from the original image.
+     * 
+     * Deprecated: Use differenceOfGaussian() instead.
      */
     default boolean subtractGaussianBackground(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
         if (doTimeTracing()) {recordMethodStart("SubtractGaussianBackground");}
