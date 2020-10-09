@@ -269,11 +269,11 @@ class CLIJxAutoComplete {
        headline = "clijx.detectLabelEdges(ClearCLImageInterface label_map, ClearCLBuffer edge_image_destination)";
        description = "<b>detectLabelEdges</b><br><br>Takes a labelmap and returns an image where all pixels on label edges are set to 1 and all other pixels to 0.<br><br>Parameters:<br>ClearCLImageInterface label_map, ClearCLBuffer edge_image_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.detectMaxima2DBox(null)";
-       description = "<b>detectMaxima2DBox</b><br><br>Detects local maxima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>higher intensity, and to 0 otherwise.<br><br>Parameters:<br>null";
+       headline = "clijx.detectMaxima2DBox(ClearCLBuffer source, ClearCLBuffer destination, Integer radiusX, Integer radiusY)";
+       description = "<b>detectMaxima2DBox</b><br><br>Detects local maxima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>higher intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer radiusX, Integer radiusY";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.detectMaxima3DBox(null)";
-       description = "<b>detectMaxima3DBox</b><br><br>Detects local maxima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>higher intensity, and to 0 otherwise.<br><br>Parameters:<br>null";
+       headline = "clijx.detectMaxima3DBox(ClearCLBuffer source, ClearCLBuffer destination, Integer radiusX, Integer radiusY, Integer radiusZ)";
+       description = "<b>detectMaxima3DBox</b><br><br>Detects local maxima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>higher intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer radiusX, Integer radiusY, Integer radiusZ";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.detectMaximaBox(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius)";
        description = "<b>detectMaximaBox</b><br><br>Detects local maxima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>higher intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius";
@@ -281,11 +281,11 @@ class CLIJxAutoComplete {
        headline = "clijx.detectMaximaSliceBySliceBox(ClearCLBuffer source, ClearCLBuffer destination, Integer radiusX, Integer radiusY)";
        description = "<b>detectMaximaSliceBySliceBox</b><br><br>Detects local maxima in a given square neighborhood of an input image stack. <br><br>The input image stack is processed slice by slice. Pixels in the resulting image are set to 1 if <br>there is no other pixel in a given radius which has a higher intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer radiusX, Integer radiusY";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.detectMinima2DBox(null)";
-       description = "<b>detectMinima2DBox</b><br><br>Detects local minima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>lower intensity, and to 0 otherwise.<br><br>Parameters:<br>null";
+       headline = "clijx.detectMinima2DBox(ClearCLBuffer source, ClearCLBuffer destination, Integer radiusX, Integer radiusY)";
+       description = "<b>detectMinima2DBox</b><br><br>Detects local minima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>lower intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer radiusX, Integer radiusY";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.detectMinima3DBox(null)";
-       description = "<b>detectMinima3DBox</b><br><br>Detects local minima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>lower intensity, and to 0 otherwise.<br><br>Parameters:<br>null";
+       headline = "clijx.detectMinima3DBox(ClearCLBuffer source, ClearCLBuffer destination, Integer radiusX, Integer radiusY, Integer radiusZ)";
+       description = "<b>detectMinima3DBox</b><br><br>Detects local minima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>lower intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer radiusX, Integer radiusY, Integer radiusZ";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.detectMinimaBox(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius)";
        description = "<b>detectMinimaBox</b><br><br>Detects local minima in a given square/cubic neighborhood. <br><br>Pixels in the resulting image are set to 1 if there is no other pixel in a given radius which has a <br>lower intensity, and to 0 otherwise.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius";
@@ -604,6 +604,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.labelStandardDeviationIntensityMap(ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination)";
        description = "<b>labelStandardDeviationIntensityMap</b><br><br>Takes an image and a corresponding label map, determines the standard deviation of the intensity per label and replaces every label with the that number.<br><br>This results in a parametric image expressing standard deviation of object intensity.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.labelSurface(ClearCLBuffer input_labels, ClearCLBuffer destination_labels, Float relative_center_x, Float relative_center_y, Float relative_center_z)";
+       description = "<b>labelSurface</b><br><br>Takes a label map and excludes all labels which are not on the surface.<br><br>For each label, a ray from a given center towards the label. If the ray crosses another label, the labelin question is not at the surface and thus, removed.<br><br>Parameters:<br>ClearCLBuffer input_labels, ClearCLBuffer destination_labels, Float relative_center_x, Float relative_center_y, Float relative_center_z";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.labelToMask(ClearCLBuffer label_map_source, ClearCLBuffer mask_destination, Float label_index)";
        description = "<b>labelToMask</b><br><br>Masks a single label in a label map. <br><br>Sets all pixels in the target image to 1, where the given label index was present in the label map. Other pixels are set to 0.<br><br>Parameters:<br>ClearCLBuffer label_map_source, ClearCLBuffer mask_destination, Float label_index";
@@ -1457,4 +1460,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 482 methods generated.
+// 483 methods generated.
