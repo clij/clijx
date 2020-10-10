@@ -21,6 +21,7 @@ import java.util.HashMap;
  * Author: @haesleinhuepf
  * July 2020
  */
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_seededWatershed")
 public class SeededWatershed extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
 
