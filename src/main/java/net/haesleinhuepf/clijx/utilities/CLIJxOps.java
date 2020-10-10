@@ -128,6 +128,7 @@ import net.haesleinhuepf.clijx.weka.BinaryWekaPixelClassifier;
 import net.haesleinhuepf.clijx.weka.WekaLabelClassifier;
 import net.haesleinhuepf.clijx.weka.GenerateLabelFeatureImage;
 import net.haesleinhuepf.clijx.plugins.LabelSurface;
+import net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelledSpots;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2255,5 +2256,18 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelledSpots
+    //----------------------------------------------------
+    /**
+     * Takes a label map and reduces all labels to their center spots. Label IDs stay and background will be zero.
+     */
+    default boolean reduceLabelsToLabelledSpots(ClearCLBuffer input_labels, ClearCLBuffer destination_labels) {
+        if (doTimeTracing()) {recordMethodStart("ReduceLabelsToLabelledSpots");}
+        boolean result = ReduceLabelsToLabelledSpots.reduceLabelsToLabelledSpots(getCLIJ2(), input_labels, destination_labels);
+        if (doTimeTracing()) {recordMethodEnd("ReduceLabelsToLabelledSpots");}
+        return result;
+    }
+
 }
-// 144 methods generated.
+// 145 methods generated.

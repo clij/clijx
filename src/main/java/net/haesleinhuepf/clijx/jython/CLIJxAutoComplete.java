@@ -1064,6 +1064,9 @@ class CLIJxAutoComplete {
        headline = "clijx.readRawImageFromDisc(ClearCLBuffer arg1, String arg2)";
        description = "<b>readRawImageFromDisc</b><br><br>Reads a raw file from disc and pushes it immediately to the GPU.<br><br>Parameters:<br>ClearCLBuffer arg1, String arg2";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.reduceLabelsToLabelledSpots(ClearCLBuffer input_labels, ClearCLBuffer destination_labels)";
+       description = "<b>reduceLabelsToLabelledSpots</b><br><br>Takes a label map and reduces all labels to their center spots. Label IDs stay and background will be zero.<br><br>Parameters:<br>ClearCLBuffer input_labels, ClearCLBuffer destination_labels";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.reduceStack(ClearCLImageInterface input, ClearCLImageInterface destination, Integer reductionFactor, Integer offset)";
        description = "<b>reduceStack</b><br><br>Reduces the number of slices in a stack by a given factor.<br>With the offset you have control which slices stay: <br>* With factor 3 and offset 0, slices 0, 3, 6,... are kept. * With factor 4 and offset 1, slices 1, 5, 9,... are kept.<br><br>Parameters:<br>ClearCLImageInterface input, ClearCLImageInterface destination, Integer reductionFactor, Integer offset";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1460,4 +1463,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 483 methods generated.
+// 484 methods generated.
