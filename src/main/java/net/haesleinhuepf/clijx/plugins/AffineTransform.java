@@ -53,21 +53,21 @@ public class AffineTransform extends AffineTransform3D implements CLIJMacroPlugi
                 at.concatenate(translateTransform);
             } else if (commandParts[0].compareTo("scale") == 0) {
                 net.imglib2.realtransform.AffineTransform2D scaleTransform = new net.imglib2.realtransform.AffineTransform2D();
-                scaleTransform.scale(1.0 / Double.parseDouble(commandParts[1]));
+                scaleTransform.scale(Double.parseDouble(commandParts[1]));
                 at.concatenate(scaleTransform);
             } else if (commandParts[0].compareTo("scalex") == 0) {
                 net.imglib2.realtransform.AffineTransform2D scaleTransform = new net.imglib2.realtransform.AffineTransform2D();
-                scaleTransform.set(1.0 / Double.parseDouble(commandParts[1]),0,0);
+                scaleTransform.set(Double.parseDouble(commandParts[1]),0,0);
                 scaleTransform.set(1.0 , 1, 1);
                 at.concatenate(scaleTransform);
             } else if (commandParts[0].compareTo("scaley") == 0) {
                 net.imglib2.realtransform.AffineTransform2D scaleTransform = new net.imglib2.realtransform.AffineTransform2D();
                 scaleTransform.set(1.0,0,0);
-                scaleTransform.set(1.0  / Double.parseDouble(commandParts[1]) , 1, 1);
+                scaleTransform.set(Double.parseDouble(commandParts[1]) , 1, 1);
                 at.concatenate(scaleTransform);
             } else if (commandParts[0].compareTo("rotate") == 0 || commandParts[0].compareTo("rotate") == 0) {
                 net.imglib2.realtransform.AffineTransform2D rotateTransform = new net.imglib2.realtransform.AffineTransform2D();
-                float angle = (float)(-asFloat(commandParts[1]) / 180.0f * Math.PI);
+                float angle = (float)(asFloat(commandParts[1]) / 180.0f * Math.PI);
                 rotateTransform.rotate(angle);
                 at.concatenate(rotateTransform);
             } else if (commandParts[0].compareTo("translatex") == 0) {
@@ -111,39 +111,39 @@ public class AffineTransform extends AffineTransform3D implements CLIJMacroPlugi
                 at.concatenate(translateTransform);
             } else if (commandParts[0].compareTo("scale") == 0) {
                 net.imglib2.realtransform.AffineTransform3D scaleTransform = new net.imglib2.realtransform.AffineTransform3D();
-                scaleTransform.scale(1.0 / Double.parseDouble(commandParts[1]));
+                scaleTransform.scale(Double.parseDouble(commandParts[1]));
                 at.concatenate(scaleTransform);
             } else if (commandParts[0].compareTo("scalex") == 0) {
                 net.imglib2.realtransform.AffineTransform3D scaleTransform = new net.imglib2.realtransform.AffineTransform3D();
-                scaleTransform.set(1.0 / Double.parseDouble(commandParts[1]),0,0);
+                scaleTransform.set(Double.parseDouble(commandParts[1]),0,0);
                 scaleTransform.set(1.0 , 1, 1);
                 scaleTransform.set(1, 2, 2);
                 at.concatenate(scaleTransform);
             } else if (commandParts[0].compareTo("scaley") == 0) {
                 net.imglib2.realtransform.AffineTransform3D scaleTransform = new net.imglib2.realtransform.AffineTransform3D();
                 scaleTransform.set(1.0,0,0);
-                scaleTransform.set(1.0  / Double.parseDouble(commandParts[1]) , 1, 1);
+                scaleTransform.set(Double.parseDouble(commandParts[1]) , 1, 1);
                 scaleTransform.set(1, 2, 2);
                 at.concatenate(scaleTransform);
             } else if (commandParts[0].compareTo("scalez") == 0) {
                 net.imglib2.realtransform.AffineTransform3D scaleTransform = new net.imglib2.realtransform.AffineTransform3D();
                 scaleTransform.set(1.0,0,0);
                 scaleTransform.set(1.0 , 1, 1);
-                scaleTransform.set(1.0  / Double.parseDouble(commandParts[1]) , 2, 2);
+                scaleTransform.set(Double.parseDouble(commandParts[1]) , 2, 2);
                 at.concatenate(scaleTransform);
             } else if (commandParts[0].compareTo("rotatex") == 0) {
                 net.imglib2.realtransform.AffineTransform3D rotateTransform = new net.imglib2.realtransform.AffineTransform3D();
-                float angle = (float)(-asFloat(commandParts[1]) / 180.0f * Math.PI);
+                float angle = (float)(asFloat(commandParts[1]) / 180.0f * Math.PI);
                 rotateTransform.rotate(0, angle);
                 at.concatenate(rotateTransform);
             } else if (commandParts[0].compareTo("rotatey") == 0) {
                 net.imglib2.realtransform.AffineTransform3D rotateTransform = new net.imglib2.realtransform.AffineTransform3D();
-                float angle = (float)(-asFloat(commandParts[1]) / 180.0f * Math.PI);
+                float angle = (float)(asFloat(commandParts[1]) / 180.0f * Math.PI);
                 rotateTransform.rotate(1, angle);
                 at.concatenate(rotateTransform);
             } else if (commandParts[0].compareTo("rotatez") == 0 || commandParts[0].compareTo("rotate") == 0) {
                 net.imglib2.realtransform.AffineTransform3D rotateTransform = new net.imglib2.realtransform.AffineTransform3D();
-                float angle = (float)(-asFloat(commandParts[1]) / 180.0f * Math.PI);
+                float angle = (float)(asFloat(commandParts[1]) / 180.0f * Math.PI);
                 rotateTransform.rotate(2, angle);
                 at.concatenate(rotateTransform);
             } else if (commandParts[0].compareTo("translatex") == 0) {
