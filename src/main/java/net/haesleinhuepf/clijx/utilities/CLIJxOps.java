@@ -129,6 +129,7 @@ import net.haesleinhuepf.clijx.weka.WekaLabelClassifier;
 import net.haesleinhuepf.clijx.weka.GenerateLabelFeatureImage;
 import net.haesleinhuepf.clijx.plugins.LabelSurface;
 import net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelledSpots;
+import net.haesleinhuepf.clijx.plugins.LabelMeanExtensionMap;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -1608,9 +1609,9 @@ public abstract interface CLIJxOps {
      * 
      * This results in a parametric image expressing mean object intensity.
      */
-    default boolean labelMeanIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3) {
+    default boolean labelMeanIntensityMap(ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("LabelMeanIntensityMap");}
-        boolean result = LabelMeanIntensityMap.labelMeanIntensityMap(getCLIJ2(), arg1, arg2, arg3);
+        boolean result = LabelMeanIntensityMap.labelMeanIntensityMap(getCLIJ2(), input, label_map, destination);
         if (doTimeTracing()) {recordMethodEnd("LabelMeanIntensityMap");}
         return result;
     }
@@ -2269,5 +2270,20 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.LabelMeanExtensionMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines for every label the mean distance of any pixel to the centroid and replaces every label with the that number.
+     * 
+     * 
+     */
+    default boolean labelMeanExtensionMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("LabelMeanExtensionMap");}
+        boolean result = LabelMeanExtensionMap.labelMeanExtensionMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("LabelMeanExtensionMap");}
+        return result;
+    }
+
 }
-// 145 methods generated.
+// 146 methods generated.

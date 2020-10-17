@@ -590,8 +590,11 @@ class CLIJxAutoComplete {
        headline = "clijx.labelMaximumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3)";
        description = "<b>labelMaximumIntensityMap</b><br><br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.labelMeanIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3)";
-       description = "<b>labelMeanIntensityMap</b><br><br>Takes an image and a corresponding label map, determines the mean intensity per label and replaces every label with the that number.<br><br>This results in a parametric image expressing mean object intensity.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3";
+       headline = "clijx.labelMeanExtensionMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>labelMeanExtensionMap</b><br><br>Takes a label map, determines for every label the mean distance of any pixel to the centroid and replaces every label with the that number.<br><br><br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.labelMeanIntensityMap(ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination)";
+       description = "<b>labelMeanIntensityMap</b><br><br>Takes an image and a corresponding label map, determines the mean intensity per label and replaces every label with the that number.<br><br>This results in a parametric image expressing mean object intensity.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.labelMinimumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3)";
        description = "<b>labelMinimumIntensityMap</b><br><br>null";
@@ -1463,4 +1466,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 484 methods generated.
+// 485 methods generated.
