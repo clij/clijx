@@ -1,6 +1,7 @@
 package net.haesleinhuepf.clijx.plugins;
 
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
@@ -55,11 +56,19 @@ public class LocalMinimumAverageDistanceOfNClosestNeighborsMap extends AbstractC
         distance_vector.close();
         touch_matrix.close();
 
+        // ignore measurement for background
+        clij2.setColumn(minimum_vector, 0, 0);
 
         clij2.replaceIntensities(pushed, minimum_vector, result);
         minimum_vector.close();
 
         return true;
+    }
+
+    @Override
+    public ClearCLBuffer createOutputBufferFromSource(ClearCLBuffer input)
+    {
+        return getCLIJ2().create(input.getDimensions(), NativeTypeEnum.Float);
     }
 
     @Override

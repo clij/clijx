@@ -81,6 +81,12 @@ public class LocalMeanTouchPortionMap extends AbstractCLIJ2Plugin implements CLI
     }
 
     @Override
+    public ClearCLBuffer createOutputBufferFromSource(ClearCLBuffer input)
+    {
+        return getCLIJ2().create(input.getDimensions(), NativeTypeEnum.Float);
+    }
+
+    @Override
     public String getDescription() {
         return "Takes a label map, determines which labels touch and how much, relatively taking the whole outline of \n" +
                 "each label into account, and determines for every label with the mean of this value and replaces the \n" +

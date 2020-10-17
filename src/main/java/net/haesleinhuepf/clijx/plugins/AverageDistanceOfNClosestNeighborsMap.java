@@ -1,6 +1,7 @@
 package net.haesleinhuepf.clijx.plugins;
 
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
@@ -47,10 +48,19 @@ public class AverageDistanceOfNClosestNeighborsMap extends AbstractCLIJ2Plugin i
         distance_matrix.close();
         pointlist.close();
 
+        // ignore background measurement
+        clij2.setColumn(distance_vector, 0, 0);
+
         clij2.replaceIntensities(pushed, distance_vector, result);
         distance_vector.close();
 
         return true;
+    }
+
+    @Override
+    public ClearCLBuffer createOutputBufferFromSource(ClearCLBuffer input)
+    {
+        return getCLIJ2().create(input.getDimensions(), NativeTypeEnum.Float);
     }
 
     @Override
@@ -65,6 +75,6 @@ public class AverageDistanceOfNClosestNeighborsMap extends AbstractCLIJ2Plugin i
 
     @Override
     public String getCategories() {
-        return "Measurements, Graph";
+        return "Measurements, Graph, Label";
     }
 }

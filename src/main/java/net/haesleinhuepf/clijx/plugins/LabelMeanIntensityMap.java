@@ -2,6 +2,7 @@ package net.haesleinhuepf.clijx.plugins;
 
 import ij.measure.ResultsTable;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
@@ -42,6 +43,7 @@ public class LabelMeanIntensityMap extends AbstractCLIJ2Plugin implements CLIJMa
         ResultsTable table = new ResultsTable();
         clij2.statisticsOfBackgroundAndLabelledPixels(input, label_map, table);
 
+
         clij2.pushResultsTableColumn(size_array, table, StatisticsOfLabelledPixels.STATISTICS_ENTRY.MEAN_INTENSITY.toString());
 
         // ignore background measurement
@@ -51,6 +53,12 @@ public class LabelMeanIntensityMap extends AbstractCLIJ2Plugin implements CLIJMa
         size_array.close();
 
         return true;
+    }
+
+    @Override
+    public ClearCLBuffer createOutputBufferFromSource(ClearCLBuffer input)
+    {
+        return getCLIJ2().create(input.getDimensions(), NativeTypeEnum.Float);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package net.haesleinhuepf.clijx.plugins;
 
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
+import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
@@ -66,6 +67,12 @@ public class DrawTouchPortionMeshBetweenTouchingLabels extends AbstractCLIJ2Plug
     }
 
     @Override
+    public ClearCLBuffer createOutputBufferFromSource(ClearCLBuffer input)
+    {
+        return getCLIJ2().create(input.getDimensions(), NativeTypeEnum.Float);
+    }
+
+    @Override
     public String getDescription() {
         return "Starting from a label map, draw lines between touching neighbors resulting in a mesh.\n\n" +
                 "The end points of the lines correspond to the centroids of the labels. The intensity of the lines \n" +
@@ -80,6 +87,6 @@ public class DrawTouchPortionMeshBetweenTouchingLabels extends AbstractCLIJ2Plug
 
     @Override
     public String getCategories() {
-        return "Measurement,Graph";
+        return "Measurement, Graph, Label";
     }
 }
