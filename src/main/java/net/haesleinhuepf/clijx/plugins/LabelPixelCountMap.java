@@ -44,6 +44,9 @@ public class LabelPixelCountMap extends AbstractCLIJ2Plugin implements CLIJMacro
 
         clij2.pushResultsTableColumn(size_array, table, StatisticsOfLabelledPixels.STATISTICS_ENTRY.PIXEL_COUNT.toString());
 
+        // ignore background measurement
+        clij2.setColumn(size_array, 0, 0);
+
         clij2.replaceIntensities(pushed, size_array, result);
         size_array.close();
 

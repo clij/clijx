@@ -58,6 +58,9 @@ public class LocalMedianAverageNeighborDistanceMap extends AbstractCLIJ2Plugin i
         distance_matrix.close();
         pointlist.close();
 
+        // ignore measurement for background
+        clij2.setColumn(median_vector, 0, 0);
+
         clij2.replaceIntensities(pushed, median_vector, result);
         median_vector.close();
 

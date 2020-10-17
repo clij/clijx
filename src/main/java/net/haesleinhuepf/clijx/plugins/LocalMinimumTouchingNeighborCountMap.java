@@ -45,6 +45,9 @@ public class LocalMinimumTouchingNeighborCountMap extends AbstractCLIJ2Plugin im
         touch_count_vector.close();
         touch_matrix.close();
 
+        // ignore measurement for background
+        clij2.setColumn(minimum_vector, 0, 0);
+
         clij2.replaceIntensities(pushed, minimum_vector, result);
         minimum_vector.close();
 

@@ -55,6 +55,8 @@ public class LocalMeanAverageDistanceOfNClosestNeighborsMap extends AbstractCLIJ
         distance_vector.close();
         touch_matrix.close();
 
+        // ignore measurement for background
+        clij2.setColumn(mean_vector, 0, 0);
 
         clij2.replaceIntensities(pushed, mean_vector, result);
         mean_vector.close();

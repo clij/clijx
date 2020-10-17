@@ -27,7 +27,7 @@ public class LabelMeanIntensityMap extends AbstractCLIJ2Plugin implements CLIJMa
 
     @Override
     public String getParameterHelpText() {
-        return "Image input, Input label_map, ByRef Image destination";
+        return "Image input, Image label_map, ByRef Image destination";
     }
 
     @Override
@@ -43,6 +43,9 @@ public class LabelMeanIntensityMap extends AbstractCLIJ2Plugin implements CLIJMa
         clij2.statisticsOfBackgroundAndLabelledPixels(input, label_map, table);
 
         clij2.pushResultsTableColumn(size_array, table, StatisticsOfLabelledPixels.STATISTICS_ENTRY.MEAN_INTENSITY.toString());
+
+        // ignore background measurement
+        clij2.setColumn(size_array, 0, 0);
 
         clij2.replaceIntensities(label_map, size_array, result);
         size_array.close();

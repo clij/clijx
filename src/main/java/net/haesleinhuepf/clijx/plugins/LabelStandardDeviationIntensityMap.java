@@ -43,6 +43,9 @@ public class LabelStandardDeviationIntensityMap extends AbstractCLIJ2Plugin impl
 
         clij2.pushResultsTableColumn(size_array, table, StatisticsOfLabelledPixels.STATISTICS_ENTRY.STANDARD_DEVIATION_INTENSITY.toString());
 
+        // ignore background measurement
+        clij2.setColumn(size_array, 0, 0);
+
         clij2.replaceIntensities(label_map, size_array, result);
         size_array.close();
 

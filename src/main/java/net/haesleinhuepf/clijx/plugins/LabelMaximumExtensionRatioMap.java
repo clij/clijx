@@ -44,6 +44,9 @@ public class LabelMaximumExtensionRatioMap extends AbstractCLIJ2Plugin implement
 
         clij2.pushResultsTableColumn(size_array, table, StatisticsOfLabelledPixels.STATISTICS_ENTRY.MAX_MEAN_DISTANCE_TO_MASS_CENTER_RATIO.toString());
 
+        // ignore background measurement
+        clij2.setColumn(size_array, 0, 0);
+
         clij2.replaceIntensities(pushed, size_array, result);
         size_array.close();
 

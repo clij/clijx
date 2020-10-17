@@ -53,6 +53,9 @@ public class LocalMedianAverageDistanceOfNClosestNeighborsMap extends AbstractCL
         distance_vector.close();
         touch_matrix.close();
 
+        // ignore measurement for background
+        clij2.setColumn(median_vector, 0, 0);
+
         clij2.replaceIntensities(pushed, median_vector, result);
         median_vector.close();
 

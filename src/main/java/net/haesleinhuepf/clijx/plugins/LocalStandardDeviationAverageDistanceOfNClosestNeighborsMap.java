@@ -55,6 +55,8 @@ public class LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap extends
         distance_vector.close();
         touch_matrix.close();
 
+        // ignore measurement for background
+        clij2.setColumn(stddev_vector, 0, 0);
 
         clij2.replaceIntensities(pushed, stddev_vector, result);
         stddev_vector.close();

@@ -65,6 +65,9 @@ public class LocalMeanTouchPortionMap extends AbstractCLIJ2Plugin implements CLI
         //ClearCLBuffer vector = clij2.create(touch_count_matrix.getWidth(), 1);
         //clij2.power(average_vector, vector, -1);
 
+        // ignore measurement for background
+        clij2.setColumn(average_vector, 0, 0);
+
         clij2.replaceIntensities(pushed, average_vector, result);
         touch_count_matrix.close();
         //vector.close();

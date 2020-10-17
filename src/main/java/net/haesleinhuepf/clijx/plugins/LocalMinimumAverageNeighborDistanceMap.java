@@ -57,6 +57,9 @@ public class LocalMinimumAverageNeighborDistanceMap extends AbstractCLIJ2Plugin 
         distance_matrix.close();
         pointlist.close();
 
+        // ignore measurement for background
+        clij2.setColumn(minimum_vector, 0, 0);
+
         clij2.replaceIntensities(pushed, minimum_vector, result);
         minimum_vector.close();
 

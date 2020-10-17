@@ -46,6 +46,9 @@ public class LocalStandardDeviationTouchingNeighborCountMap extends AbstractCLIJ
         touch_matrix.close();
         touch_count_vector.close();
 
+        // ignore measurement for background
+        clij2.setColumn(stddev_vector, 0, 0);
+
         clij2.replaceIntensities(pushed, stddev_vector, result);
         stddev_vector.close();
 

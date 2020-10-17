@@ -42,6 +42,9 @@ public class TouchingNeighborCountMap extends AbstractCLIJ2Plugin implements CLI
         clij2.countTouchingNeighbors(touch_matrix, touch_count_vector);
         touch_matrix.close();
 
+        // ignore measurement for background
+        clij2.setColumn(touch_count_vector, 0, 0);
+
         clij2.replaceIntensities(pushed, touch_count_vector, result);
         touch_count_vector.close();
 

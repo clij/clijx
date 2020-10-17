@@ -45,6 +45,9 @@ public class LocalMaximumTouchingNeighborCountMap extends AbstractCLIJ2Plugin im
         touch_count_vector.close();
         touch_matrix.close();
 
+        // ignore measurement for background
+        clij2.setColumn(maximum_vector, 0, 0);
+
         clij2.replaceIntensities(pushed, maximum_vector, result);
         maximum_vector.close();
 
