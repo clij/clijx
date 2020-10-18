@@ -803,6 +803,9 @@ class CLIJxAutoComplete {
        headline = "clijx.meanZProjectionAboveThreshold(ClearCLImageInterface source, ClearCLImageInterface destination, Float threshold)";
        description = "<b>meanZProjectionAboveThreshold</b><br><br>Determines the mean average intensity projection of an image along Z but only for pixels above a given threshold.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float threshold";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.meanZProjectionBelowThreshold(ClearCLImageInterface source, ClearCLImageInterface destination, Float threshold)";
+       description = "<b>meanZProjectionBelowThreshold</b><br><br>Determines the mean average intensity projection of an image along Z but only for pixels below a given threshold.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float threshold";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.meanZProjectionBounded(ClearCLImageInterface source, ClearCLImageInterface destination_mean, Integer min_z, Integer max_z)";
        description = "<b>meanZProjectionBounded</b><br><br>Determines the mean average intensity projection of an image along Z within a given z range.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination_mean, Integer min_z, Integer max_z";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1466,4 +1469,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 485 methods generated.
+// 486 methods generated.

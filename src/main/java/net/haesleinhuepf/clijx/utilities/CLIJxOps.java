@@ -130,6 +130,7 @@ import net.haesleinhuepf.clijx.weka.GenerateLabelFeatureImage;
 import net.haesleinhuepf.clijx.plugins.LabelSurface;
 import net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelledSpots;
 import net.haesleinhuepf.clijx.plugins.LabelMeanExtensionMap;
+import net.haesleinhuepf.clijx.plugins.MeanZProjectionBelowThreshold;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2285,5 +2286,18 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.MeanZProjectionBelowThreshold
+    //----------------------------------------------------
+    /**
+     * Determines the mean average intensity projection of an image along Z but only for pixels below a given threshold.
+     */
+    default boolean meanZProjectionBelowThreshold(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("MeanZProjectionBelowThreshold");}
+        boolean result = MeanZProjectionBelowThreshold.meanZProjectionBelowThreshold(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("MeanZProjectionBelowThreshold");}
+        return result;
+    }
+
 }
-// 146 methods generated.
+// 147 methods generated.
