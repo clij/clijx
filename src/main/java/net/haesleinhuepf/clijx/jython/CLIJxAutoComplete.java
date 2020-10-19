@@ -1334,6 +1334,9 @@ class CLIJxAutoComplete {
        headline = "clijx.thresholdDefault(ClearCLBuffer input, ClearCLBuffer destination)";
        description = "<b>thresholdDefault</b><br><br>The automatic thresholder utilizes the Default threshold method implemented in ImageJ using a histogram determined on <br>the GPU to create binary images as similar as possible to ImageJ 'Apply Threshold' method.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.thresholdDoG(ClearCLBuffer input, ClearCLBuffer destination, Float sigma1, Float sigma2, Float threshold, Boolean above_threshold)";
+       description = "<b>thresholdDoG</b><br><br>Applies a Difference-of-Gaussian filter to an image and thresholds it with given sigma and threshold values.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float sigma1, Float sigma2, Float threshold, Boolean above_threshold";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.thresholdHuang(ClearCLBuffer input, ClearCLBuffer destination)";
        description = "<b>thresholdHuang</b><br><br>The automatic thresholder utilizes the Huang threshold method implemented in ImageJ using a histogram determined on <br>the GPU to create binary images as similar as possible to ImageJ 'Apply Threshold' method.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1469,4 +1472,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 486 methods generated.
+// 487 methods generated.

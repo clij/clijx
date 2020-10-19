@@ -37,10 +37,17 @@ public class ThresholdDoG extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
 
     @Override
     public boolean executeCL() {
-        return localDoGThreshold(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1], asFloat(args[2]), asFloat(args[3]), asFloat(args[4]), asBoolean(args[5]));
+        return thresholdDoG(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1], asFloat(args[2]), asFloat(args[3]), asFloat(args[4]), asBoolean(args[5]));
     }
 
+    /**
+     * use thresholdDoG instead
+     */
+    @Deprecated
     public static boolean localDoGThreshold(CLIJ2 clijx, ClearCLBuffer pushed, ClearCLBuffer result, Float sigma1, Float sigma2, Float threshold, Boolean above_threshold) {
+        return thresholdDoG(clijx, pushed, result, sigma1, sigma2, threshold, above_threshold);
+    }
+    public static boolean thresholdDoG(CLIJ2 clijx, ClearCLBuffer pushed, ClearCLBuffer result, Float sigma1, Float sigma2, Float threshold, Boolean above_threshold) {
         ClearCLBuffer temp = clijx.create(pushed.getDimensions(), NativeTypeEnum.Float);
         clijx.differenceOfGaussian(pushed, temp, sigma1, sigma1, sigma1, sigma2, sigma2, sigma2);
 

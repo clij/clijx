@@ -1549,6 +1549,16 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+    /**
+     * Applies a Difference-of-Gaussian filter to an image and thresholds it with given sigma and threshold values.
+     */
+    default boolean thresholdDoG(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, boolean arg6) {
+        if (doTimeTracing()) {recordMethodStart("ThresholdDoG");}
+        boolean result = ThresholdDoG.thresholdDoG(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), arg6);
+        if (doTimeTracing()) {recordMethodEnd("ThresholdDoG");}
+        return result;
+    }
+
 
     // net.haesleinhuepf.clijx.plugins.DriftCorrectionByCenterOfMassFixation
     //----------------------------------------------------
@@ -2300,4 +2310,4 @@ public abstract interface CLIJxOps {
     }
 
 }
-// 147 methods generated.
+// 148 methods generated.
