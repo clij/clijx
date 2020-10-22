@@ -49,7 +49,7 @@ public class EuclideanDistanceFromLabelCentroidMap extends AbstractCLIJ2Plugin i
         int number_of_labels = (int)clij2.maximumOfAllPixels(pushed);
         ClearCLBuffer pointlist = clij2.create(number_of_labels + 1,pushed.getDimension(), 1);
 
-        clij2.centroidsOfLabels(pushed, pointlist);
+        clij2.centroidsOfBackgroundAndLabels(pushed, pointlist);
 
         HashMap<String, Object> parameters = new HashMap();
         parameters.put("src", pushed);

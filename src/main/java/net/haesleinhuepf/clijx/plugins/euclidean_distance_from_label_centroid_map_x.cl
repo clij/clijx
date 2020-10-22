@@ -24,13 +24,13 @@ __kernel void euclidean_distance_from_label_centroid_map
 
       float dz = 0;
       if (d > 1) {
-        d = (float)(READ_IMAGE(pointlist,sampler,POS_pointlist_INSTANCE(index,2,0,0)).x);
+        dz = (float)(READ_IMAGE(pointlist,sampler,POS_pointlist_INSTANCE(index,2,0,0)).x);
       }
       const float distance_squared =
-        pow((float)i - dx, 2.0) +
-        pow((float)j - dy, 2.0) +
-        pow((float)k - dz, 2.0) ;
-      distance = sqr(distance_squared);
+        pow((float)i - dx, (float)2.0) +
+        pow((float)j - dy, (float)2.0) +
+        pow((float)k - dz, (float)2.0) ;
+      distance = sqrt(distance_squared);
   }
   WRITE_IMAGE(dst, POS_dst_INSTANCE(i,j,k,0), CONVERT_dst_PIXEL_TYPE(distance));
 }
