@@ -34,7 +34,7 @@ public class AverageDistanceOfNClosestNeighborsMap extends AbstractCLIJ2Plugin i
         return averageDistanceOfNClosestNeighborsMap(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1], asInteger(args[2]));
     }
 
-    public static boolean averageDistanceOfNClosestNeighborsMap(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result, int n) {
+    public static boolean averageDistanceOfNClosestNeighborsMap(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result, Integer n) {
         int number_of_labels = (int)clij2.maximumOfAllPixels(pushed);
 
         ClearCLBuffer pointlist = clij2.create(number_of_labels, pushed.getDimension());

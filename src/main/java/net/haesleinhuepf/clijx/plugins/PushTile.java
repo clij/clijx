@@ -49,7 +49,7 @@ public class PushTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
         return true;
     }
 
-    public static ClearCLBuffer pushTile(CLIJ2 clij2, ImagePlus imp, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
+    public static ClearCLBuffer pushTile(CLIJ2 clij2, ImagePlus imp, Integer tileX, Integer tileY, Integer tileZ, Integer width, Integer height, Integer depth, Integer marginWidth, Integer marginHeight, Integer marginDepth) {
         Roi roi = imp.getRoi();
         int startX = tileX * width - marginWidth;
         int startY = tileY * height - marginHeight;
@@ -112,12 +112,12 @@ public class PushTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
         return buffer;
     }
 
-    public static void pushTile(CLIJ2 clij2, ImagePlus imp, String imageName, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
+    public static void pushTile(CLIJ2 clij2, ImagePlus imp, String imageName, Integer tileX, Integer tileY, Integer tileZ, Integer width, Integer height, Integer depth, Integer marginWidth, Integer marginHeight, Integer marginDepth) {
         ClearCLBuffer buffer = pushTile(clij2, imp, tileX, tileY, tileZ, width, height, depth, marginWidth, marginHeight, marginDepth);
         CLIJHandler.getInstance().pushInternal(buffer, imageName);
     }
 
-    public static ClearCLBuffer pushTile(CLIJ2 clij2, ClearCLBuffer input, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
+    public static ClearCLBuffer pushTile(CLIJ2 clij2, ClearCLBuffer input, Integer tileX, Integer tileY, Integer tileZ, Integer width, Integer height, Integer depth, Integer marginWidth, Integer marginHeight, Integer marginDepth) {
         long startX = tileX * width - marginWidth;
         long startY = tileY * height - marginHeight;
         long endX = (tileX + 1) * width + marginWidth - 1;

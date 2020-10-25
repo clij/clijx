@@ -25,7 +25,7 @@ public class PullTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
     @Override
     public boolean executeCL() {
         String imageName = (String) args[0];
-        int tileX = asInteger(args[1]);
+        Integer tileX = asInteger(args[1]);
         int tileY = asInteger(args[2]);
         int tileZ = asInteger(args[3]);
         int width = asInteger(args[4]);
@@ -48,12 +48,12 @@ public class PullTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
         return true;
     }
 
-    public static void pullTile(CLIJ2 clij2, ImagePlus imp, String imageName, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
+    public static void pullTile(CLIJ2 clij2, ImagePlus imp, String imageName, Integer tileX, Integer tileY, Integer tileZ, Integer width, Integer height, Integer depth, Integer marginWidth, Integer marginHeight, Integer marginDepth) {
         ClearCLBuffer buffer = CLIJHandler.getInstance().getFromCache(imageName);
         pullTile(clij2, imp, buffer, tileX, tileY, tileZ, width, height, depth, marginWidth, marginHeight, marginDepth);
     }
 
-    public static void pullTile(CLIJ2 clij2, ImagePlus imp, ClearCLBuffer buffer, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
+    public static void pullTile(CLIJ2 clij2, ImagePlus imp, ClearCLBuffer buffer, Integer tileX, Integer tileY, Integer tileZ, Integer width, Integer height, Integer depth, Integer marginWidth, Integer marginHeight, Integer marginDepth) {
         Roi roiBefore = imp.getRoi();
         int zBefore = imp.getZ();
         //imp.setRoi(tileX * width, tileY * height, width, height);
@@ -94,7 +94,7 @@ public class PullTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CL
         imp.setZ(zBefore);
     }
 
-    public static void pullTile(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, int tileX, int tileY, int tileZ, int width, int height, int depth, int marginWidth, int marginHeight, int marginDepth) {
+    public static void pullTile(CLIJ2 clij2, ClearCLBuffer input, ClearCLBuffer output, Integer tileX, Integer tileY, Integer tileZ, Integer width, Integer height, Integer depth, Integer marginWidth, Integer marginHeight, Integer marginDepth) {
 
         ClearCLBuffer temp = clij2.create(new long[]{width, height, depth}, input.getNativeType());
 
