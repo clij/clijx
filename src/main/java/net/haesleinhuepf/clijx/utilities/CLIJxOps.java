@@ -131,6 +131,8 @@ import net.haesleinhuepf.clijx.plugins.LabelSurface;
 import net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelledSpots;
 import net.haesleinhuepf.clijx.plugins.LabelMeanExtensionMap;
 import net.haesleinhuepf.clijx.plugins.MeanZProjectionBelowThreshold;
+import net.haesleinhuepf.clijx.plugins.EuclideanDistanceFromLabelCentroidMap;
+import net.haesleinhuepf.clijx.plugins.GammaCorrection;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -951,9 +953,9 @@ public abstract interface CLIJxOps {
     /**
      * Push a tile in an image specified by its name, position and size to GPU memory in order to process it there later.
      */
-    default ClearCLBuffer pushTile(ImagePlus arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
+    default ClearCLBuffer pushTile(ImagePlus arg1, double arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8, double arg9, double arg10) {
         if (doTimeTracing()) {recordMethodStart("PushTile");}
-        ClearCLBuffer result = PushTile.pushTile(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+        ClearCLBuffer result = PushTile.pushTile(getCLIJ2(), arg1, new Double (arg2).intValue(), new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), new Double (arg9).intValue(), new Double (arg10).intValue());
         if (doTimeTracing()) {recordMethodEnd("PushTile");}
         return result;
     }
@@ -961,9 +963,9 @@ public abstract interface CLIJxOps {
     /**
      * Push a tile in an image specified by its name, position and size to GPU memory in order to process it there later.
      */
-    default ClearCLBuffer pushTile(ClearCLBuffer arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
+    default ClearCLBuffer pushTile(ClearCLBuffer arg1, double arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8, double arg9, double arg10) {
         if (doTimeTracing()) {recordMethodStart("PushTile");}
-        ClearCLBuffer result = PushTile.pushTile(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+        ClearCLBuffer result = PushTile.pushTile(getCLIJ2(), arg1, new Double (arg2).intValue(), new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), new Double (arg9).intValue(), new Double (arg10).intValue());
         if (doTimeTracing()) {recordMethodEnd("PushTile");}
         return result;
     }
@@ -971,9 +973,9 @@ public abstract interface CLIJxOps {
     /**
      * Push a tile in an image specified by its name, position and size to GPU memory in order to process it there later.
      */
-    default void pushTile(ImagePlus arg1, String arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+    default void pushTile(ImagePlus arg1, String arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8, double arg9, double arg10, double arg11) {
         if (doTimeTracing()) {recordMethodStart("PushTile");}
-        PushTile.pushTile(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+        PushTile.pushTile(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), new Double (arg9).intValue(), new Double (arg10).intValue(), new Double (arg11).intValue());
         if (doTimeTracing()) {recordMethodEnd("PushTile");}
     }
 
@@ -983,27 +985,27 @@ public abstract interface CLIJxOps {
     /**
      * Pushes a tile in an image specified by its name, position and size from GPU memory.
      */
-    default void pullTile(ImagePlus arg1, String arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+    default void pullTile(ImagePlus arg1, String arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8, double arg9, double arg10, double arg11) {
         if (doTimeTracing()) {recordMethodStart("PullTile");}
-        PullTile.pullTile(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+        PullTile.pullTile(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), new Double (arg9).intValue(), new Double (arg10).intValue(), new Double (arg11).intValue());
         if (doTimeTracing()) {recordMethodEnd("PullTile");}
     }
 
     /**
      * Pushes a tile in an image specified by its name, position and size from GPU memory.
      */
-    default void pullTile(ImagePlus arg1, ClearCLBuffer arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+    default void pullTile(ImagePlus arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8, double arg9, double arg10, double arg11) {
         if (doTimeTracing()) {recordMethodStart("PullTile");}
-        PullTile.pullTile(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+        PullTile.pullTile(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), new Double (arg9).intValue(), new Double (arg10).intValue(), new Double (arg11).intValue());
         if (doTimeTracing()) {recordMethodEnd("PullTile");}
     }
 
     /**
      * Pushes a tile in an image specified by its name, position and size from GPU memory.
      */
-    default void pullTile(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+    default void pullTile(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8, double arg9, double arg10, double arg11) {
         if (doTimeTracing()) {recordMethodStart("PullTile");}
-        PullTile.pullTile(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+        PullTile.pullTile(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), new Double (arg9).intValue(), new Double (arg10).intValue(), new Double (arg11).intValue());
         if (doTimeTracing()) {recordMethodEnd("PullTile");}
     }
 
@@ -1013,9 +1015,9 @@ public abstract interface CLIJxOps {
     /**
      * 
      */
-    default boolean applyAutoContextWekaModelWithOptions(ClearCLBuffer arg1, ClearCLBuffer arg2, String arg3, String arg4, int arg5) {
+    default boolean applyAutoContextWekaModelWithOptions(ClearCLBuffer arg1, ClearCLBuffer arg2, String arg3, String arg4, double arg5) {
         if (doTimeTracing()) {recordMethodStart("ApplyAutoContextWekaModel");}
-        boolean result = ApplyAutoContextWekaModel.applyAutoContextWekaModelWithOptions(getCLIJ2(), arg1, arg2, arg3, arg4, arg5);
+        boolean result = ApplyAutoContextWekaModel.applyAutoContextWekaModelWithOptions(getCLIJ2(), arg1, arg2, arg3, arg4, new Double (arg5).intValue());
         if (doTimeTracing()) {recordMethodEnd("ApplyAutoContextWekaModel");}
         return result;
     }
@@ -1026,9 +1028,9 @@ public abstract interface CLIJxOps {
     /**
      * 
      */
-    default boolean trainAutoContextWekaModelWithOptions(ClearCLBuffer arg1, ClearCLBuffer arg2, String arg3, String arg4, int arg5, double arg6, double arg7, double arg8) {
+    default boolean trainAutoContextWekaModelWithOptions(ClearCLBuffer arg1, ClearCLBuffer arg2, String arg3, String arg4, double arg5, double arg6, double arg7, double arg8) {
         if (doTimeTracing()) {recordMethodStart("TrainAutoContextWekaModel");}
-        boolean result = TrainAutoContextWekaModel.trainAutoContextWekaModelWithOptions(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue());
+        boolean result = TrainAutoContextWekaModel.trainAutoContextWekaModelWithOptions(getCLIJ2(), arg1, arg2, arg3, arg4, new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue());
         if (doTimeTracing()) {recordMethodEnd("TrainAutoContextWekaModel");}
         return result;
     }
@@ -1542,7 +1544,9 @@ public abstract interface CLIJxOps {
     /**
      * 
      */
+    @Deprecated
     default boolean localDoGThreshold(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, boolean arg6) {
+        System.out.println("localDoGThreshold is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("ThresholdDoG");}
         boolean result = ThresholdDoG.localDoGThreshold(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), arg6);
         if (doTimeTracing()) {recordMethodEnd("ThresholdDoG");}
@@ -1713,9 +1717,9 @@ public abstract interface CLIJxOps {
     /**
      * Takes a label map, determines distances between all centroids and replaces every label with the average distance to the n closest neighboring labels.
      */
-    default boolean averageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3) {
+    default boolean averageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
         if (doTimeTracing()) {recordMethodStart("AverageDistanceOfNClosestNeighborsMap");}
-        boolean result = AverageDistanceOfNClosestNeighborsMap.averageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, arg3);
+        boolean result = AverageDistanceOfNClosestNeighborsMap.averageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
         if (doTimeTracing()) {recordMethodEnd("AverageDistanceOfNClosestNeighborsMap");}
         return result;
     }
@@ -1743,9 +1747,9 @@ public abstract interface CLIJxOps {
      * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
      *  and replaces every label with the maximum distance of touching labels.
      */
-    default boolean localMaximumAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3) {
+    default boolean localMaximumAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
         if (doTimeTracing()) {recordMethodStart("LocalMaximumAverageDistanceOfNClosestNeighborsMap");}
-        boolean result = LocalMaximumAverageDistanceOfNClosestNeighborsMap.localMaximumAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, arg3);
+        boolean result = LocalMaximumAverageDistanceOfNClosestNeighborsMap.localMaximumAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
         if (doTimeTracing()) {recordMethodEnd("LocalMaximumAverageDistanceOfNClosestNeighborsMap");}
         return result;
     }
@@ -1786,9 +1790,9 @@ public abstract interface CLIJxOps {
      * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
      *  and replaces every label with the mean distance of touching labels.
      */
-    default boolean localMeanAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3) {
+    default boolean localMeanAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
         if (doTimeTracing()) {recordMethodStart("LocalMeanAverageDistanceOfNClosestNeighborsMap");}
-        boolean result = LocalMeanAverageDistanceOfNClosestNeighborsMap.localMeanAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, arg3);
+        boolean result = LocalMeanAverageDistanceOfNClosestNeighborsMap.localMeanAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
         if (doTimeTracing()) {recordMethodEnd("LocalMeanAverageDistanceOfNClosestNeighborsMap");}
         return result;
     }
@@ -1846,9 +1850,9 @@ public abstract interface CLIJxOps {
      * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
      *  and replaces every label with the median distance of touching labels.
      */
-    default boolean localMedianAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3) {
+    default boolean localMedianAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
         if (doTimeTracing()) {recordMethodStart("LocalMedianAverageDistanceOfNClosestNeighborsMap");}
-        boolean result = LocalMedianAverageDistanceOfNClosestNeighborsMap.localMedianAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, arg3);
+        boolean result = LocalMedianAverageDistanceOfNClosestNeighborsMap.localMedianAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
         if (doTimeTracing()) {recordMethodEnd("LocalMedianAverageDistanceOfNClosestNeighborsMap");}
         return result;
     }
@@ -1889,9 +1893,9 @@ public abstract interface CLIJxOps {
      * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
      *  and replaces every label with the minimum distance of touching labels.
      */
-    default boolean localMinimumAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3) {
+    default boolean localMinimumAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
         if (doTimeTracing()) {recordMethodStart("LocalMinimumAverageDistanceOfNClosestNeighborsMap");}
-        boolean result = LocalMinimumAverageDistanceOfNClosestNeighborsMap.localMinimumAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, arg3);
+        boolean result = LocalMinimumAverageDistanceOfNClosestNeighborsMap.localMinimumAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
         if (doTimeTracing()) {recordMethodEnd("LocalMinimumAverageDistanceOfNClosestNeighborsMap");}
         return result;
     }
@@ -1932,9 +1936,9 @@ public abstract interface CLIJxOps {
      * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
      *  and replaces every label with the standard deviation distance of touching labels.
      */
-    default boolean localStandardDeviationAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, int arg3) {
+    default boolean localStandardDeviationAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
         if (doTimeTracing()) {recordMethodStart("LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap");}
-        boolean result = LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap.localStandardDeviationAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, arg3);
+        boolean result = LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap.localStandardDeviationAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
         if (doTimeTracing()) {recordMethodEnd("LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap");}
         return result;
     }
@@ -2309,5 +2313,34 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.EuclideanDistanceFromLabelCentroidMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines the centroids of all labels and writes the distance of all labelled pixels to their centroid in the result image.
+     * Background pixels stay zero.
+     */
+    default boolean euclideanDistanceFromLabelCentroidMap(ClearCLBuffer labelmap_input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("EuclideanDistanceFromLabelCentroidMap");}
+        boolean result = EuclideanDistanceFromLabelCentroidMap.euclideanDistanceFromLabelCentroidMap(getCLIJ2(), labelmap_input, destination);
+        if (doTimeTracing()) {recordMethodEnd("EuclideanDistanceFromLabelCentroidMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.GammaCorrection
+    //----------------------------------------------------
+    /**
+     * Applies a gamma correction to an image.
+     * 
+     * Therefore, all pixels x of the Image X are normalized and the power to gamma g is computed, before normlization is reversed (^ is the power operator):f(x) = (x / max(X)) ^ gamma * max(X)
+     */
+    default boolean gammaCorrection(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("GammaCorrection");}
+        boolean result = GammaCorrection.gammaCorrection(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("GammaCorrection");}
+        return result;
+    }
+
 }
-// 148 methods generated.
+// 150 methods generated.
