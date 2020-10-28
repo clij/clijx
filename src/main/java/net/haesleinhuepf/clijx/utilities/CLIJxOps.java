@@ -133,6 +133,9 @@ import net.haesleinhuepf.clijx.plugins.LabelMeanExtensionMap;
 import net.haesleinhuepf.clijx.plugins.MeanZProjectionBelowThreshold;
 import net.haesleinhuepf.clijx.plugins.EuclideanDistanceFromLabelCentroidMap;
 import net.haesleinhuepf.clijx.plugins.GammaCorrection;
+import net.haesleinhuepf.clijx.plugins.PositionOfMaximumZProjection;
+import net.haesleinhuepf.clijx.plugins.ZPositionProjection;
+import net.haesleinhuepf.clijx.plugins.ZPositionRangeProjection;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2342,5 +2345,48 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.PositionOfMaximumZProjection
+    //----------------------------------------------------
+    /**
+     * Determines a Z-position of the maximum intensity along Z and writes it into the resulting image.
+     */
+    default boolean positionOfMaximumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination) {
+        if (doTimeTracing()) {recordMethodStart("PositionOfMaximumZProjection");}
+        boolean result = PositionOfMaximumZProjection.positionOfMaximumZProjection(getCLIJ2(), source, destination);
+        if (doTimeTracing()) {recordMethodEnd("PositionOfMaximumZProjection");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ZPositionProjection
+    //----------------------------------------------------
+    /**
+     * Project a defined Z-slice of a 3D stack into a 2D image.
+     * 
+     * The slice is determined using a separate 2D image.
+     */
+    default boolean zPositionProjection(ClearCLImageInterface source_stack, ClearCLImageInterface z_position, ClearCLImageInterface destination) {
+        if (doTimeTracing()) {recordMethodStart("ZPositionProjection");}
+        boolean result = ZPositionProjection.zPositionProjection(getCLIJ2(), source_stack, z_position, destination);
+        if (doTimeTracing()) {recordMethodEnd("ZPositionProjection");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ZPositionRangeProjection
+    //----------------------------------------------------
+    /**
+     * Project multiple Z-slices of a 3D stack into a new 3D stack.
+     * 
+     * The slices are defined using a separate 2D image containing z-positions and two numbers defining the range.
+     */
+    default boolean zPositionRangeProjection(ClearCLImageInterface arg1, ClearCLImageInterface arg2, ClearCLImageInterface arg3, int arg4, int arg5) {
+        if (doTimeTracing()) {recordMethodStart("ZPositionRangeProjection");}
+        boolean result = ZPositionRangeProjection.zPositionRangeProjection(getCLIJ2(), arg1, arg2, arg3, arg4, arg5);
+        if (doTimeTracing()) {recordMethodEnd("ZPositionRangeProjection");}
+        return result;
+    }
+
 }
-// 150 methods generated.
+// 153 methods generated.
