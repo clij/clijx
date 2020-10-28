@@ -133,7 +133,7 @@ import net.haesleinhuepf.clijx.plugins.LabelMeanExtensionMap;
 import net.haesleinhuepf.clijx.plugins.MeanZProjectionBelowThreshold;
 import net.haesleinhuepf.clijx.plugins.EuclideanDistanceFromLabelCentroidMap;
 import net.haesleinhuepf.clijx.plugins.GammaCorrection;
-import net.haesleinhuepf.clijx.plugins.PositionOfMaximumZProjection;
+import net.haesleinhuepf.clijx.plugins.ZPositionOfMaximumZProjection;
 import net.haesleinhuepf.clijx.plugins.ZPositionProjection;
 import net.haesleinhuepf.clijx.plugins.ZPositionRangeProjection;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
@@ -2346,15 +2346,15 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.PositionOfMaximumZProjection
+    // net.haesleinhuepf.clijx.plugins.ZPositionOfMaximumZProjection
     //----------------------------------------------------
     /**
      * Determines a Z-position of the maximum intensity along Z and writes it into the resulting image.
      */
-    default boolean positionOfMaximumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination) {
-        if (doTimeTracing()) {recordMethodStart("PositionOfMaximumZProjection");}
-        boolean result = PositionOfMaximumZProjection.positionOfMaximumZProjection(getCLIJ2(), source, destination);
-        if (doTimeTracing()) {recordMethodEnd("PositionOfMaximumZProjection");}
+    default boolean zPositionOfMaximumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination) {
+        if (doTimeTracing()) {recordMethodStart("ZPositionOfMaximumZProjection");}
+        boolean result = ZPositionOfMaximumZProjection.zPositionOfMaximumZProjection(getCLIJ2(), source, destination);
+        if (doTimeTracing()) {recordMethodEnd("ZPositionOfMaximumZProjection");}
         return result;
     }
 

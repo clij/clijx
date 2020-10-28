@@ -19,8 +19,8 @@ import static net.haesleinhuepf.clij.utilities.CLIJUtilities.assertDifferent;
  * Author: @haesleinhuepf
  * July 2020
  */
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_positionOfMaximumZProjection")
-public class PositionOfMaximumZProjection extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_zPositionOfMaximumZProjection")
+public class ZPositionOfMaximumZProjection extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
     @Override
     public String getInputType() {
         return "Image";
@@ -34,10 +34,10 @@ public class PositionOfMaximumZProjection extends AbstractCLIJ2Plugin implements
 
     @Override
     public boolean executeCL() {
-        return positionOfMaximumZProjection(getCLIJ2() ,(ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]));
+        return zPositionOfMaximumZProjection(getCLIJ2() ,(ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]));
     }
 
-    public static boolean positionOfMaximumZProjection(CLIJ2 clij2, ClearCLImageInterface src, ClearCLImageInterface dst) {
+    public static boolean zPositionOfMaximumZProjection(CLIJ2 clij2, ClearCLImageInterface src, ClearCLImageInterface dst) {
         assertDifferent(src, dst);
 
         ClearCLBuffer temp = clij2.create(dst.getDimensions(), dst.getNativeType());
