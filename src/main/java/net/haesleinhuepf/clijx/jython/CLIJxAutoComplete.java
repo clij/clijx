@@ -425,6 +425,12 @@ class CLIJxAutoComplete {
        headline = "clijx.extendLabelsWithMaximumRadius(ClearCLBuffer input, ClearCLBuffer destination, Integer radius)";
        description = "<b>extendLabelsWithMaximumRadius</b><br><br>Extend labels with a given radius.<br><br>This is actually a local maximum filter applied to a label map which does not overwrite labels.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer radius";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.extendedDepthOfFocusTenengradProjection(ClearCLImageInterface source, ClearCLImageInterface destination, Float sigma)";
+       description = "<b>extendedDepthOfFocusTenengradProjection</b><br><br>Extended depth of focus projection maximizing intensity in the local sobel image.<br><br>The sigma parameter allows controlling an Gaussian blur which should smooth the altitude map.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float sigma";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.extendedDepthOfFocusVarianceProjection(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Float sigma)";
+       description = "<b>extendedDepthOfFocusVarianceProjection</b><br><br>Extended depth of focus projection maximizing local pixel intensity variance.<br><br>The sigma parameter allows controlling an Gaussian blur which should smooth the altitude map.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Float sigma";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.extrema(ClearCLBuffer input1, ClearCLBuffer input2, ClearCLBuffer destination)";
        description = "<b>extrema</b><br><br>Returns an image with pixel values most distant from 0: <br><br>f(x, y) = x if abs(x) > abs(y), y else.<br><br>Parameters:<br>ClearCLBuffer input1, ClearCLBuffer input2, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1241,6 +1247,9 @@ class CLIJxAutoComplete {
        headline = "clijx.sobel(ClearCLBuffer source, ClearCLBuffer destination)";
        description = "<b>sobel</b><br><br>Convolve the image with the Sobel kernel.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.sobelSliceBySlice(ClearCLImageInterface source, ClearCLImageInterface destination)";
+       description = "<b>sobelSliceBySlice</b><br><br>Convolve the image with the Sobel kernel slice by slice.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.sorensenDiceCoefficient(ClearCLBuffer source1, ClearCLBuffer source2)";
        description = "<b>sorensenDiceCoefficient</b><br><br>Determines the overlap of two binary images using the Sorensen-Dice coefficent. <br><br>A value of 0 suggests no overlap, 1 means perfect overlap.<br>The Sorensen-Dice coefficient is saved in the colum 'Sorensen_Dice_coefficient'.<br>Note that the Sorensen-Dice coefficient s can be calculated from the Jaccard index j using this formula:<br><pre>s = f(j) = 2 j / (j + 1)</pre><br><br>Parameters:<br>ClearCLBuffer source1, ClearCLBuffer source2";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1339,6 +1348,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.tenengradFusion(ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_substacks, Float sigmaX, Float sigmaY, Float sigmaZ, Float exponent)";
        description = "<b>tenengradFusion</b><br><br>Fuses #n# image stacks using Tenengrads algorithm.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_substacks, Float sigmaX, Float sigmaY, Float sigmaZ, Float exponent";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.tenengradSliceBySlice(ClearCLImageInterface source, ClearCLImageInterface destination)";
+       description = "<b>tenengradSliceBySlice</b><br><br>Convolve the image with the Tenengrad kernel slice by slice.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.threshold(ClearCLImageInterface source, ClearCLImageInterface destination, Float threshold)";
        description = "<b>threshold</b><br><br>Computes a binary image with pixel values 0 and 1. <br><br>All pixel values x of a given input image with <br>value larger or equal to a given threshold t will be set to 1.<br><br>f(x,t) = (1 if (x >= t); (0 otherwise))<br><br>This plugin is comparable to setting a raw threshold in ImageJ and using the 'Convert to Mask' menu.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float threshold";
@@ -1499,4 +1511,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 496 methods generated.
+// 500 methods generated.

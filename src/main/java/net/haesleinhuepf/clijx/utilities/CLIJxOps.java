@@ -140,6 +140,12 @@ import net.haesleinhuepf.clijx.plugins.VarianceSphere;
 import net.haesleinhuepf.clijx.plugins.StandardDeviationSphere;
 import net.haesleinhuepf.clijx.plugins.VarianceBox;
 import net.haesleinhuepf.clijx.plugins.StandardDeviationBox;
+import net.haesleinhuepf.clijx.plugins.Tenengrad;
+import net.haesleinhuepf.clijx.plugins.TenengradSliceBySlice;
+import net.haesleinhuepf.clijx.plugins.SobelSliceBySlice;
+import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusSobelProjection;
+import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusTenengradProjection;
+import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusVarianceProjection;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2456,5 +2462,89 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.Tenengrad
+    //----------------------------------------------------
+    /**
+     * Convolve the image with the Tenengrad kernel slice by slice.
+     */
+    default boolean tenengradSliceBySlice(ClearCLImageInterface source, ClearCLImageInterface destination) {
+        if (doTimeTracing()) {recordMethodStart("Tenengrad");}
+        boolean result = Tenengrad.tenengradSliceBySlice(getCLIJ2(), source, destination);
+        if (doTimeTracing()) {recordMethodEnd("Tenengrad");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.TenengradSliceBySlice
+    //----------------------------------------------------
+    /**
+     * Convolve the image with the Tenengrad kernel slice by slice.
+     */
+    default boolean tenengradSliceBySlice(ClearCLImageInterface source, ClearCLImageInterface destination) {
+        if (doTimeTracing()) {recordMethodStart("TenengradSliceBySlice");}
+        boolean result = TenengradSliceBySlice.tenengradSliceBySlice(getCLIJ2(), source, destination);
+        if (doTimeTracing()) {recordMethodEnd("TenengradSliceBySlice");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.SobelSliceBySlice
+    //----------------------------------------------------
+    /**
+     * Convolve the image with the Sobel kernel slice by slice.
+     */
+    default boolean sobelSliceBySlice(ClearCLImageInterface source, ClearCLImageInterface destination) {
+        if (doTimeTracing()) {recordMethodStart("SobelSliceBySlice");}
+        boolean result = SobelSliceBySlice.sobelSliceBySlice(getCLIJ2(), source, destination);
+        if (doTimeTracing()) {recordMethodEnd("SobelSliceBySlice");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusSobelProjection
+    //----------------------------------------------------
+    /**
+     * Extended depth of focus projection maximizing local pixel intensity variance.
+     * 
+     * The sigma parameter allows controlling an Gaussian blur which should smooth the altitude map.
+     */
+    default boolean extendedDepthOfFocusVarianceProjection(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("ExtendedDepthOfFocusSobelProjection");}
+        boolean result = ExtendedDepthOfFocusSobelProjection.extendedDepthOfFocusVarianceProjection(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("ExtendedDepthOfFocusSobelProjection");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusTenengradProjection
+    //----------------------------------------------------
+    /**
+     * Extended depth of focus projection maximizing intensity in the local sobel image.
+     * 
+     * The sigma parameter allows controlling an Gaussian blur which should smooth the altitude map.
+     */
+    default boolean extendedDepthOfFocusTenengradProjection(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("ExtendedDepthOfFocusTenengradProjection");}
+        boolean result = ExtendedDepthOfFocusTenengradProjection.extendedDepthOfFocusTenengradProjection(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("ExtendedDepthOfFocusTenengradProjection");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusVarianceProjection
+    //----------------------------------------------------
+    /**
+     * Extended depth of focus projection maximizing local pixel intensity variance.
+     * 
+     * The sigma parameter allows controlling an Gaussian blur which should smooth the altitude map.
+     */
+    default boolean extendedDepthOfFocusVarianceProjection(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("ExtendedDepthOfFocusVarianceProjection");}
+        boolean result = ExtendedDepthOfFocusVarianceProjection.extendedDepthOfFocusVarianceProjection(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("ExtendedDepthOfFocusVarianceProjection");}
+        return result;
+    }
+
 }
-// 157 methods generated.
+// 163 methods generated.
