@@ -136,6 +136,10 @@ import net.haesleinhuepf.clijx.plugins.GammaCorrection;
 import net.haesleinhuepf.clijx.plugins.ZPositionOfMaximumZProjection;
 import net.haesleinhuepf.clijx.plugins.ZPositionProjection;
 import net.haesleinhuepf.clijx.plugins.ZPositionRangeProjection;
+import net.haesleinhuepf.clijx.plugins.VarianceSphere;
+import net.haesleinhuepf.clijx.plugins.StandardDeviationSphere;
+import net.haesleinhuepf.clijx.plugins.VarianceBox;
+import net.haesleinhuepf.clijx.plugins.StandardDeviationBox;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2388,5 +2392,69 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.VarianceSphere
+    //----------------------------------------------------
+    /**
+     * Computes the local variance of a pixels spherical neighborhood. 
+     * 
+     * The spheres size is specified by 
+     * its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. 
+     */
+    default boolean varianceSphere(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("VarianceSphere");}
+        boolean result = VarianceSphere.varianceSphere(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
+        if (doTimeTracing()) {recordMethodEnd("VarianceSphere");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.StandardDeviationSphere
+    //----------------------------------------------------
+    /**
+     * Computes the local standard deviation of a pixels spherical neighborhood. 
+     * 
+     * The spheres size is specified by 
+     * its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. 
+     */
+    default boolean standardDeviationSphere(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("StandardDeviationSphere");}
+        boolean result = StandardDeviationSphere.standardDeviationSphere(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
+        if (doTimeTracing()) {recordMethodEnd("StandardDeviationSphere");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.VarianceBox
+    //----------------------------------------------------
+    /**
+     * Computes the local variance of a pixels box neighborhood. 
+     * 
+     * The box size is specified by 
+     * its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. 
+     */
+    default boolean varianceBox(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("VarianceBox");}
+        boolean result = VarianceBox.varianceBox(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
+        if (doTimeTracing()) {recordMethodEnd("VarianceBox");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.StandardDeviationBox
+    //----------------------------------------------------
+    /**
+     * Computes the local standard deviation of a pixels box neighborhood. 
+     * 
+     * The box size is specified by 
+     * its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. 
+     */
+    default boolean standardDeviationBox(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("StandardDeviationBox");}
+        boolean result = StandardDeviationBox.standardDeviationBox(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
+        if (doTimeTracing()) {recordMethodEnd("StandardDeviationBox");}
+        return result;
+    }
+
 }
-// 153 methods generated.
+// 157 methods generated.

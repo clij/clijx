@@ -1256,6 +1256,9 @@ class CLIJxAutoComplete {
        headline = "clijx.stackToTiles(ClearCLImageInterface source, ClearCLImageInterface destination, Integer tiles_x, Integer tiles_y)";
        description = "<b>stackToTiles</b><br><br>Stack to tiles.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer tiles_x, Integer tiles_y";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.standardDeviationBox(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Integer radius_z)";
+       description = "<b>standardDeviationBox</b><br><br>Computes the local standard deviation of a pixels box neighborhood. <br><br>The box size is specified by <br>its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. <br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Integer radius_z";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.standardDeviationOfAllPixels(ClearCLImageInterface source)";
        description = "<b>standardDeviationOfAllPixels</b><br><br>Determines the standard deviation of all pixels in an image. <br><br>The value will be stored in a new row of ImageJs<br>Results table in the column 'Standard_deviation'.<br><br>Parameters:<br>ClearCLImageInterface source";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1264,6 +1267,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.standardDeviationOfTouchingNeighbors(ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer standard_deviation_values_destination)";
        description = "<b>standardDeviationOfTouchingNeighbors</b><br><br>Takes a touch matrix and a vector of values to determine the standard deviation value among touching neighbors for every object. <br><br><br><br>Parameters:<br>ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer standard_deviation_values_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.standardDeviationSphere(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Integer radius_z)";
+       description = "<b>standardDeviationSphere</b><br><br>Computes the local standard deviation of a pixels spherical neighborhood. <br><br>The spheres size is specified by <br>its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. <br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Integer radius_z";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.standardDeviationZProjection(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>standardDeviationZProjection</b><br><br>Determines the standard deviation intensity projection of an image stack along Z.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
@@ -1448,11 +1454,17 @@ class CLIJxAutoComplete {
        headline = "clijx.undefinedToZero(ClearCLBuffer source, ClearCLBuffer destination)";
        description = "<b>undefinedToZero</b><br><br>Copies all pixels instead those which are not a number (NaN) or infinity (inf), which are replaced by 0.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.varianceBox(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Integer radius_z)";
+       description = "<b>varianceBox</b><br><br>Computes the local variance of a pixels box neighborhood. <br><br>The box size is specified by <br>its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. <br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Integer radius_z";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.varianceOfAllPixels(ClearCLBuffer source)";
        description = "<b>varianceOfAllPixels</b><br><br>Determines the variance of all pixels in an image. <br><br>The value will be stored in a new row of ImageJs<br>Results table in the column 'Variance'.<br><br>Parameters:<br>ClearCLBuffer source";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.varianceOfMaskedPixels(ClearCLBuffer source, ClearCLBuffer mask)";
        description = "<b>varianceOfMaskedPixels</b><br><br>Determines the variance in an image, but only in pixels which have non-zero values in another binary mask image. <br><br>The result is put in the results table as new column named 'Masked_variance'.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer mask";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.varianceSphere(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Integer radius_z)";
+       description = "<b>varianceSphere</b><br><br>Computes the local variance of a pixels spherical neighborhood. <br><br>The spheres size is specified by <br>its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. <br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Integer radius_z";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.voronoiLabeling(ClearCLBuffer input, ClearCLImageInterface destination)";
        description = "<b>voronoiLabeling</b><br><br>Takes a binary image, labels connected components and dilates the regions using a octagon shape until they touch. <br><br>The resulting label map is written to the output.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLImageInterface destination";
@@ -1487,4 +1499,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 492 methods generated.
+// 496 methods generated.
