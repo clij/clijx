@@ -48,6 +48,9 @@ public class DrawMeshBetweenNClosestLabels extends AbstractCLIJ2Plugin implement
         clij2.setColumn(distance_matrix, 0, Float.MAX_VALUE);
 
         if (number_of_closest_labels < 1) {
+            pointlist.close();
+            distance_matrix.close();
+
             return false;
         }
 
