@@ -40,11 +40,11 @@ public class Tenengrad extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, C
 
     @Override
     public boolean executeCL() {
-        boolean result = tenengradSliceBySlice(getCLIJ2(), (ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]));
+        boolean result = tenengrad(getCLIJ2(), (ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]));
         return result;
     }
 
-    public static boolean tenengradSliceBySlice(CLIJ2 clij2, ClearCLImageInterface src, ClearCLImageInterface dst) {
+    public static boolean tenengrad(CLIJ2 clij2, ClearCLImageInterface src, ClearCLImageInterface dst) {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("src", src);
         parameters.put("dst", dst);

@@ -2468,9 +2468,9 @@ public abstract interface CLIJxOps {
     /**
      * Convolve the image with the Tenengrad kernel slice by slice.
      */
-    default boolean tenengradSliceBySlice(ClearCLImageInterface source, ClearCLImageInterface destination) {
+    default boolean tenengrad(ClearCLImageInterface source, ClearCLImageInterface destination) {
         if (doTimeTracing()) {recordMethodStart("Tenengrad");}
-        boolean result = Tenengrad.tenengradSliceBySlice(getCLIJ2(), source, destination);
+        boolean result = Tenengrad.tenengrad(getCLIJ2(), source, destination);
         if (doTimeTracing()) {recordMethodEnd("Tenengrad");}
         return result;
     }
