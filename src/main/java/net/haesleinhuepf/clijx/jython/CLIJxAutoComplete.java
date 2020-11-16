@@ -1346,6 +1346,9 @@ class CLIJxAutoComplete {
        headline = "clijx.sumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination_sum)";
        description = "<b>sumZProjection</b><br><br>Determines the sum intensity projection of an image along Z.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination_sum";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.tenengrad(ClearCLImageInterface source, ClearCLImageInterface destination)";
+       description = "<b>tenengrad</b><br><br>Convolve the image with the Tenengrad kernel slice by slice.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.tenengradFusion(ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_substacks, Float sigmaX, Float sigmaY, Float sigmaZ, Float exponent)";
        description = "<b>tenengradFusion</b><br><br>Fuses #n# image stacks using Tenengrads algorithm.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_substacks, Float sigmaX, Float sigmaY, Float sigmaZ, Float exponent";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1511,4 +1514,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 500 methods generated.
+// 501 methods generated.
