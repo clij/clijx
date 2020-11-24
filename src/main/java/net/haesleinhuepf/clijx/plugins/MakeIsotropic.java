@@ -37,10 +37,10 @@ public class MakeIsotropic extends AbstractCLIJ2Plugin implements CLIJMacroPlugi
 
     @Override
     public boolean executeCL() {
-        return makeIsoTropic(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1], asFloat(args[2]), asFloat(args[3]), asFloat(args[4]), asFloat(args[5]));
+        return makeIsotropic(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1], asFloat(args[2]), asFloat(args[3]), asFloat(args[4]), asFloat(args[5]));
     }
 
-    public static boolean makeIsoTropic(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result, Float original_voxel_size_x, Float original_voxel_size_y, Float original_voxel_size_z, Float new_voxel_size) {
+    public static boolean makeIsotropic(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result, Float original_voxel_size_x, Float original_voxel_size_y, Float original_voxel_size_z, Float new_voxel_size) {
         float scale1X = (float) (original_voxel_size_x / new_voxel_size);
         float scale1Y = (float) (original_voxel_size_y / new_voxel_size);
         float scale1Z = (float) (original_voxel_size_z / new_voxel_size);

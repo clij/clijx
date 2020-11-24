@@ -1486,9 +1486,9 @@ public abstract interface CLIJxOps {
     /**
      * Applies a scaling operation using linear interpolation to generate an image stack with a given isotropic voxel size.
      */
-    default boolean makeIsoTropic(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6) {
+    default boolean makeIsotropic(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6) {
         if (doTimeTracing()) {recordMethodStart("MakeIsotropic");}
-        boolean result = MakeIsotropic.makeIsoTropic(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue());
+        boolean result = MakeIsotropic.makeIsotropic(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue());
         if (doTimeTracing()) {recordMethodEnd("MakeIsotropic");}
         return result;
     }
