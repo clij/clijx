@@ -350,6 +350,12 @@ class CLIJxAutoComplete {
        headline = "clijx.drawLine(ClearCLImageInterface destination, Float x1, Float y1, Float z1, Float x2, Float y2, Float z2, Float thickness, Float value)";
        description = "<b>drawLine</b><br><br>Draws a line between two points with a given thickness. <br><br>All pixels other than on the line are untouched. Consider using `set(buffer, 0);` in advance.<br><br>Parameters:<br>ClearCLImageInterface destination, Float x1, Float y1, Float z1, Float x2, Float y2, Float z2, Float thickness, Float value";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.drawMeshBetweenNClosestLabels(ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_closest_labels)";
+       description = "<b>drawMeshBetweenNClosestLabels</b><br><br>Starting from a label map, draw lines between n closest labels for each label resulting in a mesh.<br><br>The end points of the lines correspond to the centroids of the labels. <br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_closest_labels";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.drawMeshBetweenProximalLabels(ClearCLBuffer input, ClearCLBuffer destination, Float maximum_distance)";
+       description = "<b>drawMeshBetweenProximalLabels</b><br><br>Starting from a label map, draw lines between labels that are closer than a given distance resulting in a mesh.<br><br>The end points of the lines correspond to the centroids of the labels.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float maximum_distance";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.drawMeshBetweenTouchingLabels(ClearCLBuffer input, ClearCLBuffer destination)";
        description = "<b>drawMeshBetweenTouchingLabels</b><br><br>Starting from a label map, draw lines between touching neighbors resulting in a mesh.<br><br>The end points of the lines correspond to the centroids of the labels. <br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -701,8 +707,8 @@ class CLIJxAutoComplete {
        headline = "clijx.logarithm(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>logarithm</b><br><br>Computes base e logarithm of all pixels values.<br><br>f(x) = log(x)<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.makeIsoTropic(ClearCLBuffer input, ClearCLBuffer destination, Float original_voxel_size_x, Float original_voxel_size_y, Float original_voxel_size_z, Float new_voxel_size)";
-       description = "<b>makeIsoTropic</b><br><br>Applies a scaling operation using linear interpolation to generate an image stack with a given isotropic voxel size.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float original_voxel_size_x, Float original_voxel_size_y, Float original_voxel_size_z, Float new_voxel_size";
+       headline = "clijx.makeIsotropic(ClearCLBuffer input, ClearCLBuffer destination, Float original_voxel_size_x, Float original_voxel_size_y, Float original_voxel_size_z, Float new_voxel_size)";
+       description = "<b>makeIsotropic</b><br><br>Applies a scaling operation using linear interpolation to generate an image stack with a given isotropic voxel size.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float original_voxel_size_x, Float original_voxel_size_y, Float original_voxel_size_z, Float new_voxel_size";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.mask(ClearCLImageInterface source, ClearCLImageInterface mask, ClearCLImageInterface destination)";
        description = "<b>mask</b><br><br>Computes a masked image by applying a binary mask to an image. <br><br>All pixel values x of image X will be copied<br>to the destination image in case pixel value m at the same position in the mask image is not equal to <br>zero.<br><br><pre>f(x,m) = (x if (m != 0); (0 otherwise))</pre><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface mask, ClearCLImageInterface destination";
@@ -1514,4 +1520,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 501 methods generated.
+// 503 methods generated.
