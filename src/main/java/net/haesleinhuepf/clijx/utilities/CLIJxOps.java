@@ -146,6 +146,8 @@ import net.haesleinhuepf.clijx.plugins.SobelSliceBySlice;
 import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusSobelProjection;
 import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusTenengradProjection;
 import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusVarianceProjection;
+import net.haesleinhuepf.clijx.plugins.DrawMeshBetweenNClosestLabels;
+import net.haesleinhuepf.clijx.plugins.DrawMeshBetweenProximalLabels;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2546,5 +2548,35 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.DrawMeshBetweenNClosestLabels
+    //----------------------------------------------------
+    /**
+     * Starting from a label map, draw lines between n closest labels for each label resulting in a mesh.
+     * 
+     * The end points of the lines correspond to the centroids of the labels. 
+     */
+    default boolean drawMeshBetweenNClosestLabels(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("DrawMeshBetweenNClosestLabels");}
+        boolean result = DrawMeshBetweenNClosestLabels.drawMeshBetweenNClosestLabels(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
+        if (doTimeTracing()) {recordMethodEnd("DrawMeshBetweenNClosestLabels");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.DrawMeshBetweenProximalLabels
+    //----------------------------------------------------
+    /**
+     * Starting from a label map, draw lines between labels that are closer than a given distance resulting in a mesh.
+     * 
+     * The end points of the lines correspond to the centroids of the labels.
+     */
+    default boolean drawMeshBetweenProximalLabels(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("DrawMeshBetweenProximalLabels");}
+        boolean result = DrawMeshBetweenProximalLabels.drawMeshBetweenProximalLabels(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("DrawMeshBetweenProximalLabels");}
+        return result;
+    }
+
 }
-// 163 methods generated.
+// 165 methods generated.
