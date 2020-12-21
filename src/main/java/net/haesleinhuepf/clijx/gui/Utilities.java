@@ -33,7 +33,7 @@ public class Utilities {
 
     public static String generateIconCodeString(String icon)
     {
-        String[] positions = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
+        String[] positions = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "0"};
 
         String result = "C000";
         int x = 0;
