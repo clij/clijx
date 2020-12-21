@@ -275,6 +275,21 @@ public abstract interface CLIJxOps {
      * Applies Gaussian blur to the input image twice with different sigma values resulting in two images which are then subtracted from each other.
      * 
      * It is recommended to apply this operation to images of type Float (32 bit) as results might be negative.
+     * 
+     * Parameters
+     * ----------
+     * input : Image
+     *     The input image to be processed.
+     * destination : Image
+     *     The output image where results are written into.
+     * sigma1_x : float
+     *     Sigma of the first Gaussian filter in x
+     * sigma1_y : float
+     *     Sigma of the first Gaussian filter in y
+     * sigma2_x : float
+     *     Sigma of the second Gaussian filter in x
+     * sigma2_y : float
+     *     Sigma of the second Gaussian filter in y
      */
     default boolean differenceOfGaussian(ClearCLImage arg1, ClearCLImage arg2, double arg3, double arg4, double arg5) {
         if (doTimeTracing()) {recordMethodStart("Kernels");}
