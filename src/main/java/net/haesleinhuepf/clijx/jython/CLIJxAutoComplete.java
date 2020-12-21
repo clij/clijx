@@ -209,6 +209,9 @@ class CLIJxAutoComplete {
        headline = "clijx.copySlice(ClearCLImageInterface source, ClearCLImageInterface destination, Integer slice_index)";
        description = "<b>copySlice</b><br><br>This method has two purposes: <br>It copies a 2D image to a given slice z position in a 3D image stack or <br>It copies a given slice at position z in an image stack to a 2D image.<br><br>The first case is only available via ImageJ macro. If you are using it, it is recommended that the <br>target 3D image already pre-exists in GPU memory before calling this method. Otherwise, CLIJ create <br>the image stack with z planes.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer slice_index";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.cosinus(ClearCLImageInterface source, ClearCLImageInterface destination)";
+       description = "<b>cosinus</b><br><br>Computes the cosinus of all pixels value x.<br><br><pre>f(x) = cos(x)</pre><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.countNonZeroPixels(ClearCLBuffer source)";
        description = "<b>countNonZeroPixels</b><br><br>Determines the number of all pixels in a given image which are not equal to 0. <br><br>It will be stored in a new row of ImageJs<br>Results table in the column 'CountNonZero'.<br><br>Parameters:<br>ClearCLBuffer source";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -481,6 +484,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.generateDistanceMatrix(ClearCLBuffer coordinate_list1, ClearCLBuffer coordinate_list2, ClearCLBuffer distance_matrix_destination)";
        description = "<b>generateDistanceMatrix</b><br><br>Computes the distance between all point coordinates given in two point lists.<br><br>Takes two images containing pointlists (dimensionality n * d, n: number of points and d: dimensionality) and builds up a matrix containing the distances between these points. <br><br>Convention: Given two point lists with dimensionality n * d and m * d, the distance matrix will be of size(n + 1) * (m + 1). The first row and column contain zeros. They represent the distance of the objects to a theoretical background object. In that way, distance matrices are of the same size as touch matrices (see generateTouchMatrix). Thus, one can threshold a distance matrix to generate a touch matrix out of it for drawing meshes.<br><br>Parameters:<br>ClearCLBuffer coordinate_list1, ClearCLBuffer coordinate_list2, ClearCLBuffer distance_matrix_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.generateDistanceMatrixAlongAxis(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, Integer arg4)";
+       description = "<b>generateDistanceMatrixAlongAxis</b><br><br>Computes the distance in X, Y or Z (specified with parameter axis) between all point coordinates given in two point lists.<br><br>Takes two images containing pointlists (dimensionality n * d, n: number of points and d: dimensionality) and builds up a matrix containing the distances between these points. <br><br>Convention: Given two point lists with dimensionality n * d and m * d, the distance matrix will be of size(n + 1) * (m + 1). The first row and column contain zeros. They represent the distance of the objects to a theoretical background object. In that way, distance matrices are of the same size as touch matrices (see generateTouchMatrix). Thus, one can threshold a distance matrix to generate a touch matrix out of it for drawing meshes.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, Integer arg4";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.generateFeatureStack(ClearCLBuffer input, ClearCLBuffer feature_stack_destination, String feature_definitions)";
        description = "<b>generateFeatureStack</b><br><br>Generates a feature stack for Trainable Weka Segmentation. <br><br>Use this terminology to specifiy which stacks should be generated:<br>* &quot;original&quot; original slice<br>* &quot;GaussianBlur=s&quot; Gaussian blurred image with sigma s<br>* &quot;LaplacianOfGaussian=s&quot; Laplacian of Gaussian blurred image with sigma s<br>* &quot;SobelOfGaussian=s&quot; Sobel filter applied to Gaussian blurred image with sigma s<br>* &quot;minimum=r&quot; local minimum with radius r<br>* &quot;maximum=r&quot; local maximum with radius r<br>* &quot;mean=r&quot; local mean with radius r<br>* &quot;entropy=r&quot; local entropy with radius r<br>* &quot;gradientX&quot; local gradient in X direction<br>* &quot;gradientY&quot; local gradient in Y direction<br><br>Use sigma=0 to apply a filter to the original image. Feature definitions are not case sensitive.<br><br>Example: &quot;original gaussianBlur=1 gaussianBlur=5 laplacianOfGaussian=1 laplacianOfGaussian=7 entropy=3&quot;<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer feature_stack_destination, String feature_definitions";
@@ -1235,6 +1241,9 @@ class CLIJxAutoComplete {
        headline = "clijx.showRGB(ClearCLBuffer red, ClearCLBuffer green, ClearCLBuffer blue, String title)";
        description = "<b>showRGB</b><br><br>Visualises three 2D images as one RGB image<br><br>Parameters:<br>ClearCLBuffer red, ClearCLBuffer green, ClearCLBuffer blue, String title";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.sinus(ClearCLImageInterface source, ClearCLImageInterface destination)";
+       description = "<b>sinus</b><br><br>Computes the sinus of all pixels value x.<br><br><pre>f(x) = sin(x)</pre><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.skeletonize(ClearCLBuffer source, ClearCLBuffer destination)";
        description = "<b>skeletonize</b><br><br>Erodes a binary image until just its skeleton is left. <br><br>The result is similar to Skeletonize3D in Fiji.<br><br>Deprecated: Use SimpleITK binaryThinning() instead.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1520,4 +1529,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 503 methods generated.
+// 506 methods generated.

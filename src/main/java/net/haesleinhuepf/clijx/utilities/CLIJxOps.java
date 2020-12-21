@@ -148,6 +148,9 @@ import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusTenengradProjection;
 import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusVarianceProjection;
 import net.haesleinhuepf.clijx.plugins.DrawMeshBetweenNClosestLabels;
 import net.haesleinhuepf.clijx.plugins.DrawMeshBetweenProximalLabels;
+import net.haesleinhuepf.clijx.plugins.Cosinus;
+import net.haesleinhuepf.clijx.plugins.Sinus;
+import net.haesleinhuepf.clijx.plugins.GenerateDistanceMatrixAlongAxis;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2578,5 +2581,52 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.Cosinus
+    //----------------------------------------------------
+    /**
+     * Computes the cosinus of all pixels value x.
+     * 
+     * <pre>f(x) = cos(x)</pre>
+     */
+    default boolean cosinus(ClearCLImageInterface source, ClearCLImageInterface destination) {
+        if (doTimeTracing()) {recordMethodStart("Cosinus");}
+        boolean result = Cosinus.cosinus(getCLIJ2(), source, destination);
+        if (doTimeTracing()) {recordMethodEnd("Cosinus");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.Sinus
+    //----------------------------------------------------
+    /**
+     * Computes the sinus of all pixels value x.
+     * 
+     * <pre>f(x) = sin(x)</pre>
+     */
+    default boolean sinus(ClearCLImageInterface source, ClearCLImageInterface destination) {
+        if (doTimeTracing()) {recordMethodStart("Sinus");}
+        boolean result = Sinus.sinus(getCLIJ2(), source, destination);
+        if (doTimeTracing()) {recordMethodEnd("Sinus");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.GenerateDistanceMatrixAlongAxis
+    //----------------------------------------------------
+    /**
+     * Computes the distance in X, Y or Z (specified with parameter axis) between all point coordinates given in two point lists.
+     * 
+     * Takes two images containing pointlists (dimensionality n * d, n: number of points and d: dimensionality) and builds up a matrix containing the distances between these points. 
+     * 
+     * Convention: Given two point lists with dimensionality n * d and m * d, the distance matrix will be of size(n + 1) * (m + 1). The first row and column contain zeros. They represent the distance of the objects to a theoretical background object. In that way, distance matrices are of the same size as touch matrices (see generateTouchMatrix). Thus, one can threshold a distance matrix to generate a touch matrix out of it for drawing meshes.
+     */
+    default boolean generateDistanceMatrixAlongAxis(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("GenerateDistanceMatrixAlongAxis");}
+        boolean result = GenerateDistanceMatrixAlongAxis.generateDistanceMatrixAlongAxis(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue());
+        if (doTimeTracing()) {recordMethodEnd("GenerateDistanceMatrixAlongAxis");}
+        return result;
+    }
+
 }
-// 165 methods generated.
+// 168 methods generated.
