@@ -151,6 +151,11 @@ import net.haesleinhuepf.clijx.plugins.DrawMeshBetweenProximalLabels;
 import net.haesleinhuepf.clijx.plugins.Cosinus;
 import net.haesleinhuepf.clijx.plugins.Sinus;
 import net.haesleinhuepf.clijx.plugins.GenerateDistanceMatrixAlongAxis;
+import net.haesleinhuepf.clijx.plugins.MaximumDistanceOfTouchingNeighbors;
+import net.haesleinhuepf.clijx.plugins.MaximumNeighborDistanceMap;
+import net.haesleinhuepf.clijx.plugins.MinimumNeighborDistanceMap;
+import net.haesleinhuepf.clijx.plugins.GenerateAngleMatrix;
+import net.haesleinhuepf.clijx.plugins.NeighborDistanceRangeRatioMap;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2643,5 +2648,105 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.MaximumDistanceOfTouchingNeighbors
+    //----------------------------------------------------
+    /**
+     * Takes a touch matrix and a distance matrix to determine the maximum distance of touching neighbors for every object.
+     */
+    default boolean maximumDistanceOfTouchingNeighbors(ClearCLBuffer distance_matrix, ClearCLBuffer touch_matrix, ClearCLBuffer distancelist_destination) {
+        if (doTimeTracing()) {recordMethodStart("MaximumDistanceOfTouchingNeighbors");}
+        boolean result = MaximumDistanceOfTouchingNeighbors.maximumDistanceOfTouchingNeighbors(getCLIJ2(), distance_matrix, touch_matrix, distancelist_destination);
+        if (doTimeTracing()) {recordMethodEnd("MaximumDistanceOfTouchingNeighbors");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MaximumNeighborDistanceMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch and replaces every label with the maximum distance to their neighboring labels.
+     * 
+     * To determine the distances, the centroid of the labels is determined internally.
+     */
+    default boolean maximumNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("MaximumNeighborDistanceMap");}
+        boolean result = MaximumNeighborDistanceMap.maximumNeighborDistanceMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("MaximumNeighborDistanceMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MinimumNeighborDistanceMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch and replaces every label with the minimum distance to their neighboring labels.
+     * 
+     * To determine the distances, the centroid of the labels is determined internally.
+     */
+    default boolean minimumNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("MinimumNeighborDistanceMap");}
+        boolean result = MinimumNeighborDistanceMap.minimumNeighborDistanceMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("MinimumNeighborDistanceMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.GenerateAngleMatrix
+    //----------------------------------------------------
+    /**
+     * Computes the angle in radians between all point coordinates given in two point lists.
+     * 
+     *  Takes two images containing pointlists (dimensionality n * d, n: number of 
+     * points and d: dimensionality) and builds up a matrix containing the 
+     * angles between these points.
+     * 
+     * Convention: Values range from -90 to 90 degrees (-0.5 to 0.5 pi radians)
+     * * -90 degreess (-0.5 pi radians): Top
+     * * 0 defrees (0 radians): Right
+     * * 90 degrees (0.5 pi radians): Bottom
+     * 
+     * Convention: Given two point lists with dimensionality n * d and m * d, the distance 
+     * matrix will be of size(n + 1) * (m + 1). The first row and column 
+     * contain zeros. They represent the distance of the objects to a 
+     * theoretical background object. In that way, distance matrices are of 
+     * the same size as touch matrices (see generateTouchMatrix). Thus, one 
+     * can threshold a distance matrix to generate a touch matrix out of it 
+     * for drawing meshes. 
+     * 
+     * Implemented for 2D only at the moment.
+     * 
+     * Parameters
+     * ----------
+     * coordinate_list1 : Image
+     * coordinate_list2 : Image
+     * angle_matrix_destination : Image
+     * 
+     * Returns
+     * -------
+     * angle_matrix_destination
+     */
+    default boolean generateAngleMatrix(ClearCLBuffer coordinate_list1, ClearCLBuffer coordinate_list2, ClearCLBuffer angle_matrix_destination) {
+        if (doTimeTracing()) {recordMethodStart("GenerateAngleMatrix");}
+        boolean result = GenerateAngleMatrix.generateAngleMatrix(getCLIJ2(), coordinate_list1, coordinate_list2, angle_matrix_destination);
+        if (doTimeTracing()) {recordMethodEnd("GenerateAngleMatrix");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.NeighborDistanceRangeRatioMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels touch and replaces every label with the minimum distance to their neighboring labels.
+     * 
+     * To determine the distances, the centroid of the labels is determined internally.
+     */
+    default boolean neighborDistanceRangeRatioMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("NeighborDistanceRangeRatioMap");}
+        boolean result = NeighborDistanceRangeRatioMap.neighborDistanceRangeRatioMap(getCLIJ2(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("NeighborDistanceRangeRatioMap");}
+        return result;
+    }
+
 }
-// 168 methods generated.
+// 173 methods generated.

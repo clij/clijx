@@ -479,6 +479,9 @@ class CLIJxAutoComplete {
        headline = "clijx.gaussianBlur3D(ClearCLImageInterface source, ClearCLImageInterface destination, Float sigma_x, Float sigma_y, Float sigma_z)";
        description = "<b>gaussianBlur3D</b><br><br>Computes the Gaussian blurred image of an image given two sigma values in X, Y and Z. <br><br>Thus, the filterkernel can have non-isotropic shape.<br><br>The implementation is done separable. In case a sigma equals zero, the direction is not blurred.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float sigma_x, Float sigma_y, Float sigma_z";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.generateAngleMatrix(ClearCLBuffer coordinate_list1, ClearCLBuffer coordinate_list2, ClearCLBuffer angle_matrix_destination)";
+       description = "<b>generateAngleMatrix</b><br><br>Computes the angle in radians between all point coordinates given in two point lists.<br><br> Takes two images containing pointlists (dimensionality n * d, n: number of <br>points and d: dimensionality) and builds up a matrix containing the <br>angles between these points.<br><br>Convention: Values range from -90 to 90 degrees (-0.5 to 0.5 pi radians)<br>* -90 degreess (-0.5 pi radians): Top<br>* 0 defrees (0 radians): Right<br>* 90 degrees (0.5 pi radians): Bottom<br><br>Convention: Given two point lists with dimensionality n * d and m * d, the distance <br>matrix will be of size(n + 1) * (m + 1). The first row and column <br>contain zeros. They represent the distance of the objects to a <br>theoretical background object. In that way, distance matrices are of <br>the same size as touch matrices (see generateTouchMatrix). Thus, one <br>can threshold a distance matrix to generate a touch matrix out of it <br>for drawing meshes. <br><br>Implemented for 2D only at the moment.<br><br>### Parameters<br><br>coordinate_list1 : Image<br>coordinate_list2 : Image<br>angle_matrix_destination : Image<br><br>Returns<br>-------<br>angle_matrix_destination<br><br>Parameters:<br>ClearCLBuffer coordinate_list1, ClearCLBuffer coordinate_list2, ClearCLBuffer angle_matrix_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.generateBinaryOverlapMatrix(ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer binary_overlap_matrix_destination)";
        description = "<b>generateBinaryOverlapMatrix</b><br><br>Takes two labelmaps with n and m labels and generates a (n+1)*(m+1) matrix where all pixels are set to 0 exept those where labels overlap between the label maps. <br><br>For example, if labels 3 in labelmap1 and 4 in labelmap2 are touching then the pixel (3,4) in the matrix will be set to 1.<br><br>Parameters:<br>ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer binary_overlap_matrix_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -749,11 +752,17 @@ class CLIJxAutoComplete {
        headline = "clijx.maximumDiamond(ClearCLImageInterface arg1, ClearCLImageInterface arg2, ClearCLKernel arg3)";
        description = "<b>maximumDiamond</b><br><br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.maximumDistanceOfTouchingNeighbors(ClearCLBuffer distance_matrix, ClearCLBuffer touch_matrix, ClearCLBuffer distancelist_destination)";
+       description = "<b>maximumDistanceOfTouchingNeighbors</b><br><br>Takes a touch matrix and a distance matrix to determine the maximum distance of touching neighbors for every object.<br><br>Parameters:<br>ClearCLBuffer distance_matrix, ClearCLBuffer touch_matrix, ClearCLBuffer distancelist_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.maximumImageAndScalar(ClearCLImageInterface source, ClearCLImageInterface destination, Float scalar)";
        description = "<b>maximumImageAndScalar</b><br><br>Computes the maximum of a constant scalar s and each pixel value x in a given image X. <br><br><pre>f(x, s) = max(x, s)</pre><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float scalar";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.maximumImages(ClearCLImageInterface source1, ClearCLImageInterface source2, ClearCLImageInterface destination)";
        description = "<b>maximumImages</b><br><br>Computes the maximum of a pair of pixel values x, y from two given images X and Y. <br><br><pre>f(x, y) = max(x, y)</pre><br><br>Parameters:<br>ClearCLImageInterface source1, ClearCLImageInterface source2, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.maximumNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>maximumNeighborDistanceMap</b><br><br>Takes a label map, determines which labels touch and replaces every label with the maximum distance to their neighboring labels.<br><br>To determine the distances, the centroid of the labels is determined internally.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.maximumOctagon(ClearCLBuffer input, ClearCLBuffer destination, Integer iterations)";
        description = "<b>maximumOctagon</b><br><br>Applies a maximum filter with kernel size 3x3 n times to an image iteratively. <br><br>Odd iterations are done with box neighborhood, even iterations with a diamond. <br>Thus, with n > 2, the filter shape is an octagon. The given number of iterations makes the filter <br>result very similar to minimum sphere. Approximately:radius = iterations - 2<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer iterations";
@@ -893,6 +902,9 @@ class CLIJxAutoComplete {
        headline = "clijx.minimumImages(ClearCLImageInterface source1, ClearCLImageInterface source2, ClearCLImageInterface destination)";
        description = "<b>minimumImages</b><br><br>Computes the minimum of a pair of pixel values x, y from two given images X and Y.<br><br><pre>f(x, y) = min(x, y)</pre><br><br>Parameters:<br>ClearCLImageInterface source1, ClearCLImageInterface source2, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.minimumNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>minimumNeighborDistanceMap</b><br><br>Takes a label map, determines which labels touch and replaces every label with the minimum distance to their neighboring labels.<br><br>To determine the distances, the centroid of the labels is determined internally.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.minimumOctagon(ClearCLBuffer input, ClearCLBuffer destination, Integer iterations)";
        description = "<b>minimumOctagon</b><br><br>Applies a minimum filter with kernel size 3x3 n times to an image iteratively. <br><br>Odd iterations are done with box neighborhood, even iterations with a diamond. Thus, with n > 2, the filter shape is an octagon. The given number of iterations makes the filter result very similar to minimum sphere. Approximately:radius = iterations - 2<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer iterations";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -943,6 +955,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.nClosestPoints(ClearCLBuffer arg1, ClearCLBuffer arg2)";
        description = "<b>nClosestPoints</b><br><br>Determine the n point indices with shortest distance for all points in a distance matrix. <br><br>This corresponds to the n row indices with minimum values for each column of the distance matrix.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.neighborDistanceRangeRatioMap(ClearCLBuffer input, ClearCLBuffer destination)";
+       description = "<b>neighborDistanceRangeRatioMap</b><br><br>Takes a label map, determines which labels touch and replaces every label with the minimum distance to their neighboring labels.<br><br>To determine the distances, the centroid of the labels is determined internally.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.neighborsOfNeighbors(ClearCLBuffer touch_matrix, ClearCLBuffer neighbor_matrix_destination)";
        description = "<b>neighborsOfNeighbors</b><br><br>Determines neighbors of neigbors from touch matrix and saves the result as a new touch matrix.<br><br>Parameters:<br>ClearCLBuffer touch_matrix, ClearCLBuffer neighbor_matrix_destination";
@@ -1529,4 +1544,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 506 methods generated.
+// 511 methods generated.
