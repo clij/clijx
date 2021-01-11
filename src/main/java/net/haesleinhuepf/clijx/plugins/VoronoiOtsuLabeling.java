@@ -55,7 +55,7 @@ public class VoronoiOtsuLabeling extends AbstractCLIJ2Plugin implements CLIJMacr
 
         ClearCLBuffer binary = clij2.create(pushed.getDimensions(), NativeTypeEnum.Byte);
         clij2.binaryAnd(spots, segmentation, binary);
-        clij2.voronoiLabeling(binary, temp);
+        MaskedVoronoiLabeling.maskedVoronoiLabeling(clij2, binary, segmentation, temp);
         clij2.mask(temp, segmentation, result);
 
         binary.close();
