@@ -452,6 +452,9 @@ class CLIJxAutoComplete {
        headline = "clijx.findMaxima(ClearCLBuffer source, ClearCLBuffer destination, Float noise_threshold)";
        description = "<b>findMaxima</b><br><br>Finds and labels local maxima with neighboring maxima and background above a given tolerance threshold.<br><br><br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Float noise_threshold";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.flagLabelsOnEdges(ClearCLBuffer label_map_input, ClearCLBuffer flag_vector_destination)";
+       description = "<b>flagLabelsOnEdges</b><br><br>Determines which labels in a label map touch the edges of the image (in X, Y and Z if the image is 3D). <br><br>It results in a vector image with values 1 (touches edges) and 0 (does not touch edge).<br>The entry in the vector (index 0) corresponds to background, following entries correspond to labels.<br><br>Parameters:<br>ClearCLBuffer label_map_input, ClearCLBuffer flag_vector_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.flip(ClearCLImageInterface source, ClearCLImageInterface destination, Boolean flip_x, Boolean flip_y)";
        description = "<b>flip</b><br><br>Flips an image in X and/or Y direction depending on boolean flags.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Boolean flip_x, Boolean flip_y";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -727,6 +730,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.maskStackWithPlane(ClearCLImageInterface source, ClearCLImageInterface mask, ClearCLImageInterface destination)";
        description = "<b>maskStackWithPlane</b><br><br>Computes a masked image by applying a binary 2D mask to an image stack. <br><br>All pixel values x of image X will be copied<br>to the destination image in case pixel value m at the same spatial position in the mask image is not equal to <br>zero.<br><br><pre>f(x,m) = (x if (m != 0); (0 otherwise))</pre><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface mask, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.maskedVoronoiLabeling(ClearCLBuffer input, ClearCLBuffer mask, ClearCLImageInterface destination)";
+       description = "<b>maskedVoronoiLabeling</b><br><br>Takes a binary image, labels connected components and dilates the regions using a octagon shape until they touch and only inside another binary mask image.<br><br>The resulting label map is written to the output.<br><br>Hint: Process isotropic images only.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer mask, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.matrixEqual(ClearCLBuffer input1, ClearCLBuffer input2, Float tolerance)";
        description = "<b>matrixEqual</b><br><br>Checks if all elements of a matrix are different by less than or equal to a given tolerance. <br><br>The result will be put in the results table in column &quot;MatrixEqual&quot; as 1 if yes and 0 otherwise.<br><br>Parameters:<br>ClearCLBuffer input1, ClearCLBuffer input2, Float tolerance";
@@ -1066,6 +1072,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.pullToResultsTable(ClearCLBuffer arg1, ResultsTable arg2)";
        description = "<b>pullToResultsTable</b><br><br>Converts an image into a table.<br><br>Parameters:<br>ClearCLBuffer arg1, ResultsTable arg2";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.pullToResultsTableColumn(ClearCLBuffer arg1, ResultsTable arg2, String arg3, Boolean arg4)";
+       description = "<b>pullToResultsTableColumn</b><br><br>Copies the content of a vector image to a column in the results table.<br>You can configure if new rows should be appended or if existing values should be overwritten.<br><br>Parameters:<br>ClearCLBuffer arg1, ResultsTable arg2, String arg3, Boolean arg4";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.push(null)";
        description = "<b>push</b><br><br>Copies an image specified by its name to GPU memory in order to process it there later.<br><br>Parameters:<br>null";
@@ -1511,11 +1520,17 @@ class CLIJxAutoComplete {
        headline = "clijx.varianceSphere(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Integer radius_z)";
        description = "<b>varianceSphere</b><br><br>Computes the local variance of a pixels spherical neighborhood. <br><br>The spheres size is specified by <br>its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. <br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Integer radius_z";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.visualizeOutlinesOnOriginal(ClearCLBuffer intensity, ClearCLBuffer labels, ClearCLBuffer destination)";
+       description = "<b>visualizeOutlinesOnOriginal</b><br><br>Combines an intensity image and a label (or binary) image so that you can see segmentation outlines on the intensity image.<br><br>Parameters:<br>ClearCLBuffer intensity, ClearCLBuffer labels, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.voronoiLabeling(ClearCLBuffer input, ClearCLImageInterface destination)";
        description = "<b>voronoiLabeling</b><br><br>Takes a binary image, labels connected components and dilates the regions using a octagon shape until they touch. <br><br>The resulting label map is written to the output.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.voronoiOctagon(ClearCLBuffer input, ClearCLBuffer destination)";
        description = "<b>voronoiOctagon</b><br><br>Takes a binary image and dilates the regions using a octagon shape until they touch. <br><br>The pixels where  the regions touched are afterwards returned as binary image which corresponds to the Voronoi diagram.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.voronoiOtsuLabeling(ClearCLBuffer input, ClearCLBuffer destination, Float spot_sigma, Float outline_sigma)";
+       description = "<b>voronoiOtsuLabeling</b><br><br>Applies two Gaussian blurs, spot detection, Otsu-thresholding and Voronoi-labeling.<br>The thresholded binary image is flooded using the Voronoi approach starting from the found local maxima.<br>Noise-removal sigma for spot detection and thresholding can be configured separately.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float spot_sigma, Float outline_sigma";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.watershed(ClearCLBuffer binary_source, ClearCLBuffer destination)";
        description = "<b>watershed</b><br><br>Apply a binary watershed to a binary image and introduces black pixels between objects.<br><br>Parameters:<br>ClearCLBuffer binary_source, ClearCLBuffer destination";
@@ -1544,4 +1559,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 511 methods generated.
+// 516 methods generated.
