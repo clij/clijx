@@ -40,7 +40,7 @@ public class KMeansLabelClusterer extends AbstractCLIJ2Plugin implements CLIJMac
 
     @Override
     public String getParameterHelpText() {
-        return "Image input, Image label_map, ByRef Image destination, String features, String modelfilename, Number number_of_classes, Number  neighbor_radius, Boolean train";
+        return "Image input, Image label_map, ByRef Image destination, String features, String modelfilename, Number number_of_classes, Number neighbor_radius, Boolean train";
     }
 
     @Override
