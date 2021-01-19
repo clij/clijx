@@ -77,7 +77,7 @@ public class KMeansLabelClusterer extends AbstractCLIJ2Plugin implements CLIJMac
             }
         }
 
-        ClearCLBuffer featureImage = GenerateNeighborizedLabelFeatureImage.generateNeighborizedLabelFeatureImage(clij2, input, labelMap, features, neighbor_radius);
+        ClearCLBuffer featureImage = GenerateLabelFeatureImage.generateLabelFeatureImage(clij2, input, labelMap, features);
         clij2.print(featureImage);
 
         ResultsTable table = new ResultsTable();
@@ -110,6 +110,30 @@ public class KMeansLabelClusterer extends AbstractCLIJ2Plugin implements CLIJMac
         ClearCLBuffer vector_with_background = clij2.create(table.size() + 1, 1, 1);
         clij2.set(vector_with_background, 0);
         clij2.paste(vector, vector_with_background, 1, 0, 0);
+
+        if (neighbor_radius > 0) {
+            int number_of_labels = (int) clij2.maximumOfAllPixels(labelMap);
+            ClearCLBuffer touch_matrix = clij2.create(number_of_labels + 1, number_of_labels + 1);
+            clij2.generateTouchMatrix(labelMap, touch_matrix);
+            clij2.setColumn(touch_matrix, 0, 0);
+
+            ClearCLBuffer propagate_feature = clij2.create(vector_with_background);
+            ClearCLBuffer neighbor_matrix = clij2.create(touch_matrix);
+            clij2.copy(touch_matrix, neighbor_matrix);
+            for (int i = 1; i < neighbor_radius; i++) {
+                clij2.neighborsOfNeighbors(touch_matrix, neighbor_matrix);
+                clij2.copy(neighbor_matrix, touch_matrix);
+            }
+            neighbor_matrix.close();
+
+            ModeOfTouchingNeighbors.modeOfTouchingNeighbors(clij2, vector_with_background, touch_matrix, propagate_feature);
+            clij2.copy(propagate_feature, vector_with_background);
+            clij2.setColumn(vector_with_background, 0, 0);
+
+            propagate_feature.close();
+            touch_matrix.close();
+        }
+
         clij2.replaceIntensities(labelMap, vector_with_background, output);
 
         vector.close();
@@ -217,7 +241,9 @@ public class KMeansLabelClusterer extends AbstractCLIJ2Plugin implements CLIJMac
     public String getDescription() {
         return "Applies K-Means clustering to an image and a corresponding label map. \n\n" +
                 "See also: https://commons.apache.org/proper/commons-math/javadocs/api-3.6/org/apache/commons/math3/ml/clustering/KMeansPlusPlusClusterer.html\n" +
-                "Make sure that the handed over feature list is the same used while training the model.";
+                "Make sure that the handed over feature list is the same used while training the model.\n" +
+                "The neighbor_radius specifies a correction step which allows to use a region where the mode of \n" +
+                "classification results (the most popular class) will be determined after clustering.";
     }
 
     @Override
