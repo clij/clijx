@@ -161,6 +161,8 @@ import net.haesleinhuepf.clijx.plugins.VisualizeOutlinesOnOriginal;
 import net.haesleinhuepf.clijx.plugins.FlagLabelsOnEdges;
 import net.haesleinhuepf.clijx.plugins.MaskedVoronoiLabeling;
 import net.haesleinhuepf.clijx.plugins.PullToResultsTableColumn;
+import net.haesleinhuepf.clijx.plugins.KMeansLabelClusterer;
+import net.haesleinhuepf.clijx.plugins.ModeOfTouchingNeighbors;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2828,5 +2830,37 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.KMeansLabelClusterer
+    //----------------------------------------------------
+    /**
+     * Applies K-Means clustering to an image and a corresponding label map. 
+     * 
+     * See also: https://commons.apache.org/proper/commons-math/javadocs/api-3.6/org/apache/commons/math3/ml/clustering/KMeansPlusPlusClusterer.html
+     * Make sure that the handed over feature list is the same used while training the model.
+     * The neighbor_radius specifies a correction step which allows to use a region where the mode of 
+     * classification results (the most popular class) will be determined after clustering.
+     */
+    default boolean kMeansLabelClusterer(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, String arg4, String arg5, double arg6, double arg7, boolean arg8) {
+        if (doTimeTracing()) {recordMethodStart("KMeansLabelClusterer");}
+        boolean result = KMeansLabelClusterer.kMeansLabelClusterer(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, new Double (arg6).intValue(), new Double (arg7).intValue(), arg8);
+        if (doTimeTracing()) {recordMethodEnd("KMeansLabelClusterer");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ModeOfTouchingNeighbors
+    //----------------------------------------------------
+    /**
+     * Takes a touch matrix and a vector of values to determine the most popular integer value among touching neighbors for every object.
+     * TODO: This only works for values between 0 and 255 for now.
+     */
+    default boolean modeOfTouchingNeighbors(ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer mode_values_destination) {
+        if (doTimeTracing()) {recordMethodStart("ModeOfTouchingNeighbors");}
+        boolean result = ModeOfTouchingNeighbors.modeOfTouchingNeighbors(getCLIJ2(), values, touch_matrix, mode_values_destination);
+        if (doTimeTracing()) {recordMethodEnd("ModeOfTouchingNeighbors");}
+        return result;
+    }
+
 }
-// 178 methods generated.
+// 180 methods generated.

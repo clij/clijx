@@ -611,6 +611,9 @@ class CLIJxAutoComplete {
        headline = "clijx.jaccardIndex(ClearCLBuffer source1, ClearCLBuffer source2)";
        description = "<b>jaccardIndex</b><br><br>Determines the overlap of two binary images using the Jaccard index. <br><br>A value of 0 suggests no overlap, 1 means perfect overlap.<br>The resulting Jaccard index is saved to the results table in the 'Jaccard_Index' column.<br>Note that the Sorensen-Dice coefficient can be calculated from the Jaccard index j using this formula:<br><pre>s = f(j) = 2 j / (j + 1)</pre><br><br>Parameters:<br>ClearCLBuffer source1, ClearCLBuffer source2";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.kMeansLabelClusterer(ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination, String features, String modelfilename, Integer number_of_classes, Integer neighbor_radius, Boolean train)";
+       description = "<b>kMeansLabelClusterer</b><br><br>Applies K-Means clustering to an image and a corresponding label map. <br><br>See also: https://commons.apache.org/proper/commons-math/javadocs/api-3.6/org/apache/commons/math3/ml/clustering/KMeansPlusPlusClusterer.html<br>Make sure that the handed over feature list is the same used while training the model.<br>The neighbor_radius specifies a correction step which allows to use a region where the mode of <br>classification results (the most popular class) will be determined after clustering.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination, String features, String modelfilename, Integer number_of_classes, Integer neighbor_radius, Boolean train";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.labelMaximumExtensionMap(ClearCLBuffer input, ClearCLBuffer destination)";
        description = "<b>labelMaximumExtensionMap</b><br><br>Takes a label map, determines for every label the maximum distance of any pixel to the centroid and replaces every label with the that number.<br><br><br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -937,6 +940,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.minimumZProjectionThresholdedBounded(ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Integer arg4, Integer arg5)";
        description = "<b>minimumZProjectionThresholdedBounded</b><br><br>Determines the minimum intensity projection of all pixels in an image above a given threshold along Z within a given z range.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, Float arg3, Integer arg4, Integer arg5";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.modeOfTouchingNeighbors(ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer mode_values_destination)";
+       description = "<b>modeOfTouchingNeighbors</b><br><br>Takes a touch matrix and a vector of values to determine the most popular integer value among touching neighbors for every object.<br>TODO: This only works for values between 0 and 255 for now.<br><br>Parameters:<br>ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer mode_values_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.multiplyImageAndCoordinate(ClearCLImageInterface source, ClearCLImageInterface destination, Integer dimension)";
        description = "<b>multiplyImageAndCoordinate</b><br><br>Multiplies all pixel intensities with the x, y or z coordinate, depending on specified dimension.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer dimension";
@@ -1559,4 +1565,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 516 methods generated.
+// 518 methods generated.
