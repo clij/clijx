@@ -40,6 +40,7 @@ public class ReduceLabelsToLabelledSpots extends AbstractCLIJ2Plugin implements 
 
         ClearCLBuffer positions_and_labels = clij2.create(number_of_labels + 1,pushed.getDimension() + 1, 1);
         clij2.setRampX(positions_and_labels);
+        clij2.setColumn(positions, 0, -1); // prevent putting a 0 at the centroid position of the background
         clij2.paste(positions, positions_and_labels, 0, 0);
 
         clij2.set(result, 0);
