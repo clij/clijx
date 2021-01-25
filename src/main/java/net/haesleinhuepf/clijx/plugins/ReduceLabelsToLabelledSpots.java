@@ -36,7 +36,7 @@ public class ReduceLabelsToLabelledSpots extends AbstractCLIJ2Plugin implements 
         int number_of_labels = (int)clij2.maximumOfAllPixels(pushed);
         ClearCLBuffer positions = clij2.create(number_of_labels + 1,pushed.getDimension(), 1);
 
-        clij2.centroidsOfLabels(pushed, positions);
+        clij2.centroidsOfBackgroundAndLabels(pushed, positions);
 
         ClearCLBuffer positions_and_labels = clij2.create(number_of_labels + 1,pushed.getDimension() + 1, 1);
         clij2.setRampX(positions_and_labels);
