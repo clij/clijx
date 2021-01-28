@@ -39,11 +39,17 @@ public class GenerateNNearestNeighborsMatrix extends AbstractCLIJ2Plugin impleme
             n = 1;
         }
         ClearCLBuffer index_list = clij2.create(new long[]{distance_matrix.getWidth(), n});
+        clij2.setRow(distance_matrix, 0, Float.MAX_VALUE);
+        clij2.setColumn(distance_matrix, 0, Float.MAX_VALUE);
+        clij2.setWhereXequalsY(distance_matrix, Float.MAX_VALUE);
+
         clij2.nClosestPoints(distance_matrix, index_list);
 
         clij2.set(touch_matrix_destination, 0);
 
         PointIndexListToTouchMatrix.pointIndexListToTouchMatrix(clij2, index_list, touch_matrix_destination);
+
+        clij2.setColumn(touch_matrix_destination, 0, 0);
 
         return true;
     }
