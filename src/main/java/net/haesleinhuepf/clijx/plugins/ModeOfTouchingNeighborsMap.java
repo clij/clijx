@@ -29,7 +29,7 @@ public class ModeOfTouchingNeighborsMap extends AbstractCLIJ2Plugin implements C
 
     @Override
     public String getCategories() {
-        return "Graph, Measurements";
+        return "Graph, Measurements, Neighbor-Filter";
     }
 
     @Override

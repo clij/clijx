@@ -29,7 +29,7 @@ public class MinimumOfTouchingNeighborsMap extends AbstractCLIJ2Plugin implement
 
     @Override
     public String getCategories() {
-        return "Graph, Measurements";
+        return "Graph, Measurements, Neighbor-Filter";
     }
 
     @Override
