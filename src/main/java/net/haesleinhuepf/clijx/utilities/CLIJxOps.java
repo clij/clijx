@@ -163,6 +163,26 @@ import net.haesleinhuepf.clijx.plugins.MaskedVoronoiLabeling;
 import net.haesleinhuepf.clijx.plugins.PullToResultsTableColumn;
 import net.haesleinhuepf.clijx.plugins.KMeansLabelClusterer;
 import net.haesleinhuepf.clijx.plugins.ModeOfTouchingNeighbors;
+import net.haesleinhuepf.clijx.plugins.GenerateProximalNeighborsMatrix;
+import net.haesleinhuepf.clijx.plugins.ReadIntensitiesFromMap;
+import net.haesleinhuepf.clijx.plugins.MaximumOfTouchingNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.MinimumOfTouchingNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.MeanOfTouchingNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.ModeOfTouchingNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.StandardDeviationOfTouchingNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.PointIndexListToTouchMatrix;
+import net.haesleinhuepf.clijx.plugins.GenerateProximalNeighborsMatrix;
+import net.haesleinhuepf.clijx.plugins.GenerateNNearestNeighborsMatrix;
+import net.haesleinhuepf.clijx.plugins.MaximumOfNNearestNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.MinimumOfNNearestNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.MeanOfNNearestNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.ModeOfNNearestNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.StandardDeviationOfNNearestNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.MaximumOfProximalNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.MinimumOfProximalNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.MeanOfProximalNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.ModeOfProximalNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.StandardDeviationOfProximalNeighborsMap;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2862,5 +2882,546 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.GenerateProximalNeighborsMatrix
+    //----------------------------------------------------
+    /**
+     * Produces a touch-matrix where the neighbors within a given distance range are marked as touching neighbors.
+     * 
+     * Takes a distance matrix (e.g. derived from a pointlist of centroids) and marks for every column the neighbors whose
+     * distance lie within a given distance range (>= min and <= max). 
+     * The resulting matrix can be use as if it was a touch-matrix (a.k.a. adjacency graph matrix). 
+     * 
+     * Parameters
+     * ----------
+     * distance_marix : Image
+     * touch_matrix_destination : Image
+     * min_distance : float, optional
+     *     default : 0
+     * max_distance : float, optional
+     *     default: 10 
+     * 
+     * Returns
+     * -------
+     * touch_matrix_destination
+     */
+    default boolean generateProximalNeighborsMatrix(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("GenerateProximalNeighborsMatrix");}
+        boolean result = GenerateProximalNeighborsMatrix.generateProximalNeighborsMatrix(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("GenerateProximalNeighborsMatrix");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ReadIntensitiesFromMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and an parametric image and reads parametric values from the labels positions.
+     * 
+     * The read intensity valus are stored in a new vector.
+     * 
+     * Note: This will only work if all labels have number of voxels == 1 or if all pixels in each label have the same value.
+     * 
+     * Parameters
+     * ----------
+     * labels
+     * map_image
+     * values_destination
+     */
+    default boolean readIntensitiesFromMap(ClearCLImageInterface input, ClearCLImageInterface new_values_vector, ClearCLImageInterface destination) {
+        if (doTimeTracing()) {recordMethodStart("ReadIntensitiesFromMap");}
+        boolean result = ReadIntensitiesFromMap.readIntensitiesFromMap(getCLIJ2(), input, new_values_vector, destination);
+        if (doTimeTracing()) {recordMethodEnd("ReadIntensitiesFromMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MaximumOfTouchingNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
+     * by the maximum value of neighboring labels. The radius of the neighborhood can be configured:
+     * * radius 0: Nothing is replaced
+     * * radius 1: direct neighbors are taken into account
+     * * radius 2: neighbors and neighbors or neighbors are taken into account
+     * * radius n: ...
+     * 
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * radius : int
+     * ignore_touching_background : bool
+     * 
+     * Returns
+     * -------
+     * parametric_map_destination
+     */
+    default boolean maximumOfTouchingNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, boolean arg5) {
+        if (doTimeTracing()) {recordMethodStart("MaximumOfTouchingNeighborsMap");}
+        boolean result = MaximumOfTouchingNeighborsMap.maximumOfTouchingNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), arg5);
+        if (doTimeTracing()) {recordMethodEnd("MaximumOfTouchingNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MinimumOfTouchingNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
+     * by the minimum value of neighboring labels. The radius of the neighborhood can be configured:
+     * * radius 0: Nothing is replaced
+     * * radius 1: direct neighbors are taken into account
+     * * radius 2: neighbors and neighbors or neighbors are taken into account
+     * * radius n: ...
+     * 
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * radius : int
+     * ignore_touching_background : bool
+     * 
+     * Returns
+     * -------
+     * parametric_map_destination
+     */
+    default boolean minimumOfTouchingNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, boolean arg5) {
+        if (doTimeTracing()) {recordMethodStart("MinimumOfTouchingNeighborsMap");}
+        boolean result = MinimumOfTouchingNeighborsMap.minimumOfTouchingNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), arg5);
+        if (doTimeTracing()) {recordMethodEnd("MinimumOfTouchingNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MeanOfTouchingNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
+     * by the mean average value of neighboring labels. The radius of the neighborhood can be configured:
+     * * radius 0: Nothing is replaced
+     * * radius 1: direct neighbors are taken into account
+     * * radius 2: neighbors and neighbors or neighbors are taken into account
+     * * radius n: ...
+     * 
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * radius : int
+     * ignore_touching_background : bool
+     * 
+     * Returns
+     * -------
+     * parametric_map_destination
+     */
+    default boolean meanOfTouchingNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, boolean arg5) {
+        if (doTimeTracing()) {recordMethodStart("MeanOfTouchingNeighborsMap");}
+        boolean result = MeanOfTouchingNeighborsMap.meanOfTouchingNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), arg5);
+        if (doTimeTracing()) {recordMethodEnd("MeanOfTouchingNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ModeOfTouchingNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
+     * by the most popular value of neighboring labels. The radius of the neighborhood can be configured:
+     * * radius 0: Nothing is replaced
+     * * radius 1: direct neighbors are taken into account
+     * * radius 2: neighbors and neighbors or neighbors are taken into account
+     * * radius n: ...
+     * 
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * radius : int
+     * ignore_touching_background : bool
+     * 
+     * Returns
+     * -------
+     * parametric_map_destination
+     */
+    default boolean modeOfTouchingNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, boolean arg5) {
+        if (doTimeTracing()) {recordMethodStart("ModeOfTouchingNeighborsMap");}
+        boolean result = ModeOfTouchingNeighborsMap.modeOfTouchingNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), arg5);
+        if (doTimeTracing()) {recordMethodEnd("ModeOfTouchingNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.StandardDeviationOfTouchingNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
+     * by the standard deviation value of neighboring labels. The radius of the neighborhood can be configured:
+     * * radius 0: Nothing is replaced
+     * * radius 1: direct neighbors are taken into account
+     * * radius 2: neighbors and neighbors or neighbors are taken into account
+     * * radius n: ...
+     * 
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * radius : int
+     * ignore_touching_background : bool
+     * 
+     * Returns
+     * -------
+     * parametric_map_destination
+     */
+    default boolean standardDeviationOfTouchingNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, boolean arg5) {
+        if (doTimeTracing()) {recordMethodStart("StandardDeviationOfTouchingNeighborsMap");}
+        boolean result = StandardDeviationOfTouchingNeighborsMap.standardDeviationOfTouchingNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), arg5);
+        if (doTimeTracing()) {recordMethodEnd("StandardDeviationOfTouchingNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.PointIndexListToTouchMatrix
+    //----------------------------------------------------
+    /**
+     * Takes a list of point indices to generate a touch matrix (a.k.a. adjacency graph matrix) out of it. 
+     * 
+     * The list hasa dimensionality of m*n for the points 1... m (0 a.k.a. background is not in this list). In the n rows, there are
+     * indices to points which should be connected.
+     * 
+     * Parameters
+     * ----------
+     * indexlist : Image
+     * matrix_destination : Image
+     */
+    default boolean pointIndexListToTouchMatrix(ClearCLBuffer indexlist, ClearCLBuffer matrix_destination) {
+        if (doTimeTracing()) {recordMethodStart("PointIndexListToTouchMatrix");}
+        boolean result = PointIndexListToTouchMatrix.pointIndexListToTouchMatrix(getCLIJ2(), indexlist, matrix_destination);
+        if (doTimeTracing()) {recordMethodEnd("PointIndexListToTouchMatrix");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.GenerateProximalNeighborsMatrix
+    //----------------------------------------------------
+    /**
+     * Produces a touch-matrix where the neighbors within a given distance range are marked as touching neighbors.
+     * 
+     * Takes a distance matrix (e.g. derived from a pointlist of centroids) and marks for every column the neighbors whose
+     * distance lie within a given distance range (>= min and <= max). 
+     * The resulting matrix can be use as if it was a touch-matrix (a.k.a. adjacency graph matrix). 
+     * 
+     * Parameters
+     * ----------
+     * distance_marix : Image
+     * touch_matrix_destination : Image
+     * min_distance : float, optional
+     *     default : 0
+     * max_distance : float, optional
+     *     default: 10 
+     * 
+     * Returns
+     * -------
+     * touch_matrix_destination
+     */
+    default boolean generateProximalNeighborsMatrix(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("GenerateProximalNeighborsMatrix");}
+        boolean result = GenerateProximalNeighborsMatrix.generateProximalNeighborsMatrix(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("GenerateProximalNeighborsMatrix");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.GenerateNNearestNeighborsMatrix
+    //----------------------------------------------------
+    /**
+     * Produces a touch-matrix where the n nearest neighbors are marked as touching neighbors. 
+     * 
+     * Takes a distance matrix (e.g. derived from a pointlist of centroids) and marks for every column the n smallest
+     * distances as neighbors. The resulting matrix can be use as if it was a touch-matrix (a.k.a. adjacency graph matrix). 
+     * 
+     * Inspired by a similar implementation in imglib2 [1]
+     * 
+     * Note: The implementation is limited to square matrices.
+     * 
+     * Parameters
+     * ----------
+     * distance_marix : Image
+     * touch_matrix_destination : Image
+     * n : int
+     *    number of neighbors
+     *    
+     * References
+     * ----------
+     * [1] https://github.com/imglib/imglib2/blob/master/src/main/java/net/imglib2/interpolation/neighborsearch/InverseDistanceWeightingInterpolator.java
+     * 
+     */
+    default boolean generateNNearestNeighborsMatrix(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("GenerateNNearestNeighborsMatrix");}
+        boolean result = GenerateNNearestNeighborsMatrix.generateNNearestNeighborsMatrix(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
+        if (doTimeTracing()) {recordMethodEnd("GenerateNNearestNeighborsMatrix");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MaximumOfNNearestNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
+     * by the maximum value of neighboring labels. The distance number of nearest neighbors can be configured.
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * n : int
+     *     number of nearest neighbors
+     */
+    default boolean maximumOfNNearestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("MaximumOfNNearestNeighborsMap");}
+        boolean result = MaximumOfNNearestNeighborsMap.maximumOfNNearestNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue());
+        if (doTimeTracing()) {recordMethodEnd("MaximumOfNNearestNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MinimumOfNNearestNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
+     * by the minimum value of neighboring labels. The distance number of nearest neighbors can be configured.
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * n : int
+     *     number of nearest neighbors
+     */
+    default boolean minimumOfNNearestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("MinimumOfNNearestNeighborsMap");}
+        boolean result = MinimumOfNNearestNeighborsMap.minimumOfNNearestNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue());
+        if (doTimeTracing()) {recordMethodEnd("MinimumOfNNearestNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MeanOfNNearestNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
+     * by the minimum value of neighboring labels. The distance number of nearest neighbors can be configured.
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * n : int
+     *     number of nearest neighbors
+     */
+    default boolean meanOfNNearestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("MeanOfNNearestNeighborsMap");}
+        boolean result = MeanOfNNearestNeighborsMap.meanOfNNearestNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue());
+        if (doTimeTracing()) {recordMethodEnd("MeanOfNNearestNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ModeOfNNearestNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
+     * by the mode value of neighboring labels. The distance number of nearest neighbors can be configured.
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * n : int
+     *     number of nearest neighbors
+     */
+    default boolean modeOfNNearestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("ModeOfNNearestNeighborsMap");}
+        boolean result = ModeOfNNearestNeighborsMap.modeOfNNearestNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue());
+        if (doTimeTracing()) {recordMethodEnd("ModeOfNNearestNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.StandardDeviationOfNNearestNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
+     * by the standard deviation value of neighboring labels. The distance number of nearest neighbors can be configured.
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * n : int
+     *     number of nearest neighbors
+     */
+    default boolean standardDeviationOfNNearestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("StandardDeviationOfNNearestNeighborsMap");}
+        boolean result = StandardDeviationOfNNearestNeighborsMap.standardDeviationOfNNearestNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue());
+        if (doTimeTracing()) {recordMethodEnd("StandardDeviationOfNNearestNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MaximumOfProximalNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image by the maximum value of neighboring labels.
+     * 
+     *  The distance range of the centroids of the neighborhood can be configured.
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * min_distance : float, optional
+     *     default : 0
+     * max_distance : float, optional
+     *     default: maximum float value
+     */
+    default boolean maximumOfProximalNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("MaximumOfProximalNeighborsMap");}
+        boolean result = MaximumOfProximalNeighborsMap.maximumOfProximalNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue(), new Double (arg5).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("MaximumOfProximalNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MinimumOfProximalNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image by the minimum value of neighboring labels.
+     * 
+     *  The distance range of the centroids of the neighborhood can be configured.
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * min_distance : float, optional
+     *     default : 0
+     * max_distance : float, optional
+     *     default: maximum float value
+     */
+    default boolean minimumOfProximalNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("MinimumOfProximalNeighborsMap");}
+        boolean result = MinimumOfProximalNeighborsMap.minimumOfProximalNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue(), new Double (arg5).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("MinimumOfProximalNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MeanOfProximalNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image by the mean average value of neighboring labels.
+     * 
+     *  The distance range of the centroids of the neighborhood can be configured.
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * min_distance : float, optional
+     *     default : 0
+     * max_distance : float, optional
+     *     default: maximum float value
+     */
+    default boolean meanOfProximalNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("MeanOfProximalNeighborsMap");}
+        boolean result = MeanOfProximalNeighborsMap.meanOfProximalNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue(), new Double (arg5).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("MeanOfProximalNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ModeOfProximalNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image by the most popular value of neighboring labels.
+     * 
+     *  The distance range of the centroids of the neighborhood can be configured.
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * min_distance : float, optional
+     *     default : 0
+     * max_distance : float, optional
+     *     default: maximum float value
+     */
+    default boolean modeOfProximalNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("ModeOfProximalNeighborsMap");}
+        boolean result = ModeOfProximalNeighborsMap.modeOfProximalNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue(), new Double (arg5).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("ModeOfProximalNeighborsMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.StandardDeviationOfProximalNeighborsMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image by the standard deviation value of neighboring labels.
+     * 
+     *  The distance range of the centroids of the neighborhood can be configured.
+     * Note: Values of all pixels in a label each must be identical.
+     * 
+     * Parameters
+     * ----------
+     * parametric_map : Image
+     * label_map : Image
+     * parametric_map_destination : Image
+     * min_distance : float, optional
+     *     default : 0
+     * max_distance : float, optional
+     *     default: maximum float value
+     */
+    default boolean standardDeviationOfProximalNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("StandardDeviationOfProximalNeighborsMap");}
+        boolean result = StandardDeviationOfProximalNeighborsMap.standardDeviationOfProximalNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue(), new Double (arg5).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("StandardDeviationOfProximalNeighborsMap");}
+        return result;
+    }
+
 }
-// 180 methods generated.
+// 200 methods generated.
