@@ -171,7 +171,6 @@ import net.haesleinhuepf.clijx.plugins.MeanOfTouchingNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.ModeOfTouchingNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.StandardDeviationOfTouchingNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.PointIndexListToTouchMatrix;
-import net.haesleinhuepf.clijx.plugins.GenerateProximalNeighborsMatrix;
 import net.haesleinhuepf.clijx.plugins.GenerateNNearestNeighborsMatrix;
 import net.haesleinhuepf.clijx.plugins.MaximumOfNNearestNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.MinimumOfNNearestNeighborsMap;
@@ -3117,36 +3116,6 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.GenerateProximalNeighborsMatrix
-    //----------------------------------------------------
-    /**
-     * Produces a touch-matrix where the neighbors within a given distance range are marked as touching neighbors.
-     * 
-     * Takes a distance matrix (e.g. derived from a pointlist of centroids) and marks for every column the neighbors whose
-     * distance lie within a given distance range (>= min and <= max). 
-     * The resulting matrix can be use as if it was a touch-matrix (a.k.a. adjacency graph matrix). 
-     * 
-     * Parameters
-     * ----------
-     * distance_marix : Image
-     * touch_matrix_destination : Image
-     * min_distance : float, optional
-     *     default : 0
-     * max_distance : float, optional
-     *     default: 10 
-     * 
-     * Returns
-     * -------
-     * touch_matrix_destination
-     */
-    default boolean generateProximalNeighborsMatrix(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("GenerateProximalNeighborsMatrix");}
-        boolean result = GenerateProximalNeighborsMatrix.generateProximalNeighborsMatrix(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("GenerateProximalNeighborsMatrix");}
-        return result;
-    }
-
-
     // net.haesleinhuepf.clijx.plugins.GenerateNNearestNeighborsMatrix
     //----------------------------------------------------
     /**
@@ -3424,4 +3393,4 @@ public abstract interface CLIJxOps {
     }
 
 }
-// 200 methods generated.
+// 199 methods generated.
