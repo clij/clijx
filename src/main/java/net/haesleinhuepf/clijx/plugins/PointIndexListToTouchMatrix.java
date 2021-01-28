@@ -52,7 +52,7 @@ public class PointIndexListToTouchMatrix extends AbstractCLIJ2Plugin implements 
 
         long[] dimensions = {indexlist.getDimensions()[0], 1, 1};
         clij2.activateSizeIndependentKernelCompilation();
-        clij2.execute(PointIndexListToMesh.class, "point_index_list_to_touch_matrix_x.cl", "point_index_list_to_touch_matrix", dimensions, dimensions, parameters);
+        clij2.execute(PointIndexListToTouchMatrix.class, "point_index_list_to_touch_matrix_x.cl", "point_index_list_to_touch_matrix", dimensions, dimensions, parameters);
         return true;
     }
 
