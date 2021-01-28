@@ -50,6 +50,7 @@ public class GenerateProximalNeighborsMatrix extends AbstractCLIJ2Plugin impleme
 
         clij2.setWhereXgreaterThanY(touch_matrix_destination, 0);
         clij2.setWhereXequalsY(touch_matrix_destination, 0);
+        clij2.setColumn(touch_matrix_destination, 0, 0);
 
         return true;
     }
