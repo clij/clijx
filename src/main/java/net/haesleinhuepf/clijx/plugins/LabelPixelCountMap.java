@@ -17,7 +17,7 @@ import org.scijava.plugin.Plugin;
 public class LabelPixelCountMap extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
     @Override
     public String getInputType() {
-        return "Image, Label Image";
+        return "Label Image";
     }
 
     @Override
