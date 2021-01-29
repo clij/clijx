@@ -182,6 +182,8 @@ import net.haesleinhuepf.clijx.plugins.MinimumOfProximalNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.MeanOfProximalNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.ModeOfProximalNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.StandardDeviationOfProximalNeighborsMap;
+import net.haesleinhuepf.clijx.plugins.LabelOverlapCountMap;
+import net.haesleinhuepf.clijx.plugins.LabelProximalNeighborCountMap;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2927,9 +2929,9 @@ public abstract interface CLIJxOps {
      * map_image
      * values_destination
      */
-    default boolean readIntensitiesFromMap(ClearCLImageInterface input, ClearCLImageInterface new_values_vector, ClearCLImageInterface destination) {
+    default boolean readIntensitiesFromMap(ClearCLImageInterface labels, ClearCLImageInterface map_image, ClearCLImageInterface values_destination) {
         if (doTimeTracing()) {recordMethodStart("ReadIntensitiesFromMap");}
-        boolean result = ReadIntensitiesFromMap.readIntensitiesFromMap(getCLIJ2(), input, new_values_vector, destination);
+        boolean result = ReadIntensitiesFromMap.readIntensitiesFromMap(getCLIJ2(), labels, map_image, values_destination);
         if (doTimeTracing()) {recordMethodEnd("ReadIntensitiesFromMap");}
         return result;
     }
@@ -3392,5 +3394,35 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.LabelOverlapCountMap
+    //----------------------------------------------------
+    /**
+     * Takes two label maps, and counts for every label in label map 1 how many labels overlap with it in label map 2.
+     * 
+     * The resulting map is generated from the label map 1 by replacing the labels with the respective count.
+     */
+    default boolean labelOverlapCountMap(ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer overlap_count_map_destination) {
+        if (doTimeTracing()) {recordMethodStart("LabelOverlapCountMap");}
+        boolean result = LabelOverlapCountMap.labelOverlapCountMap(getCLIJ2(), label_map1, label_map2, overlap_count_map_destination);
+        if (doTimeTracing()) {recordMethodEnd("LabelOverlapCountMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LabelProximalNeighborCountMap
+    //----------------------------------------------------
+    /**
+     * Takes two label maps, and counts for every label in label map 1 how many labels are in a given distance range to it in label map 2.
+     * 
+     * Distances are computed from the centroids of the labels. The resulting map is generated from the label map 1 by replacing the labels with the respective count.
+     */
+    default boolean labelProximalNeighborCountMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("LabelProximalNeighborCountMap");}
+        boolean result = LabelProximalNeighborCountMap.labelProximalNeighborCountMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue(), new Double (arg5).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("LabelProximalNeighborCountMap");}
+        return result;
+    }
+
 }
-// 199 methods generated.
+// 201 methods generated.

@@ -638,8 +638,14 @@ class CLIJxAutoComplete {
        headline = "clijx.labelMinimumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3)";
        description = "<b>labelMinimumIntensityMap</b><br><br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.labelOverlapCountMap(ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer overlap_count_map_destination)";
+       description = "<b>labelOverlapCountMap</b><br><br>Takes two label maps, and counts for every label in label map 1 how many labels overlap with it in label map 2.<br><br>The resulting map is generated from the label map 1 by replacing the labels with the respective count.<br><br>Parameters:<br>ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer overlap_count_map_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.labelPixelCountMap(ClearCLBuffer input, ClearCLBuffer destination)";
        description = "<b>labelPixelCountMap</b><br><br>Takes a label map, determines the number of pixels per label and replaces every label with the that number.<br><br>This results in a parametric image expressing area or volume.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.labelProximalNeighborCountMap(ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer proximal_neighbor_count_map_destination, Float min_distance, Float max_distance)";
+       description = "<b>labelProximalNeighborCountMap</b><br><br>Takes two label maps, and counts for every label in label map 1 how many labels are in a given distance range to it in label map 2.<br><br>Distances are computed from the centroids of the labels. The resulting map is generated from the label map 1 by replacing the labels with the respective count.<br><br>Parameters:<br>ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer proximal_neighbor_count_map_destination, Float min_distance, Float max_distance";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.labelSpots(ClearCLBuffer input_spots, ClearCLBuffer labelled_spots_destination)";
        description = "<b>labelSpots</b><br><br>Transforms a binary image with single pixles set to 1 to a labelled spots image. <br><br>Transforms a spots image as resulting from maximum/minimum detection in an image of the same size where every spot has a number 1, 2, ... n.<br><br>Parameters:<br>ClearCLBuffer input_spots, ClearCLBuffer labelled_spots_destination";
@@ -1166,8 +1172,8 @@ class CLIJxAutoComplete {
        headline = "clijx.readImageFromDisc(String arg1)";
        description = "<b>readImageFromDisc</b><br><br>Read an image from disc.<br><br>Parameters:<br>String arg1";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.readIntensitiesFromMap(ClearCLImageInterface input, ClearCLImageInterface new_values_vector, ClearCLImageInterface destination)";
-       description = "<b>readIntensitiesFromMap</b><br><br>Takes a label image and an parametric image and reads parametric values from the labels positions.<br><br>The read intensity valus are stored in a new vector.<br><br>Note: This will only work if all labels have number of voxels == 1 or if all pixels in each label have the same value.<br><br>### Parameters<br><br>labels<br>map_image<br>values_destination<br><br>Parameters:<br>ClearCLImageInterface input, ClearCLImageInterface new_values_vector, ClearCLImageInterface destination";
+       headline = "clijx.readIntensitiesFromMap(ClearCLImageInterface labels, ClearCLImageInterface map_image, ClearCLImageInterface values_destination)";
+       description = "<b>readIntensitiesFromMap</b><br><br>Takes a label image and an parametric image and reads parametric values from the labels positions.<br><br>The read intensity valus are stored in a new vector.<br><br>Note: This will only work if all labels have number of voxels == 1 or if all pixels in each label have the same value.<br><br>### Parameters<br><br>labels<br>map_image<br>values_destination<br><br>Parameters:<br>ClearCLImageInterface labels, ClearCLImageInterface map_image, ClearCLImageInterface values_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.readRawImageFromDisc(ClearCLBuffer arg1, String arg2)";
        description = "<b>readRawImageFromDisc</b><br><br>Reads a raw file from disc and pushes it immediately to the GPU.<br><br>Parameters:<br>ClearCLBuffer arg1, String arg2";
@@ -1622,4 +1628,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 537 methods generated.
+// 539 methods generated.
