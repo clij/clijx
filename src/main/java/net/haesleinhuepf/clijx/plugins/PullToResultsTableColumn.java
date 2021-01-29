@@ -26,6 +26,7 @@ public class PullToResultsTableColumn extends AbstractCLIJ2Plugin implements CLI
         Boolean append = asBoolean(args[2]);
         ResultsTable table = ResultsTable.getResultsTable();
         pullToResultsTableColumn(getCLIJ2(), buffer, table, column, append);
+        table.show("Results");
         return true;
     }
 
