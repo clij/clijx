@@ -47,7 +47,9 @@ public class LabelOverlapCountMap extends AbstractCLIJ2Plugin implements CLIJMac
         clij2.generateBinaryOverlapMatrix(label_map1, label_map2, binary_overlap_matrix);
 
         ClearCLBuffer overlap_count_array = clij2.create(number_of_labels_1,1, 1);
-        clij2.setRow(overlap_count_array, 0, 0);
+
+        // ignore overlap with background
+        clij2.setRow(binary_overlap_matrix, 0, 0);
 
         clij2.sumYProjection(binary_overlap_matrix, overlap_count_array);
         binary_overlap_matrix.close();
