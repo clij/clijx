@@ -30,7 +30,7 @@ public class ReadIntensitiesFromMap extends AbstractCLIJ2Plugin implements CLIJM
 
     @Override
     public String getParameterHelpText() {
-        return "Image input, Image new_values_vector, ByRef Image destination";
+        return "Image labels, Image map_image, ByRef Image values_destination";
     }
 
     @Override
@@ -75,5 +75,11 @@ public class ReadIntensitiesFromMap extends AbstractCLIJ2Plugin implements CLIJM
     @Override
     public String getCategories() {
         return "Graph, Labels, Measurement";
+    }
+
+    @Override
+    public ClearCLBuffer createOutputBufferFromSource(ClearCLBuffer input) {
+        int number_of_labels = (int) getCLIJ2().maximumOfAllPixels((ClearCLBuffer)args[0]);
+        return getCLIJ2().create(number_of_labels + 1, 1, 1);
     }
 }
