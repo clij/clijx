@@ -38,9 +38,13 @@ public class VisualizeOutlinesOnOriginal extends AbstractCLIJ2Plugin implements 
         clij2.detectLabelEdges(labels, temp);
 
         double max_intensity = clij2.maximumOfAllPixels(intensity);
-        clij2.addImagesWeighted(intensity, temp, result, 1, max_intensity);
 
+        ClearCLBuffer temp1 = clij2.create(labels.getDimensions(), NativeTypeEnum.Byte);
+        clij2.multiplyImageAndScalar(temp, temp1, max_intensity);
         temp.close();
+
+        clij2.maximumImages(temp1, intensity, result);
+        temp1.close();
         return true;
     }
 
