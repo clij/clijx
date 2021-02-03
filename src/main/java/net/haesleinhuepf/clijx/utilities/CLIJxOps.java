@@ -184,6 +184,8 @@ import net.haesleinhuepf.clijx.plugins.ModeOfProximalNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.StandardDeviationOfProximalNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.LabelOverlapCountMap;
 import net.haesleinhuepf.clijx.plugins.LabelProximalNeighborCountMap;
+import net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelEdges;
+import net.haesleinhuepf.clijx.plugins.OutOfIntensityRange;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2249,19 +2251,19 @@ public abstract interface CLIJxOps {
      * * local_mean_average_distance_of_touching_neighbors
      * * local_maximum_average_distance_of_touching_neighbors
      * * count_touching_neighbors
+     * * local_maximum_average_distance_n_closest_neighbors=2
      * * local_minimum_average_distance_of_touching_neighbors
+     * * local_mean_average_distance_n_closest_neighbors=2
      * * average_touch_pixel_count
      * * local_minimum_count_touching_neighbors
      * * average_distance_n_closest_neighbors
+     * * local_minimum_average_distance_n_closest_neighbors=2
      * * average_distance_of_touching_neighbors
      * * local_mean_count_touching_neighbors
-     * * local_mean_average_distance_n_closest_neighbors
-     * * local_maximum_average_distance_n_closest_neighbors
+     * * local_standard_deviation_average_distance_n_closest_neighbors=2
      * * local_standard_deviation_average_distance_of_touching_neighbors
      * * local_maximum_count_touching_neighbors
      * * local_standard_deviation_count_touching_neighbors
-     * * local_standard_deviation_average_distance_n_closest_neighbors
-     * * local_minimum_average_distance_n_closest_neighbors
      * 
      * Example: "MEAN_INTENSITY count_touching_neighbors"
      */
@@ -2300,19 +2302,19 @@ public abstract interface CLIJxOps {
      * * local_mean_average_distance_of_touching_neighbors
      * * local_maximum_average_distance_of_touching_neighbors
      * * count_touching_neighbors
+     * * local_maximum_average_distance_n_closest_neighbors=2
      * * local_minimum_average_distance_of_touching_neighbors
+     * * local_mean_average_distance_n_closest_neighbors=2
      * * average_touch_pixel_count
      * * local_minimum_count_touching_neighbors
      * * average_distance_n_closest_neighbors
+     * * local_minimum_average_distance_n_closest_neighbors=2
      * * average_distance_of_touching_neighbors
      * * local_mean_count_touching_neighbors
-     * * local_mean_average_distance_n_closest_neighbors
-     * * local_maximum_average_distance_n_closest_neighbors
+     * * local_standard_deviation_average_distance_n_closest_neighbors=2
      * * local_standard_deviation_average_distance_of_touching_neighbors
      * * local_maximum_count_touching_neighbors
      * * local_standard_deviation_count_touching_neighbors
-     * * local_standard_deviation_average_distance_n_closest_neighbors
-     * * local_minimum_average_distance_n_closest_neighbors
      * 
      * Example: "MEAN_INTENSITY count_touching_neighbors"
      */
@@ -3424,5 +3426,33 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelEdges
+    //----------------------------------------------------
+    /**
+     * Takes a label map and reduces all labels to their edges. Label IDs stay the same and background will be zero.
+     */
+    default boolean reduceLabelsToLabelEdges(ClearCLBuffer input_labels, ClearCLBuffer destination_labels) {
+        if (doTimeTracing()) {recordMethodStart("ReduceLabelsToLabelEdges");}
+        boolean result = ReduceLabelsToLabelEdges.reduceLabelsToLabelEdges(getCLIJ2(), input_labels, destination_labels);
+        if (doTimeTracing()) {recordMethodEnd("ReduceLabelsToLabelEdges");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.OutOfIntensityRange
+    //----------------------------------------------------
+    /**
+     * Sets all pixels to 1 if their intensity lies out of a given range, and 0 otherwise.
+     * 
+     * Given minimum and maximum are considered part of the range.
+     */
+    default boolean outOfIntensityRange(ClearCLBuffer arg1, ClearCLImageInterface arg2, double arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("OutOfIntensityRange");}
+        boolean result = OutOfIntensityRange.outOfIntensityRange(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("OutOfIntensityRange");}
+        return result;
+    }
+
 }
-// 201 methods generated.
+// 203 methods generated.
