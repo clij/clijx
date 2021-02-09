@@ -35,7 +35,7 @@ public class VarianceSphere extends AbstractCLIJ2Plugin implements CLIJMacroPlug
 
     @Override
     public String getCategories() {
-        return "Filter, Noise";
+        return "Filter";
     }
 
     @Override

@@ -35,7 +35,7 @@ public class VarianceBox extends AbstractCLIJ2Plugin implements CLIJMacroPlugin,
 
     @Override
     public String getCategories() {
-        return "Filter, Noise";
+        return "Filter";
     }
 
     @Override
