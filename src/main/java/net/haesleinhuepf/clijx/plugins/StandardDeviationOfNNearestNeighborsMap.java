@@ -68,6 +68,8 @@ public class StandardDeviationOfNNearestNeighborsMap extends AbstractCLIJ2Plugin
         clij2.standardDeviationOfTouchingNeighbors(intensities, touch_matrix, new_intensities);
         intensities.close();
         touch_matrix.close();
+        // keep background black
+        clij2.setColumn(new_intensities, 0, 0);
 
         clij2.replaceIntensities(label_map, new_intensities, parametric_map_destination);
         new_intensities.close();
