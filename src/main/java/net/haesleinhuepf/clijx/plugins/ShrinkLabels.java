@@ -11,6 +11,10 @@ import net.haesleinhuepf.clij2.utilities.HasClassifiedInputOutput;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
+/**
+ * Author: @haesleinhuepf
+ * February 2021
+ */
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_shrinkLabels")
 public class ShrinkLabels extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
     @Override
