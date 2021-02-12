@@ -34,6 +34,11 @@ public class NeighborCountWithTouchPortionAboveThresholdMap extends AbstractCLIJ
     }
 
     @Override
+    public Object[] getDefaultValues() {
+        return new Object[]{null, null, 0.1};
+    }
+
+    @Override
     public boolean executeCL() {
         return neighborCountWithTouchPortionAboveThresholdMap (getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1], asFloat(args[2]));
     }
