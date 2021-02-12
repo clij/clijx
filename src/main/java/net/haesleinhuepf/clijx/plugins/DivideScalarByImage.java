@@ -61,7 +61,7 @@ public class DivideScalarByImage extends AbstractCLIJ2Plugin implements CLIJMacr
 
     @Override
     public String getParameterHelpText() {
-        return "Image divident, Image divisor, ByRef Image destination";
+        return "Image image, ByRef Image destination, Number scalar";
     }
 
     @Override
