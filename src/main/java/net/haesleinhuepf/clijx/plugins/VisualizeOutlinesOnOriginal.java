@@ -34,12 +34,12 @@ public class VisualizeOutlinesOnOriginal extends AbstractCLIJ2Plugin implements 
     }
 
     public static boolean visualizeOutlinesOnOriginal(CLIJ2 clij2, ClearCLBuffer intensity, ClearCLBuffer labels, ClearCLBuffer result) {
-        ClearCLBuffer temp = clij2.create(labels.getDimensions(), NativeTypeEnum.Byte);
+        ClearCLBuffer temp = clij2.create(labels.getDimensions(), NativeTypeEnum.UnsignedByte);
         clij2.detectLabelEdges(labels, temp);
 
         double max_intensity = clij2.maximumOfAllPixels(intensity);
 
-        ClearCLBuffer temp1 = clij2.create(labels.getDimensions(), NativeTypeEnum.Byte);
+        ClearCLBuffer temp1 = clij2.create(intensity);
         clij2.multiplyImageAndScalar(temp, temp1, max_intensity);
         temp.close();
 
@@ -60,6 +60,6 @@ public class VisualizeOutlinesOnOriginal extends AbstractCLIJ2Plugin implements 
 
     @Override
     public String getCategories() {
-        return "Label";
+        return "Label,Math";
     }
 }
