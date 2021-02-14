@@ -335,6 +335,9 @@ class CLIJxAutoComplete {
        headline = "clijx.divideImages(ClearCLImageInterface divident, ClearCLImageInterface divisor, ClearCLImageInterface destination)";
        description = "<b>divideImages</b><br><br>Divides two images X and Y by each other pixel wise. <br><br><pre>f(x, y) = x / y</pre><br><br>Parameters:<br>ClearCLImageInterface divident, ClearCLImageInterface divisor, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.divideScalarByImage(ClearCLImageInterface image, ClearCLImageInterface destination, Float scalar)";
+       description = "<b>divideScalarByImage</b><br><br>Divides a scalar s by image X pixel wise. <br><br><pre>f(s, x) = s / x</pre><br><br>Parameters:<br>ClearCLImageInterface image, ClearCLImageInterface destination, Float scalar";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.downsample(ClearCLImageInterface source, ClearCLImageInterface destination, Float factorX, Float factorY)";
        description = "<b>downsample</b><br><br>Scales an image using given scaling factors for X and Y dimensions. <br><br>The nearest-neighbor method<br>is applied. In ImageJ the method which is similar is called 'Interpolation method: none'.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float factorX, Float factorY";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -911,8 +914,14 @@ class CLIJxAutoComplete {
        headline = "clijx.medianOfTouchingNeighbors(ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer median_values_destination)";
        description = "<b>medianOfTouchingNeighbors</b><br><br>Takes a touch matrix and a vector of values to determine the median value among touching neighbors for every object. <br><br><br><br>Parameters:<br>ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer median_values_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.medianTouchPortionMap(ClearCLBuffer labels, ClearCLBuffer map_destination)";
+       description = "<b>medianTouchPortionMap</b><br><br>Starts from a label map, determines median touch portion to neighbors (between 0 and 1) and draws a map.<br><br><br><br>Parameters:<br>ClearCLBuffer labels, ClearCLBuffer map_destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.medianZProjection(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>medianZProjection</b><br><br>Determines the median intensity projection of an image stack along Z.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.medianZProjectionMasked(ClearCLImageInterface arg1, ClearCLImageInterface arg2, ClearCLImageInterface arg3)";
+       description = "<b>medianZProjectionMasked</b><br><br>Determines the median intensity projection of an image stack along Z where pixels in a corresponding mask image are unequal to zero.<br><br>Parameters:<br>ClearCLImageInterface arg1, ClearCLImageInterface arg2, ClearCLImageInterface arg3";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.mergeTouchingLabels(ClearCLBuffer source, ClearCLBuffer destination)";
        description = "<b>mergeTouchingLabels</b><br><br><br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination";
@@ -1024,6 +1033,9 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.nClosestPoints(ClearCLBuffer arg1, ClearCLBuffer arg2)";
        description = "<b>nClosestPoints</b><br><br>Determine the n point indices with shortest distance for all points in a distance matrix. <br><br>This corresponds to the n row indices with minimum values for each column of the distance matrix.<br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.neighborCountWithTouchPortionAboveThresholdMap(ClearCLBuffer labels, ClearCLBuffer map_destination, Float minimum_touch_portion)";
+       description = "<b>neighborCountWithTouchPortionAboveThresholdMap</b><br><br>Starts from a label map, determines touch portion to neighbors, counts those above a given value (between 0 and 1) and draws a map.<br><br><br><br>Parameters:<br>ClearCLBuffer labels, ClearCLBuffer map_destination, Float minimum_touch_portion";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.neighborDistanceRangeRatioMap(ClearCLBuffer input, ClearCLBuffer destination)";
        description = "<b>neighborDistanceRangeRatioMap</b><br><br>Takes a label map, determines which labels touch and replaces every label with the minimum distance to their neighboring labels.<br><br>To determine the distances, the centroid of the labels is determined internally.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination";
@@ -1652,4 +1664,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 547 methods generated.
+// 551 methods generated.

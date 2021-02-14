@@ -191,6 +191,10 @@ import net.haesleinhuepf.clijx.plugins.Similar;
 import net.haesleinhuepf.clijx.plugins.Different;
 import net.haesleinhuepf.clijx.weka.WekaRegionalLabelClassifier;
 import net.haesleinhuepf.clijx.plugins.LabelMeanOfLaplacianMap;
+import net.haesleinhuepf.clijx.plugins.MedianZProjectionMasked;
+import net.haesleinhuepf.clijx.plugins.MedianTouchPortionMap;
+import net.haesleinhuepf.clijx.plugins.NeighborCountWithTouchPortionAboveThresholdMap;
+import net.haesleinhuepf.clijx.plugins.DivideScalarByImage;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -3539,5 +3543,63 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.MedianZProjectionMasked
+    //----------------------------------------------------
+    /**
+     * Determines the median intensity projection of an image stack along Z where pixels in a corresponding mask image are unequal to zero.
+     */
+    default boolean medianZProjectionMasked(ClearCLImageInterface arg1, ClearCLImageInterface arg2, ClearCLImageInterface arg3) {
+        if (doTimeTracing()) {recordMethodStart("MedianZProjectionMasked");}
+        boolean result = MedianZProjectionMasked.medianZProjectionMasked(getCLIJ2(), arg1, arg2, arg3);
+        if (doTimeTracing()) {recordMethodEnd("MedianZProjectionMasked");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.MedianTouchPortionMap
+    //----------------------------------------------------
+    /**
+     * Starts from a label map, determines median touch portion to neighbors (between 0 and 1) and draws a map.
+     * 
+     * 
+     */
+    default boolean medianTouchPortionMap(ClearCLBuffer labels, ClearCLBuffer map_destination) {
+        if (doTimeTracing()) {recordMethodStart("MedianTouchPortionMap");}
+        boolean result = MedianTouchPortionMap.medianTouchPortionMap(getCLIJ2(), labels, map_destination);
+        if (doTimeTracing()) {recordMethodEnd("MedianTouchPortionMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.NeighborCountWithTouchPortionAboveThresholdMap
+    //----------------------------------------------------
+    /**
+     * Starts from a label map, determines touch portion to neighbors, counts those above a given value (between 0 and 1) and draws a map.
+     * 
+     * 
+     */
+    default boolean neighborCountWithTouchPortionAboveThresholdMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("NeighborCountWithTouchPortionAboveThresholdMap");}
+        boolean result = NeighborCountWithTouchPortionAboveThresholdMap.neighborCountWithTouchPortionAboveThresholdMap(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("NeighborCountWithTouchPortionAboveThresholdMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.DivideScalarByImage
+    //----------------------------------------------------
+    /**
+     * Divides a scalar s by image X pixel wise. 
+     * 
+     * <pre>f(s, x) = s / x</pre>
+     */
+    default boolean divideScalarByImage(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3) {
+        if (doTimeTracing()) {recordMethodStart("DivideScalarByImage");}
+        boolean result = DivideScalarByImage.divideScalarByImage(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("DivideScalarByImage");}
+        return result;
+    }
+
 }
-// 209 methods generated.
+// 213 methods generated.
