@@ -687,7 +687,7 @@ class CLIJ2AutoComplete {
        description = "<b>multiplyImageStackWithScalars</b><br><br>Multiplies all pixels value x in a given image X with a constant scalar s from a list of scalars.<br><br><pre>f(x, s) = x * s</pre><br><br>Parameters:<br>ClearCLImageInterface arg1, ClearCLImageInterface arg2, float[] arg3";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.multiplyImages(ClearCLImageInterface factor1, ClearCLImageInterface factor2, ClearCLImageInterface destination)";
-       description = "<b>multiplyImages</b><br><br>Multiplies all pairs of pixel values x and y from two image X and Y.<br><br><pre>f(x, y) = x * y</pre><br><br>### Parameters<br><br>factor1 : Image<br>    The first input image to be multiplied.<br>factor2 : Image<br>    The second image to be multiplied.<br>destination : Image<br>    The output image where results are written into.<br><br><br>Parameters:<br>ClearCLImageInterface factor1, ClearCLImageInterface factor2, ClearCLImageInterface destination";
+       description = "<b>multiplyImages</b><br><br>Multiplies all pairs of pixel values x and y from two images X and Y.<br><br><pre>f(x, y) = x * y</pre><br><br>### Parameters<br><br>factor1 : Image<br>    The first input image to be multiplied.<br>factor2 : Image<br>    The second image to be multiplied.<br>destination : Image<br>    The output image where results are written into.<br><br><br>Parameters:<br>ClearCLImageInterface factor1, ClearCLImageInterface factor2, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.multiplyMatrix(ClearCLBuffer matrix1, ClearCLBuffer matrix2, ClearCLBuffer matrix_destination)";
        description = "<b>multiplyMatrix</b><br><br>Multiplies two matrices with each other.<br><br>Parameters:<br>ClearCLBuffer matrix1, ClearCLBuffer matrix2, ClearCLBuffer matrix_destination";
@@ -993,7 +993,7 @@ class CLIJ2AutoComplete {
        description = "<b>subtractImages</b><br><br>Subtracts one image X from another image Y pixel wise.<br><br><pre>f(x, y) = x - y</pre><br><br>Parameters:<br>ClearCLImageInterface subtrahend, ClearCLImageInterface minuend, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.sumImageSliceBySlice(ClearCLImageInterface source, ClearCLImageInterface destination)";
-       description = "<b>sumImageSliceBySlice</b><br><br>Sums all pixels slice by slice and returns them in an array.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       description = "<b>sumImageSliceBySlice</b><br><br>Sums all pixels slice by slice and returns the sums in a vector.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.sumOfAllPixels(ClearCLImageInterface source)";
        description = "<b>sumOfAllPixels</b><br><br>Determines the sum of all pixels in a given image. <br><br>It will be stored in a new row of ImageJs<br>Results table in the column 'Sum'.<br><br>### Parameters<br><br>source : Image<br>    The image of which all pixels or voxels will be summed.<br><br><br>Parameters:<br>ClearCLImageInterface source";

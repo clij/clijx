@@ -195,6 +195,8 @@ import net.haesleinhuepf.clijx.plugins.MedianZProjectionMasked;
 import net.haesleinhuepf.clijx.plugins.MedianTouchPortionMap;
 import net.haesleinhuepf.clijx.plugins.NeighborCountWithTouchPortionAboveThresholdMap;
 import net.haesleinhuepf.clijx.plugins.DivideScalarByImage;
+import net.haesleinhuepf.clijx.plugins.ReadValuesFromMap;
+import net.haesleinhuepf.clijx.plugins.ReadValuesFromPositions;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2258,18 +2260,10 @@ public abstract interface CLIJxOps {
      * * SUM_INTENSITY
      * * STANDARD_DEVIATION_INTENSITY
      * * PIXEL_COUNT
-     * * local_mean_average_distance_of_touching_neighbors
-     * * local_maximum_average_distance_of_touching_neighbors
      * * count_touching_neighbors
-     * * local_minimum_average_distance_of_touching_neighbors
      * * average_touch_pixel_count
-     * * local_minimum_count_touching_neighbors
      * * average_distance_of_touching_neighbors
-     * * local_mean_count_touching_neighbors
      * * MEAN_OF_LAPLACIAN
-     * * local_standard_deviation_average_distance_of_touching_neighbors
-     * * local_maximum_count_touching_neighbors
-     * * local_standard_deviation_count_touching_neighbors
      * 
      * Example: "MEAN_INTENSITY count_touching_neighbors"
      */
@@ -2305,18 +2299,10 @@ public abstract interface CLIJxOps {
      * * SUM_INTENSITY
      * * STANDARD_DEVIATION_INTENSITY
      * * PIXEL_COUNT
-     * * local_mean_average_distance_of_touching_neighbors
-     * * local_maximum_average_distance_of_touching_neighbors
      * * count_touching_neighbors
-     * * local_minimum_average_distance_of_touching_neighbors
      * * average_touch_pixel_count
-     * * local_minimum_count_touching_neighbors
      * * average_distance_of_touching_neighbors
-     * * local_mean_count_touching_neighbors
      * * MEAN_OF_LAPLACIAN
-     * * local_standard_deviation_average_distance_of_touching_neighbors
-     * * local_maximum_count_touching_neighbors
-     * * local_standard_deviation_count_touching_neighbors
      * 
      * Example: "MEAN_INTENSITY count_touching_neighbors"
      */
@@ -2927,11 +2913,7 @@ public abstract interface CLIJxOps {
      * 
      * Note: This will only work if all labels have number of voxels == 1 or if all pixels in each label have the same value.
      * 
-     * Parameters
-     * ----------
-     * labels
-     * map_image
-     * values_destination
+     * DEPRECATED: Use ReadValuesFromMap instead
      */
     default boolean readIntensitiesFromMap(ClearCLImageInterface labels, ClearCLImageInterface map_image, ClearCLImageInterface values_destination) {
         if (doTimeTracing()) {recordMethodStart("ReadIntensitiesFromMap");}
@@ -3601,5 +3583,49 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.ReadValuesFromMap
+    //----------------------------------------------------
+    /**
+     * Takes a label image and an parametric image and reads parametric values from the labels positions.
+     * 
+     * The read intensity valus are stored in a new vector.
+     * 
+     * Note: This will only work if all labels have number of voxels == 1 or if all pixels in each label have the same value.
+     * 
+     * Parameters
+     * ----------
+     * labels
+     * map_image
+     * values_destination
+     */
+    default boolean readValuesFromMap(ClearCLImageInterface labels, ClearCLImageInterface map_image, ClearCLImageInterface values_destination) {
+        if (doTimeTracing()) {recordMethodStart("ReadValuesFromMap");}
+        boolean result = ReadValuesFromMap.readValuesFromMap(getCLIJ2(), labels, map_image, values_destination);
+        if (doTimeTracing()) {recordMethodEnd("ReadValuesFromMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ReadValuesFromPositions
+    //----------------------------------------------------
+    /**
+     * Takes a pointlist and a parametric image and reads parametric values from the positions.
+     * 
+     * The read intensity values are stored in a new vector.
+     * 
+     * Parameters
+     * ----------
+     * pointlist
+     * map_image
+     * values_destination
+     */
+    default boolean readValuesFromPositions(ClearCLImageInterface pointlist, ClearCLImageInterface map_image, ClearCLImageInterface values_destination) {
+        if (doTimeTracing()) {recordMethodStart("ReadValuesFromPositions");}
+        boolean result = ReadValuesFromPositions.readValuesFromPositions(getCLIJ2(), pointlist, map_image, values_destination);
+        if (doTimeTracing()) {recordMethodEnd("ReadValuesFromPositions");}
+        return result;
+    }
+
 }
-// 213 methods generated.
+// 215 methods generated.
