@@ -1,5 +1,5 @@
 
-__kernel void read_intensities_from_map(
+__kernel void read_values_from_map(
     IMAGE_labels_TYPE labels,
     IMAGE_map_image_TYPE map_image,
     IMAGE_intensities_TYPE intensities
