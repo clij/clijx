@@ -8,12 +8,9 @@ import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
-import net.haesleinhuepf.clij2.plugins.ReplaceIntensities;
 import net.haesleinhuepf.clij2.utilities.HasClassifiedInputOutput;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
-
-import java.util.HashMap;
 
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_readIntensitiesFromMap")
 public class ReadIntensitiesFromMap extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
@@ -40,17 +37,8 @@ public class ReadIntensitiesFromMap extends AbstractCLIJ2Plugin implements CLIJM
     }
 
     public static boolean readIntensitiesFromMap(CLIJ2 clij2, ClearCLImageInterface labels, ClearCLImageInterface map_image, ClearCLImageInterface values_destination) {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.clear();
-        parameters.put("labels", labels);
-        parameters.put("map_image", map_image);
-        parameters.put("intensities", values_destination);
-
-        long[] dims = labels.getDimensions();
-
-        clij2.activateSizeIndependentKernelCompilation();
-        clij2.execute(ReadIntensitiesFromMap.class, "read_intensities_from_map_x.cl", "read_intensities_from_map", dims, dims, parameters);
-        return true;
+        System.out.println("Deprecation warning: readIntensitiesFromMap is deprecated. Use readValuesFromMap instead.");
+        return ReadValuesFromMap.readValuesFromMap(clij2, labels, map_image, values_destination);
     }
 
     @Override
@@ -60,11 +48,7 @@ public class ReadIntensitiesFromMap extends AbstractCLIJ2Plugin implements CLIJM
                 "\n" +
                 "Note: This will only work if all labels have number of voxels == 1 or if all pixels in each label have the same value.\n" +
                 "\n" +
-                "Parameters\n" +
-                "----------\n" +
-                "labels\n" +
-                "map_image\n" +
-                "values_destination";
+                "DEPRECATED: Use ReadValuesFromMap instead";
     }
 
     @Override

@@ -2,18 +2,14 @@ package net.haesleinhuepf.clijx.plugins;
 
 
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
-import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
-import net.haesleinhuepf.clij2.plugins.MaximumOfTouchingNeighbors;
 import net.haesleinhuepf.clij2.utilities.HasClassifiedInputOutput;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
-
-import java.util.HashMap;
 
 /**
  * Author: @haesleinhuepf
@@ -80,7 +76,7 @@ public class MaximumOfTouchingNeighborsMap extends AbstractCLIJ2Plugin implement
         other_matrix.close();
 
         ClearCLBuffer intensities = clij2.create(new long[]{number_of_labels + 1 , 1, 1});
-        ReadIntensitiesFromMap.readIntensitiesFromMap(clij2, label_map, parametric_map, intensities);
+        ReadValuesFromMap.readValuesFromMap(clij2, label_map, parametric_map, intensities);
 
         ClearCLBuffer new_intensities = clij2.create(new long[]{number_of_labels + 1 , 1, 1});
         clij2.maximumOfTouchingNeighbors(intensities, touch_matrix, new_intensities);

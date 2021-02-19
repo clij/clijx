@@ -61,7 +61,7 @@ public class MinimumOfProximalNeighborsMap extends AbstractCLIJ2Plugin implement
         GenerateProximalNeighborsMatrix.generateProximalNeighborsMatrix(clij2, distance_matrix, touch_matrix, min_distance, max_distance);
 
         ClearCLBuffer intensities = clij2.create(new long[]{number_of_labels + 1 , 1, 1});
-        ReadIntensitiesFromMap.readIntensitiesFromMap(clij2, label_map, parametric_map, intensities);
+        ReadValuesFromMap.readValuesFromMap(clij2, label_map, parametric_map, intensities);
 
         ClearCLBuffer new_intensities = clij2.create(new long[]{number_of_labels + 1 , 1, 1});
         clij2.minimumOfTouchingNeighbors(intensities, touch_matrix, new_intensities);

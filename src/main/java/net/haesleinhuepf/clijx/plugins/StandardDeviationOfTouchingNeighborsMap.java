@@ -76,7 +76,7 @@ public class StandardDeviationOfTouchingNeighborsMap extends AbstractCLIJ2Plugin
         other_matrix.close();
 
         ClearCLBuffer intensities = clij2.create(new long[]{number_of_labels + 1 , 1, 1});
-        ReadIntensitiesFromMap.readIntensitiesFromMap(clij2, label_map, parametric_map, intensities);
+        ReadValuesFromMap.readValuesFromMap(clij2, label_map, parametric_map, intensities);
 
         ClearCLBuffer new_intensities = clij2.create(new long[]{number_of_labels + 1 , 1, 1});
         clij2.standardDeviationOfTouchingNeighbors(intensities, touch_matrix, new_intensities);

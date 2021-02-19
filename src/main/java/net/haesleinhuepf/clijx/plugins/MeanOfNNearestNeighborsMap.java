@@ -62,7 +62,7 @@ public class MeanOfNNearestNeighborsMap extends AbstractCLIJ2Plugin implements C
         GenerateNNearestNeighborsMatrix.generateNNearestNeighborsMatrix(clij2, distance_matrix, touch_matrix, n);
 
         ClearCLBuffer intensities = clij2.create(new long[]{number_of_labels + 1 , 1, 1});
-        ReadIntensitiesFromMap.readIntensitiesFromMap(clij2, label_map, parametric_map, intensities);
+        ReadValuesFromMap.readValuesFromMap(clij2, label_map, parametric_map, intensities);
 
         ClearCLBuffer new_intensities = clij2.create(new long[]{number_of_labels + 1 , 1, 1});
         clij2.meanOfTouchingNeighbors(intensities, touch_matrix, new_intensities);
