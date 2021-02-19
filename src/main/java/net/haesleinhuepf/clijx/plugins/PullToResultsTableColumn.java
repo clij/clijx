@@ -1,5 +1,7 @@
 package net.haesleinhuepf.clijx.plugins;
 
+import ij.IJ;
+import ij.macro.Variable;
 import ij.measure.ResultsTable;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
@@ -31,15 +33,25 @@ public class PullToResultsTableColumn extends AbstractCLIJ2Plugin implements CLI
     }
 
     public static boolean pullToResultsTableColumn(CLIJ2 clij2, ClearCLBuffer buffer, ResultsTable table, String column, Boolean append) {
+        long time = System.currentTimeMillis();
+        int column_index = table.getColumnIndex(column);
+        if (column_index == -1) {
+            table.addValue(column, 0);
+            column_index = table.getColumnIndex(column);
+        }
         ClearCLBuffer temp = clij2.create(new long[]{buffer.getWidth(), 1, 1}, NativeTypeEnum.Float);
         clij2.crop(buffer, temp, 0, 0, 0);
 
         float[] columnData = new float[(int)buffer.getWidth()];
         FloatBuffer arrayBuffer = FloatBuffer.wrap(columnData);
         temp.writeTo(arrayBuffer, true);
+        temp.close();
+
+        System.out.println("pull took " + (System.currentTimeMillis() - time));
+        time = System.currentTimeMillis();
 
         int starting_row = 0;
-        if (append){
+        if (append) {
             starting_row = table.size();
         } else {
             starting_row = table.size() - (int)buffer.getWidth();
@@ -48,10 +60,9 @@ public class PullToResultsTableColumn extends AbstractCLIJ2Plugin implements CLI
             starting_row = 0;
         }
         for (int i = 0; i < buffer.getWidth(); i++) {
-            table.setValue(column, i + starting_row, columnData[i]);
+            table.setValue(column_index, i + starting_row, columnData[i]);
         }
-
-        temp.close();
+        System.out.println("filling the table took " + (System.currentTimeMillis() - time));
 
         return true;
     }
