@@ -113,7 +113,22 @@ inline void solve_cubic_equation(double b0, double b1, double b2, double x[]) {
 #define PIXEL(x, y, z) (READ_src_IMAGE(src, sampler,POS_src_INSTANCE((x),(y),(z),0)).x)
 #define WRITE_PIXEL(image, x, y, z, value) WRITE_ ## image ## _IMAGE(image,POS_ ## image ## _INSTANCE((x),(y),(z),0), CONVERT_ ## image ## _PIXEL_TYPE(value))
 
-__kernel void hessian_3d(
+/*
+  This kernel computes the eigenvalues of the hessian matrix of a 3d image.
+
+  Hessian matrix:
+    [Ixx, Ixy, Ixz]
+    [Ixy, Iyy, Iyz]
+    [Ixz, Iyz, Izz]
+  Where Ixx denotes the second derivative in x.
+
+  Ixx and Iyy are calculated by convolving the image with the 1d kernel [1 -2 1].
+  Ixy is calculated by a convolution with the 2d kernel:
+    [ 0.25 0 -0.25]
+    [    0 0     0]
+    [-0.25 0  0.25]
+*/
+__kernel void hessian_eigenvalues_3d(
         IMAGE_src_TYPE src,
         IMAGE_small_eigenvalue_TYPE small_eigenvalue,
         IMAGE_middle_eigenvalue_TYPE middle_eigenvalue,
