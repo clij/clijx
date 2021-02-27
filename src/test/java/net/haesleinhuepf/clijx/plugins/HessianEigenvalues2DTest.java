@@ -30,7 +30,7 @@ public class HessianEigenvalues2DTest {
 			ClearCLBuffer inputCl = clij2.push(input);
 			ClearCLBuffer small_eigenvalue = clij2.create(inputCl);
 			ClearCLBuffer large_eigenvalue = clij2.create(inputCl);
-			HessianEigenvalues2D.hessian2d(clij2, inputCl, small_eigenvalue, large_eigenvalue);
+			HessianEigenvalues2D.hessianEigenvalues2D(clij2, inputCl, small_eigenvalue, large_eigenvalue);
 			RandomAccessibleInterval<FloatType> small = clij2.pullRAI(small_eigenvalue);
 			RandomAccessibleInterval<FloatType> large = clij2.pullRAI(large_eigenvalue);
 			assertEquals(-0.16228f, small.getAt(1, 1).getRealFloat(), 0.001);

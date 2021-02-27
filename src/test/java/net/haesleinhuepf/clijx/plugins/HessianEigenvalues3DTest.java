@@ -33,7 +33,7 @@ public class HessianEigenvalues3DTest {
 			ClearCLBuffer small_eigenvalue = clij2.create(inputCl);
 			ClearCLBuffer middle_eigenvalue = clij2.create(inputCl);
 			ClearCLBuffer large_eigenvalue = clij2.create(inputCl);
-			HessianEigenvalues3D.hessian3d(clij2, inputCl, small_eigenvalue, middle_eigenvalue, large_eigenvalue);
+			HessianEigenvalues3D.hessianEigenvalues3D(clij2, inputCl, small_eigenvalue, middle_eigenvalue, large_eigenvalue);
 			RandomAccessibleInterval< FloatType > small = clij2.pullRAI(small_eigenvalue);
 			RandomAccessibleInterval< FloatType > middle = clij2.pullRAI(middle_eigenvalue);
 			RandomAccessibleInterval< FloatType > large = clij2.pullRAI(large_eigenvalue);
