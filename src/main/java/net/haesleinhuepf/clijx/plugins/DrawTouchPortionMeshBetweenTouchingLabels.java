@@ -33,13 +33,17 @@ public class DrawTouchPortionMeshBetweenTouchingLabels extends AbstractCLIJ2Plug
         return drawTouchPortionMeshBetweenTouchingLabels (getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1]);
     }
 
-    public static boolean drawTouchPortionMeshBetweenTouchingLabels(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result) {
-        int number_of_labels = (int)clij2.maximumOfAllPixels(pushed);
+    public static boolean drawTouchPortionMeshBetweenTouchingLabels(CLIJ2 clij2, ClearCLBuffer labels, ClearCLBuffer result) {
+        int number_of_labels = (int)clij2.maximumOfAllPixels(labels);
         ClearCLBuffer touch_matrix = clij2.create(number_of_labels + 1, number_of_labels + 1);
-        clij2.generateTouchMatrix(pushed, touch_matrix);
+        clij2.generateTouchMatrix(labels, touch_matrix);
 
         ClearCLBuffer touch_count_matrix = clij2.create(touch_matrix);
-        clij2.generateTouchCountMatrix(pushed, touch_count_matrix);
+        ClearCLBuffer touch_count_matrix1 = clij2.create(touch_matrix);
+        clij2.generateTouchCountMatrix(labels, touch_count_matrix1);
+        clij2.touchMatrixToAdjacencyMatrix(touch_count_matrix1, touch_count_matrix);
+        clij2.setWhereXequalsY(touch_count_matrix, 0);
+        touch_count_matrix1.close();
 
         ClearCLBuffer vector = clij2.create(touch_count_matrix.getWidth(), 1);
         clij2.sumYProjection(touch_count_matrix, vector);
@@ -54,8 +58,8 @@ public class DrawTouchPortionMeshBetweenTouchingLabels extends AbstractCLIJ2Plug
         touch_matrix.close();
         touch_portion_matrix.close();
 
-        ClearCLBuffer pointlist = clij2.create(number_of_labels, pushed.getDimension());
-        clij2.centroidsOfLabels(pushed, pointlist);
+        ClearCLBuffer pointlist = clij2.create(number_of_labels, labels.getDimension());
+        clij2.centroidsOfLabels(labels, pointlist);
 
         clij2.set(result, 0);
         clij2.touchMatrixToMesh(pointlist, touch_portion_touch_matrix, result);
