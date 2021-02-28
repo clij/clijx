@@ -212,11 +212,23 @@ public abstract interface CLIJxOps {
     /**
      * Deforms an image according to distances provided in the given vector images.
      * 
-     *  It is recommended to use 32-bit images for input, output and vector images. 
+     *  It is recommended to use 32-bit images for input, output and vector images.
+     * 
+     * Parameters
+     * ----------
+     * source : Image
+     *     The input image to be processed.
+     * vector_x : Image
+     *     Pixels in this image describe the distance in X direction pixels should be shifted during warping.
+     * vector_y : Image
+     *     Pixels in this image describe the distance in Y direction pixels should be shifted during warping.
+     * destination : Image
+     *     The output image where results are written into.
+     * 
      */
-    default boolean applyVectorfield(ClearCLBuffer source, ClearCLBuffer vectorX, ClearCLBuffer vectorY, ClearCLBuffer destination) {
+    default boolean applyVectorfield(ClearCLBuffer source, ClearCLBuffer vector_x, ClearCLBuffer vector_y, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("Kernels");}
-        boolean result = Kernels.applyVectorfield(getCLIJ(), source, vectorX, vectorY, destination);
+        boolean result = Kernels.applyVectorfield(getCLIJ(), source, vector_x, vector_y, destination);
         if (doTimeTracing()) {recordMethodEnd("Kernels");}
         return result;
     }
@@ -224,7 +236,19 @@ public abstract interface CLIJxOps {
     /**
      * Deforms an image according to distances provided in the given vector images.
      * 
-     *  It is recommended to use 32-bit images for input, output and vector images. 
+     *  It is recommended to use 32-bit images for input, output and vector images.
+     * 
+     * Parameters
+     * ----------
+     * source : Image
+     *     The input image to be processed.
+     * vector_x : Image
+     *     Pixels in this image describe the distance in X direction pixels should be shifted during warping.
+     * vector_y : Image
+     *     Pixels in this image describe the distance in Y direction pixels should be shifted during warping.
+     * destination : Image
+     *     The output image where results are written into.
+     * 
      */
     default boolean applyVectorfield(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, ClearCLBuffer arg4, ClearCLBuffer arg5) {
         if (doTimeTracing()) {recordMethodStart("Kernels");}
@@ -236,11 +260,23 @@ public abstract interface CLIJxOps {
     /**
      * Deforms an image according to distances provided in the given vector images.
      * 
-     *  It is recommended to use 32-bit images for input, output and vector images. 
+     *  It is recommended to use 32-bit images for input, output and vector images.
+     * 
+     * Parameters
+     * ----------
+     * source : Image
+     *     The input image to be processed.
+     * vector_x : Image
+     *     Pixels in this image describe the distance in X direction pixels should be shifted during warping.
+     * vector_y : Image
+     *     Pixels in this image describe the distance in Y direction pixels should be shifted during warping.
+     * destination : Image
+     *     The output image where results are written into.
+     * 
      */
-    default boolean applyVectorfield(ClearCLImage source, ClearCLImage vectorX, ClearCLImage vectorY, ClearCLImage destination) {
+    default boolean applyVectorfield(ClearCLImage source, ClearCLImage vector_x, ClearCLImage vector_y, ClearCLImage destination) {
         if (doTimeTracing()) {recordMethodStart("Kernels");}
-        boolean result = Kernels.applyVectorfield(getCLIJ(), source, vectorX, vectorY, destination);
+        boolean result = Kernels.applyVectorfield(getCLIJ(), source, vector_x, vector_y, destination);
         if (doTimeTracing()) {recordMethodEnd("Kernels");}
         return result;
     }
@@ -248,7 +284,19 @@ public abstract interface CLIJxOps {
     /**
      * Deforms an image according to distances provided in the given vector images.
      * 
-     *  It is recommended to use 32-bit images for input, output and vector images. 
+     *  It is recommended to use 32-bit images for input, output and vector images.
+     * 
+     * Parameters
+     * ----------
+     * source : Image
+     *     The input image to be processed.
+     * vector_x : Image
+     *     Pixels in this image describe the distance in X direction pixels should be shifted during warping.
+     * vector_y : Image
+     *     Pixels in this image describe the distance in Y direction pixels should be shifted during warping.
+     * destination : Image
+     *     The output image where results are written into.
+     * 
      */
     default boolean applyVectorfield(ClearCLImage arg1, ClearCLImage arg2, ClearCLImage arg3, ClearCLImage arg4, ClearCLImage arg5) {
         if (doTimeTracing()) {recordMethodStart("Kernels");}
