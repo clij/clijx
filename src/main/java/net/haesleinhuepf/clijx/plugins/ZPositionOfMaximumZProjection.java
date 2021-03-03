@@ -31,20 +31,19 @@ public class ZPositionOfMaximumZProjection extends AbstractCLIJ2Plugin implement
         return "Image";
     }
 
-
     @Override
     public boolean executeCL() {
         return zPositionOfMaximumZProjection(getCLIJ2() ,(ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]));
     }
 
-    public static boolean zPositionOfMaximumZProjection(CLIJ2 clij2, ClearCLImageInterface src, ClearCLImageInterface dst) {
-        assertDifferent(src, dst);
+    public static boolean zPositionOfMaximumZProjection(CLIJ2 clij2, ClearCLImageInterface src, ClearCLImageInterface dst_arg) {
+        assertDifferent(src, dst_arg);
 
-        ClearCLBuffer temp = clij2.create(dst.getDimensions(), dst.getNativeType());
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("src", src);
+        parameters.put("dst_arg", dst_arg);
 
-        clij2.argMaximumZProjection(src, temp, dst);
-        temp.close();
-
+        clij2.execute(ZPositionOfMaximumZProjection.class, "z_position_of_maximum_z_projection_x.cl", "z_position_of_maximum_z_projection", dst_arg.getDimensions(), dst_arg.getDimensions(), parameters);
         return true;
     }
 
@@ -61,7 +60,8 @@ public class ZPositionOfMaximumZProjection extends AbstractCLIJ2Plugin implement
 
     @Override
     public String getDescription() {
-        return "Determines a Z-position of the maximum intensity along Z and writes it into the resulting image.";
+        return "Determines a Z-position of the maximum intensity along Z and writes it into the resulting image.\n\n" +
+                "If there are multiple z-slices with the same value, the smallest Z will be chosen.";
     }
 
     @Override
