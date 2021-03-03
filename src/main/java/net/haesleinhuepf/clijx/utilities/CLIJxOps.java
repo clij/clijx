@@ -197,6 +197,7 @@ import net.haesleinhuepf.clijx.plugins.NeighborCountWithTouchPortionAboveThresho
 import net.haesleinhuepf.clijx.plugins.DivideScalarByImage;
 import net.haesleinhuepf.clijx.plugins.ReadValuesFromMap;
 import net.haesleinhuepf.clijx.plugins.ReadValuesFromPositions;
+import net.haesleinhuepf.clijx.plugins.ZPositionOfMinimumZProjection;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2451,6 +2452,8 @@ public abstract interface CLIJxOps {
     //----------------------------------------------------
     /**
      * Determines a Z-position of the maximum intensity along Z and writes it into the resulting image.
+     * 
+     * If there are multiple z-slices with the same value, the smallest Z will be chosen.
      */
     default boolean zPositionOfMaximumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination) {
         if (doTimeTracing()) {recordMethodStart("ZPositionOfMaximumZProjection");}
@@ -3675,5 +3678,20 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.ZPositionOfMinimumZProjection
+    //----------------------------------------------------
+    /**
+     * Determines a Z-position of the minimum intensity along Z and writes it into the resulting image.
+     * 
+     * If there are multiple z-slices with the same value, the smallest Z will be chosen.
+     */
+    default boolean zPositionOfMinimumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination) {
+        if (doTimeTracing()) {recordMethodStart("ZPositionOfMinimumZProjection");}
+        boolean result = ZPositionOfMinimumZProjection.zPositionOfMinimumZProjection(getCLIJ2(), source, destination);
+        if (doTimeTracing()) {recordMethodEnd("ZPositionOfMinimumZProjection");}
+        return result;
+    }
+
 }
-// 215 methods generated.
+// 216 methods generated.

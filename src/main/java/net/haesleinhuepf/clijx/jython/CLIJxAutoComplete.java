@@ -1815,7 +1815,10 @@ class CLIJxAutoComplete {
        description = "<b>writeXYZPointListToDisc</b><br><br>Takes a point list image representing n points (n*2 for 2D points, n*3 for 3D points) and exports them in XYZ format.<br><br>Parameters:<br>ClearCLBuffer pointlist, String filename";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.zPositionOfMaximumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination)";
-       description = "<b>zPositionOfMaximumZProjection</b><br><br>Determines a Z-position of the maximum intensity along Z and writes it into the resulting image.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       description = "<b>zPositionOfMaximumZProjection</b><br><br>Determines a Z-position of the maximum intensity along Z and writes it into the resulting image.<br><br>If there are multiple z-slices with the same value, the smallest Z will be chosen.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.zPositionOfMinimumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination)";
+       description = "<b>zPositionOfMinimumZProjection</b><br><br>Determines a Z-position of the minimum intensity along Z and writes it into the resulting image.<br><br>If there are multiple z-slices with the same value, the smallest Z will be chosen.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.zPositionProjection(ClearCLImageInterface source_stack, ClearCLImageInterface z_position, ClearCLImageInterface destination)";
        description = "<b>zPositionProjection</b><br><br>Project a defined Z-slice of a 3D stack into a 2D image.<br><br>The slice is determined using a separate 2D image.<br><br>Parameters:<br>ClearCLImageInterface source_stack, ClearCLImageInterface z_position, ClearCLImageInterface destination";
@@ -1826,4 +1829,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 605 methods generated.
+// 606 methods generated.
