@@ -794,6 +794,15 @@ class CLIJxAutoComplete {
        headline = "clijx.localThreshold(ClearCLImageInterface source, ClearCLImageInterface localThreshold, ClearCLImageInterface destination)";
        description = "<b>localThreshold</b><br><br>Computes a binary image with pixel values 0 and 1 depending on if a pixel value x in image X <br>was above of equal to the pixel value m in mask image M.<br><br><pre>f(x) = (1 if (x >=  m)); (0 otherwise)</pre><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface localThreshold, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localThresholdPhansalkar(ClearCLImageInterface source, ClearCLImageInterface destination, Float radius, Float param_k, Float param_r, Integer whiteObjects, Integer originalMode)";
+       description = "<b>LocalThresholdPhansalkar</b><br><br>Computes a binary image with pixel values 0 and 255 depending on if a pixel value x in image X <br>was above of equal to the pixel value of the Local Threshold (Phansalkar method) of image X.<br><br><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float radius, Float param_k, Float param_r, Integer whiteObjects, Integer originalMod";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.squarePixels(ClearCLImageInterface source, ClearCLImageInterface destination)";
+       description = "<b>SquarePixels</b><br><br>Computes the squared image. <br>";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.squareRootPixels(ClearCLImageInterface source, ClearCLImageInterface destination)";
+       description = "<b>SquareRootPixels</b><br><br>Computes the square root image. <br>";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.logarithm(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>logarithm</b><br><br>Computes base e logarithm of all pixels values.<br><br>f(x) = log(x)<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));

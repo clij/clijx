@@ -15,14 +15,6 @@ import ij.ImagePlus;
 import java.util.List;
 import java.util.ArrayList;
 import net.haesleinhuepf.clij.kernels.Kernels;
-import net.haesleinhuepf.clijx.plugins.CrossCorrelation;
-import net.haesleinhuepf.clijx.plugins.Extrema;
-import net.haesleinhuepf.clijx.plugins.LocalExtremaBox;
-import net.haesleinhuepf.clijx.plugins.LocalID;
-import net.haesleinhuepf.clijx.plugins.Presign;
-import net.haesleinhuepf.clijx.plugins.StackToTiles;
-import net.haesleinhuepf.clijx.plugins.SubtractBackground2D;
-import net.haesleinhuepf.clijx.plugins.SubtractBackground3D;
 import net.haesleinhuepf.clijx.piv.FastParticleImageVelocimetry;
 import net.haesleinhuepf.clijx.piv.ParticleImageVelocimetry;
 import net.haesleinhuepf.clijx.piv.ParticleImageVelocimetryTimelapse;
@@ -32,27 +24,12 @@ import net.haesleinhuepf.clijx.registration.TranslationTimelapseRegistration;
 import net.haesleinhuepf.clijx.io.ReadImageFromDisc;
 import net.haesleinhuepf.clijx.io.ReadRawImageFromDisc;
 import net.haesleinhuepf.clijx.io.PreloadFromDisc;
-import net.haesleinhuepf.clijx.plugins.GaussJordan;
-import net.haesleinhuepf.clijx.plugins.StopWatch;
-import net.haesleinhuepf.clijx.plugins.DrawTwoValueLine;
-import net.haesleinhuepf.clijx.plugins.ConnectedComponentsLabelingInplace;
-import net.haesleinhuepf.clijx.plugins.AutomaticThresholdInplace;
-import net.haesleinhuepf.clijx.plugins.DifferenceOfGaussianInplace3D;
-import net.haesleinhuepf.clijx.plugins.AbsoluteInplace;
-import net.haesleinhuepf.clijx.plugins.ShowRGB;
-import net.haesleinhuepf.clijx.plugins.ShowGrey;
 import net.haesleinhuepf.clijx.gui.OrganiseWindows;
-import net.haesleinhuepf.clijx.plugins.TopHatOctagon;
-import net.haesleinhuepf.clijx.plugins.ShowGlasbeyOnGrey;
-import net.haesleinhuepf.clijx.plugins.BlurSliceBySlice;
+import net.haesleinhuepf.clijx.plugins.*;
 import net.haesleinhuepf.clijx.plugins.splitstack.AbstractSplitStack;
-import net.haesleinhuepf.clijx.plugins.TopHatOctagonSliceBySlice;
 import net.haesleinhuepf.clijx.io.WriteVTKLineListToDisc;
 import net.haesleinhuepf.clijx.io.WriteXYZPointListToDisc;
 import net.haesleinhuepf.clijx.plugins.tenengradfusion.TenengradFusion;
-import net.haesleinhuepf.clijx.plugins.Skeletonize;
-import net.haesleinhuepf.clijx.plugins.PushTile;
-import net.haesleinhuepf.clijx.plugins.PullTile;
 import net.haesleinhuepf.clijx.weka.autocontext.ApplyAutoContextWekaModel;
 import net.haesleinhuepf.clijx.weka.autocontext.TrainAutoContextWekaModel;
 import net.haesleinhuepf.clijx.weka.ApplyWekaModel;
@@ -61,142 +38,10 @@ import net.haesleinhuepf.clijx.weka.GenerateFeatureStack;
 import net.haesleinhuepf.clijx.weka.TrainWekaModel;
 import net.haesleinhuepf.clijx.weka.TrainWekaFromTable;
 import net.haesleinhuepf.clijx.weka.TrainWekaModelWithOptions;
-import net.haesleinhuepf.clijx.plugins.StartContinuousWebcamAcquisition;
-import net.haesleinhuepf.clijx.plugins.StopContinuousWebcamAcquisition;
-import net.haesleinhuepf.clijx.plugins.CaptureWebcamImage;
-import net.haesleinhuepf.clijx.plugins.ConvertRGBStackToGraySlice;
-import net.haesleinhuepf.clijx.plugins.NonLocalMeans;
-import net.haesleinhuepf.clijx.plugins.Bilateral;
-import net.haesleinhuepf.clijx.plugins.FindMaxima;
-import net.haesleinhuepf.clijx.plugins.MergeTouchingLabels;
-import net.haesleinhuepf.clijx.plugins.AverageNeighborDistanceMap;
-import net.haesleinhuepf.clijx.plugins.CylinderTransform;
-import net.haesleinhuepf.clijx.plugins.DetectAndLabelMaxima;
-import net.haesleinhuepf.clijx.plugins.DrawDistanceMeshBetweenTouchingLabels;
-import net.haesleinhuepf.clijx.plugins.DrawMeshBetweenTouchingLabels;
-import net.haesleinhuepf.clijx.plugins.ExcludeLabelsOutsideSizeRange;
-import net.haesleinhuepf.clijx.plugins.ExtendLabelsWithMaximumRadius;
-import net.haesleinhuepf.clijx.plugins.FindAndLabelMaxima;
-import net.haesleinhuepf.clijx.plugins.MakeIsotropic;
-import net.haesleinhuepf.clijx.plugins.TouchingNeighborCountMap;
-import net.haesleinhuepf.clijx.plugins.RigidTransform;
-import net.haesleinhuepf.clijx.plugins.SphereTransform;
-import net.haesleinhuepf.clijx.plugins.SubtractGaussianBackground;
-import net.haesleinhuepf.clijx.plugins.ThresholdDoG;
-import net.haesleinhuepf.clijx.plugins.DriftCorrectionByCenterOfMassFixation;
-import net.haesleinhuepf.clijx.plugins.DriftCorrectionByCentroidFixation;
-import net.haesleinhuepf.clijx.plugins.IntensityCorrection;
-import net.haesleinhuepf.clijx.plugins.IntensityCorrectionAboveThresholdOtsu;
-import net.haesleinhuepf.clijx.plugins.LabelMeanIntensityMap;
-import net.haesleinhuepf.clijx.plugins.LabelStandardDeviationIntensityMap;
-import net.haesleinhuepf.clijx.plugins.LabelPixelCountMap;
-import net.haesleinhuepf.clijx.plugins.ParametricWatershed;
-import net.haesleinhuepf.clijx.plugins.MeanZProjectionAboveThreshold;
-import net.haesleinhuepf.clijx.plugins.SeededWatershed;
-import net.haesleinhuepf.clijx.plugins.PushMetaData;
-import net.haesleinhuepf.clijx.plugins.PopMetaData;
-import net.haesleinhuepf.clijx.plugins.ResetMetaData;
-import net.haesleinhuepf.clijx.plugins.AverageDistanceOfNClosestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.DrawTouchCountMeshBetweenTouchingLabels;
-import net.haesleinhuepf.clijx.plugins.LocalMaximumAverageDistanceOfNClosestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.LocalMaximumAverageNeighborDistanceMap;
-import net.haesleinhuepf.clijx.plugins.LocalMaximumTouchingNeighborCountMap;
-import net.haesleinhuepf.clijx.plugins.LocalMeanAverageDistanceOfNClosestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.LocalMeanAverageNeighborDistanceMap;
-import net.haesleinhuepf.clijx.plugins.LocalMeanTouchingNeighborCountMap;
-import net.haesleinhuepf.clijx.plugins.LocalMeanTouchPortionMap;
-import net.haesleinhuepf.clijx.plugins.LocalMedianAverageDistanceOfNClosestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.LocalMedianAverageNeighborDistanceMap;
-import net.haesleinhuepf.clijx.plugins.LocalMedianTouchingNeighborCountMap;
-import net.haesleinhuepf.clijx.plugins.LocalMinimumAverageDistanceOfNClosestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.LocalMinimumAverageNeighborDistanceMap;
-import net.haesleinhuepf.clijx.plugins.LocalMinimumTouchingNeighborCountMap;
-import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageNeighborDistanceMap;
-import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationTouchingNeighborCountMap;
-import net.haesleinhuepf.clijx.plugins.LabelMinimumIntensityMap;
-import net.haesleinhuepf.clijx.plugins.LabelMaximumIntensityMap;
-import net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionRatioMap;
-import net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionMap;
-import net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfBox;
-import net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond;
-import net.haesleinhuepf.clijx.plugins.DivideByGaussianBackground;
-import net.haesleinhuepf.clijx.plugins.GenerateGreyValueCooccurrenceMatrixBox;
-import net.haesleinhuepf.clijx.plugins.GreyLevelAtttributeFiltering;
-import net.haesleinhuepf.clijx.plugins.BinaryFillHolesSliceBySlice;
 import net.haesleinhuepf.clijx.weka.BinaryWekaPixelClassifier;
 import net.haesleinhuepf.clijx.weka.WekaLabelClassifier;
 import net.haesleinhuepf.clijx.weka.GenerateLabelFeatureImage;
-import net.haesleinhuepf.clijx.plugins.LabelSurface;
-import net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelledSpots;
-import net.haesleinhuepf.clijx.plugins.LabelMeanExtensionMap;
-import net.haesleinhuepf.clijx.plugins.MeanZProjectionBelowThreshold;
-import net.haesleinhuepf.clijx.plugins.EuclideanDistanceFromLabelCentroidMap;
-import net.haesleinhuepf.clijx.plugins.GammaCorrection;
-import net.haesleinhuepf.clijx.plugins.ZPositionOfMaximumZProjection;
-import net.haesleinhuepf.clijx.plugins.ZPositionProjection;
-import net.haesleinhuepf.clijx.plugins.ZPositionRangeProjection;
-import net.haesleinhuepf.clijx.plugins.VarianceSphere;
-import net.haesleinhuepf.clijx.plugins.StandardDeviationSphere;
-import net.haesleinhuepf.clijx.plugins.VarianceBox;
-import net.haesleinhuepf.clijx.plugins.StandardDeviationBox;
-import net.haesleinhuepf.clijx.plugins.Tenengrad;
-import net.haesleinhuepf.clijx.plugins.TenengradSliceBySlice;
-import net.haesleinhuepf.clijx.plugins.SobelSliceBySlice;
-import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusSobelProjection;
-import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusTenengradProjection;
-import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusVarianceProjection;
-import net.haesleinhuepf.clijx.plugins.DrawMeshBetweenNClosestLabels;
-import net.haesleinhuepf.clijx.plugins.DrawMeshBetweenProximalLabels;
-import net.haesleinhuepf.clijx.plugins.Cosinus;
-import net.haesleinhuepf.clijx.plugins.Sinus;
-import net.haesleinhuepf.clijx.plugins.GenerateDistanceMatrixAlongAxis;
-import net.haesleinhuepf.clijx.plugins.MaximumDistanceOfTouchingNeighbors;
-import net.haesleinhuepf.clijx.plugins.MaximumNeighborDistanceMap;
-import net.haesleinhuepf.clijx.plugins.MinimumNeighborDistanceMap;
-import net.haesleinhuepf.clijx.plugins.GenerateAngleMatrix;
-import net.haesleinhuepf.clijx.plugins.NeighborDistanceRangeRatioMap;
-import net.haesleinhuepf.clijx.plugins.VoronoiOtsuLabeling;
-import net.haesleinhuepf.clijx.plugins.VisualizeOutlinesOnOriginal;
-import net.haesleinhuepf.clijx.plugins.FlagLabelsOnEdges;
-import net.haesleinhuepf.clijx.plugins.MaskedVoronoiLabeling;
-import net.haesleinhuepf.clijx.plugins.PullToResultsTableColumn;
-import net.haesleinhuepf.clijx.plugins.KMeansLabelClusterer;
-import net.haesleinhuepf.clijx.plugins.ModeOfTouchingNeighbors;
-import net.haesleinhuepf.clijx.plugins.GenerateProximalNeighborsMatrix;
-import net.haesleinhuepf.clijx.plugins.ReadIntensitiesFromMap;
-import net.haesleinhuepf.clijx.plugins.MaximumOfTouchingNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MinimumOfTouchingNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MeanOfTouchingNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.ModeOfTouchingNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.StandardDeviationOfTouchingNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.PointIndexListToTouchMatrix;
-import net.haesleinhuepf.clijx.plugins.GenerateNNearestNeighborsMatrix;
-import net.haesleinhuepf.clijx.plugins.MaximumOfNNearestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MinimumOfNNearestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MeanOfNNearestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.ModeOfNNearestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.StandardDeviationOfNNearestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MaximumOfProximalNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MinimumOfProximalNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MeanOfProximalNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.ModeOfProximalNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.StandardDeviationOfProximalNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.LabelOverlapCountMap;
-import net.haesleinhuepf.clijx.plugins.LabelProximalNeighborCountMap;
-import net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelEdges;
-import net.haesleinhuepf.clijx.plugins.OutOfIntensityRange;
-import net.haesleinhuepf.clijx.plugins.ShrinkLabels;
-import net.haesleinhuepf.clijx.plugins.Similar;
-import net.haesleinhuepf.clijx.plugins.Different;
 import net.haesleinhuepf.clijx.weka.WekaRegionalLabelClassifier;
-import net.haesleinhuepf.clijx.plugins.LabelMeanOfLaplacianMap;
-import net.haesleinhuepf.clijx.plugins.MedianZProjectionMasked;
-import net.haesleinhuepf.clijx.plugins.MedianTouchPortionMap;
-import net.haesleinhuepf.clijx.plugins.NeighborCountWithTouchPortionAboveThresholdMap;
-import net.haesleinhuepf.clijx.plugins.DivideScalarByImage;
-import net.haesleinhuepf.clijx.plugins.ReadValuesFromMap;
-import net.haesleinhuepf.clijx.plugins.ReadValuesFromPositions;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -2156,6 +2001,42 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+    // net.haesleinhuepf.clijx.plugins.LocalThresholdPhansalkar
+    //----------------------------------------------------
+    /**
+     * 
+     */
+    default boolean localThresholdPhansalkar(ClearCLBuffer input, ClearCLBuffer destination, float radius, float param_k, float param_r, int whiteObjects, int originalMode) {
+        if (doTimeTracing()) {recordMethodStart("LocalThresholdPhansalkar");}
+        boolean result = LocalThresholdPhansalkar.localThresholdPhansalkar(getCLIJx(), input, destination, radius, param_k, param_r, whiteObjects, originalMode);
+        if (doTimeTracing()) {recordMethodEnd("LocalThresholdPhansalkar");}
+        return result;
+    }
+    
+    // net.haesleinhuepf.clijx.plugins.squarePixels
+    //----------------------------------------------------
+    /**
+     * 
+     */
+    default boolean squarePixels(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("SquarePixels");}
+        boolean result = SquarePixels.squarePixels(getCLIJx(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("SquarePixels");}
+        return result;
+    }
+
+    // net.haesleinhuepf.clijx.plugins.squareRootPixels
+    //----------------------------------------------------
+    /**
+     * 
+     */
+    default boolean squareRootPixels(ClearCLBuffer input, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("SquareRootPixels");}
+        boolean result = SquareRootPixels.squareRootPixels(getCLIJx(), input, destination);
+        if (doTimeTracing()) {recordMethodEnd("SquareRootPixels");}
+        return result;
+    }
+    
 
     // net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfBox
     //----------------------------------------------------

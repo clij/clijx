@@ -647,5 +647,9 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJx_splitStackInto3" ,net.haesleinhuepf.clijx.plugins.splitstack.SplitStackInto3.class);
        service.registerPlugin("CLIJx_splitStackInto2" ,net.haesleinhuepf.clijx.plugins.splitstack.SplitStackInto2.class);
        service.registerPlugin("CLIJ2_smallerOrEqualConstant" ,net.haesleinhuepf.clij2.plugins.SmallerOrEqualConstant.class);
+       service.registerPlugin("CLIJx_localThresholdPhansalkar" ,net.haesleinhuepf.clijx.plugins.LocalThresholdPhansalkar.class);
+       service.registerPlugin("CLIJx_squarePixels" ,net.haesleinhuepf.clijx.plugins.SquarePixels.class);
+       service.registerPlugin("CLIJx_squareRootPixels" ,net.haesleinhuepf.clijx.plugins.SquareRootPixels.class);
+
    }
 }
