@@ -1,9 +1,5 @@
 package net.haesleinhuepf.clijx.plugins;
 
-//import net.haesleinhuepf.clij.CLIJ;
-//import net.haesleinhuepf.clij.clearcl.interfaces.ClearCLImageInterface;
-//import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
-//import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
@@ -15,6 +11,9 @@ import net.haesleinhuepf.clijx.CLIJx;
 import net.haesleinhuepf.clijx.utilities.AbstractCLIJxPlugin;
 import static net.haesleinhuepf.clij.utilities.CLIJUtilities.assertDifferent;
 import org.scijava.plugin.Plugin;
+
+import ij.IJ;
+
 import java.util.HashMap;
 
 /**
@@ -22,8 +21,8 @@ import java.util.HashMap;
  * 03 2021
  */
 
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJ2_squareRootPixels")
-public class SquareRootPixels extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized, HasClassifiedInputOutput {
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJ2_squareTest2")
+public class SquareTest2 extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized, HasClassifiedInputOutput {
     @Override
     public String getInputType() {
         return "Image";
@@ -44,13 +43,18 @@ public class SquareRootPixels extends AbstractCLIJxPlugin implements CLIJMacroPl
    	    	
     	CLIJx clijx = getCLIJx();
     	
-        boolean result = squareRootPixels(clijx, (ClearCLBuffer) (args[0]), 
+        long startT = System.nanoTime();
+
+        boolean result = squareTest2(clijx, (ClearCLBuffer) (args[0]), 
         									  (ClearCLBuffer) (args[1]));
+        
+        long dT = (System.nanoTime() - startT)/ 1000;      
+        IJ.log("SquareTest2 :" + dT + " µsec");		
         										
         return result;
     }
 
-    public static boolean squareRootPixels(CLIJx clijx, ClearCLBuffer src, 
+    public static boolean squareTest2(CLIJx clijx, ClearCLBuffer src, 
    													ClearCLBuffer dst
     									)
     {
@@ -60,7 +64,7 @@ public class SquareRootPixels extends AbstractCLIJxPlugin implements CLIJMacroPl
         parameters.put("src", src);
         parameters.put("dst", dst);
         
-        clijx.execute(SquareRootPixels.class, "squareroot_2d.cl", "squareroot_2d", 
+        clijx.execute(SquareTest2.class, "squaretest2_2d.cl", "squaretest2_2d", 
         		dst.getDimensions(), dst.getDimensions(), parameters);
  
         return true;
@@ -69,7 +73,7 @@ public class SquareRootPixels extends AbstractCLIJxPlugin implements CLIJMacroPl
 
     @Override
     public String getDescription() {
-        return "Computes the square root image";
+        return "Computes the squared image";
     }
 
     @Override

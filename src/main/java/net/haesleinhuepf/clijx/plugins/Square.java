@@ -11,6 +11,7 @@ import net.haesleinhuepf.clijx.CLIJx;
 import net.haesleinhuepf.clijx.utilities.AbstractCLIJxPlugin;
 import static net.haesleinhuepf.clij.utilities.CLIJUtilities.assertDifferent;
 import org.scijava.plugin.Plugin;
+
 import java.util.HashMap;
 
 /**
@@ -18,8 +19,8 @@ import java.util.HashMap;
  * 03 2021
  */
 
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJ2_squarePixels")
-public class SquarePixels extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized, HasClassifiedInputOutput {
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJ2_square")
+public class Square extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized, HasClassifiedInputOutput {
     @Override
     public String getInputType() {
         return "Image";
@@ -40,13 +41,13 @@ public class SquarePixels extends AbstractCLIJxPlugin implements CLIJMacroPlugin
    	    	
     	CLIJx clijx = getCLIJx();
     	
-        boolean result = squarePixels(clijx, (ClearCLBuffer) (args[0]), 
+        boolean result = square(clijx, (ClearCLBuffer) (args[0]), 
         									  (ClearCLBuffer) (args[1]));
         										
         return result;
     }
 
-    public static boolean squarePixels(CLIJx clijx, ClearCLBuffer src, 
+    public static boolean square(CLIJx clijx, ClearCLBuffer src, 
    													ClearCLBuffer dst
     									)
     {
@@ -56,7 +57,7 @@ public class SquarePixels extends AbstractCLIJxPlugin implements CLIJMacroPlugin
         parameters.put("src", src);
         parameters.put("dst", dst);
         
-        clijx.execute(SquarePixels.class, "square_2d.cl", "square_2d", 
+        clijx.execute(Square.class, "square_2d.cl", "square_2d", 
         		dst.getDimensions(), dst.getDimensions(), parameters);
  
         return true;
