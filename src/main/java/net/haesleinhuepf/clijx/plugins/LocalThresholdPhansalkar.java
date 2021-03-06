@@ -49,7 +49,7 @@ public class LocalThresholdPhansalkar extends AbstractCLIJxPlugin implements CLI
    	    	
     	CLIJx clijx = getCLIJx();
 
-        boolean result = localThresholdPhansalkarFast(clijx, (ClearCLBuffer) (args[0]), 
+        boolean result = localThresholdPhansalkar(clijx, (ClearCLBuffer) (args[0]),
         									  			(ClearCLBuffer) (args[1]),
         									  			asFloat(args[2]),
         									  			asFloat(args[3]),
@@ -58,7 +58,7 @@ public class LocalThresholdPhansalkar extends AbstractCLIJxPlugin implements CLI
         return result;
     }
 
-    public static boolean localThresholdPhansalkarFast(CLIJx clijx, ClearCLBuffer src, 
+    public static boolean localThresholdPhansalkar(CLIJx clijx, ClearCLBuffer src,
    													ClearCLBuffer dst,
    													float radius,
     												float k,
