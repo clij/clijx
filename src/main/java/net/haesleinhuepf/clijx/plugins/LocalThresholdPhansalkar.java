@@ -21,8 +21,8 @@ import java.util.HashMap;
  * 03 2021
  */
 
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_localThresholdPhansalkarFast")
-public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized, HasClassifiedInputOutput {
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_localThresholdPhansalkar")
+public class LocalThresholdPhansalkar extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized, HasClassifiedInputOutput {
     @Override
     public String getInputType() {
         return "Image";
@@ -30,7 +30,7 @@ public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements
 
     @Override
     public String getOutputType() {
-        return "Image";
+        return "Binary Image";
     }
 
     @Override
@@ -39,21 +39,21 @@ public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements
     }
 
     @Override
+    public Object[] getDefaultValues() {
+        return new Object[]{null, null, 15, 0, 0};
+    }
+
+    @Override
     public boolean executeCL() {
    	    	
     	CLIJx clijx = getCLIJx();
-    	
-        long startT = System.nanoTime();
 
         boolean result = localThresholdPhansalkarFast(clijx, (ClearCLBuffer) (args[0]), 
         									  			(ClearCLBuffer) (args[1]),
         									  			asFloat(args[2]),
         									  			asFloat(args[3]),
         									  			asFloat(args[4]));
-        										
-        long dT = (System.nanoTime() - startT)/ 1000;      
-        IJ.log("LocalThresholdPhansalkarFast :" + dT + " µsec");
-        
+
         return result;
     }
 
@@ -72,10 +72,10 @@ public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements
         if (r == 0)
         	r = 0.5f;
         
-        ClearCLBuffer srcNorm = clijx.create(src);       
-        ClearCLBuffer srcMean = clijx.create(src);       
-        ClearCLBuffer srcSqr = clijx.create(src);       
-        ClearCLBuffer srcSqrMean = clijx.create(src);  
+        ClearCLBuffer srcNorm = clijx.create(src.getDimensions(), clijx.Float);
+        ClearCLBuffer srcMean = clijx.create(src.getDimensions(), clijx.Float);
+        ClearCLBuffer srcSqr = clijx.create(src.getDimensions(), clijx.Float);
+        ClearCLBuffer srcSqrMean = clijx.create(src.getDimensions(), clijx.Float);
 
         clijx.multiplyImageAndScalar(src, srcNorm, 1.0/255.0);
         clijx.power(srcNorm, srcSqr, 2);
@@ -91,7 +91,7 @@ public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements
         parameters.put("k", k);
         parameters.put("r", r);
         
-        clijx.execute(LocalThresholdPhansalkarFast.class, "localthresholdphansalkarfast.cl", "localthresholdphansalkarfast", 
+        clijx.execute(LocalThresholdPhansalkar.class, "local_threshold_phansalkar_x.cl", "local_threshold_phansalkar",
         		dst.getDimensions(), dst.getDimensions(), parameters);
  
         srcNorm.close();
@@ -127,5 +127,5 @@ public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements
         return "Peter Haub";
     }
 
-    
+
 }

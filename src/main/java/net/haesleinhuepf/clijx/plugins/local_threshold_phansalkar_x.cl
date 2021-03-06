@@ -1,6 +1,6 @@
 __const sampler_t sampler = CLK_NORMALIZED_COORDS_FALSE | CLK_ADDRESS_CLAMP_TO_EDGE | CLK_FILTER_NEAREST;
 
-__kernel void localthresholdphansalkarfast (    IMAGE_src_TYPE  src,
+__kernel void local_threshold_phansalkar (    IMAGE_src_TYPE  src,
                            					IMAGE_srcMean_TYPE  srcMean,
                            					IMAGE_srcSqrMean_TYPE  srcSqrMean,
                            					IMAGE_dst_TYPE  dst,
@@ -24,8 +24,8 @@ __kernel void localthresholdphansalkarfast (    IMAGE_src_TYPE  src,
   // [*  t = mean * (1 + p * exp(-q * mean) + k * ((stddev / r) - 1)) *]   
   float t = mean * (1.0 + 2.0 * exp(-10.0 * mean) + k * ((stddev / r ) - 1.0));
   
-  float res = 255.0f;
-  if (value > t)
+  float res = 1.0f;
+  if (value <= t)
   	res = 0.0f;
   	  	
   IMAGE_dst_PIXEL_TYPE out = CONVERT_dst_PIXEL_TYPE( res );
