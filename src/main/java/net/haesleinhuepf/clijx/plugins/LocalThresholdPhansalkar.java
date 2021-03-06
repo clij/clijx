@@ -81,7 +81,7 @@ public class LocalThresholdPhansalkar extends AbstractCLIJxPlugin implements CLI
         ClearCLBuffer srcSqr = clijx.create(src.getDimensions(), clijx.Float);
         ClearCLBuffer srcSqrMean = clijx.create(src.getDimensions(), clijx.Float);
 
-        clijx.multiplyImageAndScalar(src, srcNorm, 1.0 / clijx.maximumOfAllPixels(src));
+        clijx.multiplyImageAndScalar(src, srcNorm, 1.0/255);
         clijx.power(srcNorm, srcSqr, 2);
         if (src.getDimension() == 2) {
             clijx.mean2DSphere(srcSqr, srcSqrMean, radius, radius);
@@ -117,7 +117,7 @@ public class LocalThresholdPhansalkar extends AbstractCLIJxPlugin implements CLI
         		" Auto Local Threshold (Phansalkar method) see: https://imagej.net/Auto_Local_Threshold \n" +
         		" see code in: \n" +
         		" https://github.com/fiji/Auto_Local_Threshold/blob/c955dc18cff58ac61df82f3f001799f7ffaec5cb/src/main/java/fiji/threshold/Auto_Local_Threshold.java#L636 \n" +
-                " The version here has been adapted to use normalization my multiplying the image with 1.0 / max_intensity instead of 1.0/255. \n" +
+                //" The version here has been adapted to use normalization my multiplying the image with 1.0 / max_intensity instead of 1.0/255. \n" +
                 " Formulary: \n" +
         		"<pre>t = mean * (1 + p * exp(-q * mean) + k * ((stdev / r) - 1))</pre>";
     }
