@@ -21,7 +21,7 @@ import java.util.HashMap;
  * 03 2021
  */
 
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJ2_localThresholdPhansalkarFast")
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_localThresholdPhansalkarFast")
 public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized, HasClassifiedInputOutput {
     @Override
     public String getInputType() {
@@ -78,9 +78,10 @@ public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements
         ClearCLBuffer srcSqrMean = clijx.create(src);  
 
         clijx.multiplyImageAndScalar(src, srcNorm, 1.0/255.0);
-        clijx.mean2DSphere(srcNorm, srcMean,  radius, radius);
-        clijx.square(srcNorm, srcSqr);
+        clijx.power(srcNorm, srcSqr, 2);
         clijx.mean2DSphere(srcSqr, srcSqrMean,  radius, radius);
+        srcSqr.close();
+        clijx.mean2DSphere(srcNorm, srcMean,  radius, radius);
 
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("src", srcNorm);
@@ -95,7 +96,6 @@ public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements
  
         srcNorm.close();
         srcMean.close();
-        srcSqr.close();
         srcSqrMean.close();
          
         return true;
