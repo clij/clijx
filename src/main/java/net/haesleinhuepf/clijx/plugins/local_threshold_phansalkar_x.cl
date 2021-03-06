@@ -11,12 +11,11 @@ __kernel void local_threshold_phansalkar (    IMAGE_src_TYPE  src,
 
   const int x = get_global_id(0);
   const int y = get_global_id(1);
+  const int z = get_global_id(2);
 
-  const int2 pos = (int2){x,y};
-
-  float value = (float)READ_IMAGE(src, sampler, pos).x;
-  float mean = (float)READ_IMAGE(srcMean, sampler, pos).x;
-  float sqrmean = (float)READ_IMAGE(srcSqrMean, sampler, pos).x;
+  float value = (float)READ_IMAGE(src, sampler, POS_src_INSTANCE(x, y, z, 0)).x;
+  float mean = (float)READ_IMAGE(srcMean, sampler, POS_srcMean_INSTANCE(x, y, z, 0)).x;
+  float sqrmean = (float)READ_IMAGE(srcSqrMean, sampler, POS_srcSqrMean_INSTANCE(x, y, z, 0)).x;
   
   float stddev = sqrt(sqrmean - mean*mean);
   
@@ -29,5 +28,5 @@ __kernel void local_threshold_phansalkar (    IMAGE_src_TYPE  src,
   	res = 0.0f;
   	  	
   IMAGE_dst_PIXEL_TYPE out = CONVERT_dst_PIXEL_TYPE( res );
-  WRITE_IMAGE(dst, pos, out);
+  WRITE_IMAGE(dst, POS_dst_INSTANCE(x, y, z, 0), out);
 }

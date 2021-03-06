@@ -17,7 +17,8 @@ import ij.IJ;
 import java.util.HashMap;
 
 /**
- * Author: @phaub (Peter Haub)
+ * Author: @phaub (Peter Haub),
+ *         @haesleinhuepf (Robert Haase)
  * 03 2021
  */
 
@@ -40,7 +41,7 @@ public class LocalThresholdPhansalkar extends AbstractCLIJxPlugin implements CLI
 
     @Override
     public Object[] getDefaultValues() {
-        return new Object[]{null, null, 15, 0, 0};
+        return new Object[]{null, null, 15, 0.25, 0.5};
     }
 
     @Override
@@ -62,16 +63,19 @@ public class LocalThresholdPhansalkar extends AbstractCLIJxPlugin implements CLI
    													float radius,
     												float k,
     												float r
-    									)
-    {
+    									) {
         assertDifferent(src, dst);
 
         // Set to default if params = 0
-        if (k == 0)
-        	k = 0.25f;
-        if (r == 0)
-        	r = 0.5f;
-        
+        if (k == 0) {
+            System.out.println("Warning: localThresholdPhansalkarFast k is overwritten with 0.25 ");
+            k = 0.25f;
+        }
+      	if (r == 0) {
+            System.out.println("Warning: localThresholdPhansalkarFast r is overwritten with 0.25 ");
+            r = 0.5f;
+        }
+
         ClearCLBuffer srcNorm = clijx.create(src.getDimensions(), clijx.Float);
         ClearCLBuffer srcMean = clijx.create(src.getDimensions(), clijx.Float);
         ClearCLBuffer srcSqr = clijx.create(src.getDimensions(), clijx.Float);
@@ -79,9 +83,14 @@ public class LocalThresholdPhansalkar extends AbstractCLIJxPlugin implements CLI
 
         clijx.multiplyImageAndScalar(src, srcNorm, 1.0 / clijx.maximumOfAllPixels(src));
         clijx.power(srcNorm, srcSqr, 2);
-        clijx.mean2DSphere(srcSqr, srcSqrMean,  radius, radius);
+        if (src.getDimension() == 2) {
+            clijx.mean2DSphere(srcSqr, srcSqrMean, radius, radius);
+            clijx.mean2DSphere(srcNorm, srcMean, radius, radius);
+        } else {
+            clijx.mean3DSphere(srcSqr, srcSqrMean, radius, radius, radius);
+            clijx.mean3DSphere(srcNorm, srcMean, radius, radius, radius);
+        }
         srcSqr.close();
-        clijx.mean2DSphere(srcNorm, srcMean,  radius, radius);
 
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("src", srcNorm);
@@ -125,7 +134,7 @@ public class LocalThresholdPhansalkar extends AbstractCLIJxPlugin implements CLI
     
     @Override
     public String getAuthorName() {
-        return "Peter Haub";
+        return "Peter Haub, Robert Haase";
     }
 
 
