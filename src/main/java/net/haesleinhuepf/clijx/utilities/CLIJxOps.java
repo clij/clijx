@@ -2001,41 +2001,6 @@ public abstract interface CLIJxOps {
         return result;
     }
 
-    // net.haesleinhuepf.clijx.plugins.LocalThresholdPhansalkar
-    //----------------------------------------------------
-    /**
-     * 
-     */
-    default boolean localThresholdPhansalkar(ClearCLBuffer input, ClearCLBuffer destination, float radius, float param_k, float param_r, int whiteObjects, int originalMode) {
-        if (doTimeTracing()) {recordMethodStart("LocalThresholdPhansalkar");}
-        boolean result = LocalThresholdPhansalkar.localThresholdPhansalkar(getCLIJx(), input, destination, radius, param_k, param_r, whiteObjects, originalMode);
-        if (doTimeTracing()) {recordMethodEnd("LocalThresholdPhansalkar");}
-        return result;
-    }
-    
-    // net.haesleinhuepf.clijx.plugins.squarePixels
-    //----------------------------------------------------
-    /**
-     * 
-     */
-    default boolean squarePixels(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("SquarePixels");}
-        boolean result = SquarePixels.squarePixels(getCLIJx(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("SquarePixels");}
-        return result;
-    }
-
-    // net.haesleinhuepf.clijx.plugins.squareRootPixels
-    //----------------------------------------------------
-    /**
-     * 
-     */
-    default boolean squareRootPixels(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("SquareRootPixels");}
-        boolean result = SquareRootPixels.squareRootPixels(getCLIJx(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("SquareRootPixels");}
-        return result;
-    }
     
 
     // net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfBox
