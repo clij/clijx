@@ -40,7 +40,7 @@ public class VisualizeOutlinesOnOriginal extends AbstractCLIJ2Plugin implements 
         double max_intensity = clij2.maximumOfAllPixels(intensity);
 
         ClearCLBuffer temp1 = clij2.create(intensity);
-        clij2.multiplyImageAndScalar(temp, temp1, max_intensity);
+        clij2.multiplyImageAndScalar(temp, temp1, max_intensity + 1);
         temp.close();
 
         clij2.maximumImages(temp1, intensity, result);

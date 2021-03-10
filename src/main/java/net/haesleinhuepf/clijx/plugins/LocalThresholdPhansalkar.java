@@ -17,12 +17,13 @@ import ij.IJ;
 import java.util.HashMap;
 
 /**
- * Author: @phaub (Peter Haub)
+ * Author: @phaub (Peter Haub),
+ *         @haesleinhuepf (Robert Haase)
  * 03 2021
  */
 
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_localThresholdPhansalkarFast")
-public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized, HasClassifiedInputOutput {
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_localThresholdPhansalkar")
+public class LocalThresholdPhansalkar extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized, HasClassifiedInputOutput {
     @Override
     public String getInputType() {
         return "Image";
@@ -30,7 +31,7 @@ public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements
 
     @Override
     public String getOutputType() {
-        return "Image";
+        return "Binary Image";
     }
 
     @Override
@@ -39,49 +40,57 @@ public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements
     }
 
     @Override
+    public Object[] getDefaultValues() {
+        return new Object[]{null, null, 15, 0.25, 0.5};
+    }
+
+    @Override
     public boolean executeCL() {
    	    	
     	CLIJx clijx = getCLIJx();
-    	
-        long startT = System.nanoTime();
 
-        boolean result = localThresholdPhansalkarFast(clijx, (ClearCLBuffer) (args[0]), 
+        boolean result = localThresholdPhansalkar(clijx, (ClearCLBuffer) (args[0]),
         									  			(ClearCLBuffer) (args[1]),
         									  			asFloat(args[2]),
         									  			asFloat(args[3]),
         									  			asFloat(args[4]));
-        										
-        long dT = (System.nanoTime() - startT)/ 1000;      
-        IJ.log("LocalThresholdPhansalkarFast :" + dT + " µsec");
-        
+
         return result;
     }
 
-    public static boolean localThresholdPhansalkarFast(CLIJx clijx, ClearCLBuffer src, 
+    public static boolean localThresholdPhansalkar(CLIJx clijx, ClearCLBuffer src,
    													ClearCLBuffer dst,
    													float radius,
     												float k,
     												float r
-    									)
-    {
+    									) {
         assertDifferent(src, dst);
 
         // Set to default if params = 0
-        if (k == 0)
-        	k = 0.25f;
-        if (r == 0)
-        	r = 0.5f;
-        
-        ClearCLBuffer srcNorm = clijx.create(src);       
-        ClearCLBuffer srcMean = clijx.create(src);       
-        ClearCLBuffer srcSqr = clijx.create(src);       
-        ClearCLBuffer srcSqrMean = clijx.create(src);  
+        if (k == 0) {
+            System.out.println("Warning: localThresholdPhansalkarFast k is overwritten with 0.25 ");
+            k = 0.25f;
+        }
+      	if (r == 0) {
+            System.out.println("Warning: localThresholdPhansalkarFast r is overwritten with 0.25 ");
+            r = 0.5f;
+        }
 
-        clijx.multiplyImageAndScalar(src, srcNorm, 1.0/255.0);
+        ClearCLBuffer srcNorm = clijx.create(src.getDimensions(), clijx.Float);
+        ClearCLBuffer srcMean = clijx.create(src.getDimensions(), clijx.Float);
+        ClearCLBuffer srcSqr = clijx.create(src.getDimensions(), clijx.Float);
+        ClearCLBuffer srcSqrMean = clijx.create(src.getDimensions(), clijx.Float);
+
+        clijx.multiplyImageAndScalar(src, srcNorm, 1.0/255);
         clijx.power(srcNorm, srcSqr, 2);
-        clijx.mean2DSphere(srcSqr, srcSqrMean,  radius, radius);
+        if (src.getDimension() == 2) {
+            clijx.mean2DSphere(srcSqr, srcSqrMean, radius, radius);
+            clijx.mean2DSphere(srcNorm, srcMean, radius, radius);
+        } else {
+            clijx.mean3DSphere(srcSqr, srcSqrMean, radius, radius, radius);
+            clijx.mean3DSphere(srcNorm, srcMean, radius, radius, radius);
+        }
         srcSqr.close();
-        clijx.mean2DSphere(srcNorm, srcMean,  radius, radius);
 
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("src", srcNorm);
@@ -91,7 +100,7 @@ public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements
         parameters.put("k", k);
         parameters.put("r", r);
         
-        clijx.execute(LocalThresholdPhansalkarFast.class, "localthresholdphansalkarfast.cl", "localthresholdphansalkarfast", 
+        clijx.execute(LocalThresholdPhansalkar.class, "local_threshold_phansalkar_x.cl", "local_threshold_phansalkar",
         		dst.getDimensions(), dst.getDimensions(), parameters);
  
         srcNorm.close();
@@ -108,7 +117,8 @@ public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements
         		" Auto Local Threshold (Phansalkar method) see: https://imagej.net/Auto_Local_Threshold \n" +
         		" see code in: \n" +
         		" https://github.com/fiji/Auto_Local_Threshold/blob/c955dc18cff58ac61df82f3f001799f7ffaec5cb/src/main/java/fiji/threshold/Auto_Local_Threshold.java#L636 \n" +
-        		" Formulary: \n" +
+                //" The version here has been adapted to use normalization my multiplying the image with 1.0 / max_intensity instead of 1.0/255. \n" +
+                " Formulary: \n" +
         		"<pre>t = mean * (1 + p * exp(-q * mean) + k * ((stdev / r) - 1))</pre>";
     }
 
@@ -124,8 +134,8 @@ public class LocalThresholdPhansalkarFast extends AbstractCLIJxPlugin implements
     
     @Override
     public String getAuthorName() {
-        return "Peter Haub";
+        return "Peter Haub, Robert Haase";
     }
 
-    
+
 }

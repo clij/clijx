@@ -19,8 +19,8 @@ import static net.haesleinhuepf.clij.utilities.CLIJUtilities.assertDifferent;
  * Author: @haesleinhuepf
  * July 2020
  */
-@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_zPositionOfMaximumZProjection")
-public class ZPositionOfMaximumZProjection extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
+@Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_zPositionOfMinimumZProjection")
+public class ZPositionOfMinimumZProjection extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
     @Override
     public String getInputType() {
         return "Image";
@@ -31,19 +31,20 @@ public class ZPositionOfMaximumZProjection extends AbstractCLIJ2Plugin implement
         return "Image";
     }
 
+
     @Override
     public boolean executeCL() {
-        return zPositionOfMaximumZProjection(getCLIJ2() ,(ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]));
+        return zPositionOfMinimumZProjection(getCLIJ2() ,(ClearCLBuffer)( args[0]), (ClearCLBuffer)(args[1]));
     }
 
-    public static boolean zPositionOfMaximumZProjection(CLIJ2 clij2, ClearCLImageInterface src, ClearCLImageInterface dst_arg) {
+    public static boolean zPositionOfMinimumZProjection(CLIJ2 clij2, ClearCLImageInterface src, ClearCLImageInterface dst_arg) {
         assertDifferent(src, dst_arg);
 
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("src", src);
         parameters.put("dst_arg", dst_arg);
 
-        clij2.execute(ZPositionOfMaximumZProjection.class, "z_position_of_maximum_z_projection_x.cl", "z_position_of_maximum_z_projection", dst_arg.getDimensions(), dst_arg.getDimensions(), parameters);
+        clij2.execute(ZPositionOfMaximumZProjection.class, "z_position_of_minimum_z_projection_x.cl", "z_position_of_minimum_z_projection", dst_arg.getDimensions(), dst_arg.getDimensions(), parameters);
         return true;
     }
 
@@ -60,7 +61,7 @@ public class ZPositionOfMaximumZProjection extends AbstractCLIJ2Plugin implement
 
     @Override
     public String getDescription() {
-        return "Determines a Z-position of the maximum intensity along Z and writes it into the resulting image.\n\n" +
+        return "Determines a Z-position of the minimum intensity along Z and writes it into the resulting image.\n\n" +
                 "If there are multiple z-slices with the same value, the smallest Z will be chosen.";
     }
 
