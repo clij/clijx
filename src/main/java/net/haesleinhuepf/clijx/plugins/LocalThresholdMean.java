@@ -39,6 +39,13 @@ public class LocalThresholdMean extends AbstractCLIJxPlugin implements CLIJMacro
     }
 
     @Override
+    public Object[] getDefaultValues() {
+        // from https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java#L361
+        // and https://homepages.inf.ed.ac.uk/rbf/HIPR2/adpthrsh.htm
+        return new Object[]{null, null, 15, 7};
+    }
+
+    @Override
     public boolean executeCL() {
    	    	
     	CLIJx clijx = getCLIJx();

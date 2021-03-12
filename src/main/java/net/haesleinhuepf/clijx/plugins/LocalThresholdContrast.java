@@ -39,6 +39,11 @@ public class LocalThresholdContrast extends AbstractCLIJxPlugin implements CLIJM
     }
 
     @Override
+    public Object[] getDefaultValues() {
+        return new Object[]{null, null, 15};
+    }
+
+    @Override
     public boolean executeCL() {
    	    	
     	CLIJx clijx = getCLIJx();
