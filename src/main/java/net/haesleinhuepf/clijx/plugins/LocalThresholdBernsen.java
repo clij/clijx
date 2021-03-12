@@ -35,7 +35,13 @@ public class LocalThresholdBernsen extends AbstractCLIJxPlugin implements CLIJMa
 
     @Override
     public String getParameterHelpText() {
-        return "Image source, ByRef Image destination, Number radius, Number tcontrast";
+        return "Image source, ByRef Image destination, Number radius, Number contrast_threshold";
+    }
+
+    @Override
+    public Object[] getDefaultValues() {
+        // according to https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java#L256
+        return new Object[]{null, null, 15, 15};
     }
 
     @Override

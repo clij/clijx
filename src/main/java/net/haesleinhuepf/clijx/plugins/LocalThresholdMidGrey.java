@@ -39,6 +39,11 @@ public class LocalThresholdMidGrey extends AbstractCLIJxPlugin implements CLIJMa
     }
 
     @Override
+    public Object[] getDefaultValues() {
+        return new Object[]{null, null, 15, 7};
+    }
+
+    @Override
     public boolean executeCL() {
    	    	
     	CLIJx clijx = getCLIJx();
