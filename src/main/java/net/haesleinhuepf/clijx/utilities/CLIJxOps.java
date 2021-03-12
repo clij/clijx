@@ -199,6 +199,13 @@ import net.haesleinhuepf.clijx.plugins.ReadValuesFromMap;
 import net.haesleinhuepf.clijx.plugins.ReadValuesFromPositions;
 import net.haesleinhuepf.clijx.plugins.ZPositionOfMinimumZProjection;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdPhansalkar;
+import net.haesleinhuepf.clijx.plugins.LocalThresholdBernsen;
+import net.haesleinhuepf.clijx.plugins.LocalThresholdContrast;
+import net.haesleinhuepf.clijx.plugins.LocalThresholdMean;
+import net.haesleinhuepf.clijx.plugins.LocalThresholdMedian;
+import net.haesleinhuepf.clijx.plugins.LocalThresholdMidGrey;
+import net.haesleinhuepf.clijx.plugins.LocalThresholdNiblack;
+import net.haesleinhuepf.clijx.plugins.LocalThresholdSauvola;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -3702,7 +3709,6 @@ public abstract interface CLIJxOps {
      *  Auto Local Threshold (Phansalkar method) see: https://imagej.net/Auto_Local_Threshold 
      *  see code in: 
      *  https://github.com/fiji/Auto_Local_Threshold/blob/c955dc18cff58ac61df82f3f001799f7ffaec5cb/src/main/java/fiji/threshold/Auto_Local_Threshold.java#L636 
-     *  The version here has been adapted to use normalization my multiplying the image with 1.0 / max_intensity instead of 1.0/255. 
      *  Formulary: 
      * <pre>t = mean * (1 + p * exp(-q * mean) + k * ((stdev / r) - 1))</pre>
      */
@@ -3713,5 +3719,131 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.LocalThresholdBernsen
+    //----------------------------------------------------
+    /**
+     * Computes the local threshold based on 
+     *  Auto Local Threshold (Bernsen method) see: https://imagej.net/Auto_Local_Threshold 
+     *  see code in: 
+     *  https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java 
+     *  Formular: 
+     * <pre>if (tcontrast > max - min){ if ((max + min)/2.0 >= 128) res = 0} else if (val > (max + min)/2.0) res =0</pre>
+     */
+    default boolean localThresholdBernsen(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4) {
+        if (doTimeTracing()) {recordMethodStart("LocalThresholdBernsen");}
+        boolean result = LocalThresholdBernsen.localThresholdBernsen(getCLIJx(), arg1, arg2, arg3, arg4);
+        if (doTimeTracing()) {recordMethodEnd("LocalThresholdBernsen");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalThresholdContrast
+    //----------------------------------------------------
+    /**
+     * Computes the local threshold based on 
+     *  Auto Local Threshold (Contrast method) see: https://imagej.net/Auto_Local_Threshold 
+     *  see code in: 
+     *  https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java 
+     *  Formular: 
+     * <pre>if (abs(value - min) >= abs(max - value) && (value != 0)) value = 0 </pre>
+     */
+    default boolean localThresholdContrast(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3) {
+        if (doTimeTracing()) {recordMethodStart("LocalThresholdContrast");}
+        boolean result = LocalThresholdContrast.localThresholdContrast(getCLIJx(), arg1, arg2, arg3);
+        if (doTimeTracing()) {recordMethodEnd("LocalThresholdContrast");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalThresholdMean
+    //----------------------------------------------------
+    /**
+     * Computes the local threshold based on 
+     *  Auto Local Threshold (Mean method) see: https://imagej.net/Auto_Local_Threshold 
+     *  see code in: 
+     *  https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java 
+     *  Formular: 
+     * <pre>if(value > (mean - c_value)) value = 0 </pre>
+     */
+    default boolean localThresholdMean(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4) {
+        if (doTimeTracing()) {recordMethodStart("LocalThresholdMean");}
+        boolean result = LocalThresholdMean.localThresholdMean(getCLIJx(), arg1, arg2, arg3, arg4);
+        if (doTimeTracing()) {recordMethodEnd("LocalThresholdMean");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalThresholdMedian
+    //----------------------------------------------------
+    /**
+     * Computes the local threshold based on 
+     *  Auto Local Threshold (Median method) see: https://imagej.net/Auto_Local_Threshold 
+     *  see code in: 
+     *  https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java 
+     *  Formular: 
+     * <pre>if(value > (median - c_value)) value = 0 </pre>
+     */
+    default boolean localThresholdMedian(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4) {
+        if (doTimeTracing()) {recordMethodStart("LocalThresholdMedian");}
+        boolean result = LocalThresholdMedian.localThresholdMedian(getCLIJx(), arg1, arg2, arg3, arg4);
+        if (doTimeTracing()) {recordMethodEnd("LocalThresholdMedian");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalThresholdMidGrey
+    //----------------------------------------------------
+    /**
+     * Computes the local threshold based on 
+     *  Auto Local Threshold (MidGrey method) see: https://imagej.net/Auto_Local_Threshold 
+     *  see code in: 
+     *  https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java 
+     *  Formular: 
+     * <pre>if (value > ( (max + min)/2.0 - c_value) ) value = 0 </pre>
+     */
+    default boolean localThresholdMidGrey(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4) {
+        if (doTimeTracing()) {recordMethodStart("LocalThresholdMidGrey");}
+        boolean result = LocalThresholdMidGrey.localThresholdMidGrey(getCLIJx(), arg1, arg2, arg3, arg4);
+        if (doTimeTracing()) {recordMethodEnd("LocalThresholdMidGrey");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalThresholdNiblack
+    //----------------------------------------------------
+    /**
+     * Computes the local threshold based on 
+     *  Auto Local Threshold (Niblack method) see: https://imagej.net/Auto_Local_Threshold 
+     *  see code in: 
+     *  https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java 
+     *  Formular: 
+     * <pre>t = mean + k_value * sqrt(var - c_value) </pre>
+     */
+    default boolean localThresholdNiblack(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4, float arg5) {
+        if (doTimeTracing()) {recordMethodStart("LocalThresholdNiblack");}
+        boolean result = LocalThresholdNiblack.localThresholdNiblack(getCLIJx(), arg1, arg2, arg3, arg4, arg5);
+        if (doTimeTracing()) {recordMethodEnd("LocalThresholdNiblack");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.LocalThresholdSauvola
+    //----------------------------------------------------
+    /**
+     * Computes the local threshold based on 
+     *  Auto Local Threshold (Sauvola method) see: https://imagej.net/Auto_Local_Threshold 
+     *  see code in: 
+     *  https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java 
+     *  Formular: 
+     * <pre>t = mean * (1.0 + k_value * (stddev / r_value - 1.0)) </pre>
+     */
+    default boolean localThresholdSauvola(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4, float arg5) {
+        if (doTimeTracing()) {recordMethodStart("LocalThresholdSauvola");}
+        boolean result = LocalThresholdSauvola.localThresholdSauvola(getCLIJx(), arg1, arg2, arg3, arg4, arg5);
+        if (doTimeTracing()) {recordMethodEnd("LocalThresholdSauvola");}
+        return result;
+    }
+
 }
-// 217 methods generated.
+// 224 methods generated.
