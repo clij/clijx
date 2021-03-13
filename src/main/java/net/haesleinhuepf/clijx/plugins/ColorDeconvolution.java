@@ -54,11 +54,17 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
     
     public static boolean colorDeconvolution(CLIJx clijx, 
     												ClearCLBuffer src,
-                                                    ClearCLBuffer color_vectors,
+                                                    ClearCLBuffer color_vectors_in,
    													ClearCLBuffer dst
     									)
     {
         assertDifferent(src, dst);
+
+        ClearCLBuffer color_vectors = color_vectors_in;
+        if (color_vectors.getNativeType() != NativeTypeEnum.Float) {
+            color_vectors = clijx.create(color_vectors_in.getDimensions(), NativeTypeEnum.Float);
+            clijx.copy(color_vectors_in, color_vectors);
+        }
 
         // get srccv (color vectors) as float array
         long size = color_vectors.getLength();
@@ -94,7 +100,12 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
         
         clijx.execute(ColorDeconvolution.class, "color_deconvolution.cl", "color_deconvolution", 
         		dst.getDimensions(), dst.getDimensions(), parameters);
- 
+
+        if (color_vectors != color_vectors_in) {
+            color_vectors.close();
+        }
+        lognormx.close();
+
         return true;
     }
 
