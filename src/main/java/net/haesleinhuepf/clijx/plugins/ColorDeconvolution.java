@@ -5,6 +5,8 @@ import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
+import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
+import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij2.utilities.HasAuthor;
 import net.haesleinhuepf.clij2.utilities.HasClassifiedInputOutput;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
@@ -22,7 +24,7 @@ import java.util.HashMap;
  */
 
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_colorDeconvolution")
-public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized, HasClassifiedInputOutput {
+public class ColorDeconvolution extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor, IsCategorized, HasClassifiedInputOutput {
     @Override
     public String getInputType() {
         return "Image";
@@ -41,9 +43,9 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
     @Override
     public boolean executeCL() {
    	    	
-    	CLIJx clijx = getCLIJx();
+    	CLIJ2 clij2 = getCLIJ2();
     	
-        boolean result = colorDeconvolution(clijx, 
+        boolean result = colorDeconvolution(clij2,
         											(ClearCLBuffer) (args[0]), 
         									  		(ClearCLBuffer) (args[1]),
         									  		(ClearCLBuffer) (args[2]));
@@ -52,7 +54,7 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
     }
 
     
-    public static boolean colorDeconvolution(CLIJx clijx, 
+    public static boolean colorDeconvolution(CLIJ2 clij2,
     												ClearCLBuffer src,
                                                     ClearCLBuffer color_vectors_in,
    													ClearCLBuffer dst
@@ -62,8 +64,8 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
 
         ClearCLBuffer color_vectors = color_vectors_in;
         if (color_vectors.getNativeType() != NativeTypeEnum.Float) {
-            color_vectors = clijx.create(color_vectors_in.getDimensions(), NativeTypeEnum.Float);
-            clijx.copy(color_vectors_in, color_vectors);
+            color_vectors = clij2.create(color_vectors_in.getDimensions(), NativeTypeEnum.Float);
+            clij2.copy(color_vectors_in, color_vectors);
         }
 
         // get srccv (color vectors) as float array
@@ -87,7 +89,7 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
             lognormxArray[i] = (float) -Math.log10(i / 255.0);
         }
 
-        ClearCLBuffer lognormx = clijx.create(new long[]{lognormxArray.length, 1, 1}, NativeTypeEnum.Float);
+        ClearCLBuffer lognormx = clij2.create(new long[]{lognormxArray.length, 1, 1}, NativeTypeEnum.Float);
         FloatBuffer buffer2 = FloatBuffer.wrap(lognormxArray);
         lognormx.readFrom(buffer2, true);
         
@@ -98,7 +100,7 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
         parameters.put("lognormx", lognormx);
         parameters.put("detA", detA);
         
-        clijx.execute(ColorDeconvolution.class, "color_deconvolution.cl", "color_deconvolution", 
+        clij2.execute(ColorDeconvolution.class, "color_deconvolution.cl", "color_deconvolution",
         		dst.getDimensions(), dst.getDimensions(), parameters);
 
         if (color_vectors != color_vectors_in) {
@@ -120,6 +122,12 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
     			" Haub, P., Meckel, T. A Model based Survey of Colour Deconvolution in \n" + 
     			" Diagnostic Brightfield Microscopy: Error Estimation and Spectral Consideration. \n"+
     			" Sci Rep 5, 12096 (2015). https://doi.org/10.1038/srep12096 \n";
+    }
+
+    @Override
+    public ClearCLBuffer createOutputBufferFromSource(ClearCLBuffer input)
+    {
+        return getCLIJ2().create(input.getDimensions(), NativeTypeEnum.Float);
     }
 
     @Override
