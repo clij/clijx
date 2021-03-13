@@ -17,6 +17,9 @@ imgSrc = "RGBstack";
 imgOut = "clij_ColorDeconvolution";
 imgStainVectors = "StainVectors";
 
+// clean up first, create a test image
+close("*");
+newImage("Untitled", "RGB noise", 1000, 1000, 1);
 
 // RGB image expected
 title = getTitle();
@@ -48,11 +51,6 @@ AB3=0.3018168;
 
 matSV = newArray(AR1, AR2, AR3, AG1, AG2, AG3, AB1, AB2, AB3);
 
-// Create Stain vector image
-newImage(imgStainVectors, "32-bit black", 9, 1, 1);
-for (i=0; i<matSV.length; i++)
-	setPixel(i, 0, matSV[i]);
-
 // create dublicate of original image and convert to RGB float stack (to force output as float)
 selectWindow(title);
 run("Duplicate...", "title="+imgSrc);
@@ -71,7 +69,7 @@ Ext.CLIJ2_clear();
 time = getTime();
 
 Ext.CLIJ2_push(imgSrc);
-Ext.CLIJ2_push(imgStainVectors);
+Ext.CLIJ2_pushArray(imgStainVectors, matSV, 3, 3, 1);
 
 Ext.CLIJx_colorDeconvolution(imgSrc, imgStainVectors, imgOut);
 
@@ -85,9 +83,6 @@ Ext.CLIJ2_clear();
 
 selectWindow(imgSrc);
 close();
-selectWindow(imgStainVectors);
-close();
-
 
 // ImageJ ColorDeconvolution2 plugin 
 
