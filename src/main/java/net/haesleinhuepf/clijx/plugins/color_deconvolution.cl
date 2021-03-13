@@ -1,4 +1,4 @@
-// March 2021, Peter Haub (@phaub)
+// 03'2021, Peter Haub (@phaub)
 
 __const sampler_t sampler = CLK_NORMALIZED_COORDS_FALSE | CLK_ADDRESS_CLAMP_TO_EDGE | CLK_FILTER_NEAREST;
 

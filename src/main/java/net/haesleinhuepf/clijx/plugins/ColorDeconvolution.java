@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 /**
  * Author: @phaub (Peter Haub)
- * 03 2021
+ * 03'2021
  */
 
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_colorDeconvolution")
