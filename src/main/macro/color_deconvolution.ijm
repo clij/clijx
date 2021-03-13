@@ -73,7 +73,7 @@ time = getTime();
 Ext.CLIJ2_push(imgSrc);
 Ext.CLIJ2_push(imgStainVectors);
 
-Ext.CLIJx_colorDeconvolution(imgSrc, imgOut, imgStainVectors);
+Ext.CLIJx_colorDeconvolution(imgSrc, imgStainVectors, imgOut);
 
 Ext.CLIJ2_pull(imgOut);
 

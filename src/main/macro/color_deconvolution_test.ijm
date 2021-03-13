@@ -19,6 +19,7 @@ imgStainVectors = "StainVectors";
 
 
 // RGB image expected
+newImage("Untitled", "RGB noise", 1000, 1000, 1);
 title = getTitle();
 
 // Define Stain vectors
@@ -73,7 +74,7 @@ time = getTime();
 Ext.CLIJ2_push(imgSrc);
 Ext.CLIJ2_push(imgStainVectors);
 
-Ext.CLIJx_colorDeconvolution(imgSrc, imgOut, imgStainVectors);
+Ext.CLIJx_colorDeconvolution(imgSrc, imgStainVectors, imgOut);
 
 Ext.CLIJ2_pull(imgOut);
 

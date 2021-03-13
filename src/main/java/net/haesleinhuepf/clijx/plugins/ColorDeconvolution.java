@@ -35,7 +35,7 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
 
     @Override
     public String getParameterHelpText() {
-        return "Image source, ByRef Image destination, Image srccolorvectors";
+        return "Image source, Image color_vectors, ByRef Image destination";
     }
     
     @Override
@@ -53,18 +53,18 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
 
     
     public static boolean colorDeconvolution(CLIJx clijx, 
-    												ClearCLBuffer src, 
-   													ClearCLBuffer dst,
-   													ClearCLBuffer srccv
+    												ClearCLBuffer src,
+                                                    ClearCLBuffer color_vectors,
+   													ClearCLBuffer dst
     									)
     {
         assertDifferent(src, dst);
 
         // get srccv (color vectors) as float array
-        long size = srccv.getLength();
+        long size = color_vectors.getLength();
         float[] cv = new float[(int) size];
         FloatBuffer buffer = FloatBuffer.wrap(cv);
-        srccv.writeTo(buffer, 0, size, true);
+        color_vectors.writeTo(buffer, 0, size, true);
         
       	// Color vectors matrix A 
       	//        AR1, AR2, AR3
@@ -77,8 +77,9 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
         
         float[] lognormxArray = new float[256];
         lognormxArray[0] = 5.0f;   // set to ~ 2 * -Math.log10(1/255.0) = 2.40654
-        for (int i=1; i<lognormxArray.length; i++)
-        	lognormxArray[i] = (float) -Math.log10(i/255.0);
+        for (int i=1; i<lognormxArray.length; i++) {
+            lognormxArray[i] = (float) -Math.log10(i / 255.0);
+        }
 
         ClearCLBuffer lognormx = clijx.create(new long[]{lognormxArray.length, 1, 1}, NativeTypeEnum.Float);
         FloatBuffer buffer2 = FloatBuffer.wrap(lognormxArray);
@@ -87,7 +88,7 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("src", src);
         parameters.put("dst", dst);
-        parameters.put("cv", srccv);
+        parameters.put("cv", color_vectors);
         parameters.put("lognormx", lognormx);
         parameters.put("detA", detA);
         
@@ -102,7 +103,7 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
     public String getDescription() {
         return "Computes the color deconvolution of an 8bit RGB stack color image \n" +
         		" with a given 3x3 matrix of color vectors.\n" +
-        		" (Image has to be pushed as float32 stack.)\n\n" +
+        		" Note: The input image has to be a stack with three z-slices corresponding to the red, green and blue channel.)\n\n" +
 				" Additional information see Supplementary Information to: \n\n" +
 
     			" Haub, P., Meckel, T. A Model based Survey of Colour Deconvolution in \n" + 
@@ -112,7 +113,7 @@ public class ColorDeconvolution extends AbstractCLIJxPlugin implements CLIJMacro
 
     @Override
     public String getAvailableForDimensions() {
-        return "2D, 3D";
+        return "3D";
     }
 
     @Override
