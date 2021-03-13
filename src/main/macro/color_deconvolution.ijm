@@ -55,7 +55,6 @@ matSV = newArray(AR1, AR2, AR3, AG1, AG2, AG3, AB1, AB2, AB3);
 selectWindow(title);
 run("Duplicate...", "title="+imgSrc);
 run("RGB Stack");
-run("32-bit");
 
 
 // color deconvolution on GPU
