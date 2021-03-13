@@ -794,14 +794,29 @@ class CLIJxAutoComplete {
        headline = "clijx.localThreshold(ClearCLImageInterface source, ClearCLImageInterface localThreshold, ClearCLImageInterface destination)";
        description = "<b>localThreshold</b><br><br>Computes a binary image with pixel values 0 and 1 depending on if a pixel value x in image X <br>was above of equal to the pixel value m in mask image M.<br><br><pre>f(x) = (1 if (x >=  m)); (0 otherwise)</pre><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface localThreshold, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.localThresholdPhansalkar(ClearCLImageInterface source, ClearCLImageInterface destination, Float radius, Float param_k, Float param_r, Integer whiteObjects, Integer originalMode)";
-       description = "<b>LocalThresholdPhansalkar</b><br><br>Computes a binary image with pixel values 0 and 255 depending on if a pixel value x in image X <br>was above of equal to the pixel value of the Local Threshold (Phansalkar method) of image X.<br><br><br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Float radius, Float param_k, Float param_r, Integer whiteObjects, Integer originalMod";
+       headline = "clijx.localThresholdBernsen(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4)";
+       description = "<b>localThresholdBernsen</b><br><br>Computes the local threshold based on <br> Auto Local Threshold (Bernsen method) see: https://imagej.net/Auto_Local_Threshold <br> see code in: <br> https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java <br> Formular: <br><pre>if (tcontrast > max - min){ if ((max + min)/2.0 >= 128) res = 0} else if (val > (max + min)/2.0) res =0</pre><br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.squarePixels(ClearCLImageInterface source, ClearCLImageInterface destination)";
-       description = "<b>SquarePixels</b><br><br>Computes the squared image. <br>";
+       headline = "clijx.localThresholdContrast(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3)";
+       description = "<b>localThresholdContrast</b><br><br>Computes the local threshold based on <br> Auto Local Threshold (Contrast method) see: https://imagej.net/Auto_Local_Threshold <br> see code in: <br> https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java <br> Formular: <br><pre>if (abs(value - min) >= abs(max - value) && (value != 0)) value = 0 </pre><br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.squareRootPixels(ClearCLImageInterface source, ClearCLImageInterface destination)";
-       description = "<b>SquareRootPixels</b><br><br>Computes the square root image. <br>";
+       headline = "clijx.localThresholdMean(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4)";
+       description = "<b>localThresholdMean</b><br><br>Computes the local threshold based on <br> Auto Local Threshold (Mean method) see: https://imagej.net/Auto_Local_Threshold <br> see code in: <br> https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java <br> Formular: <br><pre>if(value > (mean - c_value)) value = 0 </pre><br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localThresholdMedian(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4)";
+       description = "<b>localThresholdMedian</b><br><br>Computes the local threshold based on <br> Auto Local Threshold (Median method) see: https://imagej.net/Auto_Local_Threshold <br> see code in: <br> https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java <br> Formular: <br><pre>if(value > (median - c_value)) value = 0 </pre><br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localThresholdMidGrey(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4)";
+       description = "<b>localThresholdMidGrey</b><br><br>Computes the local threshold based on <br> Auto Local Threshold (MidGrey method) see: https://imagej.net/Auto_Local_Threshold <br> see code in: <br> https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java <br> Formular: <br><pre>if (value > ( (max + min)/2.0 - c_value) ) value = 0 </pre><br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localThresholdNiblack(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4, float arg5)";
+       description = "<b>localThresholdNiblack</b><br><br>Computes the local threshold based on <br> Auto Local Threshold (Niblack method) see: https://imagej.net/Auto_Local_Threshold <br> see code in: <br> https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java <br> Formular: <br><pre>t = mean + k_value * sqrt(var - c_value) </pre><br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4, float arg5";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localThresholdPhansalkar(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4, float arg5)";
+       description = "<b>localThresholdPhansalkar</b><br><br>Computes the local threshold (Fast version) based on <br> Auto Local Threshold (Phansalkar method) see: https://imagej.net/Auto_Local_Threshold <br> see code in: <br> https://github.com/fiji/Auto_Local_Threshold/blob/c955dc18cff58ac61df82f3f001799f7ffaec5cb/src/main/java/fiji/threshold/Auto_Local_Threshold.java#L636 <br> Formulary: <br><pre>t = mean * (1 + p * exp(-q * mean) + k * ((stdev / r) - 1))</pre><br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4, float arg5";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.localThresholdSauvola(ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4, float arg5)";
+       description = "<b>localThresholdSauvola</b><br><br>Computes the local threshold based on <br> Auto Local Threshold (Sauvola method) see: https://imagej.net/Auto_Local_Threshold <br> see code in: <br> https://github.com/fiji/Auto_Local_Threshold/blob/master/src/main/java/fiji/threshold/Auto_Local_Threshold.java <br> Formular: <br><pre>t = mean * (1.0 + k_value * (stddev / r_value - 1.0)) </pre><br><br>Parameters:<br>ClearCLBuffer arg1, ClearCLBuffer arg2, float arg3, float arg4, float arg5";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.logarithm(ClearCLImageInterface source, ClearCLImageInterface destination)";
        description = "<b>logarithm</b><br><br>Computes base e logarithm of all pixels values.<br><br>f(x) = log(x)<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
@@ -1824,7 +1839,10 @@ class CLIJxAutoComplete {
        description = "<b>writeXYZPointListToDisc</b><br><br>Takes a point list image representing n points (n*2 for 2D points, n*3 for 3D points) and exports them in XYZ format.<br><br>Parameters:<br>ClearCLBuffer pointlist, String filename";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.zPositionOfMaximumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination)";
-       description = "<b>zPositionOfMaximumZProjection</b><br><br>Determines a Z-position of the maximum intensity along Z and writes it into the resulting image.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       description = "<b>zPositionOfMaximumZProjection</b><br><br>Determines a Z-position of the maximum intensity along Z and writes it into the resulting image.<br><br>If there are multiple z-slices with the same value, the smallest Z will be chosen.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.zPositionOfMinimumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination)";
+       description = "<b>zPositionOfMinimumZProjection</b><br><br>Determines a Z-position of the minimum intensity along Z and writes it into the resulting image.<br><br>If there are multiple z-slices with the same value, the smallest Z will be chosen.<br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.zPositionProjection(ClearCLImageInterface source_stack, ClearCLImageInterface z_position, ClearCLImageInterface destination)";
        description = "<b>zPositionProjection</b><br><br>Project a defined Z-slice of a 3D stack into a 2D image.<br><br>The slice is determined using a separate 2D image.<br><br>Parameters:<br>ClearCLImageInterface source_stack, ClearCLImageInterface z_position, ClearCLImageInterface destination";
@@ -1835,4 +1853,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 605 methods generated.
+// 614 methods generated.
