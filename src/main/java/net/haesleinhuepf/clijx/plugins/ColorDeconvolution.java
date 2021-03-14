@@ -138,6 +138,7 @@ public class ColorDeconvolution extends AbstractCLIJ2Plugin implements CLIJMacro
             color_vectors.close();
         }
         lognormx.close();
+        rotmat.close();
 
         return true;
     }
