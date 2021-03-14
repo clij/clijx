@@ -74,6 +74,12 @@ public class ColorDeconvolution extends AbstractCLIJ2Plugin implements CLIJMacro
         FloatBuffer buffer = FloatBuffer.wrap(cv);
         color_vectors.writeTo(buffer, 0, size, true);
         
+        float detA = cv[0]*(cv[4]*cv[8] - cv[5]*cv[7]) - cv[1]*(cv[3]*cv[8] - cv[6]*cv[5]) + cv[2]*(cv[3]*cv[7] - cv[6]*cv[4]);
+
+        if (detA <= 0)
+        	return false;
+        
+        // Solve linear equation
       	// Color vectors matrix A 
       	//        AR1, AR2, AR3
       	//  A  =  AG1, AG2, AG3
@@ -81,8 +87,34 @@ public class ColorDeconvolution extends AbstractCLIJ2Plugin implements CLIJMacro
       	//         0    1    2
       	//         3    4    5
       	//         6    7    8
-        float detA = cv[0]*(cv[4]*cv[8] - cv[5]*cv[7]) - cv[1]*(cv[3]*cv[8] - cv[6]*cv[5]) + cv[2]*(cv[3]*cv[7] - cv[6]*cv[4]);
+      	// as float array {AR1, AR2, AR3, AG1, AG2, AG3, AB1, AB2, AB3}
+      	//                  0,   1,   2,   3,   4,   5,   6,   7,   8
+      	//  see Supplementary Information to
+    	//	Haub, P., Meckel, T. A Model based Survey of Colour Deconvolution in Diagnostic Brightfield Microscopy:
+    	//	Error Estimation and Spectral Consideration. Sci Rep 5, 12096 (2015). https://doi.org/10.1038/srep12096	
+
+        //c1 = aR   *(cv[4]*cv[8] - cv[5]*cv[7]) - cv[1]*( aG*cv[8]   -   aB*cv[5] ) + cv[2]*( aG*cv[7]   -   aB*cv[4] );
+        //c2 = cv[0]*( aG*cv[8]   -   aB*cv[5] ) - aR   *(cv[3]*cv[8] - cv[5]*cv[6]) + cv[2]*( aB*cv[3]   -   aG*cv[6] );
+        //c3 = cv[0]*( aB*cv[4]   -   aG*cv[7] ) - cv[1]*( aB*cv[3]   -   aG*cv[6] ) + aR   *(cv[3]*cv[7] - cv[4]*cv[6]);
+        // .. transforms to:
+        //c1 = aR*(cv[4]*cv[8] - cv[5]*cv[7]) + aG*(cv[2]*cv[7] - cv[1]*cv[8]) + aB*(cv[1]*cv[5] - cv[2]*cv[4]) ;
+        //c2 = aR*(cv[5]*cv[6] - cv[3]*cv[8]) + aG*(cv[0]* cv[8] - cv[2]*cv[6]) + aB*(cv[2]*cv[3] - cv[0]*cv[5])   ;
+        //c3 = aR*(cv[3]*cv[7] - cv[4]*cv[6]) + aG*(cv[1]*cv[6] - cv[0]*cv[7])   + aB*(cv[0]* cv[4] - cv[1]* cv[3])    ;
+        // .. transforms to:
+        // Color vectors matrix A transformed to rotation matrix):
+        float[] rot = new float[(int) size];
+        rot[0] = cv[4]*cv[8] - cv[5]*cv[7];   rot[1] = cv[2]*cv[7] - cv[1]*cv[8];   rot[2] = cv[1]*cv[5] - cv[2]*cv[4];
+        rot[3] = cv[5]*cv[6] - cv[3]*cv[8];   rot[4] = cv[0]*cv[8] - cv[2]*cv[6];   rot[5] = cv[2]*cv[3] - cv[0]*cv[5];
+        rot[6] = cv[3]*cv[7] - cv[4]*cv[6];   rot[7] = cv[1]*cv[6] - cv[0]*cv[7];   rot[8] = cv[0]*cv[4] - cv[1]*cv[3];
         
+        for (int i=0; i<rot.length; i++)
+        	rot[i] /= detA;       
+        
+        ClearCLBuffer rotmat = clij2.create(new long[]{rot.length, 1, 1}, NativeTypeEnum.Float);
+        FloatBuffer buffer2 = FloatBuffer.wrap(rot);
+        rotmat.readFrom(buffer2, true);
+        
+      	
         float[] lognormxArray = new float[256];
         lognormxArray[0] = 5.0f;   // set to ~ 2 * -Math.log10(1/255.0) = 2.40654
         for (int i=1; i<lognormxArray.length; i++) {
@@ -90,15 +122,14 @@ public class ColorDeconvolution extends AbstractCLIJ2Plugin implements CLIJMacro
         }
 
         ClearCLBuffer lognormx = clij2.create(new long[]{lognormxArray.length, 1, 1}, NativeTypeEnum.Float);
-        FloatBuffer buffer2 = FloatBuffer.wrap(lognormxArray);
-        lognormx.readFrom(buffer2, true);
+        FloatBuffer buffer3 = FloatBuffer.wrap(lognormxArray);
+        lognormx.readFrom(buffer3, true);
         
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("src", src);
         parameters.put("dst", dst);
-        parameters.put("cv", color_vectors);
+        parameters.put("rotmat", rotmat);
         parameters.put("lognormx", lognormx);
-        parameters.put("detA", detA);
         
         clij2.execute(ColorDeconvolution.class, "color_deconvolution.cl", "color_deconvolution",
         		dst.getDimensions(), dst.getDimensions(), parameters);
