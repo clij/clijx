@@ -68,13 +68,13 @@ public class ColorDeconvolution extends AbstractCLIJ2Plugin implements CLIJMacro
             clij2.copy(color_vectors_in, color_vectors);
         }
 
-        // get srccv (color vectors) as float array
+        // get color vectors as float array
         long size = color_vectors.getLength();
         float[] cv = new float[(int) size];
         FloatBuffer buffer = FloatBuffer.wrap(cv);
         color_vectors.writeTo(buffer, 0, size, true);
         
-        float detA = cv[0]*(cv[4]*cv[8] - cv[5]*cv[7]) - cv[1]*(cv[3]*cv[8] - cv[6]*cv[5]) + cv[2]*(cv[3]*cv[7] - cv[6]*cv[4]);
+        float detA = cv[0] *(cv[4] *cv[8] - cv[5] * cv[7]) - cv[1] * (cv[3] * cv[8] - cv[6] * cv[5]) + cv[2] * (cv[3] * cv[7] - cv[6] * cv[4]);
 
         if (detA <= 0)
         	return false;
@@ -103,12 +103,13 @@ public class ColorDeconvolution extends AbstractCLIJ2Plugin implements CLIJMacro
         // .. transforms to:
         // Color vectors matrix A transformed to rotation matrix):
         float[] rot = new float[(int) size];
-        rot[0] = cv[4]*cv[8] - cv[5]*cv[7];   rot[1] = cv[2]*cv[7] - cv[1]*cv[8];   rot[2] = cv[1]*cv[5] - cv[2]*cv[4];
-        rot[3] = cv[5]*cv[6] - cv[3]*cv[8];   rot[4] = cv[0]*cv[8] - cv[2]*cv[6];   rot[5] = cv[2]*cv[3] - cv[0]*cv[5];
-        rot[6] = cv[3]*cv[7] - cv[4]*cv[6];   rot[7] = cv[1]*cv[6] - cv[0]*cv[7];   rot[8] = cv[0]*cv[4] - cv[1]*cv[3];
+        rot[0] = cv[4] * cv[8] - cv[5] * cv[7];   rot[1] = cv[2] * cv[7] - cv[1] * cv[8];   rot[2] = cv[1] * cv[5] - cv[2] * cv[4];
+        rot[3] = cv[5] * cv[6] - cv[3] * cv[8];   rot[4] = cv[0] * cv[8] - cv[2] * cv[6];   rot[5] = cv[2] * cv[3] - cv[0] * cv[5];
+        rot[6] = cv[3] * cv[7] - cv[4] * cv[6];   rot[7] = cv[1] * cv[6] - cv[0] * cv[7];   rot[8] = cv[0] * cv[4] - cv[1] * cv[3];
         
-        for (int i=0; i<rot.length; i++)
-        	rot[i] /= detA;       
+        for (int i=0; i<rot.length; i++) {
+            rot[i] /= detA;
+        }
         
         ClearCLBuffer rotmat = clij2.create(new long[]{rot.length, 1, 1}, NativeTypeEnum.Float);
         FloatBuffer buffer2 = FloatBuffer.wrap(rot);
