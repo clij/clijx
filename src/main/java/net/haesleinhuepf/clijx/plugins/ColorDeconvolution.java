@@ -76,8 +76,9 @@ public class ColorDeconvolution extends AbstractCLIJ2Plugin implements CLIJMacro
         
         float detA = cv[0] *(cv[4] *cv[8] - cv[5] * cv[7]) - cv[1] * (cv[3] * cv[8] - cv[6] * cv[5]) + cv[2] * (cv[3] * cv[7] - cv[6] * cv[4]);
 
-        if (detA <= 0)
-        	return false;
+        if (detA <= 0) {
+            return false;
+        }
         
         // Solve linear equation
       	// Color vectors matrix A 
