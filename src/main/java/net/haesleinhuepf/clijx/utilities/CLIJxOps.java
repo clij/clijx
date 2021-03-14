@@ -206,6 +206,7 @@ import net.haesleinhuepf.clijx.plugins.LocalThresholdMedian;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdMidGrey;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdNiblack;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdSauvola;
+import net.haesleinhuepf.clijx.plugins.ColorDeconvolution;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -3845,5 +3846,27 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.ColorDeconvolution
+    //----------------------------------------------------
+    /**
+     * Computes the color deconvolution of an 8bit RGB stack color image 
+     *  with a given 3x3 matrix of color vectors.
+     *  Note: The input image has to be a stack with three z-slices corresponding to the red, green and blue channel.)
+     * 
+     *  Additional information see Supplementary Information to: 
+     * 
+     *  Haub, P., Meckel, T. A Model based Survey of Colour Deconvolution in 
+     *  Diagnostic Brightfield Microscopy: Error Estimation and Spectral Consideration. 
+     *  Sci Rep 5, 12096 (2015). https://doi.org/10.1038/srep12096 
+     * 
+     */
+    default boolean colorDeconvolution(ClearCLBuffer source, ClearCLBuffer color_vectors, ClearCLBuffer destination) {
+        if (doTimeTracing()) {recordMethodStart("ColorDeconvolution");}
+        boolean result = ColorDeconvolution.colorDeconvolution(getCLIJ2(), source, color_vectors, destination);
+        if (doTimeTracing()) {recordMethodEnd("ColorDeconvolution");}
+        return result;
+    }
+
 }
-// 224 methods generated.
+// 225 methods generated.

@@ -173,6 +173,9 @@ class CLIJxAutoComplete {
        headline = "clijx.closingDiamond(ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_dilations_and_erotions)";
        description = "<b>closingDiamond</b><br><br>Apply a binary closing to the input image by calling n dilations and n erosions subsequently.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Integer number_of_dilations_and_erotions";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.colorDeconvolution(ClearCLBuffer source, ClearCLBuffer color_vectors, ClearCLBuffer destination)";
+       description = "<b>colorDeconvolution</b><br><br>Computes the color deconvolution of an 8bit RGB stack color image <br> with a given 3x3 matrix of color vectors.<br> Note: The input image has to be a stack with three z-slices corresponding to the red, green and blue channel.)<br><br> Additional information see Supplementary Information to: <br><br> Haub, P., Meckel, T. A Model based Survey of Colour Deconvolution in <br> Diagnostic Brightfield Microscopy: Error Estimation and Spectral Consideration. <br> Sci Rep 5, 12096 (2015). https://doi.org/10.1038/srep12096 <br><br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer color_vectors, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.combineHorizontally(ClearCLImageInterface stack1, ClearCLImageInterface stack2, ClearCLImageInterface destination)";
        description = "<b>combineHorizontally</b><br><br>Combines two images or stacks in X.<br><br>Parameters:<br>ClearCLImageInterface stack1, ClearCLImageInterface stack2, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1853,4 +1856,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 614 methods generated.
+// 615 methods generated.
