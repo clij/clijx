@@ -81,8 +81,22 @@ public class MergeTouchingLabels extends AbstractCLIJ2Plugin implements CLIJMacr
 
         clij2.closeIndexGapsInLabelMap(temp, output);
 
-        temp.close();
+        // check if none are touching
+        int num_labels = (int) clij2.maximumOfAllPixels(output);
+        ClearCLBuffer touch_matrix2 = clij2.create(new long[]{num_labels + 1, num_labels + 1}, clij2.UnsignedByte);
+        clij2.generateTouchMatrix(output, touch_matrix2);
+        clij2.setColumn(touch_matrix2, 0, 0);
+        clij2.setRow(touch_matrix2, 0, 0);
+        double num_touches = clij2.sumOfAllPixels(touch_matrix2);
+        touch_matrix2.close();
 
+        if (num_touches > 0) {
+            clij2.copy(output, temp);
+            mergeTouchingLabels(clij2, temp, output);
+        }
+
+
+        temp.close();
 
         return true;
     }
@@ -113,7 +127,8 @@ public class MergeTouchingLabels extends AbstractCLIJ2Plugin implements CLIJMacr
         ClearCLBuffer input = clij2.pushString("" +
                 "1 1 0 2 0 3 0 0 0 0\n" +
                 "1 1 2 2 0 3 0 0 4 5\n" +
-                "1 0 0 2 0 0 0 0 4 5"
+                "1 0 0 2 0 0 0 0 4 5\n" +
+                "7 7 7 7 7 7 7 7 7 6"
         );
 
         ClearCLBuffer output = clij2.create(input);
