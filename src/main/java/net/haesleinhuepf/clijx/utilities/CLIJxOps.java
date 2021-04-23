@@ -207,6 +207,12 @@ import net.haesleinhuepf.clijx.plugins.LocalThresholdMidGrey;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdNiblack;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdSauvola;
 import net.haesleinhuepf.clijx.plugins.ColorDeconvolution;
+import net.haesleinhuepf.clijx.plugins.GreyscaleOpeningBox;
+import net.haesleinhuepf.clijx.plugins.GreyscaleOpeningSphere;
+import net.haesleinhuepf.clijx.plugins.GreyscaleClosingBox;
+import net.haesleinhuepf.clijx.plugins.GreyscaleClosingSphere;
+import net.haesleinhuepf.clijx.plugins.ProximalNeighborCountMap;
+import net.haesleinhuepf.clijx.plugins.SubStack;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -3868,5 +3874,99 @@ public abstract interface CLIJxOps {
         return result;
     }
 
+
+    // net.haesleinhuepf.clijx.plugins.GreyscaleOpeningBox
+    //----------------------------------------------------
+    /**
+     * Apply a greyscale morphological opening to the input image.
+     * 
+     * It applies a minimum filter first and the result is processed by a maximum filter with given radii.
+     * High intensity regions smaller than radius will disappear.
+     */
+    default boolean greyscaleOpeningBox(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("GreyscaleOpeningBox");}
+        boolean result = GreyscaleOpeningBox.greyscaleOpeningBox(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
+        if (doTimeTracing()) {recordMethodEnd("GreyscaleOpeningBox");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.GreyscaleOpeningSphere
+    //----------------------------------------------------
+    /**
+     * Apply a greyscale morphological opening to the input image.
+     * 
+     * It applies a minimum filter first and the result is processed by a maximum filter with given radii.
+     * High intensity regions smaller than radius will disappear.
+     */
+    default boolean greyscaleOpeningSphere(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("GreyscaleOpeningSphere");}
+        boolean result = GreyscaleOpeningSphere.greyscaleOpeningSphere(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
+        if (doTimeTracing()) {recordMethodEnd("GreyscaleOpeningSphere");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.GreyscaleClosingBox
+    //----------------------------------------------------
+    /**
+     * Apply a greyscale morphological closing to the input image.
+     * 
+     * It applies a maximum filter first and the result is processed by a minimum filter with given radii.
+     * Low intensity regions smaller than radius will disappear.
+     */
+    default boolean greyscaleClosingBox(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("GreyscaleClosingBox");}
+        boolean result = GreyscaleClosingBox.greyscaleClosingBox(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
+        if (doTimeTracing()) {recordMethodEnd("GreyscaleClosingBox");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.GreyscaleClosingSphere
+    //----------------------------------------------------
+    /**
+     * Apply a greyscale morphological closing to the input image.
+     * 
+     * It applies a maximum filter first and the result is processed by a minimum filter with given radii.
+     * Low intensity regions smaller than radius will disappear.
+     */
+    default boolean greyscaleClosingSphere(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5) {
+        if (doTimeTracing()) {recordMethodStart("GreyscaleClosingSphere");}
+        boolean result = GreyscaleClosingSphere.greyscaleClosingSphere(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
+        if (doTimeTracing()) {recordMethodEnd("GreyscaleClosingSphere");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.ProximalNeighborCountMap
+    //----------------------------------------------------
+    /**
+     * Takes a label map, determines which labels are within a given distance range and replaces every label with the number of neighboring labels.
+     * 
+     * 
+     */
+    default boolean proximalNeighborCountMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4) {
+        if (doTimeTracing()) {recordMethodStart("ProximalNeighborCountMap");}
+        boolean result = ProximalNeighborCountMap.proximalNeighborCountMap(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
+        if (doTimeTracing()) {recordMethodEnd("ProximalNeighborCountMap");}
+        return result;
+    }
+
+
+    // net.haesleinhuepf.clijx.plugins.SubStack
+    //----------------------------------------------------
+    /**
+     * Crops multiple Z-slices of a 3D stack into a new 3D stack.
+     * 
+     * 
+     */
+    default boolean subStack(ClearCLImageInterface arg1, ClearCLImageInterface arg2, int arg3, int arg4) {
+        if (doTimeTracing()) {recordMethodStart("SubStack");}
+        boolean result = SubStack.subStack(getCLIJ2(), arg1, arg2, arg3, arg4);
+        if (doTimeTracing()) {recordMethodEnd("SubStack");}
+        return result;
+    }
+
 }
-// 225 methods generated.
+// 231 methods generated.

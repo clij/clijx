@@ -558,7 +558,7 @@ class CLIJxAutoComplete {
        description = "<b>generateTouchMatrix</b><br><br>Takes a labelmap with n labels and generates a (n+1)*(n+1) matrix where all pixels are set to 0 exept those where labels are touching. <br><br>Only half of the matrix is filled (with x < y). For example, if labels 3 and 4 are touching then the pixel (3,4) in the matrix will be set to 1.<br>The touch matrix is a representation of a region adjacency graph<br><br><br>Parameters:<br>ClearCLBuffer label_map, ClearCLBuffer touch_matrix_destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.getAutomaticThreshold(ClearCLBuffer arg1, String arg2)";
-       description = "<b>getAutomaticThreshold</b><br><br>The automatic thresholder utilizes the threshold methods from ImageJ on a histogram determined on <br>the GPU to determine a threshold value as similar as possible to ImageJ 'Apply Threshold' method. <br><br>Enter one <br>of these methods in the method text field:<br>[Default, Huang, Intermodes, IsoData, IJ_IsoData, Li, MaxEntropy, Mean, MinError, Minimum, Moments, Otsu, Percentile, RenyiEntropy, Shanbhag, Triangle, Yen]<br><br>Parameters:<br>ClearCLBuffer arg1, String arg2";
+       description = "<b>getAutomaticThreshold</b><br><br>Determines a threshold according to a given method and saves it to the threshold_value variable.<br><br>The automatic thresholder utilizes the threshold methods from ImageJ on a histogram determined on <br>the GPU to determine a threshold value as similar as possible to ImageJ 'Apply Threshold' method. <br><br>Enter one <br>of these methods in the method text field:<br>[Default, Huang, Intermodes, IsoData, IJ_IsoData, Li, MaxEntropy, Mean, MinError, Minimum, Moments, Otsu, Percentile, RenyiEntropy, Shanbhag, Triangle, Yen]<br><br>Parameters:<br>ClearCLBuffer arg1, String arg2";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.getBoundingBox(ClearCLBuffer arg1)";
        description = "<b>getBoundingBox</b><br><br>Determines the bounding box of all non-zero pixels in a binary image. <br><br>If called from macro, the positions will be stored in the variables 'boundingBoxX', 'boundingBoxY', 'boundingBoxZ', 'boundingBoxWidth', 'boundingBoxHeight' and 'boundingBoxDepth'.In case of 2D images Z and depth will be zero.<br><br>Parameters:<br>ClearCLBuffer arg1";
@@ -619,6 +619,18 @@ class CLIJxAutoComplete {
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.greyLevelAtttributeFiltering(ClearCLBuffer source, ClearCLBuffer destination, Integer number_of_bins, Integer minimum_pixel_count)";
        description = "<b>greyLevelAtttributeFiltering</b><br><br>Inspired by Grayscale attribute filtering from MorpholibJ library by David Legland & Ignacio Arganda-Carreras.<br><br>This plugin will remove components in a grayscale image based on user-specified area (for 2D: pixels) or volume (3D: voxels).<br>For each gray level specified in the number of bins, binary images will be generated, followed by exclusion of objects (labels)<br>below a minimum pixel count.<br>All the binary images for each gray level are combined to form the final image. The output is a grayscale image, where bright objects<br>below pixel count are removed.<br>It is recommended that low values be used for number of bins, especially for large 3D images, or it may take long time.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer number_of_bins, Integer minimum_pixel_count";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.greyscaleClosingBox(ClearCLBuffer source, ClearCLBuffer destination, Integer radius_x, Integer radius_y, Integer radius_z)";
+       description = "<b>greyscaleClosingBox</b><br><br>Apply a greyscale morphological closing to the input image.<br><br>It applies a maximum filter first and the result is processed by a minimum filter with given radii.<br>Low intensity regions smaller than radius will disappear.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer radius_x, Integer radius_y, Integer radius_z";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.greyscaleClosingSphere(ClearCLBuffer source, ClearCLBuffer destination, Integer radius_x, Integer radius_y, Integer radius_z)";
+       description = "<b>greyscaleClosingSphere</b><br><br>Apply a greyscale morphological closing to the input image.<br><br>It applies a maximum filter first and the result is processed by a minimum filter with given radii.<br>Low intensity regions smaller than radius will disappear.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer radius_x, Integer radius_y, Integer radius_z";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.greyscaleOpeningBox(ClearCLBuffer source, ClearCLBuffer destination, Integer radius_x, Integer radius_y, Integer radius_z)";
+       description = "<b>greyscaleOpeningBox</b><br><br>Apply a greyscale morphological opening to the input image.<br><br>It applies a minimum filter first and the result is processed by a maximum filter with given radii.<br>High intensity regions smaller than radius will disappear.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer radius_x, Integer radius_y, Integer radius_z";
+       list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.greyscaleOpeningSphere(ClearCLBuffer source, ClearCLBuffer destination, Integer radius_x, Integer radius_y, Integer radius_z)";
+       description = "<b>greyscaleOpeningSphere</b><br><br>Apply a greyscale morphological opening to the input image.<br><br>It applies a minimum filter first and the result is processed by a maximum filter with given radii.<br>High intensity regions smaller than radius will disappear.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer radius_x, Integer radius_y, Integer radius_z";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.histogram(ClearCLBuffer source, ClearCLBuffer destination, Integer number_of_bins, Float minimum_intensity, Float maximum_intensity, Boolean determine_min_max)";
        description = "<b>histogram</b><br><br>Determines the histogram of a given image.<br><br>The histogram image is of dimensions number_of_bins/1/1; a 3D image with height=1 and depth=1. <br>Histogram bins contain the number of pixels with intensity in this corresponding bin. <br>The histogram bins are uniformly distributed between given minimum and maximum grey value intensity. <br>If the flag determine_min_max is set, minimum and maximum intensity will be determined. <br>When calling this operation many times, it is recommended to determine minimum and maximum intensity <br>once at the beginning and handing over these values.<br><br>Parameters:<br>ClearCLBuffer source, ClearCLBuffer destination, Integer number_of_bins, Float minimum_intensity, Float maximum_intensity, Boolean determine_min_max";
@@ -1241,6 +1253,9 @@ class CLIJxAutoComplete {
        headline = "clijx.print(ClearCLImageInterface input)";
        description = "<b>print</b><br><br>Visualises an image on standard out (console).<br><br>Parameters:<br>ClearCLImageInterface input";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.proximalNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination, Float min_distance, Float max_distance)";
+       description = "<b>proximalNeighborCountMap</b><br><br>Takes a label map, determines which labels are within a given distance range and replaces every label with the number of neighboring labels.<br><br><br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer destination, Float min_distance, Float max_distance";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.pull(null)";
        description = "<b>pull</b><br><br>Copies an image specified by its name from GPU memory back to ImageJ and shows it.<br><br>Parameters:<br>null";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1634,6 +1649,9 @@ class CLIJxAutoComplete {
        headline = "clijx.stopWatch(String text)";
        description = "<b>stopWatch</b><br><br>Measures time and outputs delay to last call.<br><br>Parameters:<br>String text";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clijx.subStack(ClearCLImageInterface arg1, ClearCLImageInterface arg2, int arg3, int arg4)";
+       description = "<b>subStack</b><br><br>Crops multiple Z-slices of a 3D stack into a new 3D stack.<br><br><br><br>Parameters:<br>ClearCLImageInterface arg1, ClearCLImageInterface arg2, int arg3, int arg4";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.subtract(ClearCLImageInterface subtrahend, ClearCLImageInterface minuend, ClearCLImageInterface destination)";
        description = "<b>subtract</b><br><br>Subtracts one image X from another image Y pixel wise.<br><br><pre>f(x, y) = x - y</pre><br><br>Parameters:<br>ClearCLImageInterface subtrahend, ClearCLImageInterface minuend, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1856,4 +1874,4 @@ class CLIJxAutoComplete {
         return list;
     }
 }
-// 615 methods generated.
+// 621 methods generated.
