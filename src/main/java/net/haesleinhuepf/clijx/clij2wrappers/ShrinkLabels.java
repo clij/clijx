@@ -9,7 +9,5 @@ import org.scijava.plugin.Plugin;
 // this is generated code. See src/test/net.haesleinhuepf.clijx.codegenerator.CLIJ2WrapperGenerator for details.
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_shrinkLabels")
 public class ShrinkLabels extends net.haesleinhuepf.clij2.plugins.ErodeLabels {
-    public static boolean shrinkLabels(CLIJ2 clij2, ClearCLBuffer labels_input, ClearCLBuffer labels_destination, Integer radius, Boolean relabel_islands) {
-        erodeLabels(clij2, labels_input, labels_destination, radius, relabel_islands);
-    }
+
 }

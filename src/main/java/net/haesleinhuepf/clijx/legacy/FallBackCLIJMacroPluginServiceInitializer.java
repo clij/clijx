@@ -31,7 +31,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_thresholdShanbhag" ,net.haesleinhuepf.clij2.plugins.ThresholdShanbhag.class);
        service.registerPlugin("CLIJ_median2DBox" ,net.haesleinhuepf.clij.macro.modules.Median2DBox.class);
        service.registerPlugin("CLIJ2_rotate3D" ,net.haesleinhuepf.clij2.plugins.Rotate3D.class);
-       service.registerPlugin("CLIJx_mergeTouchingLabels" ,net.haesleinhuepf.clijx.plugins.MergeTouchingLabels.class);
+       service.registerPlugin("CLIJx_mergeTouchingLabels" ,net.haesleinhuepf.clij2.plugins.MergeTouchingLabels.class);
        service.registerPlugin("CLIJ2_minimum3DSphere" ,net.haesleinhuepf.clij2.plugins.Minimum3DSphere.class);
        service.registerPlugin("CLIJx_readRawImageFromDisc" ,net.haesleinhuepf.clijx.io.ReadRawImageFromDisc.class);
        service.registerPlugin("CLIJ_pushCurrentSlice" ,net.haesleinhuepf.clij.macro.modules.PushCurrentSlice.class);
@@ -81,7 +81,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_meanXProjection" ,net.haesleinhuepf.clij2.plugins.MeanXProjection.class);
        service.registerPlugin("CLIJ2_detectMaximaSliceBySliceBox" ,net.haesleinhuepf.clij2.plugins.DetectMaximaSliceBySliceBox.class);
        service.registerPlugin("CLIJ2_getBinaryImageAspectRatio3D" ,net.haesleinhuepf.clijx.plugins.GetBinaryImageAspectRatio3D.class);
-       service.registerPlugin("CLIJx_averageDistanceOfNClosestNeighborsMap" ,net.haesleinhuepf.clijx.plugins.AverageDistanceOfNClosestNeighborsMap.class);
+       service.registerPlugin("CLIJx_averageDistanceOfNClosestNeighborsMap" ,net.haesleinhuepf.clij2.plugins.AverageDistanceOfNClosestNeighborsMap.class);
        service.registerPlugin("CLIJx_fastParticleImageVelocimetry" ,net.haesleinhuepf.clijx.piv.FastParticleImageVelocimetry.class);
        service.registerPlugin("CLIJ2_resliceBottom" ,net.haesleinhuepf.clij2.plugins.ResliceBottom.class);
        service.registerPlugin("CLIJx_trainWekaFromTable" ,net.haesleinhuepf.clijx.weka.TrainWekaFromTable.class);
@@ -171,7 +171,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_meanSquaredError" ,net.haesleinhuepf.clij2.plugins.MeanSquaredError.class);
        service.registerPlugin("CLIJx_skeletonize" ,net.haesleinhuepf.clijx.plugins.Skeletonize.class);
        service.registerPlugin("CLIJ2_resliceRight" ,net.haesleinhuepf.clij2.plugins.ResliceRight.class);
-       service.registerPlugin("CLIJx_extendLabelsWithMaximumRadius" ,net.haesleinhuepf.clijx.plugins.ExtendLabelsWithMaximumRadius.class);
+       service.registerPlugin("CLIJx_extendLabelsWithMaximumRadius" ,net.haesleinhuepf.clij2.plugins.DilateLabels.class);
        service.registerPlugin("CLIJ2_maximum2DBox" ,net.haesleinhuepf.clij2.plugins.Maximum2DBox.class);
        service.registerPlugin("CLIJ2_maximumOctagon" ,net.haesleinhuepf.clij2.plugins.MaximumOctagon.class);
        service.registerPlugin("CLIJ2_closingBox" ,net.haesleinhuepf.clij2.plugins.ClosingBox.class);
@@ -225,7 +225,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJx_absoluteInplace" ,net.haesleinhuepf.clijx.plugins.AbsoluteInplace.class);
        service.registerPlugin("CLIJ2_downsample3D" ,net.haesleinhuepf.clij2.plugins.Downsample3D.class);
        service.registerPlugin("CLIJ2_multiplyImages" ,net.haesleinhuepf.clij2.plugins.MultiplyImages.class);
-       service.registerPlugin("CLIJx_makeIsotropic" ,net.haesleinhuepf.clijx.plugins.MakeIsotropic.class);
+       service.registerPlugin("CLIJx_makeIsotropic" ,net.haesleinhuepf.clij2.plugins.MakeIsotropic.class);
        service.registerPlugin("CLIJ2_convertUInt8" ,net.haesleinhuepf.clij2.plugins.ConvertUInt8.class);
        service.registerPlugin("CLIJ2_dilateBoxSliceBySlice" ,net.haesleinhuepf.clij2.plugins.DilateBoxSliceBySlice.class);
        service.registerPlugin("CLIJ2_statisticsOfBackgroundAndLabelledPixels" ,net.haesleinhuepf.clij2.plugins.StatisticsOfBackgroundAndLabelledPixels.class);
@@ -377,10 +377,10 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_meanOfAllPixels" ,net.haesleinhuepf.clij2.plugins.MeanOfAllPixels.class);
        service.registerPlugin("CLIJ2_connectedComponentsLabelingBox" ,net.haesleinhuepf.clij2.plugins.ConnectedComponentsLabelingBox.class);
        service.registerPlugin("CLIJ2_labelVoronoiOctagon" ,net.haesleinhuepf.clij2.plugins.LabelVoronoiOctagon.class);
-       service.registerPlugin("CLIJx_labelPixelCountMap" ,net.haesleinhuepf.clijx.plugins.LabelPixelCountMap.class);
+       service.registerPlugin("CLIJx_labelPixelCountMap" ,net.haesleinhuepf.clij2.plugins.LabelPixelCountMap.class);
        service.registerPlugin("CLIJ2_maskLabel" ,net.haesleinhuepf.clij2.plugins.MaskLabel.class);
        service.registerPlugin("CLIJx_reslicePolar" ,net.haesleinhuepf.clijx.plugins.ReslicePolar.class);
-       service.registerPlugin("CLIJx_cylinderTransform" ,net.haesleinhuepf.clijx.plugins.CylinderTransform.class);
+       service.registerPlugin("CLIJx_cylinderTransform" ,net.haesleinhuepf.clij2.plugins.CylinderTransform.class);
        service.registerPlugin("CLIJ2_meanOfMaskedPixels" ,net.haesleinhuepf.clij2.plugins.MeanOfMaskedPixels.class);
        service.registerPlugin("CLIJ2_translate2D" ,net.haesleinhuepf.clij2.plugins.Translate2D.class);
        service.registerPlugin("CLIJ2_minimumImageAndScalar" ,net.haesleinhuepf.clij2.plugins.MinimumImageAndScalar.class);
@@ -479,7 +479,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_subtractImageFromScalar" ,net.haesleinhuepf.clij2.plugins.SubtractImageFromScalar.class);
        service.registerPlugin("CLIJ2_threshold" ,net.haesleinhuepf.clij2.plugins.Threshold.class);
        service.registerPlugin("CLIJ_multiplyImageAndScalar" ,net.haesleinhuepf.clij.macro.modules.MultiplyImageAndScalar.class);
-       service.registerPlugin("CLIJx_divideByGaussianBackground" ,net.haesleinhuepf.clijx.plugins.DivideByGaussianBackground.class);
+       service.registerPlugin("CLIJx_divideByGaussianBackground" ,net.haesleinhuepf.clij2.plugins.DivideByGaussianBackground.class);
        service.registerPlugin("CLIJ_dilateSphereSliceBySlice" ,net.haesleinhuepf.clij.macro.modules.DilateSphereSliceBySlice.class);
        service.registerPlugin("CLIJ2_varianceOfAllPixels" ,net.haesleinhuepf.clij2.plugins.VarianceOfAllPixels.class);
        service.registerPlugin("CLIJx_topHatOctagon" ,net.haesleinhuepf.clijx.plugins.TopHatOctagon.class);
@@ -516,7 +516,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJx_splitStackInto10" ,net.haesleinhuepf.clijx.plugins.splitstack.SplitStackInto10.class);
        service.registerPlugin("CLIJ2_set" ,net.haesleinhuepf.clij2.plugins.Set.class);
        service.registerPlugin("CLIJ2_maximumSliceBySliceSphere" ,net.haesleinhuepf.clij2.plugins.MaximumSliceBySliceSphere.class);
-       service.registerPlugin("CLIJx_averageNeighborDistanceMap" ,net.haesleinhuepf.clijx.plugins.AverageNeighborDistanceMap.class);
+       service.registerPlugin("CLIJx_averageNeighborDistanceMap" ,net.haesleinhuepf.clij2.plugins.AverageNeighborDistanceMap.class);
        service.registerPlugin("CLIJx_splitStackInto12" ,net.haesleinhuepf.clijx.plugins.splitstack.SplitStackInto12.class);
        service.registerPlugin("CLIJ2_resultsTableToImage2D" ,net.haesleinhuepf.clij2.plugins.ResultsTableToImage2D.class);
        service.registerPlugin("CLIJ2_pushCurrentSelection" ,net.haesleinhuepf.clij2.plugins.PushCurrentSelection.class);
