@@ -16,7 +16,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ_clear" ,net.haesleinhuepf.clij.macro.modules.Clear.class);
        service.registerPlugin("CLIJ_rotate3D" ,net.haesleinhuepf.clij.macro.modules.Rotate3D.class);
        service.registerPlugin("CLIJ_binaryAnd" ,net.haesleinhuepf.clij.macro.modules.BinaryAnd.class);
-       service.registerPlugin("CLIJx_drawMeshBetweenTouchingLabels" ,net.haesleinhuepf.clijx.plugins.DrawMeshBetweenTouchingLabels.class);
+       service.registerPlugin("CLIJx_drawMeshBetweenTouchingLabels" ,net.haesleinhuepf.clij2.plugins.DrawMeshBetweenTouchingLabels.class);
        service.registerPlugin("CLIJ2_topHatBox" ,net.haesleinhuepf.clij2.plugins.TopHatBox.class);
        service.registerPlugin("CLIJ2_extendLabelingViaVoronoi" ,net.haesleinhuepf.clij2.plugins.ExtendLabelingViaVoronoi.class);
        service.registerPlugin("CLIJ2_resultsTableColumnToImage" ,net.haesleinhuepf.clij2.plugins.ResultsTableColumnToImage.class);
@@ -152,7 +152,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_histogram" ,net.haesleinhuepf.clij2.plugins.Histogram.class);
        service.registerPlugin("CLIJx_readImageFromDisc" ,net.haesleinhuepf.clijx.io.ReadImageFromDisc.class);
        service.registerPlugin("CLIJx_localMinimumAverageDistanceOfNClosestNeighborsMap" ,net.haesleinhuepf.clijx.plugins.LocalMinimumAverageDistanceOfNClosestNeighborsMap.class);
-       service.registerPlugin("CLIJx_touchingNeighborCountMap" ,net.haesleinhuepf.clijx.plugins.TouchingNeighborCountMap.class);
+       service.registerPlugin("CLIJx_touchingNeighborCountMap" ,net.haesleinhuepf.clij2.plugins.TouchingNeighborCountMap.class);
        service.registerPlugin("CLIJx_captureWebcamImage" ,net.haesleinhuepf.clijx.plugins.CaptureWebcamImage.class);
        service.registerPlugin("CLIJ2_thresholdMinError" ,net.haesleinhuepf.clij2.plugins.ThresholdMinError.class);
        service.registerPlugin("CLIJx_binaryWekaPixelClassifier" ,net.haesleinhuepf.clijx.weka.BinaryWekaPixelClassifier.class);
@@ -191,7 +191,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ_minimumZProjection" ,net.haesleinhuepf.clij.macro.modules.MinimumZProjection.class);
        service.registerPlugin("CLIJ_meanZProjection" ,net.haesleinhuepf.clij.macro.modules.MeanZProjection.class);
        service.registerPlugin("CLIJ_power" ,net.haesleinhuepf.clij.macro.modules.Power.class);
-       service.registerPlugin("CLIJx_drawDistanceMeshBetweenTouchingLabels" ,net.haesleinhuepf.clijx.plugins.DrawDistanceMeshBetweenTouchingLabels.class);
+       service.registerPlugin("CLIJx_drawDistanceMeshBetweenTouchingLabels" ,net.haesleinhuepf.clij2.plugins.DrawDistanceMeshBetweenTouchingLabels.class);
        service.registerPlugin("CLIJ_maximum2DBox" ,net.haesleinhuepf.clij.macro.modules.Maximum2DBox.class);
        service.registerPlugin("CLIJ2_setWhereXgreaterThanY" ,net.haesleinhuepf.clij2.plugins.SetWhereXgreaterThanY.class);
        service.registerPlugin("CLIJ_downsampleSliceBySliceHalfMedian" ,net.haesleinhuepf.clij.macro.modules.DownsampleSliceBySliceHalfMedian.class);
@@ -597,7 +597,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_create2D" ,net.haesleinhuepf.clij2.plugins.Create2D.class);
        service.registerPlugin("CLIJ2_sorensenDiceCoefficient" ,net.haesleinhuepf.clij2.plugins.SorensenDiceCoefficient.class);
        service.registerPlugin("CLIJ2_convolve" ,net.haesleinhuepf.clij2.plugins.Convolve.class);
-       service.registerPlugin("CLIJx_excludeLabelsOutsideSizeRange" ,net.haesleinhuepf.clijx.plugins.ExcludeLabelsOutsideSizeRange.class);
+       service.registerPlugin("CLIJx_excludeLabelsOutsideSizeRange" ,net.haesleinhuepf.clij2.plugins.ExcludeLabelsOutsideSizeRange.class);
        service.registerPlugin("CLIJx_stopWatch" ,net.haesleinhuepf.clijx.plugins.StopWatch.class);
        service.registerPlugin("CLIJ2_resample" ,net.haesleinhuepf.clij2.plugins.Resample.class);
        service.registerPlugin("CLIJ2_varianceOfMaskedPixels" ,net.haesleinhuepf.clij2.plugins.VarianceOfMaskedPixels.class);

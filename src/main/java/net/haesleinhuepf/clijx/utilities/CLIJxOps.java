@@ -2827,7 +2827,7 @@ public abstract interface CLIJxOps {
      */
     default boolean neighborDistanceRangeRatioMap(ClearCLBuffer input, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("NeighborDistanceRangeRatioMap");}
-        boolean result = NeighborDistanceRangeRatioMap.neighborDistanceRangeRatioMap(getCLIJ2(), input, destination);
+        boolean result = TouchingNeighborDistanceRangeRatioMap.neighborDistanceRangeRatioMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("NeighborDistanceRangeRatioMap");}
         return result;
     }
