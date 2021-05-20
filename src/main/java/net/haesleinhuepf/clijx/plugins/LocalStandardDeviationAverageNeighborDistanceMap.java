@@ -11,6 +11,7 @@ import net.haesleinhuepf.clij2.utilities.HasClassifiedInputOutput;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_localStandardDeviationAverageNeighborDistanceMap")
 public class LocalStandardDeviationAverageNeighborDistanceMap extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
     @Override
@@ -75,7 +76,7 @@ public class LocalStandardDeviationAverageNeighborDistanceMap extends AbstractCL
 
     @Override
     public String getDescription() {
-        return "Takes a label map, determines which labels touch, the distance between their centroids and the standard deviation distance" +
+        return "Deprecated: Takes a label map, determines which labels touch, the distance between their centroids and the standard deviation distance" +
                 "between touching neighbors. It then replaces every label with the that value.";
     }
 

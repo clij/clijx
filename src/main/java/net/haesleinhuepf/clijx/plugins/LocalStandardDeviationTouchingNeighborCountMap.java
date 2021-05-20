@@ -12,6 +12,7 @@ import net.haesleinhuepf.clij2.utilities.HasClassifiedInputOutput;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_localStandardDeviationTouchingNeighborCountMap")
 public class LocalStandardDeviationTouchingNeighborCountMap extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
     @Override
@@ -64,7 +65,7 @@ public class LocalStandardDeviationTouchingNeighborCountMap extends AbstractCLIJ
 
     @Override
     public String getDescription() {
-        return "Takes a label map, determines which labels touch, determines for every label with the number of touching \n" +
+        return "Deprecated: Takes a label map, determines which labels touch, determines for every label with the number of touching \n" +
                 "neighboring labels and replaces the label index with the local standard deviation of this count.\n\n";
     }
 

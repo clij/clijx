@@ -11,6 +11,7 @@ import net.haesleinhuepf.clij2.utilities.HasClassifiedInputOutput;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_localMeanAverageNeighborDistanceMap")
 public class LocalMeanAverageNeighborDistanceMap extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
     @Override
@@ -74,7 +75,7 @@ public class LocalMeanAverageNeighborDistanceMap extends AbstractCLIJ2Plugin imp
 
     @Override
     public String getDescription() {
-        return "Takes a label map, determines which labels touch, the distance between their centroids and the mean distance" +
+        return "Deprecated: Takes a label map, determines which labels touch, the distance between their centroids and the mean distance" +
                 "between touching neighbors. It then replaces every label with the that value.";
     }
 
