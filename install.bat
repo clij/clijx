@@ -1,0 +1,1 @@
+mvn -DskipTests clean install -Dgpg.skip
