@@ -57,10 +57,12 @@ public class MinimumOfNNearestNeighborsMap extends AbstractCLIJ2Plugin implement
 
         ClearCLBuffer distance_matrix = clij2.create(new long[]{number_of_labels + 1, number_of_labels + 1});
         clij2.generateDistanceMatrix(centroids, centroids, distance_matrix);
+        centroids.close();
 
         ClearCLBuffer touch_matrix = clij2.create(new long[]{number_of_labels + 1, number_of_labels + 1});
 
         GenerateNNearestNeighborsMatrix.generateNNearestNeighborsMatrix(clij2, distance_matrix, touch_matrix, n);
+        distance_matrix.close();
 
         ClearCLBuffer intensities = clij2.create(new long[]{number_of_labels + 1 , 1, 1});
         ReadValuesFromMap.readValuesFromMap(clij2, label_map, parametric_map, intensities);
