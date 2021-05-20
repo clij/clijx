@@ -8,6 +8,7 @@ import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij2.utilities.HasClassifiedInputOutput;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
+import net.haesleinhuepf.clijx.clij2wrappers.NClosestPoints;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -43,7 +44,7 @@ public class GenerateNNearestNeighborsMatrix extends AbstractCLIJ2Plugin impleme
         clij2.setColumn(distance_matrix, 0, Float.MAX_VALUE);
         clij2.setWhereXequalsY(distance_matrix, Float.MAX_VALUE);
 
-        clij2.nClosestPoints(distance_matrix, index_list);
+        NClosestPoints.nClosestPoints(clij2, distance_matrix, index_list, true, true);
 
         clij2.set(touch_matrix_destination, 0);
 
