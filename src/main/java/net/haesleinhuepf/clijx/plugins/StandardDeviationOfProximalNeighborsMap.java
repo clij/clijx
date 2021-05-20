@@ -57,9 +57,11 @@ public class StandardDeviationOfProximalNeighborsMap extends AbstractCLIJ2Plugin
 
         ClearCLBuffer distance_matrix = clij2.create(new long[]{number_of_labels + 1, number_of_labels + 1});
         clij2.generateDistanceMatrix(centroids, centroids, distance_matrix);
+        centroids.close();
 
         ClearCLBuffer touch_matrix = clij2.create(new long[]{number_of_labels + 1, number_of_labels + 1});
         GenerateProximalNeighborsMatrix.generateProximalNeighborsMatrix(clij2, distance_matrix, touch_matrix, min_distance, max_distance);
+        distance_matrix.close();
 
         ClearCLBuffer intensities = clij2.create(new long[]{number_of_labels + 1 , 1, 1});
         ReadValuesFromMap.readValuesFromMap(clij2, label_map, parametric_map, intensities);
