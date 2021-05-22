@@ -43,7 +43,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_binarySubtract" ,net.haesleinhuepf.clij2.plugins.BinarySubtract.class);
        service.registerPlugin("CLIJ2_pullAsROI" ,net.haesleinhuepf.clij2.plugins.PullAsROI.class);
        service.registerPlugin("CLIJ2_setRampX" ,net.haesleinhuepf.clij2.plugins.SetRampX.class);
-       service.registerPlugin("CLIJx_rigidTransform" ,net.haesleinhuepf.clijx.plugins.RigidTransform.class);
+       service.registerPlugin("CLIJx_rigidTransform" ,net.haesleinhuepf.clij2.plugins.RigidTransform.class);
        service.registerPlugin("CLIJ2_minimumZProjectionBounded" ,net.haesleinhuepf.clij2.plugins.MinimumZProjectionBounded.class);
        service.registerPlugin("CLIJ2_setRampY" ,net.haesleinhuepf.clij2.plugins.SetRampY.class);
        service.registerPlugin("CLIJ2_setRampZ" ,net.haesleinhuepf.clij2.plugins.SetRampZ.class);
@@ -211,7 +211,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_customOperation" ,net.haesleinhuepf.clij2.plugins.CustomOperation.class);
        service.registerPlugin("CLIJ2_multiplyImageStackWithScalars" ,net.haesleinhuepf.clij2.plugins.MultiplyImageStackWithScalars.class);
        service.registerPlugin("CLIJ2_minimumOctagon" ,net.haesleinhuepf.clij2.plugins.MinimumOctagon.class);
-       service.registerPlugin("CLIJx_stackToTiles" ,net.haesleinhuepf.clijx.plugins.StackToTiles.class);
+       service.registerPlugin("CLIJx_stackToTiles" ,net.haesleinhuepf.clij2.plugins.StackToTiles.class);
        service.registerPlugin("CLIJ_crop3D" ,net.haesleinhuepf.clij.macro.modules.Crop3D.class);
        service.registerPlugin("CLIJ2_binaryEdgeDetection" ,net.haesleinhuepf.clij2.plugins.BinaryEdgeDetection.class);
        service.registerPlugin("CLIJx_trainWekaModelWithOptions" ,net.haesleinhuepf.clijx.weka.TrainWekaModelWithOptions.class);
@@ -379,7 +379,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_labelVoronoiOctagon" ,net.haesleinhuepf.clij2.plugins.LabelVoronoiOctagon.class);
        service.registerPlugin("CLIJx_labelPixelCountMap" ,net.haesleinhuepf.clij2.plugins.PixelCountMap.class);
        service.registerPlugin("CLIJ2_maskLabel" ,net.haesleinhuepf.clij2.plugins.MaskLabel.class);
-       service.registerPlugin("CLIJx_reslicePolar" ,net.haesleinhuepf.clijx.plugins.ReslicePolar.class);
+       service.registerPlugin("CLIJx_reslicePolar" ,net.haesleinhuepf.clij2.plugins.ReslicePolar.class);
        service.registerPlugin("CLIJx_cylinderTransform" ,net.haesleinhuepf.clij2.plugins.CylinderTransform.class);
        service.registerPlugin("CLIJ2_meanOfMaskedPixels" ,net.haesleinhuepf.clij2.plugins.MeanOfMaskedPixels.class);
        service.registerPlugin("CLIJ2_translate2D" ,net.haesleinhuepf.clij2.plugins.Translate2D.class);
@@ -388,7 +388,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ_countNonZeroVoxels3DSphere" ,net.haesleinhuepf.clij.macro.modules.CountNonZeroVoxels3DSphere.class);
        service.registerPlugin("CLIJx_bilateral" ,net.haesleinhuepf.clijx.plugins.Bilateral.class);
        service.registerPlugin("CLIJ2_sumYProjection" ,net.haesleinhuepf.clij2.plugins.SumYProjection.class);
-       service.registerPlugin("CLIJx_sphereTransform" ,net.haesleinhuepf.clijx.plugins.SphereTransform.class);
+       service.registerPlugin("CLIJx_sphereTransform" ,net.haesleinhuepf.clij2.plugins.SphereTransform.class);
        service.registerPlugin("CLIJ2_standardDeviationZProjection" ,net.haesleinhuepf.clij2.plugins.StandardDeviationZProjection.class);
        service.registerPlugin("CLIJ2_statisticsOfLabelledPixels" ,net.haesleinhuepf.clij2.plugins.StatisticsOfLabelledPixels.class);
        service.registerPlugin("CLIJ2_maskStackWithPlane" ,net.haesleinhuepf.clij2.plugins.MaskStackWithPlane.class);
