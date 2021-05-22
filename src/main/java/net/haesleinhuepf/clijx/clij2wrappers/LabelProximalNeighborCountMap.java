@@ -6,5 +6,5 @@ import org.scijava.plugin.Plugin;
 
 // this is generated code. See src/test/net.haesleinhuepf.clijx.codegenerator.CLIJ2WrapperGenerator for details.
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_labelProximalNeighborCountMap")
-public class LabelProximalNeighborCountMap extends net.haesleinhuepf.clij2.plugins.ProximalNeighborCountMap {
+public class LabelProximalNeighborCountMap extends net.haesleinhuepf.clij2.plugins.LabelProximalNeighborCountMap {
 }
