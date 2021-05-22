@@ -107,7 +107,7 @@ import net.haesleinhuepf.clijx.weka.GenerateLabelFeatureImage;
 import net.haesleinhuepf.clijx.plugins.MeanZProjectionBelowThreshold;
 import net.haesleinhuepf.clijx.plugins.GenerateDistanceMatrixAlongAxis;
 import net.haesleinhuepf.clijx.plugins.GenerateAngleMatrix;
-import net.haesleinhuepf.clijx.plugins.VisualizeOutlinesOnOriginal;
+import net.haesleinhuepf.clij2.plugins.VisualizeOutlinesOnOriginal;
 import net.haesleinhuepf.clijx.plugins.FlagLabelsOnEdges;
 import net.haesleinhuepf.clijx.plugins.KMeansLabelClusterer;
 import net.haesleinhuepf.clijx.plugins.ReadIntensitiesFromMap;
