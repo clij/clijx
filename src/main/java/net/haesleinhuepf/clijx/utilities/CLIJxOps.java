@@ -1,5 +1,6 @@
 package net.haesleinhuepf.clijx.utilities;
 import net.haesleinhuepf.clij2.CLIJ2;
+import net.haesleinhuepf.clij2.plugins.*;
 import net.haesleinhuepf.clijx.CLIJx;
 import net.haesleinhuepf.clijx.weka.CLIJxWeka2;
 import net.haesleinhuepf.clij.CLIJ;
@@ -51,8 +52,6 @@ import net.haesleinhuepf.clijx.io.WriteVTKLineListToDisc;
 import net.haesleinhuepf.clijx.io.WriteXYZPointListToDisc;
 import net.haesleinhuepf.clijx.plugins.tenengradfusion.TenengradFusion;
 import net.haesleinhuepf.clijx.plugins.Skeletonize;
-import net.haesleinhuepf.clijx.plugins.PushTile;
-import net.haesleinhuepf.clijx.plugins.PullTile;
 import net.haesleinhuepf.clijx.weka.autocontext.ApplyAutoContextWekaModel;
 import net.haesleinhuepf.clijx.weka.autocontext.TrainAutoContextWekaModel;
 import net.haesleinhuepf.clijx.weka.ApplyWekaModel;
@@ -68,17 +67,8 @@ import net.haesleinhuepf.clijx.plugins.ConvertRGBStackToGraySlice;
 import net.haesleinhuepf.clijx.plugins.NonLocalMeans;
 import net.haesleinhuepf.clijx.plugins.Bilateral;
 import net.haesleinhuepf.clijx.plugins.FindMaxima;
-import net.haesleinhuepf.clij2.plugins.MergeTouchingLabels;
-import net.haesleinhuepf.clij2.plugins.AverageNeighborDistanceMap;
-import net.haesleinhuepf.clij2.plugins.CylinderTransform;
 import net.haesleinhuepf.clijx.plugins.DetectAndLabelMaxima;
-import net.haesleinhuepf.clij2.plugins.DrawDistanceMeshBetweenTouchingLabels;
-import net.haesleinhuepf.clij2.plugins.DrawMeshBetweenTouchingLabels;
-import net.haesleinhuepf.clij2.plugins.ExcludeLabelsOutsideSizeRange;
-import net.haesleinhuepf.clij2.plugins.DilateLabels;
 import net.haesleinhuepf.clijx.plugins.FindAndLabelMaxima;
-import net.haesleinhuepf.clij2.plugins.MakeIsotropic;
-import net.haesleinhuepf.clij2.plugins.TouchingNeighborCountMap;
 import net.haesleinhuepf.clijx.plugins.RigidTransform;
 import net.haesleinhuepf.clijx.plugins.SphereTransform;
 import net.haesleinhuepf.clijx.plugins.SubtractGaussianBackground;
@@ -87,16 +77,12 @@ import net.haesleinhuepf.clijx.plugins.DriftCorrectionByCenterOfMassFixation;
 import net.haesleinhuepf.clijx.plugins.DriftCorrectionByCentroidFixation;
 import net.haesleinhuepf.clijx.plugins.IntensityCorrection;
 import net.haesleinhuepf.clijx.plugins.IntensityCorrectionAboveThresholdOtsu;
-import net.haesleinhuepf.clijx.plugins.LabelMeanIntensityMap;
-import net.haesleinhuepf.clijx.plugins.LabelStandardDeviationIntensityMap;
-import net.haesleinhuepf.clij2.plugins.LabelPixelCountMap;
 import net.haesleinhuepf.clijx.plugins.ParametricWatershed;
 import net.haesleinhuepf.clijx.plugins.MeanZProjectionAboveThreshold;
 import net.haesleinhuepf.clijx.plugins.SeededWatershed;
 import net.haesleinhuepf.clijx.plugins.PushMetaData;
 import net.haesleinhuepf.clijx.plugins.PopMetaData;
 import net.haesleinhuepf.clijx.plugins.ResetMetaData;
-import net.haesleinhuepf.clij2.plugins.AverageDistanceOfNClosestNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.DrawTouchCountMeshBetweenTouchingLabels;
 import net.haesleinhuepf.clijx.plugins.LocalMaximumAverageDistanceOfNClosestNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.LocalMaximumAverageNeighborDistanceMap;
@@ -114,13 +100,8 @@ import net.haesleinhuepf.clijx.plugins.LocalMinimumTouchingNeighborCountMap;
 import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageNeighborDistanceMap;
 import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationTouchingNeighborCountMap;
-import net.haesleinhuepf.clijx.plugins.LabelMinimumIntensityMap;
-import net.haesleinhuepf.clijx.plugins.LabelMaximumIntensityMap;
-import net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionRatioMap;
-import net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionMap;
 import net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfBox;
 import net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond;
-import net.haesleinhuepf.clij2.plugins.DivideByGaussianBackground;
 import net.haesleinhuepf.clijx.plugins.GenerateGreyValueCooccurrenceMatrixBox;
 import net.haesleinhuepf.clijx.plugins.GreyLevelAtttributeFiltering;
 import net.haesleinhuepf.clijx.plugins.BinaryFillHolesSliceBySlice;
@@ -128,76 +109,21 @@ import net.haesleinhuepf.clijx.weka.BinaryWekaPixelClassifier;
 import net.haesleinhuepf.clijx.weka.WekaLabelClassifier;
 import net.haesleinhuepf.clijx.weka.GenerateLabelFeatureImage;
 import net.haesleinhuepf.clijx.plugins.LabelSurface;
-import net.haesleinhuepf.clij2.plugins.ReduceLabelsToCentroids;
-import net.haesleinhuepf.clijx.plugins.LabelMeanExtensionMap;
+import net.haesleinhuepf.clij2.plugins.MeanExtensionMap;
 import net.haesleinhuepf.clijx.plugins.MeanZProjectionBelowThreshold;
-import net.haesleinhuepf.clij2.plugins.EuclideanDistanceFromLabelCentroidMap;
-import net.haesleinhuepf.clij2.plugins.GammaCorrection;
-import net.haesleinhuepf.clij2.plugins.ZPositionOfMaximumZProjection;
-import net.haesleinhuepf.clij2.plugins.ZPositionProjection;
-import net.haesleinhuepf.clij2.plugins.ZPositionRangeProjection;
-import net.haesleinhuepf.clij2.plugins.VarianceSphere;
-import net.haesleinhuepf.clij2.plugins.StandardDeviationSphere;
-import net.haesleinhuepf.clij2.plugins.VarianceBox;
-import net.haesleinhuepf.clij2.plugins.StandardDeviationBox;
-import net.haesleinhuepf.clij2.plugins.Tenengrad;
-import net.haesleinhuepf.clij2.plugins.TenengradSliceBySlice;
-import net.haesleinhuepf.clij2.plugins.SobelSliceBySlice;
-import net.haesleinhuepf.clij2.plugins.ExtendedDepthOfFocusSobelProjection;
-import net.haesleinhuepf.clij2.plugins.ExtendedDepthOfFocusTenengradProjection;
-import net.haesleinhuepf.clij2.plugins.ExtendedDepthOfFocusVarianceProjection;
-import net.haesleinhuepf.clij2.plugins.DrawMeshBetweenNNearestLabels;
-import net.haesleinhuepf.clij2.plugins.DrawMeshBetweenProximalLabels;
-import net.haesleinhuepf.clij2.plugins.Cosinus;
-import net.haesleinhuepf.clij2.plugins.Sinus;
 import net.haesleinhuepf.clijx.plugins.GenerateDistanceMatrixAlongAxis;
-import net.haesleinhuepf.clij2.plugins.MaximumDistanceOfTouchingNeighbors;
-import net.haesleinhuepf.clij2.plugins.MaximumTouchingNeighborDistanceMap;
-import net.haesleinhuepf.clij2.plugins.MinimumTouchingNeighborDistanceMap;
 import net.haesleinhuepf.clijx.plugins.GenerateAngleMatrix;
-import net.haesleinhuepf.clij2.plugins.TouchingNeighborDistanceRangeRatioMap;
-import net.haesleinhuepf.clij2.plugins.VoronoiOtsuLabeling;
 import net.haesleinhuepf.clijx.plugins.VisualizeOutlinesOnOriginal;
 import net.haesleinhuepf.clijx.plugins.FlagLabelsOnEdges;
-import net.haesleinhuepf.clij2.plugins.MaskedVoronoiLabeling;
-import net.haesleinhuepf.clijx.plugins.PullToResultsTableColumn;
+import net.haesleinhuepf.clij2.plugins.PullToResultsTableColumn;
 import net.haesleinhuepf.clijx.plugins.KMeansLabelClusterer;
-import net.haesleinhuepf.clij2.plugins.ModeOfTouchingNeighbors;
-import net.haesleinhuepf.clij2.plugins.GenerateProximalNeighborsMatrix;
 import net.haesleinhuepf.clijx.plugins.ReadIntensitiesFromMap;
-import net.haesleinhuepf.clij2.plugins.MaximumOfTouchingNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.MinimumOfTouchingNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.MeanOfTouchingNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.ModeOfTouchingNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.StandardDeviationOfTouchingNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.PointIndexListToTouchMatrix;
-import net.haesleinhuepf.clij2.plugins.GenerateNNearestNeighborsMatrix;
-import net.haesleinhuepf.clij2.plugins.MaximumOfNNearestNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.MinimumOfNNearestNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.MeanOfNNearestNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.ModeOfNNearestNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.StandardDeviationOfNNearestNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.MaximumOfProximalNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.MinimumOfProximalNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.MeanOfProximalNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.ModeOfProximalNeighborsMap;
-import net.haesleinhuepf.clij2.plugins.StandardDeviationOfProximalNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.LabelOverlapCountMap;
-import net.haesleinhuepf.clijx.plugins.LabelProximalNeighborCountMap;
-import net.haesleinhuepf.clij2.plugins.ReduceLabelsToLabelEdges;
-import net.haesleinhuepf.clij2.plugins.OutOfIntensityRange;
-import net.haesleinhuepf.clij2.plugins.ErodeLabels;
-import net.haesleinhuepf.clij2.plugins.Similar;
-import net.haesleinhuepf.clij2.plugins.Different;
+import net.haesleinhuepf.clij2.plugins.LabelOverlapCountMap;
+import net.haesleinhuepf.clij2.plugins.ProximalNeighborCountMap;
 import net.haesleinhuepf.clijx.weka.WekaRegionalLabelClassifier;
 import net.haesleinhuepf.clijx.plugins.LabelMeanOfLaplacianMap;
-import net.haesleinhuepf.clij2.plugins.MedianZProjectionMasked;
 import net.haesleinhuepf.clijx.plugins.MedianTouchPortionMap;
 import net.haesleinhuepf.clijx.plugins.NeighborCountWithTouchPortionAboveThresholdMap;
-import net.haesleinhuepf.clij2.plugins.DivideScalarByImage;
-import net.haesleinhuepf.clij2.plugins.ReadValuesFromMap;
-import net.haesleinhuepf.clij2.plugins.ReadValuesFromPositions;
-import net.haesleinhuepf.clij2.plugins.ZPositionOfMinimumZProjection;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdPhansalkar;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdBernsen;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdContrast;
@@ -207,12 +133,7 @@ import net.haesleinhuepf.clijx.plugins.LocalThresholdMidGrey;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdNiblack;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdSauvola;
 import net.haesleinhuepf.clijx.plugins.ColorDeconvolution;
-import net.haesleinhuepf.clij2.plugins.GreyscaleOpeningBox;
-import net.haesleinhuepf.clij2.plugins.GreyscaleOpeningSphere;
-import net.haesleinhuepf.clij2.plugins.GreyscaleClosingBox;
-import net.haesleinhuepf.clij2.plugins.GreyscaleClosingSphere;
-import net.haesleinhuepf.clij2.plugins.ProximalNeighborCountMap;
-import net.haesleinhuepf.clij2.plugins.SubStack;
+
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -1770,7 +1691,7 @@ public abstract interface CLIJxOps {
      */
     default boolean labelMeanIntensityMap(ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("LabelMeanIntensityMap");}
-        boolean result = LabelMeanIntensityMap.labelMeanIntensityMap(getCLIJ2(), input, label_map, destination);
+        boolean result = MeanIntensityMap.labelMeanIntensityMap(getCLIJ2(), input, label_map, destination);
         if (doTimeTracing()) {recordMethodEnd("LabelMeanIntensityMap");}
         return result;
     }
@@ -1785,7 +1706,7 @@ public abstract interface CLIJxOps {
      */
     default boolean labelStandardDeviationIntensityMap(ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("LabelStandardDeviationIntensityMap");}
-        boolean result = LabelStandardDeviationIntensityMap.labelStandardDeviationIntensityMap(getCLIJ2(), input, label_map, destination);
+        boolean result = StandardDeviationIntensityMap.labelStandardDeviationIntensityMap(getCLIJ2(), input, label_map, destination);
         if (doTimeTracing()) {recordMethodEnd("LabelStandardDeviationIntensityMap");}
         return result;
     }
@@ -1800,7 +1721,7 @@ public abstract interface CLIJxOps {
      */
     default boolean labelPixelCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("LabelPixelCountMap");}
-        boolean result = LabelPixelCountMap.labelPixelCountMap(getCLIJ2(), input, destination);
+        boolean result = PixelCountMap.labelPixelCountMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LabelPixelCountMap");}
         return result;
     }
@@ -2124,7 +2045,7 @@ public abstract interface CLIJxOps {
      */
     default boolean labelMinimumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3) {
         if (doTimeTracing()) {recordMethodStart("LabelMinimumIntensityMap");}
-        boolean result = LabelMinimumIntensityMap.labelMinimumIntensityMap(getCLIJ2(), arg1, arg2, arg3);
+        boolean result = MinimumIntensityMap.labelMinimumIntensityMap(getCLIJ2(), arg1, arg2, arg3);
         if (doTimeTracing()) {recordMethodEnd("LabelMinimumIntensityMap");}
         return result;
     }
@@ -2137,7 +2058,7 @@ public abstract interface CLIJxOps {
      */
     default boolean labelMaximumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3) {
         if (doTimeTracing()) {recordMethodStart("LabelMaximumIntensityMap");}
-        boolean result = LabelMaximumIntensityMap.labelMaximumIntensityMap(getCLIJ2(), arg1, arg2, arg3);
+        boolean result = MaximumIntensityMap.labelMaximumIntensityMap(getCLIJ2(), arg1, arg2, arg3);
         if (doTimeTracing()) {recordMethodEnd("LabelMaximumIntensityMap");}
         return result;
     }
@@ -2152,7 +2073,7 @@ public abstract interface CLIJxOps {
      */
     default boolean labelMaximumExtensionRatioMap(ClearCLBuffer input, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("LabelMaximumExtensionRatioMap");}
-        boolean result = LabelMaximumExtensionRatioMap.labelMaximumExtensionRatioMap(getCLIJ2(), input, destination);
+        boolean result = ExtensionRatioMap.labelMaximumExtensionRatioMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LabelMaximumExtensionRatioMap");}
         return result;
     }
@@ -2167,7 +2088,7 @@ public abstract interface CLIJxOps {
      */
     default boolean labelMaximumExtensionMap(ClearCLBuffer input, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("LabelMaximumExtensionMap");}
-        boolean result = LabelMaximumExtensionMap.labelMaximumExtensionMap(getCLIJ2(), input, destination);
+        boolean result = MaximumExtensionMap.labelMaximumExtensionMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LabelMaximumExtensionMap");}
         return result;
     }
@@ -2415,7 +2336,7 @@ public abstract interface CLIJxOps {
      */
     default boolean labelMeanExtensionMap(ClearCLBuffer input, ClearCLBuffer destination) {
         if (doTimeTracing()) {recordMethodStart("LabelMeanExtensionMap");}
-        boolean result = LabelMeanExtensionMap.labelMeanExtensionMap(getCLIJ2(), input, destination);
+        boolean result = MeanExtensionMap.labelMeanExtensionMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LabelMeanExtensionMap");}
         return result;
     }

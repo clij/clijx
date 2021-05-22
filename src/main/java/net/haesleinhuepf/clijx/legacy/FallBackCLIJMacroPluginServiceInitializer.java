@@ -7,7 +7,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
     public static void initialize(FallBackCLIJMacroPluginService service) {
        service.registerPlugin("CLIJx_wekaLabelClassifier" ,net.haesleinhuepf.clijx.weka.WekaLabelClassifier.class);
        service.registerPlugin("CLIJx_pullArray" ,net.haesleinhuepf.clijx.plugins.PullArray.class);
-       service.registerPlugin("CLIJx_labelMaxiumIntensityMap" ,net.haesleinhuepf.clijx.plugins.LabelMaximumIntensityMap.class);
+       service.registerPlugin("CLIJx_labelMaxiumIntensityMap" ,net.haesleinhuepf.clij2.plugins.MaximumIntensityMap.class);
        service.registerPlugin("CLIJ2_addImageAndScalar" ,net.haesleinhuepf.clij2.plugins.AddImageAndScalar.class);
        service.registerPlugin("CLIJ2_medianSliceBySliceBox" ,net.haesleinhuepf.clij2.plugins.MedianSliceBySliceBox.class);
        service.registerPlugin("CLIJ2_nonzeroMinimumDiamond" ,net.haesleinhuepf.clij2.plugins.NonzeroMinimumDiamond.class);
@@ -55,7 +55,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ_addImageAndScalar" ,net.haesleinhuepf.clij.macro.modules.AddImageAndScalar.class);
        service.registerPlugin("CLIJ2_getAutomaticThreshold" ,net.haesleinhuepf.clij2.plugins.GetAutomaticThreshold.class);
        service.registerPlugin("CLIJ2_averageDistanceOfTouchingNeighbors" ,net.haesleinhuepf.clij2.plugins.AverageDistanceOfTouchingNeighbors.class);
-       service.registerPlugin("CLIJx_labelMaximumExtensionRatioMap" ,net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionRatioMap.class);
+       service.registerPlugin("CLIJx_labelMaximumExtensionRatioMap" ,net.haesleinhuepf.clij2.plugins.ExtensionRatioMap.class);
        service.registerPlugin("CLIJ2_binaryUnion" ,net.haesleinhuepf.clij2.plugins.BinaryUnion.class);
        service.registerPlugin("CLIJ_detectMinimaSliceBySliceBox" ,net.haesleinhuepf.clij.macro.modules.DetectMinimaSliceBySliceBox.class);
        service.registerPlugin("CLIJxt_trainWekaModelWithOptions" ,net.haesleinhuepf.clijx.tilor.implementations.TrainWekaModelWithOptions.class);
@@ -68,7 +68,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ_create3D" ,net.haesleinhuepf.clij.macro.modules.Create3D.class);
        service.registerPlugin("CLIJx_localMaximumAverageNeighborDistanceMap" ,net.haesleinhuepf.clijx.plugins.LocalMaximumAverageNeighborDistanceMap.class);
        service.registerPlugin("CLIJ2_getJaccardIndex" ,net.haesleinhuepf.clij2.plugins.GetJaccardIndex.class);
-       service.registerPlugin("CLIJx_labelMiniumIntensityMap" ,net.haesleinhuepf.clijx.plugins.LabelMinimumIntensityMap.class);
+       service.registerPlugin("CLIJx_labelMiniumIntensityMap" ,net.haesleinhuepf.clij2.plugins.MinimumIntensityMap.class);
        service.registerPlugin("CLIJ2_minimumOfAllPixels" ,net.haesleinhuepf.clij2.plugins.MinimumOfAllPixels.class);
        service.registerPlugin("CLIJ2_mean3DSphere" ,net.haesleinhuepf.clij2.plugins.Mean3DSphere.class);
        service.registerPlugin("CLIJxt_minimum3DBox" ,net.haesleinhuepf.clijx.tilor.implementations.Minimum3DBox.class);
@@ -133,7 +133,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_erodeBox" ,net.haesleinhuepf.clij2.plugins.ErodeBox.class);
        service.registerPlugin("CLIJ2_pullToCurrentSliceSelection" ,net.haesleinhuepf.clij2.plugins.PullToCurrentSliceSelection.class);
        service.registerPlugin("CLIJ2_meanYProjection" ,net.haesleinhuepf.clij2.plugins.MeanYProjection.class);
-       service.registerPlugin("CLIJx_labelMeanIntensityMap" ,net.haesleinhuepf.clijx.plugins.LabelMeanIntensityMap.class);
+       service.registerPlugin("CLIJx_labelMeanIntensityMap" ,net.haesleinhuepf.clij2.plugins.MeanIntensityMap.class);
        service.registerPlugin("CLIJx_pushMetaData" ,net.haesleinhuepf.clijx.plugins.PushMetaData.class);
        service.registerPlugin("CLIJ_countNonZeroPixelsSliceBySliceSphere" ,net.haesleinhuepf.clij.macro.modules.CountNonZeroPixelsSliceBySliceSphere.class);
        service.registerPlugin("CLIJx_startContinuousWebcamAcquisition" ,net.haesleinhuepf.clijx.plugins.StartContinuousWebcamAcquisition.class);
@@ -360,7 +360,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_floodFillDiamond" ,net.haesleinhuepf.clij2.plugins.FloodFillDiamond.class);
        service.registerPlugin("CLIJ2_automaticThreshold" ,net.haesleinhuepf.clij2.plugins.AutomaticThreshold.class);
        service.registerPlugin("CLIJxt_addImages" ,net.haesleinhuepf.clijx.tilor.implementations.AddImages.class);
-       service.registerPlugin("CLIJx_labelMaximumExtensionMap" ,net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionMap.class);
+       service.registerPlugin("CLIJx_labelMaximumExtensionMap" ,net.haesleinhuepf.clij2.plugins.MaximumExtensionMap.class);
        service.registerPlugin("CLIJ2_affineTransform2D" ,net.haesleinhuepf.clij2.plugins.AffineTransform2D.class);
        service.registerPlugin("CLIJ_argMaximumZProjection" ,net.haesleinhuepf.clij.macro.modules.ArgMaximumZProjection.class);
        service.registerPlugin("CLIJ2_medianZProjection" ,net.haesleinhuepf.clij2.plugins.MedianZProjection.class);
@@ -377,7 +377,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_meanOfAllPixels" ,net.haesleinhuepf.clij2.plugins.MeanOfAllPixels.class);
        service.registerPlugin("CLIJ2_connectedComponentsLabelingBox" ,net.haesleinhuepf.clij2.plugins.ConnectedComponentsLabelingBox.class);
        service.registerPlugin("CLIJ2_labelVoronoiOctagon" ,net.haesleinhuepf.clij2.plugins.LabelVoronoiOctagon.class);
-       service.registerPlugin("CLIJx_labelPixelCountMap" ,net.haesleinhuepf.clij2.plugins.LabelPixelCountMap.class);
+       service.registerPlugin("CLIJx_labelPixelCountMap" ,net.haesleinhuepf.clij2.plugins.PixelCountMap.class);
        service.registerPlugin("CLIJ2_maskLabel" ,net.haesleinhuepf.clij2.plugins.MaskLabel.class);
        service.registerPlugin("CLIJx_reslicePolar" ,net.haesleinhuepf.clijx.plugins.ReslicePolar.class);
        service.registerPlugin("CLIJx_cylinderTransform" ,net.haesleinhuepf.clij2.plugins.CylinderTransform.class);
@@ -403,7 +403,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ_gradientY" ,net.haesleinhuepf.clij.macro.modules.GradientY.class);
        service.registerPlugin("CLIJx_showRGB" ,net.haesleinhuepf.clijx.plugins.ShowRGB.class);
        service.registerPlugin("CLIJ2_bottomHatBox" ,net.haesleinhuepf.clij2.plugins.BottomHatBox.class);
-       service.registerPlugin("CLIJx_pullTile" ,net.haesleinhuepf.clijx.plugins.PullTile.class);
+       service.registerPlugin("CLIJx_pullTile" ,net.haesleinhuepf.clij2.plugins.PullTile.class);
        service.registerPlugin("CLIJ_gradientX" ,net.haesleinhuepf.clij.macro.modules.GradientX.class);
        service.registerPlugin("CLIJ2_pullString" ,net.haesleinhuepf.clij2.plugins.PullString.class);
        service.registerPlugin("CLIJ_push" ,net.haesleinhuepf.clij.macro.modules.Push.class);
@@ -455,7 +455,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_maximumOfMaskedPixels" ,net.haesleinhuepf.clij2.plugins.MaximumOfMaskedPixels.class);
        service.registerPlugin("CLIJ2_minimumYProjection" ,net.haesleinhuepf.clij2.plugins.MinimumYProjection.class);
        service.registerPlugin("CLIJ2_rotateClockwise" ,net.haesleinhuepf.clij2.plugins.RotateClockwise.class);
-       service.registerPlugin("CLIJx_labelStandardDeviationIntensityMap" ,net.haesleinhuepf.clijx.plugins.LabelStandardDeviationIntensityMap.class);
+       service.registerPlugin("CLIJx_labelStandardDeviationIntensityMap" ,net.haesleinhuepf.clij2.plugins.StandardDeviationIntensityMap.class);
        service.registerPlugin("CLIJ2_meanZProjection" ,net.haesleinhuepf.clij2.plugins.MeanZProjection.class);
        service.registerPlugin("CLIJ_detectMaximaSliceBySliceBox" ,net.haesleinhuepf.clij.macro.modules.DetectMaximaSliceBySliceBox.class);
        service.registerPlugin("CLIJ2_power" ,net.haesleinhuepf.clij2.plugins.Power.class);
@@ -522,7 +522,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJ2_pushCurrentSelection" ,net.haesleinhuepf.clij2.plugins.PushCurrentSelection.class);
        service.registerPlugin("CLIJ2_powerImages" ,net.haesleinhuepf.clij2.plugins.PowerImages.class);
        service.registerPlugin("CLIJx_generateFeatureStack" ,net.haesleinhuepf.clijx.weka.GenerateFeatureStack.class);
-       service.registerPlugin("CLIJx_pull2DPointListAsRoi" ,net.haesleinhuepf.clijx.plugins.Pull2DPointListAsRoi.class);
+       service.registerPlugin("CLIJx_pull2DPointListAsRoi" ,net.haesleinhuepf.clij2.plugins.Pull2DPointListAsRoi.class);
        service.registerPlugin("CLIJ2_combineHorizontally" ,net.haesleinhuepf.clij2.plugins.CombineHorizontally.class);
        service.registerPlugin("CLIJ_resliceLeft" ,net.haesleinhuepf.clij.macro.modules.ResliceLeft.class);
        service.registerPlugin("CLIJ2_replacePixelsIfZero" ,net.haesleinhuepf.clij2.plugins.ReplacePixelsIfZero.class);
@@ -549,7 +549,7 @@ public class FallBackCLIJMacroPluginServiceInitializer {
        service.registerPlugin("CLIJx_findMaxima" ,net.haesleinhuepf.clijx.plugins.FindMaxima.class);
        service.registerPlugin("CLIJx_blurInplace3D" ,net.haesleinhuepf.clijx.plugins.BlurInplace3D.class);
        service.registerPlugin("CLIJx_localMeanAverageNeighborDistanceMap" ,net.haesleinhuepf.clijx.plugins.LocalMeanAverageNeighborDistanceMap.class);
-       service.registerPlugin("CLIJx_pushTile" ,net.haesleinhuepf.clijx.plugins.PushTile.class);
+       service.registerPlugin("CLIJx_pushTile" ,net.haesleinhuepf.clij2.plugins.PushTile.class);
        service.registerPlugin("CLIJ2_median2DSphere" ,net.haesleinhuepf.clij2.plugins.Median2DSphere.class);
        service.registerPlugin("CLIJ_countNonZeroPixels2DSphere" ,net.haesleinhuepf.clij.macro.modules.CountNonZeroPixels2DSphere.class);
        service.registerPlugin("CLIJ2_standardDeviationOfTouchingNeighbors" ,net.haesleinhuepf.clij2.plugins.StandardDeviationOfTouchingNeighbors.class);
