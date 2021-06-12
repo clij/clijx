@@ -107,7 +107,6 @@ import net.haesleinhuepf.clijx.weka.GenerateLabelFeatureImage;
 import net.haesleinhuepf.clijx.plugins.MeanZProjectionBelowThreshold;
 import net.haesleinhuepf.clijx.plugins.GenerateDistanceMatrixAlongAxis;
 import net.haesleinhuepf.clijx.plugins.GenerateAngleMatrix;
-import net.haesleinhuepf.clij2.plugins.VisualizeOutlinesOnOriginal;
 import net.haesleinhuepf.clijx.plugins.FlagLabelsOnEdges;
 import net.haesleinhuepf.clijx.plugins.KMeansLabelClusterer;
 import net.haesleinhuepf.clijx.plugins.ReadIntensitiesFromMap;
@@ -2023,19 +2022,6 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.VisualizeOutlinesOnOriginal
-    //----------------------------------------------------
-    /**
-     * Combines an intensity image and a label (or binary) image so that you can see segmentation outlines on the intensity image.
-     */
-    default boolean visualizeOutlinesOnOriginal(ClearCLBuffer intensity, ClearCLBuffer labels, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("VisualizeOutlinesOnOriginal");}
-        boolean result = VisualizeOutlinesOnOriginal.visualizeOutlinesOnOriginal(getCLIJ2(), intensity, labels, destination);
-        if (doTimeTracing()) {recordMethodEnd("VisualizeOutlinesOnOriginal");}
-        return result;
-    }
-
-
     // net.haesleinhuepf.clijx.plugins.FlagLabelsOnEdges
     //----------------------------------------------------
     /**
@@ -2328,4 +2314,4 @@ public abstract interface CLIJxOps {
     }
 
 }
-// 138 methods generated.
+// 137 methods generated.
