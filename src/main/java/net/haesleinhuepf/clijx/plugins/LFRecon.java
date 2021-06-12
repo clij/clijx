@@ -11,6 +11,7 @@ import net.haesleinhuepf.clij.macro.AbstractCLIJPlugin;
 import net.haesleinhuepf.clij.macro.CLIJMacroPlugin;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij.macro.documentation.OffersDocumentation;
+import net.haesleinhuepf.clij2.plugins.StackToTiles;
 import net.haesleinhuepf.clijx.CLIJx;
 import net.imglib2.realtransform.AffineTransform3D;
 import org.scijava.plugin.Plugin;

@@ -20,7 +20,6 @@ import net.haesleinhuepf.clijx.plugins.Extrema;
 import net.haesleinhuepf.clijx.plugins.LocalExtremaBox;
 import net.haesleinhuepf.clijx.plugins.LocalID;
 import net.haesleinhuepf.clijx.plugins.Presign;
-import net.haesleinhuepf.clijx.plugins.StackToTiles;
 import net.haesleinhuepf.clijx.plugins.SubtractBackground2D;
 import net.haesleinhuepf.clijx.plugins.SubtractBackground3D;
 import net.haesleinhuepf.clijx.piv.FastParticleImageVelocimetry;
@@ -51,8 +50,6 @@ import net.haesleinhuepf.clijx.io.WriteVTKLineListToDisc;
 import net.haesleinhuepf.clijx.io.WriteXYZPointListToDisc;
 import net.haesleinhuepf.clijx.plugins.tenengradfusion.TenengradFusion;
 import net.haesleinhuepf.clijx.plugins.Skeletonize;
-import net.haesleinhuepf.clijx.plugins.PushTile;
-import net.haesleinhuepf.clijx.plugins.PullTile;
 import net.haesleinhuepf.clijx.weka.autocontext.ApplyAutoContextWekaModel;
 import net.haesleinhuepf.clijx.weka.autocontext.TrainAutoContextWekaModel;
 import net.haesleinhuepf.clijx.weka.ApplyWekaModel;
@@ -68,35 +65,20 @@ import net.haesleinhuepf.clijx.plugins.ConvertRGBStackToGraySlice;
 import net.haesleinhuepf.clijx.plugins.NonLocalMeans;
 import net.haesleinhuepf.clijx.plugins.Bilateral;
 import net.haesleinhuepf.clijx.plugins.FindMaxima;
-import net.haesleinhuepf.clijx.plugins.MergeTouchingLabels;
-import net.haesleinhuepf.clijx.plugins.AverageNeighborDistanceMap;
-import net.haesleinhuepf.clijx.plugins.CylinderTransform;
 import net.haesleinhuepf.clijx.plugins.DetectAndLabelMaxima;
-import net.haesleinhuepf.clijx.plugins.DrawDistanceMeshBetweenTouchingLabels;
-import net.haesleinhuepf.clijx.plugins.DrawMeshBetweenTouchingLabels;
-import net.haesleinhuepf.clijx.plugins.ExcludeLabelsOutsideSizeRange;
-import net.haesleinhuepf.clijx.plugins.ExtendLabelsWithMaximumRadius;
 import net.haesleinhuepf.clijx.plugins.FindAndLabelMaxima;
-import net.haesleinhuepf.clijx.plugins.MakeIsotropic;
-import net.haesleinhuepf.clijx.plugins.TouchingNeighborCountMap;
-import net.haesleinhuepf.clijx.plugins.RigidTransform;
-import net.haesleinhuepf.clijx.plugins.SphereTransform;
 import net.haesleinhuepf.clijx.plugins.SubtractGaussianBackground;
 import net.haesleinhuepf.clijx.plugins.ThresholdDoG;
 import net.haesleinhuepf.clijx.plugins.DriftCorrectionByCenterOfMassFixation;
 import net.haesleinhuepf.clijx.plugins.DriftCorrectionByCentroidFixation;
 import net.haesleinhuepf.clijx.plugins.IntensityCorrection;
 import net.haesleinhuepf.clijx.plugins.IntensityCorrectionAboveThresholdOtsu;
-import net.haesleinhuepf.clijx.plugins.LabelMeanIntensityMap;
-import net.haesleinhuepf.clijx.plugins.LabelStandardDeviationIntensityMap;
-import net.haesleinhuepf.clijx.plugins.LabelPixelCountMap;
 import net.haesleinhuepf.clijx.plugins.ParametricWatershed;
 import net.haesleinhuepf.clijx.plugins.MeanZProjectionAboveThreshold;
 import net.haesleinhuepf.clijx.plugins.SeededWatershed;
 import net.haesleinhuepf.clijx.plugins.PushMetaData;
 import net.haesleinhuepf.clijx.plugins.PopMetaData;
 import net.haesleinhuepf.clijx.plugins.ResetMetaData;
-import net.haesleinhuepf.clijx.plugins.AverageDistanceOfNClosestNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.DrawTouchCountMeshBetweenTouchingLabels;
 import net.haesleinhuepf.clijx.plugins.LocalMaximumAverageDistanceOfNClosestNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.LocalMaximumAverageNeighborDistanceMap;
@@ -114,90 +96,25 @@ import net.haesleinhuepf.clijx.plugins.LocalMinimumTouchingNeighborCountMap;
 import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap;
 import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageNeighborDistanceMap;
 import net.haesleinhuepf.clijx.plugins.LocalStandardDeviationTouchingNeighborCountMap;
-import net.haesleinhuepf.clijx.plugins.LabelMinimumIntensityMap;
-import net.haesleinhuepf.clijx.plugins.LabelMaximumIntensityMap;
-import net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionRatioMap;
-import net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionMap;
 import net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfBox;
 import net.haesleinhuepf.clijx.plugins.GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond;
-import net.haesleinhuepf.clijx.plugins.DivideByGaussianBackground;
 import net.haesleinhuepf.clijx.plugins.GenerateGreyValueCooccurrenceMatrixBox;
 import net.haesleinhuepf.clijx.plugins.GreyLevelAtttributeFiltering;
 import net.haesleinhuepf.clijx.plugins.BinaryFillHolesSliceBySlice;
 import net.haesleinhuepf.clijx.weka.BinaryWekaPixelClassifier;
 import net.haesleinhuepf.clijx.weka.WekaLabelClassifier;
 import net.haesleinhuepf.clijx.weka.GenerateLabelFeatureImage;
-import net.haesleinhuepf.clijx.plugins.LabelSurface;
-import net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelledSpots;
-import net.haesleinhuepf.clijx.plugins.LabelMeanExtensionMap;
 import net.haesleinhuepf.clijx.plugins.MeanZProjectionBelowThreshold;
-import net.haesleinhuepf.clijx.plugins.EuclideanDistanceFromLabelCentroidMap;
-import net.haesleinhuepf.clijx.plugins.GammaCorrection;
-import net.haesleinhuepf.clijx.plugins.ZPositionOfMaximumZProjection;
-import net.haesleinhuepf.clijx.plugins.ZPositionProjection;
-import net.haesleinhuepf.clijx.plugins.ZPositionRangeProjection;
-import net.haesleinhuepf.clijx.plugins.VarianceSphere;
-import net.haesleinhuepf.clijx.plugins.StandardDeviationSphere;
-import net.haesleinhuepf.clijx.plugins.VarianceBox;
-import net.haesleinhuepf.clijx.plugins.StandardDeviationBox;
-import net.haesleinhuepf.clijx.plugins.Tenengrad;
-import net.haesleinhuepf.clijx.plugins.TenengradSliceBySlice;
-import net.haesleinhuepf.clijx.plugins.SobelSliceBySlice;
-import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusSobelProjection;
-import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusTenengradProjection;
-import net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusVarianceProjection;
-import net.haesleinhuepf.clijx.plugins.DrawMeshBetweenNClosestLabels;
-import net.haesleinhuepf.clijx.plugins.DrawMeshBetweenProximalLabels;
-import net.haesleinhuepf.clijx.plugins.Cosinus;
-import net.haesleinhuepf.clijx.plugins.Sinus;
 import net.haesleinhuepf.clijx.plugins.GenerateDistanceMatrixAlongAxis;
-import net.haesleinhuepf.clijx.plugins.MaximumDistanceOfTouchingNeighbors;
-import net.haesleinhuepf.clijx.plugins.MaximumNeighborDistanceMap;
-import net.haesleinhuepf.clijx.plugins.MinimumNeighborDistanceMap;
 import net.haesleinhuepf.clijx.plugins.GenerateAngleMatrix;
-import net.haesleinhuepf.clijx.plugins.NeighborDistanceRangeRatioMap;
-import net.haesleinhuepf.clijx.plugins.VoronoiOtsuLabeling;
-import net.haesleinhuepf.clijx.plugins.VisualizeOutlinesOnOriginal;
+import net.haesleinhuepf.clij2.plugins.VisualizeOutlinesOnOriginal;
 import net.haesleinhuepf.clijx.plugins.FlagLabelsOnEdges;
-import net.haesleinhuepf.clijx.plugins.MaskedVoronoiLabeling;
-import net.haesleinhuepf.clijx.plugins.PullToResultsTableColumn;
 import net.haesleinhuepf.clijx.plugins.KMeansLabelClusterer;
-import net.haesleinhuepf.clijx.plugins.ModeOfTouchingNeighbors;
-import net.haesleinhuepf.clijx.plugins.GenerateProximalNeighborsMatrix;
 import net.haesleinhuepf.clijx.plugins.ReadIntensitiesFromMap;
-import net.haesleinhuepf.clijx.plugins.MaximumOfTouchingNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MinimumOfTouchingNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MeanOfTouchingNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.ModeOfTouchingNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.StandardDeviationOfTouchingNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.PointIndexListToTouchMatrix;
-import net.haesleinhuepf.clijx.plugins.GenerateNNearestNeighborsMatrix;
-import net.haesleinhuepf.clijx.plugins.MaximumOfNNearestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MinimumOfNNearestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MeanOfNNearestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.ModeOfNNearestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.StandardDeviationOfNNearestNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MaximumOfProximalNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MinimumOfProximalNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.MeanOfProximalNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.ModeOfProximalNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.StandardDeviationOfProximalNeighborsMap;
-import net.haesleinhuepf.clijx.plugins.LabelOverlapCountMap;
-import net.haesleinhuepf.clijx.plugins.LabelProximalNeighborCountMap;
-import net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelEdges;
-import net.haesleinhuepf.clijx.plugins.OutOfIntensityRange;
-import net.haesleinhuepf.clijx.plugins.ShrinkLabels;
-import net.haesleinhuepf.clijx.plugins.Similar;
-import net.haesleinhuepf.clijx.plugins.Different;
 import net.haesleinhuepf.clijx.weka.WekaRegionalLabelClassifier;
 import net.haesleinhuepf.clijx.plugins.LabelMeanOfLaplacianMap;
-import net.haesleinhuepf.clijx.plugins.MedianZProjectionMasked;
 import net.haesleinhuepf.clijx.plugins.MedianTouchPortionMap;
 import net.haesleinhuepf.clijx.plugins.NeighborCountWithTouchPortionAboveThresholdMap;
-import net.haesleinhuepf.clijx.plugins.DivideScalarByImage;
-import net.haesleinhuepf.clijx.plugins.ReadValuesFromMap;
-import net.haesleinhuepf.clijx.plugins.ReadValuesFromPositions;
-import net.haesleinhuepf.clijx.plugins.ZPositionOfMinimumZProjection;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdPhansalkar;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdBernsen;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdContrast;
@@ -207,12 +124,6 @@ import net.haesleinhuepf.clijx.plugins.LocalThresholdMidGrey;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdNiblack;
 import net.haesleinhuepf.clijx.plugins.LocalThresholdSauvola;
 import net.haesleinhuepf.clijx.plugins.ColorDeconvolution;
-import net.haesleinhuepf.clijx.plugins.GreyscaleOpeningBox;
-import net.haesleinhuepf.clijx.plugins.GreyscaleOpeningSphere;
-import net.haesleinhuepf.clijx.plugins.GreyscaleClosingBox;
-import net.haesleinhuepf.clijx.plugins.GreyscaleClosingSphere;
-import net.haesleinhuepf.clijx.plugins.ProximalNeighborCountMap;
-import net.haesleinhuepf.clijx.plugins.SubStack;
 // this is generated code. See src/test/java/net/haesleinhuepf/clijx/codegenerator for details
 public abstract interface CLIJxOps {
    CLIJ getCLIJ();
@@ -560,19 +471,6 @@ public abstract interface CLIJxOps {
         if (doTimeTracing()) {recordMethodStart("Presign");}
         boolean result = Presign.presign(getCLIJ(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("Presign");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.StackToTiles
-    //----------------------------------------------------
-    /**
-     * Stack to tiles.
-     */
-    default boolean stackToTiles(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("StackToTiles");}
-        boolean result = StackToTiles.stackToTiles(getCLIJx(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue());
-        if (doTimeTracing()) {recordMethodEnd("StackToTiles");}
         return result;
     }
 
@@ -1091,68 +989,6 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.PushTile
-    //----------------------------------------------------
-    /**
-     * Push a tile in an image specified by its name, position and size to GPU memory in order to process it there later.
-     */
-    default ClearCLBuffer pushTile(ImagePlus arg1, double arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8, double arg9, double arg10) {
-        if (doTimeTracing()) {recordMethodStart("PushTile");}
-        ClearCLBuffer result = PushTile.pushTile(getCLIJ2(), arg1, new Double (arg2).intValue(), new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), new Double (arg9).intValue(), new Double (arg10).intValue());
-        if (doTimeTracing()) {recordMethodEnd("PushTile");}
-        return result;
-    }
-
-    /**
-     * Push a tile in an image specified by its name, position and size to GPU memory in order to process it there later.
-     */
-    default ClearCLBuffer pushTile(ClearCLBuffer arg1, double arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8, double arg9, double arg10) {
-        if (doTimeTracing()) {recordMethodStart("PushTile");}
-        ClearCLBuffer result = PushTile.pushTile(getCLIJ2(), arg1, new Double (arg2).intValue(), new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), new Double (arg9).intValue(), new Double (arg10).intValue());
-        if (doTimeTracing()) {recordMethodEnd("PushTile");}
-        return result;
-    }
-
-    /**
-     * Push a tile in an image specified by its name, position and size to GPU memory in order to process it there later.
-     */
-    default void pushTile(ImagePlus arg1, String arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8, double arg9, double arg10, double arg11) {
-        if (doTimeTracing()) {recordMethodStart("PushTile");}
-        PushTile.pushTile(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), new Double (arg9).intValue(), new Double (arg10).intValue(), new Double (arg11).intValue());
-        if (doTimeTracing()) {recordMethodEnd("PushTile");}
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.PullTile
-    //----------------------------------------------------
-    /**
-     * Pushes a tile in an image specified by its name, position and size from GPU memory.
-     */
-    default void pullTile(ImagePlus arg1, String arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8, double arg9, double arg10, double arg11) {
-        if (doTimeTracing()) {recordMethodStart("PullTile");}
-        PullTile.pullTile(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), new Double (arg9).intValue(), new Double (arg10).intValue(), new Double (arg11).intValue());
-        if (doTimeTracing()) {recordMethodEnd("PullTile");}
-    }
-
-    /**
-     * Pushes a tile in an image specified by its name, position and size from GPU memory.
-     */
-    default void pullTile(ImagePlus arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8, double arg9, double arg10, double arg11) {
-        if (doTimeTracing()) {recordMethodStart("PullTile");}
-        PullTile.pullTile(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), new Double (arg9).intValue(), new Double (arg10).intValue(), new Double (arg11).intValue());
-        if (doTimeTracing()) {recordMethodEnd("PullTile");}
-    }
-
-    /**
-     * Pushes a tile in an image specified by its name, position and size from GPU memory.
-     */
-    default void pullTile(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8, double arg9, double arg10, double arg11) {
-        if (doTimeTracing()) {recordMethodStart("PullTile");}
-        PullTile.pullTile(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue(), new Double (arg6).intValue(), new Double (arg7).intValue(), new Double (arg8).intValue(), new Double (arg9).intValue(), new Double (arg10).intValue(), new Double (arg11).intValue());
-        if (doTimeTracing()) {recordMethodEnd("PullTile");}
-    }
-
-
     // net.haesleinhuepf.clijx.weka.autocontext.ApplyAutoContextWekaModel
     //----------------------------------------------------
     /**
@@ -1473,54 +1309,6 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.MergeTouchingLabels
-    //----------------------------------------------------
-    /**
-     * 
-     */
-    default boolean mergeTouchingLabels(ClearCLBuffer source, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("MergeTouchingLabels");}
-        boolean result = MergeTouchingLabels.mergeTouchingLabels(getCLIJ2(), source, destination);
-        if (doTimeTracing()) {recordMethodEnd("MergeTouchingLabels");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.AverageNeighborDistanceMap
-    //----------------------------------------------------
-    /**
-     * Takes a label map, determines which labels touch and replaces every label with the average distance to their neighboring labels.
-     * 
-     * To determine the distances, the centroid of the labels is determined internally.
-     */
-    default boolean averageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("AverageNeighborDistanceMap");}
-        boolean result = AverageNeighborDistanceMap.averageNeighborDistanceMap(getCLIJ2(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("AverageNeighborDistanceMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.CylinderTransform
-    //----------------------------------------------------
-    /**
-     * Applies a cylinder transform to an image stack assuming the center line goes in Y direction in the center of the stack.
-     * 
-     * This transforms an image stack from an XYZ coordinate system to a AYD coordinate system with 
-     * A the angle around the center line, 
-     * Y the original Y coordinate and 
-     * D, the distance from the center.
-     * 
-     * Thus, going in virtual Z direction (actually D) in the resulting stack, you go from the center to theperiphery.
-     */
-    default boolean cylinderTransform(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6) {
-        if (doTimeTracing()) {recordMethodStart("CylinderTransform");}
-        boolean result = CylinderTransform.cylinderTransform(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("CylinderTransform");}
-        return result;
-    }
-
-
     // net.haesleinhuepf.clijx.plugins.DetectAndLabelMaxima
     //----------------------------------------------------
     /**
@@ -1537,68 +1325,6 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.DrawDistanceMeshBetweenTouchingLabels
-    //----------------------------------------------------
-    /**
-     * Starting from a label map, draw lines between touching neighbors resulting in a mesh.
-     * 
-     * The end points of the lines correspond to the centroids of the labels. The intensity of the lines 
-     * corresponds to the distance between these labels (in pixels or voxels).
-     */
-    default boolean drawDistanceMeshBetweenTouchingLabels(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("DrawDistanceMeshBetweenTouchingLabels");}
-        boolean result = DrawDistanceMeshBetweenTouchingLabels.drawDistanceMeshBetweenTouchingLabels(getCLIJ2(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("DrawDistanceMeshBetweenTouchingLabels");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.DrawMeshBetweenTouchingLabels
-    //----------------------------------------------------
-    /**
-     * Starting from a label map, draw lines between touching neighbors resulting in a mesh.
-     * 
-     * The end points of the lines correspond to the centroids of the labels. 
-     */
-    default boolean drawMeshBetweenTouchingLabels(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("DrawMeshBetweenTouchingLabels");}
-        boolean result = DrawMeshBetweenTouchingLabels.drawMeshBetweenTouchingLabels(getCLIJ2(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("DrawMeshBetweenTouchingLabels");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ExcludeLabelsOutsideSizeRange
-    //----------------------------------------------------
-    /**
-     * Removes labels from a label map which are not within a certain size range.
-     * 
-     * Size of the labels is given as the number of pixel or voxels per label.
-     */
-    default boolean excludeLabelsOutsideSizeRange(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("ExcludeLabelsOutsideSizeRange");}
-        boolean result = ExcludeLabelsOutsideSizeRange.excludeLabelsOutsideSizeRange(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("ExcludeLabelsOutsideSizeRange");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ExtendLabelsWithMaximumRadius
-    //----------------------------------------------------
-    /**
-     * Extend labels with a given radius.
-     * 
-     * This is actually a local maximum filter applied to a label map which does not overwrite labels.
-     * It is recommended to apply this operation to isotropic images only.
-     */
-    default boolean extendLabelsWithMaximumRadius(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
-        if (doTimeTracing()) {recordMethodStart("ExtendLabelsWithMaximumRadius");}
-        boolean result = ExtendLabelsWithMaximumRadius.extendLabelsWithMaximumRadius(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
-        if (doTimeTracing()) {recordMethodEnd("ExtendLabelsWithMaximumRadius");}
-        return result;
-    }
-
-
     // net.haesleinhuepf.clijx.plugins.FindAndLabelMaxima
     //----------------------------------------------------
     /**
@@ -1608,62 +1334,6 @@ public abstract interface CLIJxOps {
         if (doTimeTracing()) {recordMethodStart("FindAndLabelMaxima");}
         boolean result = FindAndLabelMaxima.findAndLabelMaxima(getCLIJx(), arg1, arg2, new Double (arg3).floatValue(), arg4);
         if (doTimeTracing()) {recordMethodEnd("FindAndLabelMaxima");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MakeIsotropic
-    //----------------------------------------------------
-    /**
-     * Applies a scaling operation using linear interpolation to generate an image stack with a given isotropic voxel size.
-     */
-    default boolean makeIsotropic(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6) {
-        if (doTimeTracing()) {recordMethodStart("MakeIsotropic");}
-        boolean result = MakeIsotropic.makeIsotropic(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("MakeIsotropic");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.TouchingNeighborCountMap
-    //----------------------------------------------------
-    /**
-     * Takes a label map, determines which labels touch and replaces every label with the number of touching neighboring labels.
-     * 
-     * 
-     */
-    default boolean touchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("TouchingNeighborCountMap");}
-        boolean result = TouchingNeighborCountMap.touchingNeighborCountMap(getCLIJ2(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("TouchingNeighborCountMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.RigidTransform
-    //----------------------------------------------------
-    /**
-     * Applies a rigid transform using linear interpolation to an image stack.
-     */
-    default boolean rigidTransform(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8) {
-        if (doTimeTracing()) {recordMethodStart("RigidTransform");}
-        boolean result = RigidTransform.rigidTransform(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue(), new Double (arg7).floatValue(), new Double (arg8).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("RigidTransform");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.SphereTransform
-    //----------------------------------------------------
-    /**
-     * Turns an image stack in XYZ cartesian coordinate system to an AID polar coordinate system.
-     * 
-     * A corresponds to azimut,I to inclination and D to the distance from the center.Thus, going in virtual Z direction (actually D) in the resulting stack, you go from the center to theperiphery.
-     */
-    default boolean sphereTransform(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5, double arg6, double arg7) {
-        if (doTimeTracing()) {recordMethodStart("SphereTransform");}
-        boolean result = SphereTransform.sphereTransform(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue(), new Double (arg6).floatValue(), new Double (arg7).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("SphereTransform");}
         return result;
     }
 
@@ -1761,51 +1431,6 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.LabelMeanIntensityMap
-    //----------------------------------------------------
-    /**
-     * Takes an image and a corresponding label map, determines the mean intensity per label and replaces every label with the that number.
-     * 
-     * This results in a parametric image expressing mean object intensity.
-     */
-    default boolean labelMeanIntensityMap(ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("LabelMeanIntensityMap");}
-        boolean result = LabelMeanIntensityMap.labelMeanIntensityMap(getCLIJ2(), input, label_map, destination);
-        if (doTimeTracing()) {recordMethodEnd("LabelMeanIntensityMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.LabelStandardDeviationIntensityMap
-    //----------------------------------------------------
-    /**
-     * Takes an image and a corresponding label map, determines the standard deviation of the intensity per label and replaces every label with the that number.
-     * 
-     * This results in a parametric image expressing standard deviation of object intensity.
-     */
-    default boolean labelStandardDeviationIntensityMap(ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("LabelStandardDeviationIntensityMap");}
-        boolean result = LabelStandardDeviationIntensityMap.labelStandardDeviationIntensityMap(getCLIJ2(), input, label_map, destination);
-        if (doTimeTracing()) {recordMethodEnd("LabelStandardDeviationIntensityMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.LabelPixelCountMap
-    //----------------------------------------------------
-    /**
-     * Takes a label map, determines the number of pixels per label and replaces every label with the that number.
-     * 
-     * This results in a parametric image expressing area or volume.
-     */
-    default boolean labelPixelCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("LabelPixelCountMap");}
-        boolean result = LabelPixelCountMap.labelPixelCountMap(getCLIJ2(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("LabelPixelCountMap");}
-        return result;
-    }
-
-
     // net.haesleinhuepf.clijx.plugins.ParametricWatershed
     //----------------------------------------------------
     /**
@@ -1856,19 +1481,6 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.ResetMetaData
     //----------------------------------------------------
 
-    // net.haesleinhuepf.clijx.plugins.AverageDistanceOfNClosestNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label map, determines distances between all centroids and replaces every label with the average distance to the n closest neighboring labels.
-     */
-    default boolean averageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
-        if (doTimeTracing()) {recordMethodStart("AverageDistanceOfNClosestNeighborsMap");}
-        boolean result = AverageDistanceOfNClosestNeighborsMap.averageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
-        if (doTimeTracing()) {recordMethodEnd("AverageDistanceOfNClosestNeighborsMap");}
-        return result;
-    }
-
-
     // net.haesleinhuepf.clijx.plugins.DrawTouchCountMeshBetweenTouchingLabels
     //----------------------------------------------------
     /**
@@ -1888,10 +1500,12 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalMaximumAverageDistanceOfNClosestNeighborsMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
+     * Deprecated: Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
      *  and replaces every label with the maximum distance of touching labels.
      */
+    @Deprecated
     default boolean localMaximumAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        System.out.println("localMaximumAverageDistanceOfNClosestNeighborsMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalMaximumAverageDistanceOfNClosestNeighborsMap");}
         boolean result = LocalMaximumAverageDistanceOfNClosestNeighborsMap.localMaximumAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
         if (doTimeTracing()) {recordMethodEnd("LocalMaximumAverageDistanceOfNClosestNeighborsMap");}
@@ -1902,9 +1516,11 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalMaximumAverageNeighborDistanceMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines which labels touch, the distance between their centroids and the maximum distancebetween touching neighbors. It then replaces every label with the that value.
+     * Deprecated: Takes a label map, determines which labels touch, the distance between their centroids and the maximum distancebetween touching neighbors. It then replaces every label with the that value.
      */
+    @Deprecated
     default boolean localMaximumAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        System.out.println("localMaximumAverageNeighborDistanceMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalMaximumAverageNeighborDistanceMap");}
         boolean result = LocalMaximumAverageNeighborDistanceMap.localMaximumAverageNeighborDistanceMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LocalMaximumAverageNeighborDistanceMap");}
@@ -1915,12 +1531,14 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalMaximumTouchingNeighborCountMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines which labels touch, determines for every label with the number of touching 
+     * Deprecated: Takes a label map, determines which labels touch, determines for every label with the number of touching 
      * neighboring labels and replaces the label index with the local maximum of this count.
      * 
      * 
      */
+    @Deprecated
     default boolean localMaximumTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        System.out.println("localMaximumTouchingNeighborCountMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalMaximumTouchingNeighborCountMap");}
         boolean result = LocalMaximumTouchingNeighborCountMap.localMaximumTouchingNeighborCountMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LocalMaximumTouchingNeighborCountMap");}
@@ -1931,10 +1549,12 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalMeanAverageDistanceOfNClosestNeighborsMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
+     * Deprecated: Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
      *  and replaces every label with the mean distance of touching labels.
      */
+    @Deprecated
     default boolean localMeanAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        System.out.println("localMeanAverageDistanceOfNClosestNeighborsMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalMeanAverageDistanceOfNClosestNeighborsMap");}
         boolean result = LocalMeanAverageDistanceOfNClosestNeighborsMap.localMeanAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
         if (doTimeTracing()) {recordMethodEnd("LocalMeanAverageDistanceOfNClosestNeighborsMap");}
@@ -1945,9 +1565,11 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalMeanAverageNeighborDistanceMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines which labels touch, the distance between their centroids and the mean distancebetween touching neighbors. It then replaces every label with the that value.
+     * Deprecated: Takes a label map, determines which labels touch, the distance between their centroids and the mean distancebetween touching neighbors. It then replaces every label with the that value.
      */
+    @Deprecated
     default boolean localMeanAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        System.out.println("localMeanAverageNeighborDistanceMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalMeanAverageNeighborDistanceMap");}
         boolean result = LocalMeanAverageNeighborDistanceMap.localMeanAverageNeighborDistanceMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LocalMeanAverageNeighborDistanceMap");}
@@ -1958,12 +1580,14 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalMeanTouchingNeighborCountMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines which labels touch, determines for every label with the number of touching 
+     * Deprecated: Takes a label map, determines which labels touch, determines for every label with the number of touching 
      * neighboring labels and replaces the label index with the local mean of this count.
      * 
      * 
      */
+    @Deprecated
     default boolean localMeanTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        System.out.println("localMeanTouchingNeighborCountMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalMeanTouchingNeighborCountMap");}
         boolean result = LocalMeanTouchingNeighborCountMap.localMeanTouchingNeighborCountMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LocalMeanTouchingNeighborCountMap");}
@@ -1991,10 +1615,12 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalMedianAverageDistanceOfNClosestNeighborsMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
+     * Deprecated: Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
      *  and replaces every label with the median distance of touching labels.
      */
+    @Deprecated
     default boolean localMedianAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        System.out.println("localMedianAverageDistanceOfNClosestNeighborsMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalMedianAverageDistanceOfNClosestNeighborsMap");}
         boolean result = LocalMedianAverageDistanceOfNClosestNeighborsMap.localMedianAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
         if (doTimeTracing()) {recordMethodEnd("LocalMedianAverageDistanceOfNClosestNeighborsMap");}
@@ -2005,9 +1631,11 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalMedianAverageNeighborDistanceMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines which labels touch, the distance between their centroids and the median distancebetween touching neighbors. It then replaces every label with the that value.
+     * Deprecated: Takes a label map, determines which labels touch, the distance between their centroids and the median distancebetween touching neighbors. It then replaces every label with the that value.
      */
+    @Deprecated
     default boolean localMedianAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        System.out.println("localMedianAverageNeighborDistanceMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalMedianAverageNeighborDistanceMap");}
         boolean result = LocalMedianAverageNeighborDistanceMap.localMedianAverageNeighborDistanceMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LocalMedianAverageNeighborDistanceMap");}
@@ -2018,12 +1646,14 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalMedianTouchingNeighborCountMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines which labels touch, determines for every label with the number of touching 
+     * Deprecated: Takes a label map, determines which labels touch, determines for every label with the number of touching 
      * neighboring labels and replaces the label index with the local median of this count.
      * 
      * 
      */
+    @Deprecated
     default boolean localMedianTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        System.out.println("localMedianTouchingNeighborCountMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalMedianTouchingNeighborCountMap");}
         boolean result = LocalMedianTouchingNeighborCountMap.localMedianTouchingNeighborCountMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LocalMedianTouchingNeighborCountMap");}
@@ -2034,10 +1664,12 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalMinimumAverageDistanceOfNClosestNeighborsMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
+     * Deprecated: Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
      *  and replaces every label with the minimum distance of touching labels.
      */
+    @Deprecated
     default boolean localMinimumAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        System.out.println("localMinimumAverageDistanceOfNClosestNeighborsMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalMinimumAverageDistanceOfNClosestNeighborsMap");}
         boolean result = LocalMinimumAverageDistanceOfNClosestNeighborsMap.localMinimumAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
         if (doTimeTracing()) {recordMethodEnd("LocalMinimumAverageDistanceOfNClosestNeighborsMap");}
@@ -2048,9 +1680,11 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalMinimumAverageNeighborDistanceMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines which labels touch, the distance between their centroids and the minimum distancebetween touching neighbors. It then replaces every label with the that value.
+     * Deprecated: Takes a label map, determines which labels touch, the distance between their centroids and the minimum distancebetween touching neighbors. It then replaces every label with the that value.
      */
+    @Deprecated
     default boolean localMinimumAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        System.out.println("localMinimumAverageNeighborDistanceMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalMinimumAverageNeighborDistanceMap");}
         boolean result = LocalMinimumAverageNeighborDistanceMap.localMinimumAverageNeighborDistanceMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LocalMinimumAverageNeighborDistanceMap");}
@@ -2061,12 +1695,14 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalMinimumTouchingNeighborCountMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines which labels touch, determines for every label with the number of touching 
+     * Deprecated: Takes a label map, determines which labels touch, determines for every label with the number of touching 
      * neighboring labels and replaces the label index with the local minimum of this count.
      * 
      * 
      */
+    @Deprecated
     default boolean localMinimumTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        System.out.println("localMinimumTouchingNeighborCountMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalMinimumTouchingNeighborCountMap");}
         boolean result = LocalMinimumTouchingNeighborCountMap.localMinimumTouchingNeighborCountMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LocalMinimumTouchingNeighborCountMap");}
@@ -2077,10 +1713,12 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
+     * Deprecated: Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point
      *  and replaces every label with the standard deviation distance of touching labels.
      */
+    @Deprecated
     default boolean localStandardDeviationAverageDistanceOfNClosestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
+        System.out.println("localStandardDeviationAverageDistanceOfNClosestNeighborsMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap");}
         boolean result = LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap.localStandardDeviationAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
         if (doTimeTracing()) {recordMethodEnd("LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap");}
@@ -2091,9 +1729,11 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalStandardDeviationAverageNeighborDistanceMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines which labels touch, the distance between their centroids and the standard deviation distancebetween touching neighbors. It then replaces every label with the that value.
+     * Deprecated: Takes a label map, determines which labels touch, the distance between their centroids and the standard deviation distancebetween touching neighbors. It then replaces every label with the that value.
      */
+    @Deprecated
     default boolean localStandardDeviationAverageNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        System.out.println("localStandardDeviationAverageNeighborDistanceMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalStandardDeviationAverageNeighborDistanceMap");}
         boolean result = LocalStandardDeviationAverageNeighborDistanceMap.localStandardDeviationAverageNeighborDistanceMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LocalStandardDeviationAverageNeighborDistanceMap");}
@@ -2104,71 +1744,17 @@ public abstract interface CLIJxOps {
     // net.haesleinhuepf.clijx.plugins.LocalStandardDeviationTouchingNeighborCountMap
     //----------------------------------------------------
     /**
-     * Takes a label map, determines which labels touch, determines for every label with the number of touching 
+     * Deprecated: Takes a label map, determines which labels touch, determines for every label with the number of touching 
      * neighboring labels and replaces the label index with the local standard deviation of this count.
      * 
      * 
      */
+    @Deprecated
     default boolean localStandardDeviationTouchingNeighborCountMap(ClearCLBuffer input, ClearCLBuffer destination) {
+        System.out.println("localStandardDeviationTouchingNeighborCountMap is deprecated. Check the documentation for a replacement. https://clij.github.io/clij2-doccs/reference");
         if (doTimeTracing()) {recordMethodStart("LocalStandardDeviationTouchingNeighborCountMap");}
         boolean result = LocalStandardDeviationTouchingNeighborCountMap.localStandardDeviationTouchingNeighborCountMap(getCLIJ2(), input, destination);
         if (doTimeTracing()) {recordMethodEnd("LocalStandardDeviationTouchingNeighborCountMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.LabelMinimumIntensityMap
-    //----------------------------------------------------
-    /**
-     * 
-     */
-    default boolean labelMinimumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3) {
-        if (doTimeTracing()) {recordMethodStart("LabelMinimumIntensityMap");}
-        boolean result = LabelMinimumIntensityMap.labelMinimumIntensityMap(getCLIJ2(), arg1, arg2, arg3);
-        if (doTimeTracing()) {recordMethodEnd("LabelMinimumIntensityMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.LabelMaximumIntensityMap
-    //----------------------------------------------------
-    /**
-     * 
-     */
-    default boolean labelMaximumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3) {
-        if (doTimeTracing()) {recordMethodStart("LabelMaximumIntensityMap");}
-        boolean result = LabelMaximumIntensityMap.labelMaximumIntensityMap(getCLIJ2(), arg1, arg2, arg3);
-        if (doTimeTracing()) {recordMethodEnd("LabelMaximumIntensityMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionRatioMap
-    //----------------------------------------------------
-    /**
-     * Takes a label map, determines for every label the maximum distance of any pixel to the centroid and replaces every label with the that number.
-     * 
-     * 
-     */
-    default boolean labelMaximumExtensionRatioMap(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("LabelMaximumExtensionRatioMap");}
-        boolean result = LabelMaximumExtensionRatioMap.labelMaximumExtensionRatioMap(getCLIJ2(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("LabelMaximumExtensionRatioMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.LabelMaximumExtensionMap
-    //----------------------------------------------------
-    /**
-     * Takes a label map, determines for every label the maximum distance of any pixel to the centroid and replaces every label with the that number.
-     * 
-     * 
-     */
-    default boolean labelMaximumExtensionMap(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("LabelMaximumExtensionMap");}
-        boolean result = LabelMaximumExtensionMap.labelMaximumExtensionMap(getCLIJ2(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("LabelMaximumExtensionMap");}
         return result;
     }
 
@@ -2199,19 +1785,6 @@ public abstract interface CLIJxOps {
         if (doTimeTracing()) {recordMethodStart("GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond");}
         boolean result = GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond.generateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond(getCLIJ2(), integer_image, grey_value_cooccurrence_matrix_destination);
         if (doTimeTracing()) {recordMethodEnd("GenerateIntegerGreyValueCooccurrenceCountMatrixHalfDiamond");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.DivideByGaussianBackground
-    //----------------------------------------------------
-    /**
-     * Applies Gaussian blur to the input image and divides the original by the result.
-     */
-    default boolean divideByGaussianBackground(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("DivideByGaussianBackground");}
-        boolean result = DivideByGaussianBackground.divideByGaussianBackground(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("DivideByGaussianBackground");}
         return result;
     }
 
@@ -2378,49 +1951,6 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.LabelSurface
-    //----------------------------------------------------
-    /**
-     * Takes a label map and excludes all labels which are not on the surface.
-     * 
-     * For each label, a ray from a given center towards the label. If the ray crosses another label, the labelin question is not at the surface and thus, removed.
-     */
-    default boolean labelSurface(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("LabelSurface");}
-        boolean result = LabelSurface.labelSurface(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue(), new Double (arg5).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("LabelSurface");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelledSpots
-    //----------------------------------------------------
-    /**
-     * Takes a label map and reduces all labels to their center spots. Label IDs stay and background will be zero.
-     */
-    default boolean reduceLabelsToLabelledSpots(ClearCLBuffer input_labels, ClearCLBuffer destination_labels) {
-        if (doTimeTracing()) {recordMethodStart("ReduceLabelsToLabelledSpots");}
-        boolean result = ReduceLabelsToLabelledSpots.reduceLabelsToLabelledSpots(getCLIJ2(), input_labels, destination_labels);
-        if (doTimeTracing()) {recordMethodEnd("ReduceLabelsToLabelledSpots");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.LabelMeanExtensionMap
-    //----------------------------------------------------
-    /**
-     * Takes a label map, determines for every label the mean distance of any pixel to the centroid and replaces every label with the that number.
-     * 
-     * 
-     */
-    default boolean labelMeanExtensionMap(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("LabelMeanExtensionMap");}
-        boolean result = LabelMeanExtensionMap.labelMeanExtensionMap(getCLIJ2(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("LabelMeanExtensionMap");}
-        return result;
-    }
-
-
     // net.haesleinhuepf.clijx.plugins.MeanZProjectionBelowThreshold
     //----------------------------------------------------
     /**
@@ -2430,288 +1960,6 @@ public abstract interface CLIJxOps {
         if (doTimeTracing()) {recordMethodStart("MeanZProjectionBelowThreshold");}
         boolean result = MeanZProjectionBelowThreshold.meanZProjectionBelowThreshold(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
         if (doTimeTracing()) {recordMethodEnd("MeanZProjectionBelowThreshold");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.EuclideanDistanceFromLabelCentroidMap
-    //----------------------------------------------------
-    /**
-     * Takes a label map, determines the centroids of all labels and writes the distance of all labelled pixels to their centroid in the result image.
-     * Background pixels stay zero.
-     */
-    default boolean euclideanDistanceFromLabelCentroidMap(ClearCLBuffer labelmap_input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("EuclideanDistanceFromLabelCentroidMap");}
-        boolean result = EuclideanDistanceFromLabelCentroidMap.euclideanDistanceFromLabelCentroidMap(getCLIJ2(), labelmap_input, destination);
-        if (doTimeTracing()) {recordMethodEnd("EuclideanDistanceFromLabelCentroidMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.GammaCorrection
-    //----------------------------------------------------
-    /**
-     * Applies a gamma correction to an image.
-     * 
-     * Therefore, all pixels x of the Image X are normalized and the power to gamma g is computed, before normlization is reversed (^ is the power operator):f(x) = (x / max(X)) ^ gamma * max(X)
-     */
-    default boolean gammaCorrection(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
-        if (doTimeTracing()) {recordMethodStart("GammaCorrection");}
-        boolean result = GammaCorrection.gammaCorrection(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("GammaCorrection");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ZPositionOfMaximumZProjection
-    //----------------------------------------------------
-    /**
-     * Determines a Z-position of the maximum intensity along Z and writes it into the resulting image.
-     * 
-     * If there are multiple z-slices with the same value, the smallest Z will be chosen.
-     */
-    default boolean zPositionOfMaximumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination) {
-        if (doTimeTracing()) {recordMethodStart("ZPositionOfMaximumZProjection");}
-        boolean result = ZPositionOfMaximumZProjection.zPositionOfMaximumZProjection(getCLIJ2(), source, destination);
-        if (doTimeTracing()) {recordMethodEnd("ZPositionOfMaximumZProjection");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ZPositionProjection
-    //----------------------------------------------------
-    /**
-     * Project a defined Z-slice of a 3D stack into a 2D image.
-     * 
-     * The slice is determined using a separate 2D image.
-     */
-    default boolean zPositionProjection(ClearCLImageInterface source_stack, ClearCLImageInterface z_position, ClearCLImageInterface destination) {
-        if (doTimeTracing()) {recordMethodStart("ZPositionProjection");}
-        boolean result = ZPositionProjection.zPositionProjection(getCLIJ2(), source_stack, z_position, destination);
-        if (doTimeTracing()) {recordMethodEnd("ZPositionProjection");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ZPositionRangeProjection
-    //----------------------------------------------------
-    /**
-     * Project multiple Z-slices of a 3D stack into a new 3D stack.
-     * 
-     * The slices are defined using a separate 2D image containing z-positions and two numbers defining the range.
-     */
-    default boolean zPositionRangeProjection(ClearCLImageInterface arg1, ClearCLImageInterface arg2, ClearCLImageInterface arg3, int arg4, int arg5) {
-        if (doTimeTracing()) {recordMethodStart("ZPositionRangeProjection");}
-        boolean result = ZPositionRangeProjection.zPositionRangeProjection(getCLIJ2(), arg1, arg2, arg3, arg4, arg5);
-        if (doTimeTracing()) {recordMethodEnd("ZPositionRangeProjection");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.VarianceSphere
-    //----------------------------------------------------
-    /**
-     * Computes the local variance of a pixels spherical neighborhood. 
-     * 
-     * The spheres size is specified by 
-     * its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. 
-     */
-    default boolean varianceSphere(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("VarianceSphere");}
-        boolean result = VarianceSphere.varianceSphere(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
-        if (doTimeTracing()) {recordMethodEnd("VarianceSphere");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.StandardDeviationSphere
-    //----------------------------------------------------
-    /**
-     * Computes the local standard deviation of a pixels spherical neighborhood. 
-     * 
-     * The spheres size is specified by 
-     * its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. 
-     */
-    default boolean standardDeviationSphere(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("StandardDeviationSphere");}
-        boolean result = StandardDeviationSphere.standardDeviationSphere(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
-        if (doTimeTracing()) {recordMethodEnd("StandardDeviationSphere");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.VarianceBox
-    //----------------------------------------------------
-    /**
-     * Computes the local variance of a pixels box neighborhood. 
-     * 
-     * The box size is specified by 
-     * its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. 
-     */
-    default boolean varianceBox(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("VarianceBox");}
-        boolean result = VarianceBox.varianceBox(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
-        if (doTimeTracing()) {recordMethodEnd("VarianceBox");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.StandardDeviationBox
-    //----------------------------------------------------
-    /**
-     * Computes the local standard deviation of a pixels box neighborhood. 
-     * 
-     * The box size is specified by 
-     * its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. 
-     */
-    default boolean standardDeviationBox(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("StandardDeviationBox");}
-        boolean result = StandardDeviationBox.standardDeviationBox(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
-        if (doTimeTracing()) {recordMethodEnd("StandardDeviationBox");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.Tenengrad
-    //----------------------------------------------------
-    /**
-     * Convolve the image with the Tenengrad kernel slice by slice.
-     */
-    default boolean tenengrad(ClearCLImageInterface source, ClearCLImageInterface destination) {
-        if (doTimeTracing()) {recordMethodStart("Tenengrad");}
-        boolean result = Tenengrad.tenengrad(getCLIJ2(), source, destination);
-        if (doTimeTracing()) {recordMethodEnd("Tenengrad");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.TenengradSliceBySlice
-    //----------------------------------------------------
-    /**
-     * Convolve the image with the Tenengrad kernel slice by slice.
-     */
-    default boolean tenengradSliceBySlice(ClearCLImageInterface source, ClearCLImageInterface destination) {
-        if (doTimeTracing()) {recordMethodStart("TenengradSliceBySlice");}
-        boolean result = TenengradSliceBySlice.tenengradSliceBySlice(getCLIJ2(), source, destination);
-        if (doTimeTracing()) {recordMethodEnd("TenengradSliceBySlice");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.SobelSliceBySlice
-    //----------------------------------------------------
-    /**
-     * Convolve the image with the Sobel kernel slice by slice.
-     */
-    default boolean sobelSliceBySlice(ClearCLImageInterface source, ClearCLImageInterface destination) {
-        if (doTimeTracing()) {recordMethodStart("SobelSliceBySlice");}
-        boolean result = SobelSliceBySlice.sobelSliceBySlice(getCLIJ2(), source, destination);
-        if (doTimeTracing()) {recordMethodEnd("SobelSliceBySlice");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusSobelProjection
-    //----------------------------------------------------
-    /**
-     * Extended depth of focus projection maximizing local pixel intensity variance.
-     * 
-     * The sigma parameter allows controlling an Gaussian blur which should smooth the altitude map.
-     */
-    default boolean extendedDepthOfFocusVarianceProjection(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3) {
-        if (doTimeTracing()) {recordMethodStart("ExtendedDepthOfFocusSobelProjection");}
-        boolean result = ExtendedDepthOfFocusSobelProjection.extendedDepthOfFocusVarianceProjection(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("ExtendedDepthOfFocusSobelProjection");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusTenengradProjection
-    //----------------------------------------------------
-    /**
-     * Extended depth of focus projection maximizing intensity in the local sobel image.
-     * 
-     * The sigma parameter allows controlling an Gaussian blur which should smooth the altitude map.
-     */
-    default boolean extendedDepthOfFocusTenengradProjection(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3) {
-        if (doTimeTracing()) {recordMethodStart("ExtendedDepthOfFocusTenengradProjection");}
-        boolean result = ExtendedDepthOfFocusTenengradProjection.extendedDepthOfFocusTenengradProjection(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("ExtendedDepthOfFocusTenengradProjection");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ExtendedDepthOfFocusVarianceProjection
-    //----------------------------------------------------
-    /**
-     * Extended depth of focus projection maximizing local pixel intensity variance.
-     * 
-     * The sigma parameter allows controlling an Gaussian blur which should smooth the altitude map.
-     */
-    default boolean extendedDepthOfFocusVarianceProjection(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("ExtendedDepthOfFocusVarianceProjection");}
-        boolean result = ExtendedDepthOfFocusVarianceProjection.extendedDepthOfFocusVarianceProjection(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("ExtendedDepthOfFocusVarianceProjection");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.DrawMeshBetweenNClosestLabels
-    //----------------------------------------------------
-    /**
-     * Starting from a label map, draw lines between n closest labels for each label resulting in a mesh.
-     * 
-     * The end points of the lines correspond to the centroids of the labels. 
-     */
-    default boolean drawMeshBetweenNClosestLabels(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
-        if (doTimeTracing()) {recordMethodStart("DrawMeshBetweenNClosestLabels");}
-        boolean result = DrawMeshBetweenNClosestLabels.drawMeshBetweenNClosestLabels(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
-        if (doTimeTracing()) {recordMethodEnd("DrawMeshBetweenNClosestLabels");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.DrawMeshBetweenProximalLabels
-    //----------------------------------------------------
-    /**
-     * Starting from a label map, draw lines between labels that are closer than a given distance resulting in a mesh.
-     * 
-     * The end points of the lines correspond to the centroids of the labels.
-     */
-    default boolean drawMeshBetweenProximalLabels(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
-        if (doTimeTracing()) {recordMethodStart("DrawMeshBetweenProximalLabels");}
-        boolean result = DrawMeshBetweenProximalLabels.drawMeshBetweenProximalLabels(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("DrawMeshBetweenProximalLabels");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.Cosinus
-    //----------------------------------------------------
-    /**
-     * Computes the cosinus of all pixels value x.
-     * 
-     * <pre>f(x) = cos(x)</pre>
-     */
-    default boolean cosinus(ClearCLImageInterface source, ClearCLImageInterface destination) {
-        if (doTimeTracing()) {recordMethodStart("Cosinus");}
-        boolean result = Cosinus.cosinus(getCLIJ2(), source, destination);
-        if (doTimeTracing()) {recordMethodEnd("Cosinus");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.Sinus
-    //----------------------------------------------------
-    /**
-     * Computes the sinus of all pixels value x.
-     * 
-     * <pre>f(x) = sin(x)</pre>
-     */
-    default boolean sinus(ClearCLImageInterface source, ClearCLImageInterface destination) {
-        if (doTimeTracing()) {recordMethodStart("Sinus");}
-        boolean result = Sinus.sinus(getCLIJ2(), source, destination);
-        if (doTimeTracing()) {recordMethodEnd("Sinus");}
         return result;
     }
 
@@ -2729,49 +1977,6 @@ public abstract interface CLIJxOps {
         if (doTimeTracing()) {recordMethodStart("GenerateDistanceMatrixAlongAxis");}
         boolean result = GenerateDistanceMatrixAlongAxis.generateDistanceMatrixAlongAxis(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue());
         if (doTimeTracing()) {recordMethodEnd("GenerateDistanceMatrixAlongAxis");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MaximumDistanceOfTouchingNeighbors
-    //----------------------------------------------------
-    /**
-     * Takes a touch matrix and a distance matrix to determine the maximum distance of touching neighbors for every object.
-     */
-    default boolean maximumDistanceOfTouchingNeighbors(ClearCLBuffer distance_matrix, ClearCLBuffer touch_matrix, ClearCLBuffer distancelist_destination) {
-        if (doTimeTracing()) {recordMethodStart("MaximumDistanceOfTouchingNeighbors");}
-        boolean result = MaximumDistanceOfTouchingNeighbors.maximumDistanceOfTouchingNeighbors(getCLIJ2(), distance_matrix, touch_matrix, distancelist_destination);
-        if (doTimeTracing()) {recordMethodEnd("MaximumDistanceOfTouchingNeighbors");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MaximumNeighborDistanceMap
-    //----------------------------------------------------
-    /**
-     * Takes a label map, determines which labels touch and replaces every label with the maximum distance to their neighboring labels.
-     * 
-     * To determine the distances, the centroid of the labels is determined internally.
-     */
-    default boolean maximumNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("MaximumNeighborDistanceMap");}
-        boolean result = MaximumNeighborDistanceMap.maximumNeighborDistanceMap(getCLIJ2(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("MaximumNeighborDistanceMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MinimumNeighborDistanceMap
-    //----------------------------------------------------
-    /**
-     * Takes a label map, determines which labels touch and replaces every label with the minimum distance to their neighboring labels.
-     * 
-     * To determine the distances, the centroid of the labels is determined internally.
-     */
-    default boolean minimumNeighborDistanceMap(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("MinimumNeighborDistanceMap");}
-        boolean result = MinimumNeighborDistanceMap.minimumNeighborDistanceMap(getCLIJ2(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("MinimumNeighborDistanceMap");}
         return result;
     }
 
@@ -2818,36 +2023,6 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.NeighborDistanceRangeRatioMap
-    //----------------------------------------------------
-    /**
-     * Takes a label map, determines which labels touch and replaces every label with the minimum distance to their neighboring labels.
-     * 
-     * To determine the distances, the centroid of the labels is determined internally.
-     */
-    default boolean neighborDistanceRangeRatioMap(ClearCLBuffer input, ClearCLBuffer destination) {
-        if (doTimeTracing()) {recordMethodStart("NeighborDistanceRangeRatioMap");}
-        boolean result = NeighborDistanceRangeRatioMap.neighborDistanceRangeRatioMap(getCLIJ2(), input, destination);
-        if (doTimeTracing()) {recordMethodEnd("NeighborDistanceRangeRatioMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.VoronoiOtsuLabeling
-    //----------------------------------------------------
-    /**
-     * Applies two Gaussian blurs, spot detection, Otsu-thresholding and Voronoi-labeling.
-     * The thresholded binary image is flooded using the Voronoi approach starting from the found local maxima.
-     * Noise-removal sigma for spot detection and thresholding can be configured separately.
-     */
-    default boolean voronoiOtsuLabeling(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("VoronoiOtsuLabeling");}
-        boolean result = VoronoiOtsuLabeling.voronoiOtsuLabeling(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("VoronoiOtsuLabeling");}
-        return result;
-    }
-
-
     // net.haesleinhuepf.clijx.plugins.VisualizeOutlinesOnOriginal
     //----------------------------------------------------
     /**
@@ -2877,37 +2052,6 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.MaskedVoronoiLabeling
-    //----------------------------------------------------
-    /**
-     * Takes a binary image, labels connected components and dilates the regions using a octagon shape until they touch and only inside another binary mask image.
-     * 
-     * The resulting label map is written to the output.
-     * 
-     * Hint: Process isotropic images only.
-     */
-    default boolean maskedVoronoiLabeling(ClearCLBuffer input, ClearCLBuffer mask, ClearCLImageInterface destination) {
-        if (doTimeTracing()) {recordMethodStart("MaskedVoronoiLabeling");}
-        boolean result = MaskedVoronoiLabeling.maskedVoronoiLabeling(getCLIJ2(), input, mask, destination);
-        if (doTimeTracing()) {recordMethodEnd("MaskedVoronoiLabeling");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.PullToResultsTableColumn
-    //----------------------------------------------------
-    /**
-     * Copies the content of a vector image to a column in the results table.
-     * You can configure if new rows should be appended or if existing values should be overwritten.
-     */
-    default boolean pullToResultsTableColumn(ClearCLBuffer arg1, ResultsTable arg2, String arg3, boolean arg4) {
-        if (doTimeTracing()) {recordMethodStart("PullToResultsTableColumn");}
-        boolean result = PullToResultsTableColumn.pullToResultsTableColumn(getCLIJ2(), arg1, arg2, arg3, arg4);
-        if (doTimeTracing()) {recordMethodEnd("PullToResultsTableColumn");}
-        return result;
-    }
-
-
     // net.haesleinhuepf.clijx.plugins.KMeansLabelClusterer
     //----------------------------------------------------
     /**
@@ -2922,50 +2066,6 @@ public abstract interface CLIJxOps {
         if (doTimeTracing()) {recordMethodStart("KMeansLabelClusterer");}
         boolean result = KMeansLabelClusterer.kMeansLabelClusterer(getCLIJ2(), arg1, arg2, arg3, arg4, arg5, new Double (arg6).intValue(), new Double (arg7).intValue(), arg8);
         if (doTimeTracing()) {recordMethodEnd("KMeansLabelClusterer");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ModeOfTouchingNeighbors
-    //----------------------------------------------------
-    /**
-     * Takes a touch matrix and a vector of values to determine the most popular integer value among touching neighbors for every object.
-     * TODO: This only works for values between 0 and 255 for now.
-     */
-    default boolean modeOfTouchingNeighbors(ClearCLBuffer values, ClearCLBuffer touch_matrix, ClearCLBuffer mode_values_destination) {
-        if (doTimeTracing()) {recordMethodStart("ModeOfTouchingNeighbors");}
-        boolean result = ModeOfTouchingNeighbors.modeOfTouchingNeighbors(getCLIJ2(), values, touch_matrix, mode_values_destination);
-        if (doTimeTracing()) {recordMethodEnd("ModeOfTouchingNeighbors");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.GenerateProximalNeighborsMatrix
-    //----------------------------------------------------
-    /**
-     * Produces a touch-matrix where the neighbors within a given distance range are marked as touching neighbors.
-     * 
-     * Takes a distance matrix (e.g. derived from a pointlist of centroids) and marks for every column the neighbors whose
-     * distance lie within a given distance range (>= min and <= max). 
-     * The resulting matrix can be use as if it was a touch-matrix (a.k.a. adjacency graph matrix). 
-     * 
-     * Parameters
-     * ----------
-     * distance_marix : Image
-     * touch_matrix_destination : Image
-     * min_distance : float, optional
-     *     default : 0
-     * max_distance : float, optional
-     *     default: 10 
-     * 
-     * Returns
-     * -------
-     * touch_matrix_destination
-     */
-    default boolean generateProximalNeighborsMatrix(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("GenerateProximalNeighborsMatrix");}
-        boolean result = GenerateProximalNeighborsMatrix.generateProximalNeighborsMatrix(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("GenerateProximalNeighborsMatrix");}
         return result;
     }
 
@@ -2985,566 +2085,6 @@ public abstract interface CLIJxOps {
         if (doTimeTracing()) {recordMethodStart("ReadIntensitiesFromMap");}
         boolean result = ReadIntensitiesFromMap.readIntensitiesFromMap(getCLIJ2(), labels, map_image, values_destination);
         if (doTimeTracing()) {recordMethodEnd("ReadIntensitiesFromMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MaximumOfTouchingNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
-     * by the maximum value of neighboring labels. The radius of the neighborhood can be configured:
-     * * radius 0: Nothing is replaced
-     * * radius 1: direct neighbors are taken into account
-     * * radius 2: neighbors and neighbors or neighbors are taken into account
-     * * radius n: ...
-     * 
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * radius : int
-     * ignore_touching_background : bool
-     * 
-     * Returns
-     * -------
-     * parametric_map_destination
-     */
-    default boolean maximumOfTouchingNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, boolean arg5) {
-        if (doTimeTracing()) {recordMethodStart("MaximumOfTouchingNeighborsMap");}
-        boolean result = MaximumOfTouchingNeighborsMap.maximumOfTouchingNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), arg5);
-        if (doTimeTracing()) {recordMethodEnd("MaximumOfTouchingNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MinimumOfTouchingNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
-     * by the minimum value of neighboring labels. The radius of the neighborhood can be configured:
-     * * radius 0: Nothing is replaced
-     * * radius 1: direct neighbors are taken into account
-     * * radius 2: neighbors and neighbors or neighbors are taken into account
-     * * radius n: ...
-     * 
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * radius : int
-     * ignore_touching_background : bool
-     * 
-     * Returns
-     * -------
-     * parametric_map_destination
-     */
-    default boolean minimumOfTouchingNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, boolean arg5) {
-        if (doTimeTracing()) {recordMethodStart("MinimumOfTouchingNeighborsMap");}
-        boolean result = MinimumOfTouchingNeighborsMap.minimumOfTouchingNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), arg5);
-        if (doTimeTracing()) {recordMethodEnd("MinimumOfTouchingNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MeanOfTouchingNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
-     * by the mean average value of neighboring labels. The radius of the neighborhood can be configured:
-     * * radius 0: Nothing is replaced
-     * * radius 1: direct neighbors are taken into account
-     * * radius 2: neighbors and neighbors or neighbors are taken into account
-     * * radius n: ...
-     * 
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * radius : int
-     * ignore_touching_background : bool
-     * 
-     * Returns
-     * -------
-     * parametric_map_destination
-     */
-    default boolean meanOfTouchingNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, boolean arg5) {
-        if (doTimeTracing()) {recordMethodStart("MeanOfTouchingNeighborsMap");}
-        boolean result = MeanOfTouchingNeighborsMap.meanOfTouchingNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), arg5);
-        if (doTimeTracing()) {recordMethodEnd("MeanOfTouchingNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ModeOfTouchingNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
-     * by the most popular value of neighboring labels. The radius of the neighborhood can be configured:
-     * * radius 0: Nothing is replaced
-     * * radius 1: direct neighbors are taken into account
-     * * radius 2: neighbors and neighbors or neighbors are taken into account
-     * * radius n: ...
-     * 
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * radius : int
-     * ignore_touching_background : bool
-     * 
-     * Returns
-     * -------
-     * parametric_map_destination
-     */
-    default boolean modeOfTouchingNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, boolean arg5) {
-        if (doTimeTracing()) {recordMethodStart("ModeOfTouchingNeighborsMap");}
-        boolean result = ModeOfTouchingNeighborsMap.modeOfTouchingNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), arg5);
-        if (doTimeTracing()) {recordMethodEnd("ModeOfTouchingNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.StandardDeviationOfTouchingNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
-     * by the standard deviation value of neighboring labels. The radius of the neighborhood can be configured:
-     * * radius 0: Nothing is replaced
-     * * radius 1: direct neighbors are taken into account
-     * * radius 2: neighbors and neighbors or neighbors are taken into account
-     * * radius n: ...
-     * 
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * radius : int
-     * ignore_touching_background : bool
-     * 
-     * Returns
-     * -------
-     * parametric_map_destination
-     */
-    default boolean standardDeviationOfTouchingNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, boolean arg5) {
-        if (doTimeTracing()) {recordMethodStart("StandardDeviationOfTouchingNeighborsMap");}
-        boolean result = StandardDeviationOfTouchingNeighborsMap.standardDeviationOfTouchingNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue(), arg5);
-        if (doTimeTracing()) {recordMethodEnd("StandardDeviationOfTouchingNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.PointIndexListToTouchMatrix
-    //----------------------------------------------------
-    /**
-     * Takes a list of point indices to generate a touch matrix (a.k.a. adjacency graph matrix) out of it. 
-     * 
-     * The list hasa dimensionality of m*n for the points 1... m (0 a.k.a. background is not in this list). In the n rows, there are
-     * indices to points which should be connected.
-     * 
-     * Parameters
-     * ----------
-     * indexlist : Image
-     * matrix_destination : Image
-     */
-    default boolean pointIndexListToTouchMatrix(ClearCLBuffer indexlist, ClearCLBuffer matrix_destination) {
-        if (doTimeTracing()) {recordMethodStart("PointIndexListToTouchMatrix");}
-        boolean result = PointIndexListToTouchMatrix.pointIndexListToTouchMatrix(getCLIJ2(), indexlist, matrix_destination);
-        if (doTimeTracing()) {recordMethodEnd("PointIndexListToTouchMatrix");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.GenerateNNearestNeighborsMatrix
-    //----------------------------------------------------
-    /**
-     * Produces a touch-matrix where the n nearest neighbors are marked as touching neighbors. 
-     * 
-     * Takes a distance matrix (e.g. derived from a pointlist of centroids) and marks for every column the n smallest
-     * distances as neighbors. The resulting matrix can be use as if it was a touch-matrix (a.k.a. adjacency graph matrix). 
-     * 
-     * Inspired by a similar implementation in imglib2 [1]
-     * 
-     * Note: The implementation is limited to square matrices.
-     * 
-     * Parameters
-     * ----------
-     * distance_marix : Image
-     * touch_matrix_destination : Image
-     * n : int
-     *    number of neighbors
-     *    
-     * References
-     * ----------
-     * [1] https://github.com/imglib/imglib2/blob/master/src/main/java/net/imglib2/interpolation/neighborsearch/InverseDistanceWeightingInterpolator.java
-     * 
-     */
-    default boolean generateNNearestNeighborsMatrix(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3) {
-        if (doTimeTracing()) {recordMethodStart("GenerateNNearestNeighborsMatrix");}
-        boolean result = GenerateNNearestNeighborsMatrix.generateNNearestNeighborsMatrix(getCLIJ2(), arg1, arg2, new Double (arg3).intValue());
-        if (doTimeTracing()) {recordMethodEnd("GenerateNNearestNeighborsMatrix");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MaximumOfNNearestNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
-     * by the maximum value of neighboring labels. The distance number of nearest neighbors can be configured.
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * n : int
-     *     number of nearest neighbors
-     */
-    default boolean maximumOfNNearestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("MaximumOfNNearestNeighborsMap");}
-        boolean result = MaximumOfNNearestNeighborsMap.maximumOfNNearestNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue());
-        if (doTimeTracing()) {recordMethodEnd("MaximumOfNNearestNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MinimumOfNNearestNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
-     * by the minimum value of neighboring labels. The distance number of nearest neighbors can be configured.
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * n : int
-     *     number of nearest neighbors
-     */
-    default boolean minimumOfNNearestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("MinimumOfNNearestNeighborsMap");}
-        boolean result = MinimumOfNNearestNeighborsMap.minimumOfNNearestNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue());
-        if (doTimeTracing()) {recordMethodEnd("MinimumOfNNearestNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MeanOfNNearestNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
-     * by the minimum value of neighboring labels. The distance number of nearest neighbors can be configured.
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * n : int
-     *     number of nearest neighbors
-     */
-    default boolean meanOfNNearestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("MeanOfNNearestNeighborsMap");}
-        boolean result = MeanOfNNearestNeighborsMap.meanOfNNearestNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue());
-        if (doTimeTracing()) {recordMethodEnd("MeanOfNNearestNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ModeOfNNearestNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
-     * by the mode value of neighboring labels. The distance number of nearest neighbors can be configured.
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * n : int
-     *     number of nearest neighbors
-     */
-    default boolean modeOfNNearestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("ModeOfNNearestNeighborsMap");}
-        boolean result = ModeOfNNearestNeighborsMap.modeOfNNearestNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue());
-        if (doTimeTracing()) {recordMethodEnd("ModeOfNNearestNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.StandardDeviationOfNNearestNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image
-     * by the standard deviation value of neighboring labels. The distance number of nearest neighbors can be configured.
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * n : int
-     *     number of nearest neighbors
-     */
-    default boolean standardDeviationOfNNearestNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("StandardDeviationOfNNearestNeighborsMap");}
-        boolean result = StandardDeviationOfNNearestNeighborsMap.standardDeviationOfNNearestNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).intValue());
-        if (doTimeTracing()) {recordMethodEnd("StandardDeviationOfNNearestNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MaximumOfProximalNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image by the maximum value of neighboring labels.
-     * 
-     *  The distance range of the centroids of the neighborhood can be configured.
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * min_distance : float, optional
-     *     default : 0
-     * max_distance : float, optional
-     *     default: maximum float value
-     */
-    default boolean maximumOfProximalNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("MaximumOfProximalNeighborsMap");}
-        boolean result = MaximumOfProximalNeighborsMap.maximumOfProximalNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue(), new Double (arg5).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("MaximumOfProximalNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MinimumOfProximalNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image by the minimum value of neighboring labels.
-     * 
-     *  The distance range of the centroids of the neighborhood can be configured.
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * min_distance : float, optional
-     *     default : 0
-     * max_distance : float, optional
-     *     default: maximum float value
-     */
-    default boolean minimumOfProximalNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("MinimumOfProximalNeighborsMap");}
-        boolean result = MinimumOfProximalNeighborsMap.minimumOfProximalNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue(), new Double (arg5).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("MinimumOfProximalNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.MeanOfProximalNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image by the mean average value of neighboring labels.
-     * 
-     *  The distance range of the centroids of the neighborhood can be configured.
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * min_distance : float, optional
-     *     default : 0
-     * max_distance : float, optional
-     *     default: maximum float value
-     */
-    default boolean meanOfProximalNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("MeanOfProximalNeighborsMap");}
-        boolean result = MeanOfProximalNeighborsMap.meanOfProximalNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue(), new Double (arg5).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("MeanOfProximalNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ModeOfProximalNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image by the most popular value of neighboring labels.
-     * 
-     *  The distance range of the centroids of the neighborhood can be configured.
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * min_distance : float, optional
-     *     default : 0
-     * max_distance : float, optional
-     *     default: maximum float value
-     */
-    default boolean modeOfProximalNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("ModeOfProximalNeighborsMap");}
-        boolean result = ModeOfProximalNeighborsMap.modeOfProximalNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue(), new Double (arg5).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("ModeOfProximalNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.StandardDeviationOfProximalNeighborsMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and a parametric intensity image and will replace each labels value in the parametric image by the standard deviation value of neighboring labels.
-     * 
-     *  The distance range of the centroids of the neighborhood can be configured.
-     * Note: Values of all pixels in a label each must be identical.
-     * 
-     * Parameters
-     * ----------
-     * parametric_map : Image
-     * label_map : Image
-     * parametric_map_destination : Image
-     * min_distance : float, optional
-     *     default : 0
-     * max_distance : float, optional
-     *     default: maximum float value
-     */
-    default boolean standardDeviationOfProximalNeighborsMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("StandardDeviationOfProximalNeighborsMap");}
-        boolean result = StandardDeviationOfProximalNeighborsMap.standardDeviationOfProximalNeighborsMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue(), new Double (arg5).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("StandardDeviationOfProximalNeighborsMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.LabelOverlapCountMap
-    //----------------------------------------------------
-    /**
-     * Takes two label maps, and counts for every label in label map 1 how many labels overlap with it in label map 2.
-     * 
-     * The resulting map is generated from the label map 1 by replacing the labels with the respective count.
-     */
-    default boolean labelOverlapCountMap(ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer overlap_count_map_destination) {
-        if (doTimeTracing()) {recordMethodStart("LabelOverlapCountMap");}
-        boolean result = LabelOverlapCountMap.labelOverlapCountMap(getCLIJ2(), label_map1, label_map2, overlap_count_map_destination);
-        if (doTimeTracing()) {recordMethodEnd("LabelOverlapCountMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.LabelProximalNeighborCountMap
-    //----------------------------------------------------
-    /**
-     * Takes two label maps, and counts for every label in label map 1 how many labels are in a given distance range to it in label map 2.
-     * 
-     * Distances are computed from the centroids of the labels. The resulting map is generated from the label map 1 by replacing the labels with the respective count.
-     */
-    default boolean labelProximalNeighborCountMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("LabelProximalNeighborCountMap");}
-        boolean result = LabelProximalNeighborCountMap.labelProximalNeighborCountMap(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue(), new Double (arg5).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("LabelProximalNeighborCountMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ReduceLabelsToLabelEdges
-    //----------------------------------------------------
-    /**
-     * Takes a label map and reduces all labels to their edges. Label IDs stay the same and background will be zero.
-     */
-    default boolean reduceLabelsToLabelEdges(ClearCLBuffer input_labels, ClearCLBuffer destination_labels) {
-        if (doTimeTracing()) {recordMethodStart("ReduceLabelsToLabelEdges");}
-        boolean result = ReduceLabelsToLabelEdges.reduceLabelsToLabelEdges(getCLIJ2(), input_labels, destination_labels);
-        if (doTimeTracing()) {recordMethodEnd("ReduceLabelsToLabelEdges");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.OutOfIntensityRange
-    //----------------------------------------------------
-    /**
-     * Sets all pixels to 1 if their intensity lies out of a given range, and 0 otherwise.
-     * 
-     * Given minimum and maximum are considered part of the range.
-     */
-    default boolean outOfIntensityRange(ClearCLBuffer arg1, ClearCLImageInterface arg2, double arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("OutOfIntensityRange");}
-        boolean result = OutOfIntensityRange.outOfIntensityRange(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("OutOfIntensityRange");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ShrinkLabels
-    //----------------------------------------------------
-    /**
-     * Extend labels with a given radius.
-     * 
-     * This is actually a local minimum filter applied to a label map after introducing background-gaps between labels.
-     * In case relabel_islands is set, split objects will get new labels each. In this case, more labels might be in the result.
-     * It is recommended to apply this operation to isotropic images only.
-     * Warning: If labels were too small, they may be missing in the resulting label image.
-     */
-    default boolean shrinkLabels(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, boolean arg4) {
-        if (doTimeTracing()) {recordMethodStart("ShrinkLabels");}
-        boolean result = ShrinkLabels.shrinkLabels(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), arg4);
-        if (doTimeTracing()) {recordMethodEnd("ShrinkLabels");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.Similar
-    //----------------------------------------------------
-    /**
-     * Determines the absolute difference between two images and sets all pixels to 1 where it is below or equal a given tolerance, and 0 otherwise.
-     */
-    default boolean similar(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("Similar");}
-        boolean result = Similar.similar(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("Similar");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.Different
-    //----------------------------------------------------
-    /**
-     * Determines the absolute difference between two images and sets all pixels to 1 where it is above a given tolerance, and 0 otherwise.
-     */
-    default boolean different(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("Different");}
-        boolean result = Different.different(getCLIJ2(), arg1, arg2, arg3, new Double (arg4).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("Different");}
         return result;
     }
 
@@ -3592,19 +2132,6 @@ public abstract interface CLIJxOps {
     }
 
 
-    // net.haesleinhuepf.clijx.plugins.MedianZProjectionMasked
-    //----------------------------------------------------
-    /**
-     * Determines the median intensity projection of an image stack along Z where pixels in a corresponding mask image are unequal to zero.
-     */
-    default boolean medianZProjectionMasked(ClearCLImageInterface arg1, ClearCLImageInterface arg2, ClearCLImageInterface arg3) {
-        if (doTimeTracing()) {recordMethodStart("MedianZProjectionMasked");}
-        boolean result = MedianZProjectionMasked.medianZProjectionMasked(getCLIJ2(), arg1, arg2, arg3);
-        if (doTimeTracing()) {recordMethodEnd("MedianZProjectionMasked");}
-        return result;
-    }
-
-
     // net.haesleinhuepf.clijx.plugins.MedianTouchPortionMap
     //----------------------------------------------------
     /**
@@ -3631,80 +2158,6 @@ public abstract interface CLIJxOps {
         if (doTimeTracing()) {recordMethodStart("NeighborCountWithTouchPortionAboveThresholdMap");}
         boolean result = NeighborCountWithTouchPortionAboveThresholdMap.neighborCountWithTouchPortionAboveThresholdMap(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
         if (doTimeTracing()) {recordMethodEnd("NeighborCountWithTouchPortionAboveThresholdMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.DivideScalarByImage
-    //----------------------------------------------------
-    /**
-     * Divides a scalar s by image X pixel wise. 
-     * 
-     * <pre>f(s, x) = s / x</pre>
-     */
-    default boolean divideScalarByImage(ClearCLImageInterface arg1, ClearCLImageInterface arg2, double arg3) {
-        if (doTimeTracing()) {recordMethodStart("DivideScalarByImage");}
-        boolean result = DivideScalarByImage.divideScalarByImage(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("DivideScalarByImage");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ReadValuesFromMap
-    //----------------------------------------------------
-    /**
-     * Takes a label image and an parametric image and reads parametric values from the labels positions.
-     * 
-     * The read intensity valus are stored in a new vector.
-     * 
-     * Note: This will only work if all labels have number of voxels == 1 or if all pixels in each label have the same value.
-     * 
-     * Parameters
-     * ----------
-     * labels
-     * map_image
-     * values_destination
-     */
-    default boolean readValuesFromMap(ClearCLImageInterface labels, ClearCLImageInterface map_image, ClearCLImageInterface values_destination) {
-        if (doTimeTracing()) {recordMethodStart("ReadValuesFromMap");}
-        boolean result = ReadValuesFromMap.readValuesFromMap(getCLIJ2(), labels, map_image, values_destination);
-        if (doTimeTracing()) {recordMethodEnd("ReadValuesFromMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ReadValuesFromPositions
-    //----------------------------------------------------
-    /**
-     * Takes a pointlist and a parametric image and reads parametric values from the positions.
-     * 
-     * The read intensity values are stored in a new vector.
-     * 
-     * Parameters
-     * ----------
-     * pointlist
-     * map_image
-     * values_destination
-     */
-    default boolean readValuesFromPositions(ClearCLImageInterface pointlist, ClearCLImageInterface map_image, ClearCLImageInterface values_destination) {
-        if (doTimeTracing()) {recordMethodStart("ReadValuesFromPositions");}
-        boolean result = ReadValuesFromPositions.readValuesFromPositions(getCLIJ2(), pointlist, map_image, values_destination);
-        if (doTimeTracing()) {recordMethodEnd("ReadValuesFromPositions");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ZPositionOfMinimumZProjection
-    //----------------------------------------------------
-    /**
-     * Determines a Z-position of the minimum intensity along Z and writes it into the resulting image.
-     * 
-     * If there are multiple z-slices with the same value, the smallest Z will be chosen.
-     */
-    default boolean zPositionOfMinimumZProjection(ClearCLImageInterface source, ClearCLImageInterface destination) {
-        if (doTimeTracing()) {recordMethodStart("ZPositionOfMinimumZProjection");}
-        boolean result = ZPositionOfMinimumZProjection.zPositionOfMinimumZProjection(getCLIJ2(), source, destination);
-        if (doTimeTracing()) {recordMethodEnd("ZPositionOfMinimumZProjection");}
         return result;
     }
 
@@ -3874,99 +2327,5 @@ public abstract interface CLIJxOps {
         return result;
     }
 
-
-    // net.haesleinhuepf.clijx.plugins.GreyscaleOpeningBox
-    //----------------------------------------------------
-    /**
-     * Apply a greyscale morphological opening to the input image.
-     * 
-     * It applies a minimum filter first and the result is processed by a maximum filter with given radii.
-     * High intensity regions smaller than radius will disappear.
-     */
-    default boolean greyscaleOpeningBox(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("GreyscaleOpeningBox");}
-        boolean result = GreyscaleOpeningBox.greyscaleOpeningBox(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
-        if (doTimeTracing()) {recordMethodEnd("GreyscaleOpeningBox");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.GreyscaleOpeningSphere
-    //----------------------------------------------------
-    /**
-     * Apply a greyscale morphological opening to the input image.
-     * 
-     * It applies a minimum filter first and the result is processed by a maximum filter with given radii.
-     * High intensity regions smaller than radius will disappear.
-     */
-    default boolean greyscaleOpeningSphere(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("GreyscaleOpeningSphere");}
-        boolean result = GreyscaleOpeningSphere.greyscaleOpeningSphere(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
-        if (doTimeTracing()) {recordMethodEnd("GreyscaleOpeningSphere");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.GreyscaleClosingBox
-    //----------------------------------------------------
-    /**
-     * Apply a greyscale morphological closing to the input image.
-     * 
-     * It applies a maximum filter first and the result is processed by a minimum filter with given radii.
-     * Low intensity regions smaller than radius will disappear.
-     */
-    default boolean greyscaleClosingBox(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("GreyscaleClosingBox");}
-        boolean result = GreyscaleClosingBox.greyscaleClosingBox(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
-        if (doTimeTracing()) {recordMethodEnd("GreyscaleClosingBox");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.GreyscaleClosingSphere
-    //----------------------------------------------------
-    /**
-     * Apply a greyscale morphological closing to the input image.
-     * 
-     * It applies a maximum filter first and the result is processed by a minimum filter with given radii.
-     * Low intensity regions smaller than radius will disappear.
-     */
-    default boolean greyscaleClosingSphere(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4, double arg5) {
-        if (doTimeTracing()) {recordMethodStart("GreyscaleClosingSphere");}
-        boolean result = GreyscaleClosingSphere.greyscaleClosingSphere(getCLIJ2(), arg1, arg2, new Double (arg3).intValue(), new Double (arg4).intValue(), new Double (arg5).intValue());
-        if (doTimeTracing()) {recordMethodEnd("GreyscaleClosingSphere");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.ProximalNeighborCountMap
-    //----------------------------------------------------
-    /**
-     * Takes a label map, determines which labels are within a given distance range and replaces every label with the number of neighboring labels.
-     * 
-     * 
-     */
-    default boolean proximalNeighborCountMap(ClearCLBuffer arg1, ClearCLBuffer arg2, double arg3, double arg4) {
-        if (doTimeTracing()) {recordMethodStart("ProximalNeighborCountMap");}
-        boolean result = ProximalNeighborCountMap.proximalNeighborCountMap(getCLIJ2(), arg1, arg2, new Double (arg3).floatValue(), new Double (arg4).floatValue());
-        if (doTimeTracing()) {recordMethodEnd("ProximalNeighborCountMap");}
-        return result;
-    }
-
-
-    // net.haesleinhuepf.clijx.plugins.SubStack
-    //----------------------------------------------------
-    /**
-     * Crops multiple Z-slices of a 3D stack into a new 3D stack.
-     * 
-     * 
-     */
-    default boolean subStack(ClearCLImageInterface arg1, ClearCLImageInterface arg2, int arg3, int arg4) {
-        if (doTimeTracing()) {recordMethodStart("SubStack");}
-        boolean result = SubStack.subStack(getCLIJ2(), arg1, arg2, arg3, arg4);
-        if (doTimeTracing()) {recordMethodEnd("SubStack");}
-        return result;
-    }
-
 }
-// 231 methods generated.
+// 138 methods generated.

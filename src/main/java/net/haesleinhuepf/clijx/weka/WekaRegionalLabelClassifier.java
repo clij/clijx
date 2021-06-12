@@ -12,7 +12,7 @@ import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clij2.utilities.HasClassifiedInputOutput;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
-import net.haesleinhuepf.clijx.plugins.GenerateProximalNeighborsMatrix;
+import net.haesleinhuepf.clij2.plugins.GenerateProximalNeighborsMatrix;
 import org.scijava.plugin.Plugin;
 import weka.filters.supervised.instance.ClassBalancer;
 

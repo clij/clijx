@@ -11,6 +11,7 @@ import net.haesleinhuepf.clij2.utilities.HasClassifiedInputOutput;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_localMinimumTouchingNeighborCountMap")
 public class LocalMinimumTouchingNeighborCountMap extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
     @Override
@@ -33,6 +34,7 @@ public class LocalMinimumTouchingNeighborCountMap extends AbstractCLIJ2Plugin im
         return localMinimumTouchingNeighborCountMap(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1]);
     }
 
+    @Deprecated
     public static boolean localMinimumTouchingNeighborCountMap(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result) {
         int number_of_labels = (int)clij2.maximumOfAllPixels(pushed);
         ClearCLBuffer touch_matrix = clij2.create(number_of_labels + 1, number_of_labels + 1);
@@ -63,7 +65,7 @@ public class LocalMinimumTouchingNeighborCountMap extends AbstractCLIJ2Plugin im
 
     @Override
     public String getDescription() {
-        return "Takes a label map, determines which labels touch, determines for every label with the number of touching \n" +
+        return "Deprecated: Takes a label map, determines which labels touch, determines for every label with the number of touching \n" +
                 "neighboring labels and replaces the label index with the local minimum of this count.\n\n";
     }
 

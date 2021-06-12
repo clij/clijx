@@ -4,8 +4,8 @@ import net.haesleinhuepf.clij.CLIJ;
 import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.macro.CLIJOpenCLProcessor;
 import net.haesleinhuepf.clij2.AbstractCLIJ2Plugin;
-import net.haesleinhuepf.clijx.plugins.PullTile;
-import net.haesleinhuepf.clijx.plugins.PushTile;
+import net.haesleinhuepf.clij2.plugins.PullTile;
+import net.haesleinhuepf.clij2.plugins.PushTile;
 
 import java.util.HashMap;
 public class ExecutorOnTile implements Runnable {

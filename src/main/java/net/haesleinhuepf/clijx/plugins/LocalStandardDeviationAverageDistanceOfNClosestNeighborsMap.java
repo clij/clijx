@@ -11,6 +11,7 @@ import net.haesleinhuepf.clij2.utilities.HasClassifiedInputOutput;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_localStandardDeviationAverageDistanceOfNClosestNeighborsMap")
 public class LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized , HasClassifiedInputOutput {
     @Override
@@ -33,6 +34,7 @@ public class LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap extends
         return localStandardDeviationAverageDistanceOfNClosestNeighborsMap(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1], asInteger(args[2]));
     }
 
+    @Deprecated
     public static boolean localStandardDeviationAverageDistanceOfNClosestNeighborsMap(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result, Integer n) {
         int number_of_labels = (int)clij2.maximumOfAllPixels(pushed);
         ClearCLBuffer touch_matrix = clij2.create(number_of_labels + 1, number_of_labels + 1);
@@ -73,7 +75,7 @@ public class LocalStandardDeviationAverageDistanceOfNClosestNeighborsMap extends
 
     @Override
     public String getDescription() {
-        return "Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point\n" +
+        return "Deprecated: Takes a label map, determines distances between all centroids, the mean distance of the n closest points for every point\n" +
                 " and replaces every label with the standard deviation distance of touching labels.";
     }
 

@@ -11,6 +11,7 @@ import net.haesleinhuepf.clij2.utilities.HasClassifiedInputOutput;
 import net.haesleinhuepf.clij2.utilities.IsCategorized;
 import org.scijava.plugin.Plugin;
 
+@Deprecated
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJx_localMedianAverageNeighborDistanceMap")
 public class LocalMedianAverageNeighborDistanceMap extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, IsCategorized, HasClassifiedInputOutput {
     @Override
@@ -34,6 +35,7 @@ public class LocalMedianAverageNeighborDistanceMap extends AbstractCLIJ2Plugin i
         return localMedianAverageNeighborDistanceMap(getCLIJ2(), (ClearCLBuffer) args[0], (ClearCLBuffer) args[1]);
     }
 
+    @Deprecated
     public static boolean localMedianAverageNeighborDistanceMap(CLIJ2 clij2, ClearCLBuffer pushed, ClearCLBuffer result) {
         int number_of_labels = (int)clij2.maximumOfAllPixels(pushed);
         ClearCLBuffer touch_matrix = clij2.create(number_of_labels + 1, number_of_labels + 1);
@@ -76,7 +78,7 @@ public class LocalMedianAverageNeighborDistanceMap extends AbstractCLIJ2Plugin i
 
     @Override
     public String getDescription() {
-        return "Takes a label map, determines which labels touch, the distance between their centroids and the median distance" +
+        return "Deprecated: Takes a label map, determines which labels touch, the distance between their centroids and the median distance" +
                 "between touching neighbors. It then replaces every label with the that value.";
     }
 

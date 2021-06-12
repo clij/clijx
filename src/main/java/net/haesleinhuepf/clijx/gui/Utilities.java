@@ -15,7 +15,7 @@ public class Utilities {
 
         Toolbar.addPlugInTool(new ContinuousWebcamAcquisition());
         Toolbar.addPlugInTool(new InteractiveBrightnessContrast());
-        Toolbar.addPlugInTool(new InteractiveZoom());
+        //Toolbar.addPlugInTool(new InteractiveZoom());
         Toolbar.addPlugInTool(new InteractiveWindowPosition());
         //Toolbar.addPlugInTool(new InteractiveWand());
         //Toolbar.addPlugInTool(new InteractiveRotation());

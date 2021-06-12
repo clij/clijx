@@ -12,7 +12,7 @@ import net.haesleinhuepf.clij.clearcl.ClearCLBuffer;
 import net.haesleinhuepf.clij.coremem.enums.NativeTypeEnum;
 import net.haesleinhuepf.clij2.CLIJ2;
 import net.haesleinhuepf.clijx.CLIJx;
-import net.haesleinhuepf.clijx.plugins.Pull2DPointListAsRoi;
+import net.haesleinhuepf.clij2.plugins.Pull2DPointListAsRoi;
 
 import javax.swing.*;
 import java.awt.*;
