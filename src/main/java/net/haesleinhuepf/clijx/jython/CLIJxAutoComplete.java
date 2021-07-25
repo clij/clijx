@@ -641,8 +641,8 @@ class CLIJxAutoComplete {
        headline = "clijx.labelMeanOfLaplacianMap(ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination)";
        description = "<b>labelMeanOfLaplacianMap</b><br><br>Takes an image and a corresponding label map, determines the mean intensity in the laplacian of the image per label and replaces every label with the that number.<br><br>This results in a parametric image visualizing local contrast.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLBuffer label_map, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clijx.labelMinimumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3)";
-       description = "<b>labelMinimumIntensityMap</b><br><br>null";
+       headline = "clijx.labelMinimumIntensityMap(ClearCLBuffer intensity_image, ClearCLBuffer label_map, ClearCLBuffer destination)";
+       description = "<b>labelMinimumIntensityMap</b><br><br>Takes an image and a corresponding label map, determines the minimum intensity per label and replaces every label with the that number.<br><br>This results in a parametric image expressing mean object intensity.<br><br>Parameters:<br>ClearCLBuffer intensity_image, ClearCLBuffer label_map, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clijx.labelOverlapCountMap(ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer overlap_count_map_destination)";
        description = "<b>labelOverlapCountMap</b><br><br>Takes two label maps, and counts for every label in label map 1 how many labels overlap with it in label map 2.<br><br>The resulting map is generated from the label map 1 by replacing the labels with the respective count.<br><br>Parameters:<br>ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer overlap_count_map_destination";

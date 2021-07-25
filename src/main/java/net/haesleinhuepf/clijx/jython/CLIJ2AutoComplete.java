@@ -542,8 +542,8 @@ class CLIJ2AutoComplete {
        headline = "clij2.labelMeanIntensityMap(ClearCLBuffer intensity_image, ClearCLBuffer label_map, ClearCLBuffer destination)";
        description = "<b>labelMeanIntensityMap</b><br><br>Takes an image and a corresponding label map, determines the mean intensity per label and replaces every label with the that number.<br><br>This results in a parametric image expressing mean object intensity.<br><br>Parameters:<br>ClearCLBuffer intensity_image, ClearCLBuffer label_map, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
-       headline = "clij2.labelMinimumIntensityMap(ClearCLBuffer arg1, ClearCLBuffer arg2, ClearCLBuffer arg3)";
-       description = "<b>labelMinimumIntensityMap</b><br><br>null";
+       headline = "clij2.labelMinimumIntensityMap(ClearCLBuffer intensity_image, ClearCLBuffer label_map, ClearCLBuffer destination)";
+       description = "<b>labelMinimumIntensityMap</b><br><br>Takes an image and a corresponding label map, determines the minimum intensity per label and replaces every label with the that number.<br><br>This results in a parametric image expressing mean object intensity.<br><br>Parameters:<br>ClearCLBuffer intensity_image, ClearCLBuffer label_map, ClearCLBuffer destination";
        list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.labelOverlapCountMap(ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer overlap_count_map_destination)";
        description = "<b>labelOverlapCountMap</b><br><br>Takes two label maps, and counts for every label in label map 1 how many labels overlap with it in label map 2.<br><br>The resulting map is generated from the label map 1 by replacing the labels with the respective count.<br><br>Parameters:<br>ClearCLBuffer label_map1, ClearCLBuffer label_map2, ClearCLBuffer overlap_count_map_destination";
@@ -1382,6 +1382,9 @@ class CLIJ2AutoComplete {
        headline = "clij2.varianceSphere(ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Integer radius_z)";
        description = "<b>varianceSphere</b><br><br>Computes the local variance of a pixels spherical neighborhood. <br><br>The spheres size is specified by <br>its half-width, half-height and half-depth (radius). If 2D images are given, radius_z will be ignored. <br><br>Parameters:<br>ClearCLImageInterface source, ClearCLImageInterface destination, Integer radius_x, Integer radius_y, Integer radius_z";
        list.add(new BasicCompletion(provider, headline, null, description));
+       headline = "clij2.visualizeOutlinesOnOriginal(ClearCLBuffer intensity, ClearCLBuffer labels, ClearCLBuffer destination)";
+       description = "<b>visualizeOutlinesOnOriginal</b><br><br>Combines an intensity image and a label (or binary) image so that you can see segmentation outlines on the intensity image.<br><br>Parameters:<br>ClearCLBuffer intensity, ClearCLBuffer labels, ClearCLBuffer destination";
+       list.add(new BasicCompletion(provider, headline, null, description));
        headline = "clij2.voronoiLabeling(ClearCLBuffer input, ClearCLImageInterface destination)";
        description = "<b>voronoiLabeling</b><br><br>Takes a binary image, labels connected components and dilates the regions using a octagon shape until they touch. <br><br>The resulting label map is written to the output.<br><br>Parameters:<br>ClearCLBuffer input, ClearCLImageInterface destination";
        list.add(new BasicCompletion(provider, headline, null, description));
@@ -1412,4 +1415,4 @@ class CLIJ2AutoComplete {
         return list;
     }
 }
-// 467 methods generated.
+// 468 methods generated.
